@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package finchatbot.chat.v1;
+
+option go_package = ".;chatpb";
+
+message Message {
+  int64 id = 1;
+  string sender_id = 2;
+  string content = 3;
+}
+
+message Feedback {
+  int64 message_id = 1;
+  string user_id = 2;
+  int32 rating = 3;
+  string comment = 4;
+}
+
+service ChatService {
+  rpc GiveFeedback(Feedback) returns (FeedbackResponse);
+  rpc GetFeedbackList(Empty) returns (GetFeedbackListResponse);
+}
+
+message Empty {}
+
+message FeedbackResponse {
+  Feedback feedback = 1;
+}
+
+message GetFeedbackListResponse {
+  repeated Feedback feedbacks = 1;
+}
