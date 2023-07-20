@@ -1,4 +1,4 @@
-module chatfinbot-grpc
+module github.com/intellectia/chatfinbot-grpc
 
 go 1.19
 
