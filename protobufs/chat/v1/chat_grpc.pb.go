@@ -24,6 +24,12 @@ const _ = grpc.SupportPackageIsVersion7
 type ChatServiceClient interface {
 	GiveFeedback(ctx context.Context, in *Feedback, opts ...grpc.CallOption) (*FeedbackResponse, error)
 	GetFeedbackList(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetFeedbackListResponse, error)
+	// New RPC methods for managing sessions
+	CreateSession(ctx context.Context, in *Session, opts ...grpc.CallOption) (*SessionResponse, error)
+	UpdateSession(ctx context.Context, in *Session, opts ...grpc.CallOption) (*SessionResponse, error)
+	DeleteSession(ctx context.Context, in *Session, opts ...grpc.CallOption) (*Empty, error)
+	GetSessionByID(ctx context.Context, in *Session, opts ...grpc.CallOption) (*SessionResponse, error)
+	GetSessionList(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetSessionListResponse, error)
 }
 
 type chatServiceClient struct {
@@ -36,7 +42,7 @@ func NewChatServiceClient(cc grpc.ClientConnInterface) ChatServiceClient {
 
 func (c *chatServiceClient) GiveFeedback(ctx context.Context, in *Feedback, opts ...grpc.CallOption) (*FeedbackResponse, error) {
 	out := new(FeedbackResponse)
-	err := c.cc.Invoke(ctx, "/finchatbot.chat.v1.ChatService/GiveFeedback", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/chatfinbot.chat.v1.ChatService/GiveFeedback", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +51,52 @@ func (c *chatServiceClient) GiveFeedback(ctx context.Context, in *Feedback, opts
 
 func (c *chatServiceClient) GetFeedbackList(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetFeedbackListResponse, error) {
 	out := new(GetFeedbackListResponse)
-	err := c.cc.Invoke(ctx, "/finchatbot.chat.v1.ChatService/GetFeedbackList", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/chatfinbot.chat.v1.ChatService/GetFeedbackList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) CreateSession(ctx context.Context, in *Session, opts ...grpc.CallOption) (*SessionResponse, error) {
+	out := new(SessionResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.chat.v1.ChatService/CreateSession", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) UpdateSession(ctx context.Context, in *Session, opts ...grpc.CallOption) (*SessionResponse, error) {
+	out := new(SessionResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.chat.v1.ChatService/UpdateSession", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) DeleteSession(ctx context.Context, in *Session, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/chatfinbot.chat.v1.ChatService/DeleteSession", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) GetSessionByID(ctx context.Context, in *Session, opts ...grpc.CallOption) (*SessionResponse, error) {
+	out := new(SessionResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.chat.v1.ChatService/GetSessionByID", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *chatServiceClient) GetSessionList(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetSessionListResponse, error) {
+	out := new(GetSessionListResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.chat.v1.ChatService/GetSessionList", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -58,6 +109,12 @@ func (c *chatServiceClient) GetFeedbackList(ctx context.Context, in *Empty, opts
 type ChatServiceServer interface {
 	GiveFeedback(context.Context, *Feedback) (*FeedbackResponse, error)
 	GetFeedbackList(context.Context, *Empty) (*GetFeedbackListResponse, error)
+	// New RPC methods for managing sessions
+	CreateSession(context.Context, *Session) (*SessionResponse, error)
+	UpdateSession(context.Context, *Session) (*SessionResponse, error)
+	DeleteSession(context.Context, *Session) (*Empty, error)
+	GetSessionByID(context.Context, *Session) (*SessionResponse, error)
+	GetSessionList(context.Context, *Empty) (*GetSessionListResponse, error)
 	mustEmbedUnimplementedChatServiceServer()
 }
 
@@ -70,6 +127,21 @@ func (UnimplementedChatServiceServer) GiveFeedback(context.Context, *Feedback) (
 }
 func (UnimplementedChatServiceServer) GetFeedbackList(context.Context, *Empty) (*GetFeedbackListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFeedbackList not implemented")
+}
+func (UnimplementedChatServiceServer) CreateSession(context.Context, *Session) (*SessionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateSession not implemented")
+}
+func (UnimplementedChatServiceServer) UpdateSession(context.Context, *Session) (*SessionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSession not implemented")
+}
+func (UnimplementedChatServiceServer) DeleteSession(context.Context, *Session) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteSession not implemented")
+}
+func (UnimplementedChatServiceServer) GetSessionByID(context.Context, *Session) (*SessionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSessionByID not implemented")
+}
+func (UnimplementedChatServiceServer) GetSessionList(context.Context, *Empty) (*GetSessionListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSessionList not implemented")
 }
 func (UnimplementedChatServiceServer) mustEmbedUnimplementedChatServiceServer() {}
 
@@ -94,7 +166,7 @@ func _ChatService_GiveFeedback_Handler(srv interface{}, ctx context.Context, dec
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/finchatbot.chat.v1.ChatService/GiveFeedback",
+		FullMethod: "/chatfinbot.chat.v1.ChatService/GiveFeedback",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ChatServiceServer).GiveFeedback(ctx, req.(*Feedback))
@@ -112,10 +184,100 @@ func _ChatService_GetFeedbackList_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/finchatbot.chat.v1.ChatService/GetFeedbackList",
+		FullMethod: "/chatfinbot.chat.v1.ChatService/GetFeedbackList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ChatServiceServer).GetFeedbackList(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChatService_CreateSession_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Session)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).CreateSession(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.chat.v1.ChatService/CreateSession",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).CreateSession(ctx, req.(*Session))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChatService_UpdateSession_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Session)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).UpdateSession(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.chat.v1.ChatService/UpdateSession",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).UpdateSession(ctx, req.(*Session))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChatService_DeleteSession_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Session)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).DeleteSession(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.chat.v1.ChatService/DeleteSession",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).DeleteSession(ctx, req.(*Session))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChatService_GetSessionByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Session)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).GetSessionByID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.chat.v1.ChatService/GetSessionByID",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).GetSessionByID(ctx, req.(*Session))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ChatService_GetSessionList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).GetSessionList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.chat.v1.ChatService/GetSessionList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).GetSessionList(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -124,7 +286,7 @@ func _ChatService_GetFeedbackList_Handler(srv interface{}, ctx context.Context, 
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ChatService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "finchatbot.chat.v1.ChatService",
+	ServiceName: "chatfinbot.chat.v1.ChatService",
 	HandlerType: (*ChatServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -134,6 +296,26 @@ var ChatService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetFeedbackList",
 			Handler:    _ChatService_GetFeedbackList_Handler,
+		},
+		{
+			MethodName: "CreateSession",
+			Handler:    _ChatService_CreateSession_Handler,
+		},
+		{
+			MethodName: "UpdateSession",
+			Handler:    _ChatService_UpdateSession_Handler,
+		},
+		{
+			MethodName: "DeleteSession",
+			Handler:    _ChatService_DeleteSession_Handler,
+		},
+		{
+			MethodName: "GetSessionByID",
+			Handler:    _ChatService_GetSessionByID_Handler,
+		},
+		{
+			MethodName: "GetSessionList",
+			Handler:    _ChatService_GetSessionList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

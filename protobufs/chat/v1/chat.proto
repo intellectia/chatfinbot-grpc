@@ -1,11 +1,11 @@
 syntax = "proto3";
 
-package finchatbot.chat.v1;
+package chatfinbot.chat.v1;
 
 option go_package = ".;chatpb";
 
 message Message {
-  int64 id = 1;
+  // int64 id = 1;
   string sender_id = 2;
   string content = 3;
 }
@@ -17,9 +17,23 @@ message Feedback {
   string comment = 4;
 }
 
+message Session {
+  int64 id = 1;
+  string user_id = 2;
+  string title = 3;
+}
+
 service ChatService {
   rpc GiveFeedback(Feedback) returns (FeedbackResponse);
   rpc GetFeedbackList(Empty) returns (GetFeedbackListResponse);
+
+
+  // New RPC methods for managing sessions
+  rpc CreateSession(Session) returns (SessionResponse);
+  rpc UpdateSession(Session) returns (SessionResponse);
+  rpc DeleteSession(Session) returns (Empty);
+  rpc GetSessionByID(Session) returns (SessionResponse);
+  rpc GetSessionList(Empty) returns (GetSessionListResponse);
 }
 
 message Empty {}
@@ -30,4 +44,12 @@ message FeedbackResponse {
 
 message GetFeedbackListResponse {
   repeated Feedback feedbacks = 1;
+}
+
+message SessionResponse {
+  Session session = 1;
+}
+
+message GetSessionListResponse {
+  repeated Session sessions = 1;
 }
