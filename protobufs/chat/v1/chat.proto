@@ -23,6 +23,8 @@ message Session {
   string title = 3;
   int64  created_at = 4;
   int64  updated_at = 5;
+  string session_id = 6;
+  int32  model_type = 7;
 }
 
 service ChatService {
