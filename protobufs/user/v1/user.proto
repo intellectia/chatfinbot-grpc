@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package chatfinbot.user.v1;
+
+option go_package = ".;userpb";
+
+service UserService {
+  rpc Register(UserRequest) returns (RegisterResponse);
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc GetUser(GetUserRequest) returns (UserResponse);
+}
+
+message UserRequest {
+  string email = 1;
+  string password = 2;
+  string user_name = 3;
+}
+
+message RegisterResponse {
+  string id = 1;
+  string user_name = 2;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string id = 1;
+  string token = 2;
+}
+
+message GetUserRequest {
+  string id = 1;
+}
+
+message UserResponse {
+  string id = 2;
+  string email = 3;
+  string user_name = 4;
+}

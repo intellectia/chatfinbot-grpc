@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package chatfinbot.file.v1;
+
+option go_package = ".;filepb";
+
+service FileService {
+  rpc UploadFile(UploadRequest) returns (UploadResponse);
+}
+
+message UploadRequest {
+  bytes file_content = 1;
+  string filename = 2;
+}
+
+message UploadResponse {
+  string hash_value = 1;
+  string s3_path = 2;
+  string file_name = 3;
+}
