@@ -17,6 +17,16 @@ message Feedback {
   string comment = 4;
 }
 
+message Attachment {
+  string name = 1;
+  string type = 2;
+  string doc_id = 3;
+}
+
+message SessionData {
+  repeated Attachment attachments = 1;
+}
+
 message Session {
   int64 id = 1;
   string user_id = 2;
@@ -25,6 +35,7 @@ message Session {
   int64  updated_at = 5;
   string session_id = 6;
   int32  model_type = 7;
+  SessionData session_data = 8;
 }
 
 service ChatService {
