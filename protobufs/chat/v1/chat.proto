@@ -38,18 +38,6 @@ message Session {
   SessionData session_data = 8;
 }
 
-service ChatService {
-  rpc GiveFeedback(Feedback) returns (FeedbackResponse);
-  rpc GetFeedbackList(Empty) returns (GetFeedbackListResponse);
-
-
-  // New RPC methods for managing sessions
-  rpc CreateSession(Session) returns (SessionResponse);
-  rpc UpdateSession(Session) returns (SessionResponse);
-  rpc DeleteSession(Session) returns (Empty);
-  rpc GetSessionByID(Session) returns (SessionResponse);
-  rpc GetSessionList(Empty) returns (GetSessionListResponse);
-}
 
 message Empty {}
 
@@ -68,3 +56,55 @@ message SessionResponse {
 message GetSessionListResponse {
   repeated Session sessions = 1;
 }
+
+
+message Source {
+    string type = 1;      // Type of the source
+    string source_id = 2;  // URL or unique identifier of the source
+}
+
+message Collection {
+    int64 id = 1;
+    string user_id = 2;
+    string title = 3;
+    int64 created_at = 4;  // Using int64 for date representation
+    int64 updated_at = 5;  // Using int64 for date representation
+    int64 deleted_at = 6;  // Using int64 for date representation
+    Source source = 7;     // Embedded source message
+}
+
+message ListCollectionsResponse {
+    repeated Collection collections = 1;
+}
+
+message CollectionRequest {
+    Collection collection = 1;
+}
+
+message CollectionResponse {
+    Collection collection = 1;
+}
+
+
+
+service ChatService {
+  rpc GiveFeedback(Feedback) returns (FeedbackResponse);
+  rpc GetFeedbackList(Empty) returns (GetFeedbackListResponse);
+
+
+  // New RPC methods for managing sessions
+  rpc CreateSession(Session) returns (SessionResponse);
+  rpc UpdateSession(Session) returns (SessionResponse);
+  rpc DeleteSession(Session) returns (Empty);
+  rpc GetSessionByID(Session) returns (SessionResponse);
+  rpc GetSessionList(Empty) returns (GetSessionListResponse);
+
+   // New RPC methods for managing collections
+  rpc ListCollections (Empty) returns (ListCollectionsResponse);
+  rpc CreateCollection (Collection) returns (CollectionResponse);
+  rpc UpdateCollection (Collection) returns (CollectionResponse);
+  rpc DeleteCollection (Collection) returns (Empty);
+  rpc GetCollectionByID (Collection) returns (CollectionResponse);
+
+}
+
