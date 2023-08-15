@@ -7,6 +7,7 @@ option go_package = ".;userpb";
 service UserService {
   rpc Register(UserRequest) returns (RegisterResponse);
   rpc Login(LoginRequest) returns (LoginResponse);
+  rpc SendSMSCode(SendSMSCodeRequest) returns (Empty);
   rpc GetUser(GetUserRequest) returns (UserResponse);
 }
 
@@ -39,4 +40,11 @@ message UserResponse {
   string id = 2;
   string email = 3;
   string user_name = 4;
+}
+
+message Empty {}
+
+message SendSMSCodeRequest {
+    string phone_number = 1; // 手机号 8613211112222
+    int32 message_type = 2; // 1: 验证码
 }

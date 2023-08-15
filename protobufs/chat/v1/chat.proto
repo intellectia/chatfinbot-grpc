@@ -13,8 +13,8 @@ message Message {
 message Feedback {
   int64 message_id = 1;
   string user_id = 2;
-  int32 rating = 3;
-  string comment = 4;
+  int32 score = 3;
+  bool is_rated = 4;
 }
 
 message Attachment {
