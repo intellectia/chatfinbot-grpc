@@ -1,0 +1,144 @@
+syntax = "proto3";
+
+package chatfinbot.search.v1;
+
+option go_package = ".;searchpb";
+
+enum CompanyType {
+    CompanyTypeUnknown = 0; // 未知（不要使用）
+    CompanyTypeCh = 1; // 沪深，A股
+    CompanyTypeHK = 2; // 港股
+    CompanyTypeUS = 3; // 美股
+
+}
+
+service SearchService {
+    // 获取公司数据 
+    rpc GetCompanyInfo(GetCompanyInfoReq) returns (GetCompanyInfoRsp);
+    // 获取公司行情指标
+    rpc GetIndicators(GetIndicatorsReq) returns (GetIndicatorsRsp);
+    // 获取公司股权结构
+    rpc GetShareholders(GetShareholdersReq) returns (GetShareholdersRsp);
+    // 获取公司管理层信息
+    rpc GetExecutives(GetExecutivesReq) returns (GetExecutivesRsp);
+}
+
+
+
+message GetCompanyInfoReq {
+    string code = 1; // 公司code 例如00030.SZ
+}
+
+message GetCompanyInfoRsp {
+    CompanyType type = 1; // 公司类型 
+    CompanyInfoCh ch_data = 2; // 沪深，A股基本信息
+    CompanyInfoHK hk_data = 3; // 港股基本信息
+}
+
+// 公司基本信息
+message CompanyInfoCh {
+    string comp_name = 1;    // 公司中文名称 COMPNAME
+    string comp_name_eng = 2;    // 公司中文名称 COMPNAMEENG
+    string gics = 3;        // 所属行业 GICS
+    string reg_capital = 4;  // 注册资本 REGCAPITAL
+    string reg_address = 5;  // 注册地址 REGADDRESS
+    string found_date = 6;    // 成立时间 FOUNDDATE
+    string list_date = 7;     // 上市时间 LISTDATE
+    string legrepresent = 8; // 法定代表人 LEGREPRESENT
+    string code =  9;        // 股票代码 CODE
+    string aholder_type = 10;  // 实控人 AHOLDERTYPE
+    string hold_name = 11;   // 第一股东 HOLDNAME
+    string website = 12;    // 公司官网 WEBSITE
+    string office_address  = 13;  // 办公地址 OFFICEADDRESS
+    string phone = 14;    // 电话 PHONE
+    string email = 15;    // 电子邮箱 EMAIL
+    string com_profile = 16; // 公司介绍 COMPROFILE
+}
+
+// 港股公司基本信息
+message CompanyInfoHK {
+
+}
+
+message GetIndicatorsReq {
+    string code = 1; // 公司code 例如00030.SZ
+}
+
+message GetIndicatorsRsp {
+    repeated CommonListData list = 1; // 列表数据
+}
+
+message CommonListData {
+    string cn_name = 1;  // 字段中文名
+    string name = 2;     // 字段名
+    uint32 unit = 3;     // 单位
+    string val = 4;      // 值
+}
+
+// 行情指标
+message IndicatorsCh {
+    string close = 1; // 最新收盘价 Close
+    string differ_range = 2; // 涨跌幅 DifferRange
+    string amount = 3; // 成交额 Amount
+    string volume = 4; // 成交量 Volume
+    string mvbycsrc = 5; /// 总市值 MVBYCSRC
+    string total_share = 6; // 总股本 TOTALSHARE
+    string liq_share = 7; // 流通股本 LIQSHARE
+    string listed_mvbycsrc = 8; // 上市市值
+    string differ_rangey = 9; // 年内涨跌幅 DifferRangeY
+    string pettm = 10; // PE (TTM) PETTM
+    string epsttm = 11; // EPS (TTM) EPSTTM
+    string psttm = 12; // PS (TTM) PSTTM
+    string pbmrqn = 13; // PB (MRQ) PBMRQN
+    string dividend_yield_new = 14; // 股息率 DIVIDENDYIELDNEW
+    string dividend_rate = 15;  // 分红率
+}
+
+message GetShareholdersReq {
+    string code = 1; // 公司code 例如00030.SZ
+}
+
+message GetShareholdersRsp {
+    repeated GetShareholdersChart charts = 1;  // 饼状图
+    repeated GetShareholdersInfo list = 2;     // 股东数据
+}
+
+message GetShareholdersChart {
+    string id = 1;   // id
+    double value =2;  // 值
+}
+
+message GetShareholdersInfo {
+    string hold_name = 1;    // 股东名称 HOLDNAME
+    double hold_amt = 2;     // 持股数量 HOLDAMT
+    uint32 hold_amt_unit = 3; // 持股数量单位  0=不设置 1=万 2=亿  
+    double hold_pct = 4;  // 持股比例 HOLDPCT
+    uint64 reference = 5;  // 期末参考值
+    string hold_change  = 6; // 较上期持股变动数 HOLDCHANGE 
+    uint32 change_type = 7; // 1= 新增 2=减少 3=不变
+    string direction = 8; // 变动方向 DIRECTION 　 
+    double hold_change_pct = 9; // 持股比例变动
+}
+
+message GetExecutivesReq {
+    string code = 1; // 公司code 例如00030.SZ
+}
+
+message GetExecutivesRsp {
+    repeated ExecutivesData list = 1;     // 高层信息
+}
+
+// 高层信息
+message ExecutivesData {
+    string name = 1;  // 名字
+    string position = 2; // 职务
+    uint32 age = 3; // 年龄
+    uint32 gender =4;  // 性别 1=男 2=女
+    string edu = 5; // 学历
+    string pmt = 6; // 酬薪 留空则表示未知
+    uint32 pmt_unit = 7; // 酬薪单位 0=不设置 1=万 2=亿  
+    string hold_amt = 8;     // 持股数量  留空则表示未知
+    uint32 hold_amt_unit = 9; // 持股数量单位  0=不设置 1=万 2=亿 
+    string hold_pct = 10;  // 持股比例 
+    string resume = 11; // 个人简历
+}
