@@ -253,7 +253,7 @@ message GetFinancialData {
 
 message Financial {
     // 损益表摘要
-    // TOTALOPERATEREVE 营业总收入(元)  同比
+    // TOTALOPERATEREVE 营业总收入(元)  同比 totaloperatereve
     // TOTALOPERATEEXP 营业总成本(元)  同比
     // OPERATEPROFIT 营业利润(元)   同比
     // NETPROFIT 净利润(元)  同比
