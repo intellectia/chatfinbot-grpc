@@ -79,6 +79,7 @@ message CommonListData {
     string name = 2;     // 字段名
     uint32 unit = 3;     // 单位
     string val = 4;      // 值
+    uint32 sign = 5;   // 标记 0=无变化  1=标蓝
 }
 
 // 行情指标
@@ -226,5 +227,63 @@ message GetFinancialReq {
 }
 
 message GetFinancialRsp {
-    
+    repeated GetFinancialChartsList charts = 1;  // 饼状图
+    repeated GetFinancialList list = 2; // 列表数据
+}
+
+message GetFinancialChartsList {
+    string name = 1; // 名称
+    repeated GetFinancialChart list = 2; // 柱状图列表
+}
+
+message GetFinancialChart {
+    string id = 1;   // id
+    double value = 2;  // 值
+}
+
+message GetFinancialList {
+    uint32 year = 1;  // 年
+    repeated GetMBRevenueData column_list = 2; // 栏目
+}
+
+message GetFinancialData {
+    string name  = 1;  // 栏目名
+    repeated CommonListData item_list = 2; // 明细
+}
+
+message Financial {
+    // 损益表摘要
+    // TOTALOPERATEREVE 营业总收入(元)  同比
+    // TOTALOPERATEEXP 营业总成本(元)  同比
+    // OPERATEPROFIT 营业利润(元)   同比
+    // NETPROFIT 净利润(元)  同比
+    // PARENTNETPROFIT 归属于母公司股东的净利润(元)
+
+
+    //  互联网金融信息服
+    // SUMLASSET 流动资产合计(元)
+    // SUMNONLASSET 非流动资产合计(元)
+    // SUMLLIAB 流动负债合计(元)
+    // SUMNONLLIAB 非流动负债合计(元)    同比
+    // SUMSHEQUITY 股东权益合计(元)
+    // SUMPARENTEQUITY 归属于母公司股东权益合计(元)   同比
+
+
+    // 现金流量表摘要
+    // SALEGOODSSERVICEREC  销售商品提供劳务收到的现金
+    // NETOPERATECASHFLOW 经营活动产生的现金流量净额(元)
+    // NETINVCASHFLOW 投资活动产生的现金流量净额(元)
+    // NETFINACASHFLOW  筹资活动产生的现金流量净额(元)
+    // NICASHEQUI 现金及现金等价物净增加额(元)
+    // CASHEQUIENDING 期末现金及现金等价物余额(元)
+    // DISPFILASSETLOSS 处置固定资产、无形资产和其他长期资产的损失(元)
+
+    // ROEDILUTED 净资产收益率ROE(摊薄)
+    // ROEWA 净资产收益率ROE(加权)
+    // ROEEXDILUTED 净资产收益率ROE(扣除/摊薄)
+    // ROA 总资产报酬率ROA
+    // GPMARGIN 销售净利率
+    // NPMARGIN 销售毛利率
+    // LIBILITYTOASSET 资产负债率
+    // SALESCASHINTOOR 销售商品提供劳务收到的现金/营业收入
 }
