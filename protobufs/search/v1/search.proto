@@ -21,6 +21,12 @@ service SearchService {
     rpc GetShareholders(GetShareholdersReq) returns (GetShareholdersRsp);
     // 获取公司管理层信息
     rpc GetExecutives(GetExecutivesReq) returns (GetExecutivesRsp);
+    // 获取员工构成
+    rpc GetStaffInfo(GetStaffInfoReq) returns (GetStaffInfoRsp);
+    // 获取主营营收
+    rpc GetMBRevenue(GetMBRevenueReq) returns (GetMBRevenueRsp);
+    // 获取财务概况
+    rpc GetFinancial(GetFinancialReq) returns (GetFinancialRsp);
 }
 
 
@@ -141,4 +147,84 @@ message ExecutivesData {
     uint32 hold_amt_unit = 9; // 持股数量单位  0=不设置 1=万 2=亿 
     string hold_pct = 10;  // 持股比例 
     string resume = 11; // 个人简历
+}
+
+message GetStaffInfoReq {
+    uint32 stype  =1; // 3=近三年 5=近五年 10=近十年  999=上市以来 
+    string code = 2; // 公司code 例如00030.SZ
+}
+
+message GetStaffInfoRsp {
+    repeated GetStaffInfoChartList job_charts = 1;  // 饼状图
+    repeated GetStaffInfoChartList edu_charts = 2;  // 饼状图
+    repeated GetStaffInfoData job_list = 3;     // 专业构成
+    repeated GetStaffInfoData edu_list = 4;     // 学历构成
+}
+
+message GetStaffInfoChartList {
+    uint32 year = 1; // 年份
+    repeated GetStaffInfoChart list =2; // 列表 
+}
+
+message GetStaffInfoChart {
+    string id = 1;   // id
+    uint32 value =2;  // 值
+}
+
+message GetStaffInfoData {
+    uint32 year = 1; // 年份
+    repeated CommonListData list = 2;
+}
+
+message StaffData {
+    string employee_num  = 1; // 职工总数 EMPLOYEENUM
+    string producer_num = 2;// 生产人员 PRODUCERNUM
+    string salesman_num = 3;// 销售人员 SALESMANNUM
+    string financial_num = 4;// 财务人员 FINANCIALNUM
+    string technician_num = 5;// 技术人员 TECHNICIANNUM
+    string randd_num = 6;// 研发人员 RANDDNUM
+    string administra_num = 7;// 行政管理人员 ADMINISTRANUM
+    string retire_num = 8; // 退休人员 
+    string other_num = 9;// 其他人员 
+    string edu_1 = 10; //  博士 level_1
+    string edu_2 = 11; // 硕士 level_2
+    string edu_3 = 12; // 本科  level_3
+    string edu_4 = 13; // 大专 level_4
+    string edu_5 = 14; // 大专以下 level_5
+}
+
+message GetMBRevenueReq {
+    uint32 stype  = 1; // 3=近三年 5=近五年 10=近十年  999=上市以来 
+    uint32 mbtype = 2; // 类型 1=行业 2=产品 3=地区
+    string code = 3; // 公司code 例如00030.SZ
+}
+
+message GetMBRevenueRsp {
+    repeated GetMBRevenueCharts charts = 1;  // 饼状图
+    repeated GetMBRevenueList list =2; // 列表数据
+}
+
+message GetMBRevenueCharts {
+    string year = 1; // 年份
+    string service = 2; // 业务 
+    double revenue = 3; // 营收
+}
+
+message GetMBRevenueList {
+    uint32 year = 1;  // 年
+    repeated GetMBRevenueData column_list = 2; // 栏目
+}
+
+message GetMBRevenueData {
+    string name  = 1;  // 栏目名
+    repeated CommonListData item_list = 2; // 明细
+}
+
+message GetFinancialReq {
+    uint32 stype  = 1; // 3=近三年 5=近五年 10=近十年  999=上市以来 
+    string code = 2; // 公司code 例如00030.SZ
+}
+
+message GetFinancialRsp {
+    
 }

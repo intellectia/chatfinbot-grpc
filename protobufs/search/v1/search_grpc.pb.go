@@ -23,6 +23,9 @@ const (
 	SearchService_GetIndicators_FullMethodName   = "/chatfinbot.search.v1.SearchService/GetIndicators"
 	SearchService_GetShareholders_FullMethodName = "/chatfinbot.search.v1.SearchService/GetShareholders"
 	SearchService_GetExecutives_FullMethodName   = "/chatfinbot.search.v1.SearchService/GetExecutives"
+	SearchService_GetStaffInfo_FullMethodName    = "/chatfinbot.search.v1.SearchService/GetStaffInfo"
+	SearchService_GetMBRevenue_FullMethodName    = "/chatfinbot.search.v1.SearchService/GetMBRevenue"
+	SearchService_GetFinancial_FullMethodName    = "/chatfinbot.search.v1.SearchService/GetFinancial"
 )
 
 // SearchServiceClient is the client API for SearchService service.
@@ -37,6 +40,12 @@ type SearchServiceClient interface {
 	GetShareholders(ctx context.Context, in *GetShareholdersReq, opts ...grpc.CallOption) (*GetShareholdersRsp, error)
 	// 获取公司管理层信息
 	GetExecutives(ctx context.Context, in *GetExecutivesReq, opts ...grpc.CallOption) (*GetExecutivesRsp, error)
+	// 获取员工构成
+	GetStaffInfo(ctx context.Context, in *GetStaffInfoReq, opts ...grpc.CallOption) (*GetStaffInfoRsp, error)
+	// 获取主营营收
+	GetMBRevenue(ctx context.Context, in *GetMBRevenueReq, opts ...grpc.CallOption) (*GetMBRevenueRsp, error)
+	// 获取财务概况
+	GetFinancial(ctx context.Context, in *GetFinancialReq, opts ...grpc.CallOption) (*GetFinancialRsp, error)
 }
 
 type searchServiceClient struct {
@@ -83,6 +92,33 @@ func (c *searchServiceClient) GetExecutives(ctx context.Context, in *GetExecutiv
 	return out, nil
 }
 
+func (c *searchServiceClient) GetStaffInfo(ctx context.Context, in *GetStaffInfoReq, opts ...grpc.CallOption) (*GetStaffInfoRsp, error) {
+	out := new(GetStaffInfoRsp)
+	err := c.cc.Invoke(ctx, SearchService_GetStaffInfo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *searchServiceClient) GetMBRevenue(ctx context.Context, in *GetMBRevenueReq, opts ...grpc.CallOption) (*GetMBRevenueRsp, error) {
+	out := new(GetMBRevenueRsp)
+	err := c.cc.Invoke(ctx, SearchService_GetMBRevenue_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *searchServiceClient) GetFinancial(ctx context.Context, in *GetFinancialReq, opts ...grpc.CallOption) (*GetFinancialRsp, error) {
+	out := new(GetFinancialRsp)
+	err := c.cc.Invoke(ctx, SearchService_GetFinancial_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SearchServiceServer is the server API for SearchService service.
 // All implementations must embed UnimplementedSearchServiceServer
 // for forward compatibility
@@ -95,6 +131,12 @@ type SearchServiceServer interface {
 	GetShareholders(context.Context, *GetShareholdersReq) (*GetShareholdersRsp, error)
 	// 获取公司管理层信息
 	GetExecutives(context.Context, *GetExecutivesReq) (*GetExecutivesRsp, error)
+	// 获取员工构成
+	GetStaffInfo(context.Context, *GetStaffInfoReq) (*GetStaffInfoRsp, error)
+	// 获取主营营收
+	GetMBRevenue(context.Context, *GetMBRevenueReq) (*GetMBRevenueRsp, error)
+	// 获取财务概况
+	GetFinancial(context.Context, *GetFinancialReq) (*GetFinancialRsp, error)
 	mustEmbedUnimplementedSearchServiceServer()
 }
 
@@ -113,6 +155,15 @@ func (UnimplementedSearchServiceServer) GetShareholders(context.Context, *GetSha
 }
 func (UnimplementedSearchServiceServer) GetExecutives(context.Context, *GetExecutivesReq) (*GetExecutivesRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetExecutives not implemented")
+}
+func (UnimplementedSearchServiceServer) GetStaffInfo(context.Context, *GetStaffInfoReq) (*GetStaffInfoRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetStaffInfo not implemented")
+}
+func (UnimplementedSearchServiceServer) GetMBRevenue(context.Context, *GetMBRevenueReq) (*GetMBRevenueRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMBRevenue not implemented")
+}
+func (UnimplementedSearchServiceServer) GetFinancial(context.Context, *GetFinancialReq) (*GetFinancialRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFinancial not implemented")
 }
 func (UnimplementedSearchServiceServer) mustEmbedUnimplementedSearchServiceServer() {}
 
@@ -199,6 +250,60 @@ func _SearchService_GetExecutives_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SearchService_GetStaffInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetStaffInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SearchServiceServer).GetStaffInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SearchService_GetStaffInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SearchServiceServer).GetStaffInfo(ctx, req.(*GetStaffInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SearchService_GetMBRevenue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMBRevenueReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SearchServiceServer).GetMBRevenue(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SearchService_GetMBRevenue_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SearchServiceServer).GetMBRevenue(ctx, req.(*GetMBRevenueReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SearchService_GetFinancial_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFinancialReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SearchServiceServer).GetFinancial(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SearchService_GetFinancial_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SearchServiceServer).GetFinancial(ctx, req.(*GetFinancialReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SearchService_ServiceDesc is the grpc.ServiceDesc for SearchService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -221,6 +326,18 @@ var SearchService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetExecutives",
 			Handler:    _SearchService_GetExecutives_Handler,
+		},
+		{
+			MethodName: "GetStaffInfo",
+			Handler:    _SearchService_GetStaffInfo_Handler,
+		},
+		{
+			MethodName: "GetMBRevenue",
+			Handler:    _SearchService_GetMBRevenue_Handler,
+		},
+		{
+			MethodName: "GetFinancial",
+			Handler:    _SearchService_GetFinancial_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
