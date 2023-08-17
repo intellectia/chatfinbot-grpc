@@ -6,9 +6,13 @@ option go_package = ".;userpb";
 
 service UserService {
   rpc Register(UserRequest) returns (RegisterResponse);
-  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc LoginWithEmail(LoginWithEmailRequest) returns (LoginWithEmailResponse); // email login
+  rpc LoginWithPhone(LoginWithPhoneRequest) returns (LoginWithPhoneResponse); // phone login
+  rpc LoginWithUserName(LoginWithUserNameRequest) returns (LoginWithUserNameResponse); // user_name login
   rpc SendSMSCode(SendSMSCodeRequest) returns (Empty);
   rpc GetUser(GetUserRequest) returns (UserResponse);
+  rpc SetInitPassword(SetInitPasswordRequest) returns (Empty); // set original password
+  rpc InitUserExtraInfo(InitUserExtraInfoRequest) returns (Empty);
 }
 
 message UserRequest {
@@ -22,15 +26,47 @@ message RegisterResponse {
   string user_name = 2;
 }
 
-message LoginRequest {
+message LoginWithEmailRequest {
   string email = 1;
   string password = 2;
 }
 
-message LoginResponse {
+message LoginWithEmailResponse {
   string id = 1;
   string token = 2;
 }
+
+message LoginWithPhoneRequest {
+  string phone = 1;
+  string country_code = 2;
+  string code = 3;
+}
+
+message LoginWithPhoneResponse {
+  string user_id = 1;
+  string token = 2; // 登录token, 如果没有设置密码或者没有公司名，返回空
+  string user_name = 3; // 手机注册时，手机号为用户名
+  bool has_password = 4; // 是否有密码
+  string company_name = 5; // 公司名称
+  bool is_first_login = 6; // 是否第一次登录
+}
+
+message LoginWithUserNameRequest {
+  string user_name = 1;
+  string password = 2;
+}
+
+message LoginWithUserNameResponse {
+  string user_id = 1;
+  string token = 2; // 登录token, 如果没有设置密码或者没有公司名，返回空
+  string user_name = 3; // 手机注册时，手机号为用户名
+  bool has_password = 4; // 是否有密码
+  string company_name = 5; // 公司名称
+  bool is_first_login = 6; // 是否第一次登录
+}
+
+
+
 
 message GetUserRequest {
   string id = 1;
@@ -47,4 +83,16 @@ message Empty {}
 message SendSMSCodeRequest {
     string phone_number = 1; // 手机号 8613211112222
     int32 message_type = 2; // 1: 验证码
+}
+
+message InitUserExtraInfoRequest {
+  string user_id = 1;           // user ID to specify which user to update
+  string company_name = 2;     
+  string real_name = 3;        
+  string job = 4;              
+}
+
+message SetInitPasswordRequest {
+  string user_id = 1;           // user ID to specify which user's password to reset
+  string password = 2;     // the new password user wants to set
 }
