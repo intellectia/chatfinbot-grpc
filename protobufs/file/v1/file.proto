@@ -6,15 +6,47 @@ option go_package = ".;filepb";
 
 service FileService {
   rpc UploadFile(UploadRequest) returns (UploadResponse);
+  rpc DeleteFile(DeleteFileRequest) returns (Empty);
+  rpc UpdateFile(UpdateFileRequest) returns (Empty);
+  rpc GetFileList(GetFileListRequest) returns (GetFileListResponse);
+}
+
+message DeleteFileRequest {
+    string id = 1;  // or filename, based on how you identify a unique file
+}
+
+message UpdateFileRequest {
+    string id = 1;          // Unique identifier for the file you want to update
+    string file_name = 2;   // New filename (optional, if you want to allow renaming)
 }
 
 message UploadRequest {
   bytes file_content = 1;
-  string filename = 2;
+  string file_name = 2;
 }
+
+message GetFileListRequest {}
 
 message UploadResponse {
   string hash_value = 1;
   string s3_path = 2;
   string file_name = 3;
+  string id = 4;
+  string file_type = 5;
+  int64  created_at = 6;
+  int64  updated_at = 7;
+}
+
+message Empty {}
+
+message FileListItem {
+  string id = 1;
+  string file_name = 2;
+  string hash_value = 3;
+  string s3_path = 4;
+  string file_type = 5;
+}
+
+message GetFileListResponse {
+  repeated FileListItem files = 1;  // A list of files
 }
