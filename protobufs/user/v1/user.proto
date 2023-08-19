@@ -12,7 +12,7 @@ service UserService {
   rpc SendSMSCode(SendSMSCodeRequest) returns (Empty);
   rpc GetUser(GetUserRequest) returns (UserResponse);
   rpc SetInitPassword(SetInitPasswordRequest) returns (Empty); // set original password
-  rpc InitUserExtraInfo(InitUserExtraInfoRequest) returns (Empty);
+  rpc InitUserExtraInfo(InitUserExtraInfoRequest) returns (InitUserExtraInfoResponse);
 }
 
 message UserRequest {
@@ -49,6 +49,7 @@ message LoginWithPhoneResponse {
   bool has_password = 4; // 是否有密码
   string company_name = 5; // 公司名称
   bool is_first_login = 6; // 是否第一次登录
+  string temp_token = 7; // 临时token，用于初始化
 }
 
 message LoginWithUserNameRequest {
@@ -64,8 +65,6 @@ message LoginWithUserNameResponse {
   string company_name = 5; // 公司名称
   bool is_first_login = 6; // 是否第一次登录
 }
-
-
 
 
 message GetUserRequest {
@@ -89,10 +88,17 @@ message InitUserExtraInfoRequest {
   string user_id = 1;           // user ID to specify which user to update
   string company_name = 2;     
   string real_name = 3;        
-  string job = 4;              
+  string job = 4;
+  string temp_token = 5; // 临时token，用于额外信息            
+}
+
+message InitUserExtraInfoResponse {
+  string user_id = 1;           // user ID to specify which user to update 
+  string token = 2;             // 登录token        
 }
 
 message SetInitPasswordRequest {
   string user_id = 1;           // user ID to specify which user's password to reset
   string password = 2;     // the new password user wants to set
+  string temp_token = 5; // 临时token，用于设置密码
 }
