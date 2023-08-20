@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ChatServiceClient interface {
-	GiveFeedback(ctx context.Context, in *Feedback, opts ...grpc.CallOption) (*FeedbackResponse, error)
+	GiveFeedback(ctx context.Context, in *Feedback, opts ...grpc.CallOption) (*Empty, error)
 	GetFeedbackList(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetFeedbackListResponse, error)
 	// New RPC methods for managing sessions
 	CreateSession(ctx context.Context, in *Session, opts ...grpc.CallOption) (*SessionResponse, error)
@@ -46,8 +46,8 @@ func NewChatServiceClient(cc grpc.ClientConnInterface) ChatServiceClient {
 	return &chatServiceClient{cc}
 }
 
-func (c *chatServiceClient) GiveFeedback(ctx context.Context, in *Feedback, opts ...grpc.CallOption) (*FeedbackResponse, error) {
-	out := new(FeedbackResponse)
+func (c *chatServiceClient) GiveFeedback(ctx context.Context, in *Feedback, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
 	err := c.cc.Invoke(ctx, "/chatfinbot.chat.v1.ChatService/GiveFeedback", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -158,7 +158,7 @@ func (c *chatServiceClient) GetCollectionByID(ctx context.Context, in *Collectio
 // All implementations must embed UnimplementedChatServiceServer
 // for forward compatibility
 type ChatServiceServer interface {
-	GiveFeedback(context.Context, *Feedback) (*FeedbackResponse, error)
+	GiveFeedback(context.Context, *Feedback) (*Empty, error)
 	GetFeedbackList(context.Context, *Empty) (*GetFeedbackListResponse, error)
 	// New RPC methods for managing sessions
 	CreateSession(context.Context, *Session) (*SessionResponse, error)
@@ -179,7 +179,7 @@ type ChatServiceServer interface {
 type UnimplementedChatServiceServer struct {
 }
 
-func (UnimplementedChatServiceServer) GiveFeedback(context.Context, *Feedback) (*FeedbackResponse, error) {
+func (UnimplementedChatServiceServer) GiveFeedback(context.Context, *Feedback) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GiveFeedback not implemented")
 }
 func (UnimplementedChatServiceServer) GetFeedbackList(context.Context, *Empty) (*GetFeedbackListResponse, error) {

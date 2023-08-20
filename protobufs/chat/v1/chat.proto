@@ -12,8 +12,7 @@ message Message {
 
 message Feedback {
   int64 message_id = 1;
-  string user_id = 2;
-  int32 score = 3;
+  int32 rate_score = 3;
   bool is_rated = 4;
 }
 
@@ -88,7 +87,7 @@ message CollectionResponse {
 
 
 service ChatService {
-  rpc GiveFeedback(Feedback) returns (FeedbackResponse);
+  rpc GiveFeedback(Feedback) returns (Empty);
   rpc GetFeedbackList(Empty) returns (GetFeedbackListResponse);
 
 
