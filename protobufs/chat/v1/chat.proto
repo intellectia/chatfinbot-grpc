@@ -84,6 +84,24 @@ message CollectionResponse {
     Collection collection = 1;
 }
 
+message GetChatHistoryReq {
+    string session_id = 1;
+    uint32 limit = 2;
+}
+
+message GetChatHistoryRsp {
+    repeated ChatHistory history = 1;
+}
+
+message ChatHistory {
+    string role = 1;
+    string name = 2;
+    string message = 3;
+    int64 message_id = 4;
+    bool is_rated = 5;
+    int32 rate_score = 6;
+
+}
 
 
 service ChatService {
@@ -104,6 +122,9 @@ service ChatService {
   rpc UpdateCollection (Collection) returns (CollectionResponse);
   rpc DeleteCollection (Collection) returns (Empty);
   rpc GetCollectionByID (Collection) returns (CollectionResponse);
+  
+  // New RPC methods for managing chat
+  rpc GetChatHistory (GetChatHistoryReq) returns (GetChatHistoryRsp);
 
 }
 
