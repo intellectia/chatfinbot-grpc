@@ -100,6 +100,20 @@ message ChatHistory {
     int64 message_id = 4;
     bool is_rated = 5;
     int32 rate_score = 6;
+    ChatHistoryAdditionalData additional_data = 7;
+}
+
+message ChatHistoryAdditionalData {
+    repeated ChatHistoryReferences references = 1;
+    ChatHistoryPlotlyData plotly_data = 2;
+}
+
+message ChatHistoryReferences {
+    string doc_id = 1; 
+    repeated string val = 2;
+}
+
+message ChatHistoryPlotlyData {
 
 }
 
