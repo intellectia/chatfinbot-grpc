@@ -47,6 +47,7 @@ message FileListItem {
   string file_type = 5;
   int64  created_at = 6;
   int64  updated_at = 7;
+  bool   is_collected = 8;
 }
 
 message GetFileListResponse {

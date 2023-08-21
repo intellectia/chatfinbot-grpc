@@ -35,6 +35,7 @@ message Session {
   string session_id = 6;
   int32  model_type = 7;
   SessionData session_data = 8;
+  bool is_collected = 9;
 }
 
 
@@ -58,8 +59,8 @@ message GetSessionListResponse {
 
 
 message Source {
-    string type = 1;      // Type of the source
-    string source_id = 2;  // URL or unique identifier of the source
+    string source_id = 1;  // URL or unique identifier of the source
+    string company_code = 2; // Company code
 }
 
 message Collection {
@@ -68,8 +69,13 @@ message Collection {
     string title = 3;
     int64 created_at = 4;  // Using int64 for date representation
     int64 updated_at = 5;  // Using int64 for date representation
-    int64 deleted_at = 6;  // Using int64 for date representation
-    Source source = 7;     // Embedded source message
+    // Source source = 6;     // Embedded source message
+    string source_id = 6;  // Source ID
+    string type = 7;       // session, file, public_file
+}
+
+message ListCollectionsRequest {
+  string type = 1;
 }
 
 message ListCollectionsResponse {
@@ -82,6 +88,15 @@ message CollectionRequest {
 
 message CollectionResponse {
     Collection collection = 1;
+}
+
+message AreSourcesCollectedRequest {
+    string type = 1;
+    repeated string source_ids = 2;  // List of source IDs
+}
+
+message AreSourcesCollectedResponse {
+    map<string, bool> sources_status = 1;  // Map of source IDs to boolean values
 }
 
 
@@ -99,11 +114,11 @@ service ChatService {
   rpc GetSessionList(Empty) returns (GetSessionListResponse);
 
    // New RPC methods for managing collections
-  rpc ListCollections (Empty) returns (ListCollectionsResponse);
+  rpc ListCollections (ListCollectionsRequest) returns (ListCollectionsResponse);
   rpc CreateCollection (Collection) returns (CollectionResponse);
   rpc UpdateCollection (Collection) returns (CollectionResponse);
   rpc DeleteCollection (Collection) returns (Empty);
   rpc GetCollectionByID (Collection) returns (CollectionResponse);
-
+  rpc AreSourcesCollected (AreSourcesCollectedRequest) returns (AreSourcesCollectedResponse);
 }
 

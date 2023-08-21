@@ -31,11 +31,12 @@ type ChatServiceClient interface {
 	GetSessionByID(ctx context.Context, in *Session, opts ...grpc.CallOption) (*SessionResponse, error)
 	GetSessionList(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetSessionListResponse, error)
 	// New RPC methods for managing collections
-	ListCollections(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ListCollectionsResponse, error)
+	ListCollections(ctx context.Context, in *ListCollectionsRequest, opts ...grpc.CallOption) (*ListCollectionsResponse, error)
 	CreateCollection(ctx context.Context, in *Collection, opts ...grpc.CallOption) (*CollectionResponse, error)
 	UpdateCollection(ctx context.Context, in *Collection, opts ...grpc.CallOption) (*CollectionResponse, error)
 	DeleteCollection(ctx context.Context, in *Collection, opts ...grpc.CallOption) (*Empty, error)
 	GetCollectionByID(ctx context.Context, in *Collection, opts ...grpc.CallOption) (*CollectionResponse, error)
+	AreSourcesCollected(ctx context.Context, in *AreSourcesCollectedRequest, opts ...grpc.CallOption) (*AreSourcesCollectedResponse, error)
 }
 
 type chatServiceClient struct {
@@ -109,7 +110,7 @@ func (c *chatServiceClient) GetSessionList(ctx context.Context, in *Empty, opts 
 	return out, nil
 }
 
-func (c *chatServiceClient) ListCollections(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ListCollectionsResponse, error) {
+func (c *chatServiceClient) ListCollections(ctx context.Context, in *ListCollectionsRequest, opts ...grpc.CallOption) (*ListCollectionsResponse, error) {
 	out := new(ListCollectionsResponse)
 	err := c.cc.Invoke(ctx, "/chatfinbot.chat.v1.ChatService/ListCollections", in, out, opts...)
 	if err != nil {
@@ -154,6 +155,15 @@ func (c *chatServiceClient) GetCollectionByID(ctx context.Context, in *Collectio
 	return out, nil
 }
 
+func (c *chatServiceClient) AreSourcesCollected(ctx context.Context, in *AreSourcesCollectedRequest, opts ...grpc.CallOption) (*AreSourcesCollectedResponse, error) {
+	out := new(AreSourcesCollectedResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.chat.v1.ChatService/AreSourcesCollected", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ChatServiceServer is the server API for ChatService service.
 // All implementations must embed UnimplementedChatServiceServer
 // for forward compatibility
@@ -167,11 +177,12 @@ type ChatServiceServer interface {
 	GetSessionByID(context.Context, *Session) (*SessionResponse, error)
 	GetSessionList(context.Context, *Empty) (*GetSessionListResponse, error)
 	// New RPC methods for managing collections
-	ListCollections(context.Context, *Empty) (*ListCollectionsResponse, error)
+	ListCollections(context.Context, *ListCollectionsRequest) (*ListCollectionsResponse, error)
 	CreateCollection(context.Context, *Collection) (*CollectionResponse, error)
 	UpdateCollection(context.Context, *Collection) (*CollectionResponse, error)
 	DeleteCollection(context.Context, *Collection) (*Empty, error)
 	GetCollectionByID(context.Context, *Collection) (*CollectionResponse, error)
+	AreSourcesCollected(context.Context, *AreSourcesCollectedRequest) (*AreSourcesCollectedResponse, error)
 	mustEmbedUnimplementedChatServiceServer()
 }
 
@@ -200,7 +211,7 @@ func (UnimplementedChatServiceServer) GetSessionByID(context.Context, *Session) 
 func (UnimplementedChatServiceServer) GetSessionList(context.Context, *Empty) (*GetSessionListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSessionList not implemented")
 }
-func (UnimplementedChatServiceServer) ListCollections(context.Context, *Empty) (*ListCollectionsResponse, error) {
+func (UnimplementedChatServiceServer) ListCollections(context.Context, *ListCollectionsRequest) (*ListCollectionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCollections not implemented")
 }
 func (UnimplementedChatServiceServer) CreateCollection(context.Context, *Collection) (*CollectionResponse, error) {
@@ -214,6 +225,9 @@ func (UnimplementedChatServiceServer) DeleteCollection(context.Context, *Collect
 }
 func (UnimplementedChatServiceServer) GetCollectionByID(context.Context, *Collection) (*CollectionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCollectionByID not implemented")
+}
+func (UnimplementedChatServiceServer) AreSourcesCollected(context.Context, *AreSourcesCollectedRequest) (*AreSourcesCollectedResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AreSourcesCollected not implemented")
 }
 func (UnimplementedChatServiceServer) mustEmbedUnimplementedChatServiceServer() {}
 
@@ -355,7 +369,7 @@ func _ChatService_GetSessionList_Handler(srv interface{}, ctx context.Context, d
 }
 
 func _ChatService_ListCollections_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Empty)
+	in := new(ListCollectionsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -367,7 +381,7 @@ func _ChatService_ListCollections_Handler(srv interface{}, ctx context.Context, 
 		FullMethod: "/chatfinbot.chat.v1.ChatService/ListCollections",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).ListCollections(ctx, req.(*Empty))
+		return srv.(ChatServiceServer).ListCollections(ctx, req.(*ListCollectionsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -444,6 +458,24 @@ func _ChatService_GetCollectionByID_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ChatService_AreSourcesCollected_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AreSourcesCollectedRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).AreSourcesCollected(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.chat.v1.ChatService/AreSourcesCollected",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).AreSourcesCollected(ctx, req.(*AreSourcesCollectedRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ChatService_ServiceDesc is the grpc.ServiceDesc for ChatService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -498,6 +530,10 @@ var ChatService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCollectionByID",
 			Handler:    _ChatService_GetCollectionByID_Handler,
+		},
+		{
+			MethodName: "AreSourcesCollected",
+			Handler:    _ChatService_AreSourcesCollected_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
