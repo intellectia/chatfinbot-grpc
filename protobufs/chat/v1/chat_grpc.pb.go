@@ -37,6 +37,8 @@ type ChatServiceClient interface {
 	DeleteCollection(ctx context.Context, in *Collection, opts ...grpc.CallOption) (*Empty, error)
 	GetCollectionByID(ctx context.Context, in *Collection, opts ...grpc.CallOption) (*CollectionResponse, error)
 	AreSourcesCollected(ctx context.Context, in *AreSourcesCollectedRequest, opts ...grpc.CallOption) (*AreSourcesCollectedResponse, error)
+	// New RPC methods for managing chat
+	GetChatHistory(ctx context.Context, in *GetChatHistoryReq, opts ...grpc.CallOption) (*GetChatHistoryRsp, error)
 }
 
 type chatServiceClient struct {
@@ -164,6 +166,15 @@ func (c *chatServiceClient) AreSourcesCollected(ctx context.Context, in *AreSour
 	return out, nil
 }
 
+func (c *chatServiceClient) GetChatHistory(ctx context.Context, in *GetChatHistoryReq, opts ...grpc.CallOption) (*GetChatHistoryRsp, error) {
+	out := new(GetChatHistoryRsp)
+	err := c.cc.Invoke(ctx, "/chatfinbot.chat.v1.ChatService/GetChatHistory", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ChatServiceServer is the server API for ChatService service.
 // All implementations must embed UnimplementedChatServiceServer
 // for forward compatibility
@@ -183,6 +194,8 @@ type ChatServiceServer interface {
 	DeleteCollection(context.Context, *Collection) (*Empty, error)
 	GetCollectionByID(context.Context, *Collection) (*CollectionResponse, error)
 	AreSourcesCollected(context.Context, *AreSourcesCollectedRequest) (*AreSourcesCollectedResponse, error)
+	// New RPC methods for managing chat
+	GetChatHistory(context.Context, *GetChatHistoryReq) (*GetChatHistoryRsp, error)
 	mustEmbedUnimplementedChatServiceServer()
 }
 
@@ -228,6 +241,9 @@ func (UnimplementedChatServiceServer) GetCollectionByID(context.Context, *Collec
 }
 func (UnimplementedChatServiceServer) AreSourcesCollected(context.Context, *AreSourcesCollectedRequest) (*AreSourcesCollectedResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AreSourcesCollected not implemented")
+}
+func (UnimplementedChatServiceServer) GetChatHistory(context.Context, *GetChatHistoryReq) (*GetChatHistoryRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetChatHistory not implemented")
 }
 func (UnimplementedChatServiceServer) mustEmbedUnimplementedChatServiceServer() {}
 
@@ -476,6 +492,24 @@ func _ChatService_AreSourcesCollected_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ChatService_GetChatHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetChatHistoryReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).GetChatHistory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.chat.v1.ChatService/GetChatHistory",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).GetChatHistory(ctx, req.(*GetChatHistoryReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ChatService_ServiceDesc is the grpc.ServiceDesc for ChatService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -534,6 +568,10 @@ var ChatService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AreSourcesCollected",
 			Handler:    _ChatService_AreSourcesCollected_Handler,
+		},
+		{
+			MethodName: "GetChatHistory",
+			Handler:    _ChatService_GetChatHistory_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
