@@ -9,6 +9,7 @@ service FileService {
   rpc DeleteFile(DeleteFileRequest) returns (Empty);
   rpc UpdateFile(UpdateFileRequest) returns (Empty);
   rpc GetFileList(GetFileListRequest) returns (GetFileListResponse);
+  rpc GetFileInfo(GetFileInfoRequest) returns (GetFileInfoResponse);
 }
 
 message DeleteFileRequest {
@@ -35,6 +36,7 @@ message UploadResponse {
   string file_type = 5;
   int64  created_at = 6;
   int64  updated_at = 7;
+  string bucket_name = 8;
 }
 
 message Empty {}
@@ -53,4 +55,19 @@ message FileListItem {
 
 message GetFileListResponse {
   repeated FileListItem files = 1;  // A list of files
+}
+
+// Added these
+message GetFileInfoRequest {
+  string doc_id = 1;  // Unique identifier for the file you want info on
+}
+
+message GetFileInfoResponse {
+  string doc_id = 1;
+  string file_name = 2;
+  string hash_value = 3;
+  string s3_download_url = 4;
+  string file_type = 5;
+  int64  created_at = 6;
+  int64  updated_at = 7;
 }
