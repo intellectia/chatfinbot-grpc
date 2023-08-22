@@ -26,6 +26,7 @@ type FileServiceClient interface {
 	DeleteFile(ctx context.Context, in *DeleteFileRequest, opts ...grpc.CallOption) (*Empty, error)
 	UpdateFile(ctx context.Context, in *UpdateFileRequest, opts ...grpc.CallOption) (*Empty, error)
 	GetFileList(ctx context.Context, in *GetFileListRequest, opts ...grpc.CallOption) (*GetFileListResponse, error)
+	GetFileInfo(ctx context.Context, in *GetFileInfoRequest, opts ...grpc.CallOption) (*GetFileInfoResponse, error)
 }
 
 type fileServiceClient struct {
@@ -72,6 +73,15 @@ func (c *fileServiceClient) GetFileList(ctx context.Context, in *GetFileListRequ
 	return out, nil
 }
 
+func (c *fileServiceClient) GetFileInfo(ctx context.Context, in *GetFileInfoRequest, opts ...grpc.CallOption) (*GetFileInfoResponse, error) {
+	out := new(GetFileInfoResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.file.v1.FileService/GetFileInfo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // FileServiceServer is the server API for FileService service.
 // All implementations must embed UnimplementedFileServiceServer
 // for forward compatibility
@@ -80,6 +90,7 @@ type FileServiceServer interface {
 	DeleteFile(context.Context, *DeleteFileRequest) (*Empty, error)
 	UpdateFile(context.Context, *UpdateFileRequest) (*Empty, error)
 	GetFileList(context.Context, *GetFileListRequest) (*GetFileListResponse, error)
+	GetFileInfo(context.Context, *GetFileInfoRequest) (*GetFileInfoResponse, error)
 	mustEmbedUnimplementedFileServiceServer()
 }
 
@@ -98,6 +109,9 @@ func (UnimplementedFileServiceServer) UpdateFile(context.Context, *UpdateFileReq
 }
 func (UnimplementedFileServiceServer) GetFileList(context.Context, *GetFileListRequest) (*GetFileListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFileList not implemented")
+}
+func (UnimplementedFileServiceServer) GetFileInfo(context.Context, *GetFileInfoRequest) (*GetFileInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFileInfo not implemented")
 }
 func (UnimplementedFileServiceServer) mustEmbedUnimplementedFileServiceServer() {}
 
@@ -184,6 +198,24 @@ func _FileService_GetFileList_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _FileService_GetFileInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFileInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FileServiceServer).GetFileInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.file.v1.FileService/GetFileInfo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FileServiceServer).GetFileInfo(ctx, req.(*GetFileInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // FileService_ServiceDesc is the grpc.ServiceDesc for FileService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -206,6 +238,10 @@ var FileService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetFileList",
 			Handler:    _FileService_GetFileList_Handler,
+		},
+		{
+			MethodName: "GetFileInfo",
+			Handler:    _FileService_GetFileInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
