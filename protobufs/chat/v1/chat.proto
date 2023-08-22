@@ -58,53 +58,6 @@ message GetSessionListResponse {
   repeated Session sessions = 1;
 }
 
-
-message Source {
-    string source_id = 1;  // URL or unique identifier of the source
-    string company_code = 2; // Company code
-}
-
-message Collection {
-    int64 id = 1;
-    string user_id = 2;
-    string title = 3;
-    int64 created_at = 4;  // Using int64 for date representation
-    int64 updated_at = 5;  // Using int64 for date representation
-    // Source source = 6;     // Embedded source message
-    string source_id = 6;  // Source ID
-    string type = 7;       // session, file, public_file
-}
-
-message ListCollectionsRequest {
-  string type = 1;
-}
-
-message ListCollectionsResponse {
-    repeated Collection collections = 1;
-}
-
-message CollectionRequest {
-    Collection collection = 1;
-}
-
-message CollectionResponse {
-    Collection collection = 1;
-}
-
-message AreSourcesCollectedRequest {
-    string type = 1;
-    repeated string source_ids = 2;  // List of source IDs
-}
-
-message SourceStatus {
-    bool is_collected = 1;
-    int64 collection_id = 2; // or int64 if your IDs are large
-}
-
-message AreSourcesCollectedResponse {
-    map<string, SourceStatus> sources_status = 1; // Map of source IDs to SourceStatus messages
-}
-
 message GetChatHistoryReq {
     string session_id = 1;
     uint32 limit = 2;
@@ -150,14 +103,6 @@ service ChatService {
   rpc DeleteSession(Session) returns (Empty);
   rpc GetSessionByID(Session) returns (SessionResponse);
   rpc GetSessionList(Empty) returns (GetSessionListResponse);
-
-   // New RPC methods for managing collections
-  rpc ListCollections (ListCollectionsRequest) returns (ListCollectionsResponse);
-  rpc CreateCollection (Collection) returns (CollectionResponse);
-  rpc UpdateCollection (Collection) returns (CollectionResponse);
-  rpc DeleteCollection (Collection) returns (Empty);
-  rpc GetCollectionByID (Collection) returns (CollectionResponse);
-  rpc AreSourcesCollected (AreSourcesCollectedRequest) returns (AreSourcesCollectedResponse);
   
   // New RPC methods for managing chat
   rpc GetChatHistory (GetChatHistoryReq) returns (GetChatHistoryRsp);
