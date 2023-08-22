@@ -36,6 +36,7 @@ message Session {
   int32  model_type = 7;
   SessionData session_data = 8;
   bool is_collected = 9;
+  int64 collection_id = 10;
 }
 
 
@@ -95,8 +96,13 @@ message AreSourcesCollectedRequest {
     repeated string source_ids = 2;  // List of source IDs
 }
 
+message SourceStatus {
+    bool is_collected = 1;
+    int64 collection_id = 2; // or int64 if your IDs are large
+}
+
 message AreSourcesCollectedResponse {
-    map<string, bool> sources_status = 1;  // Map of source IDs to boolean values
+    map<string, SourceStatus> sources_status = 1; // Map of source IDs to SourceStatus messages
 }
 
 message GetChatHistoryReq {
