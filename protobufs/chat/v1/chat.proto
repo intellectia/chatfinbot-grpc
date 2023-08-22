@@ -126,7 +126,7 @@ message ChatHistory {
 
 message ChatHistoryAdditionalData {
     repeated ChatHistoryReferences references = 1;
-    ChatHistoryPlotlyData plotly_data = 2;
+    string plotly_data = 2;
 }
 
 message ChatHistoryReferences {
@@ -134,9 +134,6 @@ message ChatHistoryReferences {
     repeated string val = 2;
 }
 
-message ChatHistoryPlotlyData {
-
-}
 
 
 service ChatService {
