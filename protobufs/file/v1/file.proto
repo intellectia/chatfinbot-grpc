@@ -10,6 +10,8 @@ service FileService {
   rpc UpdateFile(UpdateFileRequest) returns (Empty);
   rpc GetFileList(GetFileListRequest) returns (GetFileListResponse);
   rpc GetFileInfo(GetFileInfoRequest) returns (GetFileInfoResponse);
+  rpc GetPublicS3DownloadURL(GetPublicS3DownloadURLRequest) returns (GetS3DownloadURLResponse);
+  rpc GetPrivateS3DownloadURL(GetPrivateS3DownloadURLRequest) returns (GetS3DownloadURLResponse);
 }
 
 message DeleteFileRequest {
@@ -71,4 +73,17 @@ message GetFileInfoResponse {
   string file_type = 5;
   int64  created_at = 6;
   int64  updated_at = 7;
+}
+
+message GetPublicS3DownloadURLRequest {
+    repeated string s3_paths = 1;      // The S3 path of the file.
+}
+
+message GetPrivateS3DownloadURLRequest {
+    repeated string doc_ids = 1;      // The S3 path of the file.
+}
+
+
+message GetS3DownloadURLResponse {
+    repeated string download_urls = 1;  // List of download URLs.
 }
