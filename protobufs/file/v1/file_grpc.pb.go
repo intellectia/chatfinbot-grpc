@@ -27,6 +27,8 @@ type FileServiceClient interface {
 	UpdateFile(ctx context.Context, in *UpdateFileRequest, opts ...grpc.CallOption) (*Empty, error)
 	GetFileList(ctx context.Context, in *GetFileListRequest, opts ...grpc.CallOption) (*GetFileListResponse, error)
 	GetFileInfo(ctx context.Context, in *GetFileInfoRequest, opts ...grpc.CallOption) (*GetFileInfoResponse, error)
+	GetPublicS3DownloadURL(ctx context.Context, in *GetPublicS3DownloadURLRequest, opts ...grpc.CallOption) (*GetS3DownloadURLResponse, error)
+	GetPrivateS3DownloadURL(ctx context.Context, in *GetPrivateS3DownloadURLRequest, opts ...grpc.CallOption) (*GetS3DownloadURLResponse, error)
 }
 
 type fileServiceClient struct {
@@ -82,6 +84,24 @@ func (c *fileServiceClient) GetFileInfo(ctx context.Context, in *GetFileInfoRequ
 	return out, nil
 }
 
+func (c *fileServiceClient) GetPublicS3DownloadURL(ctx context.Context, in *GetPublicS3DownloadURLRequest, opts ...grpc.CallOption) (*GetS3DownloadURLResponse, error) {
+	out := new(GetS3DownloadURLResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.file.v1.FileService/GetPublicS3DownloadURL", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fileServiceClient) GetPrivateS3DownloadURL(ctx context.Context, in *GetPrivateS3DownloadURLRequest, opts ...grpc.CallOption) (*GetS3DownloadURLResponse, error) {
+	out := new(GetS3DownloadURLResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.file.v1.FileService/GetPrivateS3DownloadURL", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // FileServiceServer is the server API for FileService service.
 // All implementations must embed UnimplementedFileServiceServer
 // for forward compatibility
@@ -91,6 +111,8 @@ type FileServiceServer interface {
 	UpdateFile(context.Context, *UpdateFileRequest) (*Empty, error)
 	GetFileList(context.Context, *GetFileListRequest) (*GetFileListResponse, error)
 	GetFileInfo(context.Context, *GetFileInfoRequest) (*GetFileInfoResponse, error)
+	GetPublicS3DownloadURL(context.Context, *GetPublicS3DownloadURLRequest) (*GetS3DownloadURLResponse, error)
+	GetPrivateS3DownloadURL(context.Context, *GetPrivateS3DownloadURLRequest) (*GetS3DownloadURLResponse, error)
 	mustEmbedUnimplementedFileServiceServer()
 }
 
@@ -112,6 +134,12 @@ func (UnimplementedFileServiceServer) GetFileList(context.Context, *GetFileListR
 }
 func (UnimplementedFileServiceServer) GetFileInfo(context.Context, *GetFileInfoRequest) (*GetFileInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFileInfo not implemented")
+}
+func (UnimplementedFileServiceServer) GetPublicS3DownloadURL(context.Context, *GetPublicS3DownloadURLRequest) (*GetS3DownloadURLResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPublicS3DownloadURL not implemented")
+}
+func (UnimplementedFileServiceServer) GetPrivateS3DownloadURL(context.Context, *GetPrivateS3DownloadURLRequest) (*GetS3DownloadURLResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPrivateS3DownloadURL not implemented")
 }
 func (UnimplementedFileServiceServer) mustEmbedUnimplementedFileServiceServer() {}
 
@@ -216,6 +244,42 @@ func _FileService_GetFileInfo_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _FileService_GetPublicS3DownloadURL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPublicS3DownloadURLRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FileServiceServer).GetPublicS3DownloadURL(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.file.v1.FileService/GetPublicS3DownloadURL",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FileServiceServer).GetPublicS3DownloadURL(ctx, req.(*GetPublicS3DownloadURLRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FileService_GetPrivateS3DownloadURL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPrivateS3DownloadURLRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FileServiceServer).GetPrivateS3DownloadURL(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.file.v1.FileService/GetPrivateS3DownloadURL",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FileServiceServer).GetPrivateS3DownloadURL(ctx, req.(*GetPrivateS3DownloadURLRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // FileService_ServiceDesc is the grpc.ServiceDesc for FileService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +306,14 @@ var FileService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetFileInfo",
 			Handler:    _FileService_GetFileInfo_Handler,
+		},
+		{
+			MethodName: "GetPublicS3DownloadURL",
+			Handler:    _FileService_GetPublicS3DownloadURL_Handler,
+		},
+		{
+			MethodName: "GetPrivateS3DownloadURL",
+			Handler:    _FileService_GetPrivateS3DownloadURL_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
