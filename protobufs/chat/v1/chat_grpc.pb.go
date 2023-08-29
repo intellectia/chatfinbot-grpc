@@ -27,6 +27,7 @@ const (
 	ChatService_GetSessionByID_FullMethodName  = "/chatfinbot.chat.v1.ChatService/GetSessionByID"
 	ChatService_GetSessionList_FullMethodName  = "/chatfinbot.chat.v1.ChatService/GetSessionList"
 	ChatService_GetChatHistory_FullMethodName  = "/chatfinbot.chat.v1.ChatService/GetChatHistory"
+	ChatService_IntelChat_FullMethodName       = "/chatfinbot.chat.v1.ChatService/IntelChat"
 )
 
 // ChatServiceClient is the client API for ChatService service.
@@ -43,6 +44,7 @@ type ChatServiceClient interface {
 	GetSessionList(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetSessionListResponse, error)
 	// New RPC methods for managing chat
 	GetChatHistory(ctx context.Context, in *GetChatHistoryReq, opts ...grpc.CallOption) (*GetChatHistoryRsp, error)
+	IntelChat(ctx context.Context, in *IntelChatReq, opts ...grpc.CallOption) (*IntelChatRsp, error)
 }
 
 type chatServiceClient struct {
@@ -125,6 +127,15 @@ func (c *chatServiceClient) GetChatHistory(ctx context.Context, in *GetChatHisto
 	return out, nil
 }
 
+func (c *chatServiceClient) IntelChat(ctx context.Context, in *IntelChatReq, opts ...grpc.CallOption) (*IntelChatRsp, error) {
+	out := new(IntelChatRsp)
+	err := c.cc.Invoke(ctx, ChatService_IntelChat_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ChatServiceServer is the server API for ChatService service.
 // All implementations must embed UnimplementedChatServiceServer
 // for forward compatibility
@@ -139,6 +150,7 @@ type ChatServiceServer interface {
 	GetSessionList(context.Context, *Empty) (*GetSessionListResponse, error)
 	// New RPC methods for managing chat
 	GetChatHistory(context.Context, *GetChatHistoryReq) (*GetChatHistoryRsp, error)
+	IntelChat(context.Context, *IntelChatReq) (*IntelChatRsp, error)
 	mustEmbedUnimplementedChatServiceServer()
 }
 
@@ -169,6 +181,9 @@ func (UnimplementedChatServiceServer) GetSessionList(context.Context, *Empty) (*
 }
 func (UnimplementedChatServiceServer) GetChatHistory(context.Context, *GetChatHistoryReq) (*GetChatHistoryRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetChatHistory not implemented")
+}
+func (UnimplementedChatServiceServer) IntelChat(context.Context, *IntelChatReq) (*IntelChatRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IntelChat not implemented")
 }
 func (UnimplementedChatServiceServer) mustEmbedUnimplementedChatServiceServer() {}
 
@@ -327,6 +342,24 @@ func _ChatService_GetChatHistory_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ChatService_IntelChat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IntelChatReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).IntelChat(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChatService_IntelChat_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).IntelChat(ctx, req.(*IntelChatReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ChatService_ServiceDesc is the grpc.ServiceDesc for ChatService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -365,6 +398,10 @@ var ChatService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetChatHistory",
 			Handler:    _ChatService_GetChatHistory_Handler,
+		},
+		{
+			MethodName: "IntelChat",
+			Handler:    _ChatService_IntelChat_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

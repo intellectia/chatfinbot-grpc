@@ -75,11 +75,24 @@ message ChatHistory {
     bool is_rated = 5;
     int32 rate_score = 6;
     ChatHistoryAdditionalData additional_data = 7;
+    uint32 chat_type = 8; // 消息类型 0=普通消息 1=公司简介 2=行情指标 3=股东信息 4=高管 5=财务指标 6主营业务 7=员工构成
 }
 
 message ChatHistoryAdditionalData {
     repeated ChatHistoryReferences references = 1;
     string plotly_graph = 2;
+    repeated ChatHistoryDocuments documents = 3;
+}
+
+message ChatHistoryDocuments {
+    string title = 1;   // 标题
+    string file_name = 2; // 文件名
+    string doc_id = 3; // doc id
+    string type = 4;    // 文件类型
+    string s3_bucket = 5; // bucket
+    string s3_path = 6;  // s3路径
+    string language = 7; // 语言
+    int32 total_pages = 8;  // 总的页数
 }
 
 message ChatHistoryReferences {
@@ -87,6 +100,15 @@ message ChatHistoryReferences {
     repeated string val = 2;
 }
 
+message IntelChatReq {
+    string session_id = 1;
+    string message = 2;
+    uint32 chat_type = 3;
+}
+
+message IntelChatRsp {
+    
+}
 
 
 service ChatService {
@@ -103,6 +125,7 @@ service ChatService {
   
   // New RPC methods for managing chat
   rpc GetChatHistory (GetChatHistoryReq) returns (GetChatHistoryRsp);
+  rpc  IntelChat(IntelChatReq) returns (IntelChatRsp);
 
 }
 
