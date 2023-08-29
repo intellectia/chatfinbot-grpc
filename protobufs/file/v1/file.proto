@@ -12,6 +12,7 @@ service FileService {
   rpc GetFileInfo(GetFileInfoRequest) returns (GetFileInfoResponse);
   rpc GetPublicS3DownloadURL(GetPublicS3DownloadURLRequest) returns (GetS3DownloadURLResponse);
   rpc GetPrivateS3DownloadURL(GetPrivateS3DownloadURLRequest) returns (GetS3DownloadURLResponse);
+  rpc GetS3DownloadURL(GetS3DownloadURLReq) returns (GetS3DownloadURLRsp);
 }
 
 message DeleteFileRequest {
@@ -86,4 +87,17 @@ message GetPrivateS3DownloadURLRequest {
 
 message GetS3DownloadURLResponse {
     repeated string download_urls = 1;  // List of download URLs.
+}
+
+message GetS3DownloadURLReq {
+    repeated S3Documents documents = 1;
+}
+
+message S3Documents {
+    string doc_id = 1;
+    string s3_path = 2;
+}
+
+message GetS3DownloadURLRsp {
+    map<string, string> documents = 1;  //
 }

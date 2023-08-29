@@ -86,7 +86,7 @@ message ChatHistoryAdditionalData {
 
 message ChatHistoryDocuments {
     string title = 1;   // 标题
-    string file_name = 2; // 文件名
+    string name = 2; // 文件名
     string doc_id = 3; // doc id
     string type = 4;    // 文件类型
     string s3_bucket = 5; // bucket
