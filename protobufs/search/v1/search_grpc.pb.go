@@ -19,13 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	SearchService_GetCompanyInfo_FullMethodName  = "/chatfinbot.search.v1.SearchService/GetCompanyInfo"
-	SearchService_GetIndicators_FullMethodName   = "/chatfinbot.search.v1.SearchService/GetIndicators"
-	SearchService_GetShareholders_FullMethodName = "/chatfinbot.search.v1.SearchService/GetShareholders"
-	SearchService_GetExecutives_FullMethodName   = "/chatfinbot.search.v1.SearchService/GetExecutives"
-	SearchService_GetStaffInfo_FullMethodName    = "/chatfinbot.search.v1.SearchService/GetStaffInfo"
-	SearchService_GetMBRevenue_FullMethodName    = "/chatfinbot.search.v1.SearchService/GetMBRevenue"
-	SearchService_GetFinancial_FullMethodName    = "/chatfinbot.search.v1.SearchService/GetFinancial"
+	SearchService_GetCompanyInfo_FullMethodName     = "/chatfinbot.search.v1.SearchService/GetCompanyInfo"
+	SearchService_GetIndicators_FullMethodName      = "/chatfinbot.search.v1.SearchService/GetIndicators"
+	SearchService_GetShareholders_FullMethodName    = "/chatfinbot.search.v1.SearchService/GetShareholders"
+	SearchService_GetExecutives_FullMethodName      = "/chatfinbot.search.v1.SearchService/GetExecutives"
+	SearchService_GetStaffInfo_FullMethodName       = "/chatfinbot.search.v1.SearchService/GetStaffInfo"
+	SearchService_GetMBRevenue_FullMethodName       = "/chatfinbot.search.v1.SearchService/GetMBRevenue"
+	SearchService_GetFinancial_FullMethodName       = "/chatfinbot.search.v1.SearchService/GetFinancial"
+	SearchService_SearchCompany_FullMethodName      = "/chatfinbot.search.v1.SearchService/SearchCompany"
+	SearchService_SearchPublicReport_FullMethodName = "/chatfinbot.search.v1.SearchService/SearchPublicReport"
 )
 
 // SearchServiceClient is the client API for SearchService service.
@@ -46,6 +48,10 @@ type SearchServiceClient interface {
 	GetMBRevenue(ctx context.Context, in *GetMBRevenueReq, opts ...grpc.CallOption) (*GetMBRevenueRsp, error)
 	// 获取财务概况
 	GetFinancial(ctx context.Context, in *GetFinancialReq, opts ...grpc.CallOption) (*GetFinancialRsp, error)
+	// 搜索公司
+	SearchCompany(ctx context.Context, in *SearchCompanyReq, opts ...grpc.CallOption) (*SearchCompanyRsp, error)
+	// 搜索公开报告
+	SearchPublicReport(ctx context.Context, in *SearchPublicReportReq, opts ...grpc.CallOption) (*SearchPublicReportRsp, error)
 }
 
 type searchServiceClient struct {
@@ -119,6 +125,24 @@ func (c *searchServiceClient) GetFinancial(ctx context.Context, in *GetFinancial
 	return out, nil
 }
 
+func (c *searchServiceClient) SearchCompany(ctx context.Context, in *SearchCompanyReq, opts ...grpc.CallOption) (*SearchCompanyRsp, error) {
+	out := new(SearchCompanyRsp)
+	err := c.cc.Invoke(ctx, SearchService_SearchCompany_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *searchServiceClient) SearchPublicReport(ctx context.Context, in *SearchPublicReportReq, opts ...grpc.CallOption) (*SearchPublicReportRsp, error) {
+	out := new(SearchPublicReportRsp)
+	err := c.cc.Invoke(ctx, SearchService_SearchPublicReport_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SearchServiceServer is the server API for SearchService service.
 // All implementations must embed UnimplementedSearchServiceServer
 // for forward compatibility
@@ -137,6 +161,10 @@ type SearchServiceServer interface {
 	GetMBRevenue(context.Context, *GetMBRevenueReq) (*GetMBRevenueRsp, error)
 	// 获取财务概况
 	GetFinancial(context.Context, *GetFinancialReq) (*GetFinancialRsp, error)
+	// 搜索公司
+	SearchCompany(context.Context, *SearchCompanyReq) (*SearchCompanyRsp, error)
+	// 搜索公开报告
+	SearchPublicReport(context.Context, *SearchPublicReportReq) (*SearchPublicReportRsp, error)
 	mustEmbedUnimplementedSearchServiceServer()
 }
 
@@ -164,6 +192,12 @@ func (UnimplementedSearchServiceServer) GetMBRevenue(context.Context, *GetMBReve
 }
 func (UnimplementedSearchServiceServer) GetFinancial(context.Context, *GetFinancialReq) (*GetFinancialRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFinancial not implemented")
+}
+func (UnimplementedSearchServiceServer) SearchCompany(context.Context, *SearchCompanyReq) (*SearchCompanyRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchCompany not implemented")
+}
+func (UnimplementedSearchServiceServer) SearchPublicReport(context.Context, *SearchPublicReportReq) (*SearchPublicReportRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchPublicReport not implemented")
 }
 func (UnimplementedSearchServiceServer) mustEmbedUnimplementedSearchServiceServer() {}
 
@@ -304,6 +338,42 @@ func _SearchService_GetFinancial_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SearchService_SearchCompany_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchCompanyReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SearchServiceServer).SearchCompany(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SearchService_SearchCompany_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SearchServiceServer).SearchCompany(ctx, req.(*SearchCompanyReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SearchService_SearchPublicReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchPublicReportReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SearchServiceServer).SearchPublicReport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SearchService_SearchPublicReport_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SearchServiceServer).SearchPublicReport(ctx, req.(*SearchPublicReportReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SearchService_ServiceDesc is the grpc.ServiceDesc for SearchService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -338,6 +408,14 @@ var SearchService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetFinancial",
 			Handler:    _SearchService_GetFinancial_Handler,
+		},
+		{
+			MethodName: "SearchCompany",
+			Handler:    _SearchService_SearchCompany_Handler,
+		},
+		{
+			MethodName: "SearchPublicReport",
+			Handler:    _SearchService_SearchPublicReport_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

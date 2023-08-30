@@ -27,6 +27,10 @@ service SearchService {
     rpc GetMBRevenue(GetMBRevenueReq) returns (GetMBRevenueRsp);
     // 获取财务概况
     rpc GetFinancial(GetFinancialReq) returns (GetFinancialRsp);
+    // 搜索公司
+    rpc SearchCompany(SearchCompanyReq) returns (SearchCompanyRsp);
+    // 搜索公开报告
+    rpc SearchPublicReport(SearchPublicReportReq) returns (SearchPublicReportRsp);
 }
 
 
@@ -288,4 +292,53 @@ message Financial {
     // NPMARGIN 销售毛利率
     // LIBILITYTOASSET 资产负债率
     // SALESCASHINTOOR 销售商品提供劳务收到的现金/营业收入
+}
+
+message SearchCompanyReq {
+    string key = 1;  // 关键字
+}
+
+message SearchCompanyRsp {
+    repeated CompanyData list = 1;
+}
+
+message CompanyData {
+    string code = 1;
+    string company_name = 2;
+    string english_name = 3;
+    string abbreviation = 4;
+    string symbol = 5;
+    string pinyin_abbreviation = 6;
+}
+
+message SearchPublicReportReq {
+    string code = 1;
+    string company_name = 2;
+    string report_type  = 3;
+    int32  past = 4;
+    string since = 5;
+    string till = 6;
+    int32 size = 7;
+    bool return_fulltext = 8;
+}
+
+message SearchPublicReportRsp {
+    repeated PublicReport list = 1;
+}
+
+message PublicReport {
+    string code = 1;
+    string abbreviation = 2;
+    string file_name = 3;
+    string file_type = 4;
+    string s3_path = 5;
+    string file_hash = 6;
+    string description = 7;
+    string report_type = 8;
+    string release_date = 9;
+    int32 year = 10;
+    int32 quarter = 11;
+    string company_code = 12;
+    string company_name = 13;
+    string file_path = 14;
 }
