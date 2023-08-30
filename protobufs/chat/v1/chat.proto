@@ -76,6 +76,7 @@ message ChatHistory {
     int32 rate_score = 6;
     ChatHistoryAdditionalData additional_data = 7;
     uint32 chat_type = 8; // 消息类型 0=普通消息 1=公司简介 2=行情指标 3=股东信息 4=高管 5=财务指标 6主营业务 7=员工构成
+    string params = 9;
 }
 
 message ChatHistoryAdditionalData {
@@ -104,6 +105,7 @@ message IntelChatReq {
     string session_id = 1;
     string message = 2;
     uint32 chat_type = 3;
+    string params = 4;
 }
 
 message IntelChatRsp {
