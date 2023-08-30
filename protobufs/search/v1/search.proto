@@ -123,7 +123,7 @@ message GetShareholdersInfo {
     string hold_name = 1;    // 股东名称 HOLDNAME
     string hold_amt = 2;     // 持股数量 HOLDAMT
     uint32 hold_amt_unit = 3; // 持股数量单位  0=不设置 1=万 2=亿  
-    double hold_pct = 4;  // 持股比例 HOLDPCT
+    string hold_pct = 4;  // 持股比例 HOLDPCT
     uint64 reference = 5;  // 期末参考值
     string hold_change  = 6; // 较上期持股变动数 HOLDCHANGE 
     uint32 change_type = 7; // 1= 新增 2=减少 3=不变
