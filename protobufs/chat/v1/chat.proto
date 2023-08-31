@@ -80,7 +80,7 @@ message ChatHistory {
 }
 
 message ChatHistoryAdditionalData {
-    repeated ChatHistoryReferences references = 1;
+    string references = 1;
     string plotly_graph = 2;
     repeated ChatHistoryDocuments documents = 3;
 }
