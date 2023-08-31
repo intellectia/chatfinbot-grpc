@@ -341,4 +341,5 @@ message PublicReport {
     string company_code = 12;
     string company_name = 13;
     string file_path = 14;
+    string update_date = 15;
 }
