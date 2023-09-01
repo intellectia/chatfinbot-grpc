@@ -14,6 +14,7 @@ enum MsgL2Type {
     MsgL2TypeUnknown = 0; // 未知（不要使用）
     MsgL2TypePing = 1; // ping 消息
     MsgL2TypePong = 2; // pong 消息
+    MsgL2TypeTest = 3; // 测试 后面会废弃
 }
 
 message Msg {
