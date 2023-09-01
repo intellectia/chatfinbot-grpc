@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package chatfinbot.ws.v1;
+
+option go_package = ".;wspb";
+
+enum MsgType {
+    MsgTypeUnknown = 0; // 未知（不要使用）
+    MsgTypeCommon = 1; // 普通消息
+    MsgTypeControl = 2; // 控制消息
+}
+
+enum MsgL2Type {
+    MsgL2TypeUnknown = 0; // 未知（不要使用）
+    MsgL2TypePing = 1; // ping 消息
+    MsgL2TypePong = 2; // pong 消息
+}
+
+message Msg {
+    MsgType msg_type = 1;
+    MsgL2Type l2_type = 2;
+    MsgBody body = 3;      
+}
+
+message MsgBody {
+    string user_id = 1;         
+    string session_id = 2;
+    string chat_id = 3;
+    int64 sequence = 4;
+    string tokens = 5;
+    string stage = 6;
+    string status = 7;
+    string message =8;     
+}
