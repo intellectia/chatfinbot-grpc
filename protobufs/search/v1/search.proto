@@ -43,6 +43,7 @@ message GetCompanyInfoRsp {
     CompanyType type = 1; // 公司类型 
     CompanyInfoCh ch_data = 2; // 沪深，A股基本信息
     CompanyInfoHK hk_data = 3; // 港股基本信息
+    string company_name = 4; // 公司名字
 }
 
 // 公司基本信息
@@ -76,6 +77,8 @@ message GetIndicatorsReq {
 
 message GetIndicatorsRsp {
     repeated CommonListData list = 1; // 列表数据
+    string company_name = 2; // 公司名字
+    string date = 3; // 更新时间
 }
 
 message CommonListData {
@@ -112,6 +115,7 @@ message GetShareholdersReq {
 message GetShareholdersRsp {
     repeated GetShareholdersChart charts = 1;  // 饼状图
     repeated GetShareholdersInfo list = 2;     // 股东数据
+    string company_name = 3; // 公司名字
 }
 
 message GetShareholdersChart {
@@ -137,6 +141,7 @@ message GetExecutivesReq {
 
 message GetExecutivesRsp {
     repeated ExecutivesData list = 1;     // 高层信息
+    string company_name = 2; // 公司名字
 }
 
 // 高层信息
@@ -164,6 +169,7 @@ message GetStaffInfoRsp {
     repeated GetStaffInfoChartList edu_charts = 2;  // 饼状图
     repeated GetStaffInfoData job_list = 3;     // 专业构成
     repeated GetStaffInfoData edu_list = 4;     // 学历构成
+    string company_name = 5; // 公司名字
 }
 
 message GetStaffInfoChartList {
@@ -208,6 +214,7 @@ message GetMBRevenueReq {
 message GetMBRevenueRsp {
     repeated GetMBRevenueCharts charts = 1;  // 饼状图
     repeated GetMBRevenueList list =2; // 列表数据
+    string company_name = 3; // 公司名字
 }
 
 message GetMBRevenueCharts {
@@ -235,6 +242,7 @@ message GetFinancialReq {
 message GetFinancialRsp {
     repeated GetFinancialChartsList charts = 1;  // 饼状图
     repeated GetFinancialList list = 2; // 列表数据
+    string company_name = 3; // 公司名字
 }
 
 message GetFinancialChartsList {
