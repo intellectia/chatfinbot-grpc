@@ -31,6 +31,8 @@ service SearchService {
     rpc SearchCompany(SearchCompanyReq) returns (SearchCompanyRsp);
     // 搜索公开报告
     rpc SearchPublicReport(SearchPublicReportReq) returns (SearchPublicReportRsp);
+    // 获取应收款
+    rpc GetAccountsReceivable(GetAccountsReceivableReq) returns (GetAccountsReceivableRsp);
 }
 
 
@@ -350,4 +352,38 @@ message PublicReport {
     string company_name = 13;
     string file_path = 14;
     string update_date = 15;
+}
+
+message GetAccountsReceivableReq {
+    string code = 1; // 公司code 例如00030.SZ
+    uint32 stype  = 2; // 3=近三年 5=近五年 10=近十年  999=上市以来 
+    uint32 unit = 3; // 单位 0=元 1=千元 2=万元 3=百万元 4=亿元 5=十亿元
+}
+
+message GetAccountsReceivableRsp {
+    repeated GetAccountsReceivableCharts charts = 1;  // 饼状图
+    repeated GetAccountsReceivableList list =2; // 列表数据
+    string company_name = 3; // 公司名字
+}
+
+message GetAccountsReceivableCharts {
+    string name = 1; // 名称
+    repeated GetAccountsReceivableChart list = 2; // 柱状图列表
+}
+
+message GetAccountsReceivableChart {
+    string id = 1;   // id
+    double value = 2;  // 值
+}
+
+message GetAccountsReceivableList {
+    string year = 1;  // 年
+    repeated AccountsReceivableData item_list = 2; // 明细
+}
+
+message AccountsReceivableData {
+    string name = 1; // 名称
+    string money = 2; // 应收账款-金额
+    string ratio = 3; // 应收账款-比例
+    string bad_debt = 4; // 坏账准备
 }

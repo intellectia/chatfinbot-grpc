@@ -19,15 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	SearchService_GetCompanyInfo_FullMethodName     = "/chatfinbot.search.v1.SearchService/GetCompanyInfo"
-	SearchService_GetIndicators_FullMethodName      = "/chatfinbot.search.v1.SearchService/GetIndicators"
-	SearchService_GetShareholders_FullMethodName    = "/chatfinbot.search.v1.SearchService/GetShareholders"
-	SearchService_GetExecutives_FullMethodName      = "/chatfinbot.search.v1.SearchService/GetExecutives"
-	SearchService_GetStaffInfo_FullMethodName       = "/chatfinbot.search.v1.SearchService/GetStaffInfo"
-	SearchService_GetMBRevenue_FullMethodName       = "/chatfinbot.search.v1.SearchService/GetMBRevenue"
-	SearchService_GetFinancial_FullMethodName       = "/chatfinbot.search.v1.SearchService/GetFinancial"
-	SearchService_SearchCompany_FullMethodName      = "/chatfinbot.search.v1.SearchService/SearchCompany"
-	SearchService_SearchPublicReport_FullMethodName = "/chatfinbot.search.v1.SearchService/SearchPublicReport"
+	SearchService_GetCompanyInfo_FullMethodName        = "/chatfinbot.search.v1.SearchService/GetCompanyInfo"
+	SearchService_GetIndicators_FullMethodName         = "/chatfinbot.search.v1.SearchService/GetIndicators"
+	SearchService_GetShareholders_FullMethodName       = "/chatfinbot.search.v1.SearchService/GetShareholders"
+	SearchService_GetExecutives_FullMethodName         = "/chatfinbot.search.v1.SearchService/GetExecutives"
+	SearchService_GetStaffInfo_FullMethodName          = "/chatfinbot.search.v1.SearchService/GetStaffInfo"
+	SearchService_GetMBRevenue_FullMethodName          = "/chatfinbot.search.v1.SearchService/GetMBRevenue"
+	SearchService_GetFinancial_FullMethodName          = "/chatfinbot.search.v1.SearchService/GetFinancial"
+	SearchService_SearchCompany_FullMethodName         = "/chatfinbot.search.v1.SearchService/SearchCompany"
+	SearchService_SearchPublicReport_FullMethodName    = "/chatfinbot.search.v1.SearchService/SearchPublicReport"
+	SearchService_GetAccountsReceivable_FullMethodName = "/chatfinbot.search.v1.SearchService/GetAccountsReceivable"
 )
 
 // SearchServiceClient is the client API for SearchService service.
@@ -52,6 +53,8 @@ type SearchServiceClient interface {
 	SearchCompany(ctx context.Context, in *SearchCompanyReq, opts ...grpc.CallOption) (*SearchCompanyRsp, error)
 	// 搜索公开报告
 	SearchPublicReport(ctx context.Context, in *SearchPublicReportReq, opts ...grpc.CallOption) (*SearchPublicReportRsp, error)
+	// 获取应收款
+	GetAccountsReceivable(ctx context.Context, in *GetAccountsReceivableReq, opts ...grpc.CallOption) (*GetAccountsReceivableRsp, error)
 }
 
 type searchServiceClient struct {
@@ -143,6 +146,15 @@ func (c *searchServiceClient) SearchPublicReport(ctx context.Context, in *Search
 	return out, nil
 }
 
+func (c *searchServiceClient) GetAccountsReceivable(ctx context.Context, in *GetAccountsReceivableReq, opts ...grpc.CallOption) (*GetAccountsReceivableRsp, error) {
+	out := new(GetAccountsReceivableRsp)
+	err := c.cc.Invoke(ctx, SearchService_GetAccountsReceivable_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SearchServiceServer is the server API for SearchService service.
 // All implementations must embed UnimplementedSearchServiceServer
 // for forward compatibility
@@ -165,6 +177,8 @@ type SearchServiceServer interface {
 	SearchCompany(context.Context, *SearchCompanyReq) (*SearchCompanyRsp, error)
 	// 搜索公开报告
 	SearchPublicReport(context.Context, *SearchPublicReportReq) (*SearchPublicReportRsp, error)
+	// 获取应收款
+	GetAccountsReceivable(context.Context, *GetAccountsReceivableReq) (*GetAccountsReceivableRsp, error)
 	mustEmbedUnimplementedSearchServiceServer()
 }
 
@@ -198,6 +212,9 @@ func (UnimplementedSearchServiceServer) SearchCompany(context.Context, *SearchCo
 }
 func (UnimplementedSearchServiceServer) SearchPublicReport(context.Context, *SearchPublicReportReq) (*SearchPublicReportRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchPublicReport not implemented")
+}
+func (UnimplementedSearchServiceServer) GetAccountsReceivable(context.Context, *GetAccountsReceivableReq) (*GetAccountsReceivableRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAccountsReceivable not implemented")
 }
 func (UnimplementedSearchServiceServer) mustEmbedUnimplementedSearchServiceServer() {}
 
@@ -374,6 +391,24 @@ func _SearchService_SearchPublicReport_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SearchService_GetAccountsReceivable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAccountsReceivableReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SearchServiceServer).GetAccountsReceivable(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SearchService_GetAccountsReceivable_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SearchServiceServer).GetAccountsReceivable(ctx, req.(*GetAccountsReceivableReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SearchService_ServiceDesc is the grpc.ServiceDesc for SearchService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -416,6 +451,10 @@ var SearchService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SearchPublicReport",
 			Handler:    _SearchService_SearchPublicReport_Handler,
+		},
+		{
+			MethodName: "GetAccountsReceivable",
+			Handler:    _SearchService_GetAccountsReceivable_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
