@@ -29,6 +29,7 @@ const (
 	SearchService_SearchCompany_FullMethodName         = "/chatfinbot.search.v1.SearchService/SearchCompany"
 	SearchService_SearchPublicReport_FullMethodName    = "/chatfinbot.search.v1.SearchService/SearchPublicReport"
 	SearchService_GetAccountsReceivable_FullMethodName = "/chatfinbot.search.v1.SearchService/GetAccountsReceivable"
+	SearchService_GetRdExpenditure_FullMethodName      = "/chatfinbot.search.v1.SearchService/GetRdExpenditure"
 )
 
 // SearchServiceClient is the client API for SearchService service.
@@ -55,6 +56,8 @@ type SearchServiceClient interface {
 	SearchPublicReport(ctx context.Context, in *SearchPublicReportReq, opts ...grpc.CallOption) (*SearchPublicReportRsp, error)
 	// 获取应收款
 	GetAccountsReceivable(ctx context.Context, in *GetAccountsReceivableReq, opts ...grpc.CallOption) (*GetAccountsReceivableRsp, error)
+	// 获取研发支出
+	GetRdExpenditure(ctx context.Context, in *GetRdExpenditureReq, opts ...grpc.CallOption) (*GetRdExpenditureRsp, error)
 }
 
 type searchServiceClient struct {
@@ -155,6 +158,15 @@ func (c *searchServiceClient) GetAccountsReceivable(ctx context.Context, in *Get
 	return out, nil
 }
 
+func (c *searchServiceClient) GetRdExpenditure(ctx context.Context, in *GetRdExpenditureReq, opts ...grpc.CallOption) (*GetRdExpenditureRsp, error) {
+	out := new(GetRdExpenditureRsp)
+	err := c.cc.Invoke(ctx, SearchService_GetRdExpenditure_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SearchServiceServer is the server API for SearchService service.
 // All implementations must embed UnimplementedSearchServiceServer
 // for forward compatibility
@@ -179,6 +191,8 @@ type SearchServiceServer interface {
 	SearchPublicReport(context.Context, *SearchPublicReportReq) (*SearchPublicReportRsp, error)
 	// 获取应收款
 	GetAccountsReceivable(context.Context, *GetAccountsReceivableReq) (*GetAccountsReceivableRsp, error)
+	// 获取研发支出
+	GetRdExpenditure(context.Context, *GetRdExpenditureReq) (*GetRdExpenditureRsp, error)
 	mustEmbedUnimplementedSearchServiceServer()
 }
 
@@ -215,6 +229,9 @@ func (UnimplementedSearchServiceServer) SearchPublicReport(context.Context, *Sea
 }
 func (UnimplementedSearchServiceServer) GetAccountsReceivable(context.Context, *GetAccountsReceivableReq) (*GetAccountsReceivableRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAccountsReceivable not implemented")
+}
+func (UnimplementedSearchServiceServer) GetRdExpenditure(context.Context, *GetRdExpenditureReq) (*GetRdExpenditureRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRdExpenditure not implemented")
 }
 func (UnimplementedSearchServiceServer) mustEmbedUnimplementedSearchServiceServer() {}
 
@@ -409,6 +426,24 @@ func _SearchService_GetAccountsReceivable_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SearchService_GetRdExpenditure_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRdExpenditureReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SearchServiceServer).GetRdExpenditure(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SearchService_GetRdExpenditure_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SearchServiceServer).GetRdExpenditure(ctx, req.(*GetRdExpenditureReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SearchService_ServiceDesc is the grpc.ServiceDesc for SearchService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -455,6 +490,10 @@ var SearchService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAccountsReceivable",
 			Handler:    _SearchService_GetAccountsReceivable_Handler,
+		},
+		{
+			MethodName: "GetRdExpenditure",
+			Handler:    _SearchService_GetRdExpenditure_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

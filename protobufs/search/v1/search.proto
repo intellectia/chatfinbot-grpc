@@ -33,6 +33,8 @@ service SearchService {
     rpc SearchPublicReport(SearchPublicReportReq) returns (SearchPublicReportRsp);
     // 获取应收款
     rpc GetAccountsReceivable(GetAccountsReceivableReq) returns (GetAccountsReceivableRsp);
+    // 获取研发支出
+    rpc GetRdExpenditure(GetRdExpenditureReq) returns (GetRdExpenditureRsp);
 }
 
 
@@ -386,4 +388,32 @@ message AccountsReceivableData {
     string money = 2; // 应收账款-金额
     string ratio = 3; // 应收账款-比例
     string bad_debt = 4; // 坏账准备
+}
+
+message  GetRdExpenditureReq {
+    uint32 stype  = 1; // 3=近三年 5=近五年 10=近十年  999=上市以来 
+    string code = 2; // 公司code 例如00030.SZ
+    uint32 unit = 3; // 单位 0=元 1=千元 2=万元 3=百万元 4=亿元 5=十亿元
+}
+
+message GetRdExpenditureRsp {
+    repeated GetRdExpenditureChart charts = 1;  // 饼状图
+    repeated GetRdExpenditureList list = 2; // 列表数据
+    string company_name = 3; // 公司名字
+}
+message GetRdExpenditureChart {
+    string id = 1;   // id
+    double value = 2;  // 值
+}
+
+message GetRdExpenditureList {
+    string year = 1;  // 年
+    RdExpenditureData data = 2; // 明细
+}
+
+message RdExpenditureData {
+    string rd_expend_all = 1;  // 研发支出合计
+    string rd_expend_cost = 2; // 研发支出-费用化
+    string rd_expend_capital = 3; // 研发支出-资本化
+    string rd_personnel = 4; // 研发人员人数
 }
