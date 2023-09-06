@@ -12,6 +12,7 @@ service FileService {
   rpc GetFileInfo(GetFileInfoRequest) returns (GetFileInfoResponse);
   rpc GetPublicS3DownloadURL(GetPublicS3DownloadURLRequest) returns (GetS3DownloadURLResponse);
   rpc GetPrivateS3DownloadURL(GetPrivateS3DownloadURLRequest) returns (GetS3DownloadURLResponse);
+  rpc GetPrivateS3DownloadURLInner(GetPrivateS3DownloadURLRequest) returns (GetS3DownloadURLResponse);
   rpc GetS3DownloadURL(GetS3DownloadURLReq) returns (GetS3DownloadURLRsp);
 }
 

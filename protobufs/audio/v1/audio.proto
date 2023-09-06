@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package chatfinbot.audio.v1;
+
+option go_package = ".;audiopb";
+
+service AudioService {
+    rpc CreateRecord(CreateRecordReq) returns (CreateRecordRsp);
+    rpc GetRecordList(GetRecordListReq) returns (GetRecordListRsp);
+}
+
+message CreateRecordReq {
+    string session_id = 1; // session id
+    string doc_id = 2; // 文件id
+}
+
+message CreateRecordRsp {
+    
+}
+
+message GetRecordListReq {
+    string session_id = 1; // session id
+    uint32 page = 2; // 页码 
+    uint32 page_size = 3; // 页数
+}
+
+message GetRecordListRsp {
+    repeated AudioRecord list = 1;
+}
+
+message AudioRecord {
+    string doc_id = 1; // 文件id
+    string content = 2; // 概要
+    uint32 status = 3; //进度
+    string remark = 4; // 备注 
+}

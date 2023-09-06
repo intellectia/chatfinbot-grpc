@@ -19,14 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	FileService_UploadFile_FullMethodName              = "/chatfinbot.file.v1.FileService/UploadFile"
-	FileService_DeleteFile_FullMethodName              = "/chatfinbot.file.v1.FileService/DeleteFile"
-	FileService_UpdateFile_FullMethodName              = "/chatfinbot.file.v1.FileService/UpdateFile"
-	FileService_GetFileList_FullMethodName             = "/chatfinbot.file.v1.FileService/GetFileList"
-	FileService_GetFileInfo_FullMethodName             = "/chatfinbot.file.v1.FileService/GetFileInfo"
-	FileService_GetPublicS3DownloadURL_FullMethodName  = "/chatfinbot.file.v1.FileService/GetPublicS3DownloadURL"
-	FileService_GetPrivateS3DownloadURL_FullMethodName = "/chatfinbot.file.v1.FileService/GetPrivateS3DownloadURL"
-	FileService_GetS3DownloadURL_FullMethodName        = "/chatfinbot.file.v1.FileService/GetS3DownloadURL"
+	FileService_UploadFile_FullMethodName                   = "/chatfinbot.file.v1.FileService/UploadFile"
+	FileService_DeleteFile_FullMethodName                   = "/chatfinbot.file.v1.FileService/DeleteFile"
+	FileService_UpdateFile_FullMethodName                   = "/chatfinbot.file.v1.FileService/UpdateFile"
+	FileService_GetFileList_FullMethodName                  = "/chatfinbot.file.v1.FileService/GetFileList"
+	FileService_GetFileInfo_FullMethodName                  = "/chatfinbot.file.v1.FileService/GetFileInfo"
+	FileService_GetPublicS3DownloadURL_FullMethodName       = "/chatfinbot.file.v1.FileService/GetPublicS3DownloadURL"
+	FileService_GetPrivateS3DownloadURL_FullMethodName      = "/chatfinbot.file.v1.FileService/GetPrivateS3DownloadURL"
+	FileService_GetPrivateS3DownloadURLInner_FullMethodName = "/chatfinbot.file.v1.FileService/GetPrivateS3DownloadURLInner"
+	FileService_GetS3DownloadURL_FullMethodName             = "/chatfinbot.file.v1.FileService/GetS3DownloadURL"
 )
 
 // FileServiceClient is the client API for FileService service.
@@ -40,6 +41,7 @@ type FileServiceClient interface {
 	GetFileInfo(ctx context.Context, in *GetFileInfoRequest, opts ...grpc.CallOption) (*GetFileInfoResponse, error)
 	GetPublicS3DownloadURL(ctx context.Context, in *GetPublicS3DownloadURLRequest, opts ...grpc.CallOption) (*GetS3DownloadURLResponse, error)
 	GetPrivateS3DownloadURL(ctx context.Context, in *GetPrivateS3DownloadURLRequest, opts ...grpc.CallOption) (*GetS3DownloadURLResponse, error)
+	GetPrivateS3DownloadURLInner(ctx context.Context, in *GetPrivateS3DownloadURLRequest, opts ...grpc.CallOption) (*GetS3DownloadURLResponse, error)
 	GetS3DownloadURL(ctx context.Context, in *GetS3DownloadURLReq, opts ...grpc.CallOption) (*GetS3DownloadURLRsp, error)
 }
 
@@ -114,6 +116,15 @@ func (c *fileServiceClient) GetPrivateS3DownloadURL(ctx context.Context, in *Get
 	return out, nil
 }
 
+func (c *fileServiceClient) GetPrivateS3DownloadURLInner(ctx context.Context, in *GetPrivateS3DownloadURLRequest, opts ...grpc.CallOption) (*GetS3DownloadURLResponse, error) {
+	out := new(GetS3DownloadURLResponse)
+	err := c.cc.Invoke(ctx, FileService_GetPrivateS3DownloadURLInner_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *fileServiceClient) GetS3DownloadURL(ctx context.Context, in *GetS3DownloadURLReq, opts ...grpc.CallOption) (*GetS3DownloadURLRsp, error) {
 	out := new(GetS3DownloadURLRsp)
 	err := c.cc.Invoke(ctx, FileService_GetS3DownloadURL_FullMethodName, in, out, opts...)
@@ -134,6 +145,7 @@ type FileServiceServer interface {
 	GetFileInfo(context.Context, *GetFileInfoRequest) (*GetFileInfoResponse, error)
 	GetPublicS3DownloadURL(context.Context, *GetPublicS3DownloadURLRequest) (*GetS3DownloadURLResponse, error)
 	GetPrivateS3DownloadURL(context.Context, *GetPrivateS3DownloadURLRequest) (*GetS3DownloadURLResponse, error)
+	GetPrivateS3DownloadURLInner(context.Context, *GetPrivateS3DownloadURLRequest) (*GetS3DownloadURLResponse, error)
 	GetS3DownloadURL(context.Context, *GetS3DownloadURLReq) (*GetS3DownloadURLRsp, error)
 	mustEmbedUnimplementedFileServiceServer()
 }
@@ -162,6 +174,9 @@ func (UnimplementedFileServiceServer) GetPublicS3DownloadURL(context.Context, *G
 }
 func (UnimplementedFileServiceServer) GetPrivateS3DownloadURL(context.Context, *GetPrivateS3DownloadURLRequest) (*GetS3DownloadURLResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPrivateS3DownloadURL not implemented")
+}
+func (UnimplementedFileServiceServer) GetPrivateS3DownloadURLInner(context.Context, *GetPrivateS3DownloadURLRequest) (*GetS3DownloadURLResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPrivateS3DownloadURLInner not implemented")
 }
 func (UnimplementedFileServiceServer) GetS3DownloadURL(context.Context, *GetS3DownloadURLReq) (*GetS3DownloadURLRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetS3DownloadURL not implemented")
@@ -305,6 +320,24 @@ func _FileService_GetPrivateS3DownloadURL_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _FileService_GetPrivateS3DownloadURLInner_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPrivateS3DownloadURLRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FileServiceServer).GetPrivateS3DownloadURLInner(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: FileService_GetPrivateS3DownloadURLInner_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FileServiceServer).GetPrivateS3DownloadURLInner(ctx, req.(*GetPrivateS3DownloadURLRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _FileService_GetS3DownloadURL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetS3DownloadURLReq)
 	if err := dec(in); err != nil {
@@ -357,6 +390,10 @@ var FileService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPrivateS3DownloadURL",
 			Handler:    _FileService_GetPrivateS3DownloadURL_Handler,
+		},
+		{
+			MethodName: "GetPrivateS3DownloadURLInner",
+			Handler:    _FileService_GetPrivateS3DownloadURLInner_Handler,
 		},
 		{
 			MethodName: "GetS3DownloadURL",
