@@ -99,18 +99,6 @@ message WeChatLoginRequest {
     string code = 1; // WeChat code for authentication
 }
 
-// WeChatLoginResponse defines the response format for WeChatLogin rpc method
-message WeChatLoginResponse {
-    string provider_user_app_id = 1; // Identifier from OAuth provider (e.g., WeChat)
-    string user_id = 2;              // User ID
-    string user_name = 3;            // User name
-    string token = 4;                // Authentication token for the user
-    bool has_password = 5; // 是否有密码
-    string company_name = 6; // 公司名称
-    bool is_first_login = 7; // 是否第一次登录
-    string login_type = 8; // 用户类型
-}
-
 message LoginResponse {
   string user_id = 1;
   string token = 2; // 登录token, 如果没有设置密码或者没有公司名，返回空

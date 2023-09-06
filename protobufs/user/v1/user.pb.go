@@ -886,110 +886,6 @@ func (x *WeChatLoginRequest) GetCode() string {
 	return ""
 }
 
-// WeChatLoginResponse defines the response format for WeChatLogin rpc method
-type WeChatLoginResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	ProviderUserAppId string `protobuf:"bytes,1,opt,name=provider_user_app_id,json=providerUserAppId,proto3" json:"provider_user_app_id,omitempty"` // Identifier from OAuth provider (e.g., WeChat)
-	UserId            string `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                                      // User ID
-	UserName          string `protobuf:"bytes,3,opt,name=user_name,json=userName,proto3" json:"user_name,omitempty"`                                // User name
-	Token             string `protobuf:"bytes,4,opt,name=token,proto3" json:"token,omitempty"`                                                      // Authentication token for the user
-	HasPassword       bool   `protobuf:"varint,5,opt,name=has_password,json=hasPassword,proto3" json:"has_password,omitempty"`                      // 是否有密码
-	CompanyName       string `protobuf:"bytes,6,opt,name=company_name,json=companyName,proto3" json:"company_name,omitempty"`                       // 公司名称
-	IsFirstLogin      bool   `protobuf:"varint,7,opt,name=is_first_login,json=isFirstLogin,proto3" json:"is_first_login,omitempty"`                 // 是否第一次登录
-	LoginType         string `protobuf:"bytes,8,opt,name=login_type,json=loginType,proto3" json:"login_type,omitempty"`                             // 用户类型
-}
-
-func (x *WeChatLoginResponse) Reset() {
-	*x = WeChatLoginResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_user_proto_msgTypes[15]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *WeChatLoginResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*WeChatLoginResponse) ProtoMessage() {}
-
-func (x *WeChatLoginResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_user_proto_msgTypes[15]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use WeChatLoginResponse.ProtoReflect.Descriptor instead.
-func (*WeChatLoginResponse) Descriptor() ([]byte, []int) {
-	return file_user_proto_rawDescGZIP(), []int{15}
-}
-
-func (x *WeChatLoginResponse) GetProviderUserAppId() string {
-	if x != nil {
-		return x.ProviderUserAppId
-	}
-	return ""
-}
-
-func (x *WeChatLoginResponse) GetUserId() string {
-	if x != nil {
-		return x.UserId
-	}
-	return ""
-}
-
-func (x *WeChatLoginResponse) GetUserName() string {
-	if x != nil {
-		return x.UserName
-	}
-	return ""
-}
-
-func (x *WeChatLoginResponse) GetToken() string {
-	if x != nil {
-		return x.Token
-	}
-	return ""
-}
-
-func (x *WeChatLoginResponse) GetHasPassword() bool {
-	if x != nil {
-		return x.HasPassword
-	}
-	return false
-}
-
-func (x *WeChatLoginResponse) GetCompanyName() string {
-	if x != nil {
-		return x.CompanyName
-	}
-	return ""
-}
-
-func (x *WeChatLoginResponse) GetIsFirstLogin() bool {
-	if x != nil {
-		return x.IsFirstLogin
-	}
-	return false
-}
-
-func (x *WeChatLoginResponse) GetLoginType() string {
-	if x != nil {
-		return x.LoginType
-	}
-	return ""
-}
-
 type LoginResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1009,7 +905,7 @@ type LoginResponse struct {
 func (x *LoginResponse) Reset() {
 	*x = LoginResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_user_proto_msgTypes[16]
+		mi := &file_user_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1022,7 +918,7 @@ func (x *LoginResponse) String() string {
 func (*LoginResponse) ProtoMessage() {}
 
 func (x *LoginResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_user_proto_msgTypes[16]
+	mi := &file_user_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1035,7 +931,7 @@ func (x *LoginResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoginResponse.ProtoReflect.Descriptor instead.
 func (*LoginResponse) Descriptor() ([]byte, []int) {
-	return file_user_proto_rawDescGZIP(), []int{16}
+	return file_user_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *LoginResponse) GetUserId() string {
@@ -1184,25 +1080,7 @@ var file_user_proto_rawDesc = []byte{
 	0x01, 0x28, 0x09, 0x52, 0x0b, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x72, 0x79, 0x43, 0x6f, 0x64, 0x65,
 	0x22, 0x28, 0x0a, 0x12, 0x57, 0x65, 0x43, 0x68, 0x61, 0x74, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x52,
 	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x22, 0x9d, 0x02, 0x0a, 0x13, 0x57,
-	0x65, 0x43, 0x68, 0x61, 0x74, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x12, 0x2f, 0x0a, 0x14, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x5f, 0x75,
-	0x73, 0x65, 0x72, 0x5f, 0x61, 0x70, 0x70, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x11, 0x70, 0x72, 0x6f, 0x76, 0x69, 0x64, 0x65, 0x72, 0x55, 0x73, 0x65, 0x72, 0x41, 0x70,
-	0x70, 0x49, 0x64, 0x12, 0x17, 0x0a, 0x07, 0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75, 0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x1b, 0x0a, 0x09,
-	0x75, 0x73, 0x65, 0x72, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x08, 0x75, 0x73, 0x65, 0x72, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x6b,
-	0x65, 0x6e, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x12,
-	0x21, 0x0a, 0x0c, 0x68, 0x61, 0x73, 0x5f, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x18,
-	0x05, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0b, 0x68, 0x61, 0x73, 0x50, 0x61, 0x73, 0x73, 0x77, 0x6f,
-	0x72, 0x64, 0x12, 0x21, 0x0a, 0x0c, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e, 0x79, 0x5f, 0x6e, 0x61,
-	0x6d, 0x65, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x63, 0x6f, 0x6d, 0x70, 0x61, 0x6e,
-	0x79, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x24, 0x0a, 0x0e, 0x69, 0x73, 0x5f, 0x66, 0x69, 0x72, 0x73,
-	0x74, 0x5f, 0x6c, 0x6f, 0x67, 0x69, 0x6e, 0x18, 0x07, 0x20, 0x01, 0x28, 0x08, 0x52, 0x0c, 0x69,
-	0x73, 0x46, 0x69, 0x72, 0x73, 0x74, 0x4c, 0x6f, 0x67, 0x69, 0x6e, 0x12, 0x1d, 0x0a, 0x0a, 0x6c,
-	0x6f, 0x67, 0x69, 0x6e, 0x5f, 0x74, 0x79, 0x70, 0x65, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x09, 0x6c, 0x6f, 0x67, 0x69, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x22, 0xb6, 0x02, 0x0a, 0x0d, 0x4c,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x22, 0xb6, 0x02, 0x0a, 0x0d, 0x4c,
 	0x6f, 0x67, 0x69, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x17, 0x0a, 0x07,
 	0x75, 0x73, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x75,
 	0x73, 0x65, 0x72, 0x49, 0x64, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x02,
@@ -1297,7 +1175,7 @@ func file_user_proto_rawDescGZIP() []byte {
 	return file_user_proto_rawDescData
 }
 
-var file_user_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_user_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_user_proto_goTypes = []interface{}{
 	(*UserRequest)(nil),               // 0: chatfinbot.user.v1.UserRequest
 	(*RegisterResponse)(nil),          // 1: chatfinbot.user.v1.RegisterResponse
@@ -1314,8 +1192,7 @@ var file_user_proto_goTypes = []interface{}{
 	(*SetInitPasswordRequest)(nil),    // 12: chatfinbot.user.v1.SetInitPasswordRequest
 	(*BindPhoneRequest)(nil),          // 13: chatfinbot.user.v1.BindPhoneRequest
 	(*WeChatLoginRequest)(nil),        // 14: chatfinbot.user.v1.WeChatLoginRequest
-	(*WeChatLoginResponse)(nil),       // 15: chatfinbot.user.v1.WeChatLoginResponse
-	(*LoginResponse)(nil),             // 16: chatfinbot.user.v1.LoginResponse
+	(*LoginResponse)(nil),             // 15: chatfinbot.user.v1.LoginResponse
 }
 var file_user_proto_depIdxs = []int32{
 	0,  // 0: chatfinbot.user.v1.UserService.Register:input_type -> chatfinbot.user.v1.UserRequest
@@ -1330,14 +1207,14 @@ var file_user_proto_depIdxs = []int32{
 	14, // 9: chatfinbot.user.v1.UserService.WeChatLogin:input_type -> chatfinbot.user.v1.WeChatLoginRequest
 	1,  // 10: chatfinbot.user.v1.UserService.Register:output_type -> chatfinbot.user.v1.RegisterResponse
 	3,  // 11: chatfinbot.user.v1.UserService.LoginWithEmail:output_type -> chatfinbot.user.v1.LoginWithEmailResponse
-	16, // 12: chatfinbot.user.v1.UserService.LoginWithPhone:output_type -> chatfinbot.user.v1.LoginResponse
-	16, // 13: chatfinbot.user.v1.UserService.LoginWithUserName:output_type -> chatfinbot.user.v1.LoginResponse
+	15, // 12: chatfinbot.user.v1.UserService.LoginWithPhone:output_type -> chatfinbot.user.v1.LoginResponse
+	15, // 13: chatfinbot.user.v1.UserService.LoginWithUserName:output_type -> chatfinbot.user.v1.LoginResponse
 	8,  // 14: chatfinbot.user.v1.UserService.SendSMSCode:output_type -> chatfinbot.user.v1.Empty
 	7,  // 15: chatfinbot.user.v1.UserService.GetUser:output_type -> chatfinbot.user.v1.UserResponse
 	8,  // 16: chatfinbot.user.v1.UserService.SetInitPassword:output_type -> chatfinbot.user.v1.Empty
 	11, // 17: chatfinbot.user.v1.UserService.InitUserExtraInfo:output_type -> chatfinbot.user.v1.InitUserExtraInfoResponse
-	16, // 18: chatfinbot.user.v1.UserService.BindPhone:output_type -> chatfinbot.user.v1.LoginResponse
-	16, // 19: chatfinbot.user.v1.UserService.WeChatLogin:output_type -> chatfinbot.user.v1.LoginResponse
+	15, // 18: chatfinbot.user.v1.UserService.BindPhone:output_type -> chatfinbot.user.v1.LoginResponse
+	15, // 19: chatfinbot.user.v1.UserService.WeChatLogin:output_type -> chatfinbot.user.v1.LoginResponse
 	10, // [10:20] is the sub-list for method output_type
 	0,  // [0:10] is the sub-list for method input_type
 	0,  // [0:0] is the sub-list for extension type_name
@@ -1532,18 +1409,6 @@ func file_user_proto_init() {
 			}
 		}
 		file_user_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*WeChatLoginResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_user_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*LoginResponse); i {
 			case 0:
 				return &v.state
@@ -1562,7 +1427,7 @@ func file_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_user_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   17,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
