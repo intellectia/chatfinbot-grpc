@@ -7,12 +7,14 @@ option go_package = ".;userpb";
 service UserService {
   rpc Register(UserRequest) returns (RegisterResponse);
   rpc LoginWithEmail(LoginWithEmailRequest) returns (LoginWithEmailResponse); // email login
-  rpc LoginWithPhone(LoginWithPhoneRequest) returns (LoginWithPhoneResponse); // phone login
-  rpc LoginWithUserName(LoginWithUserNameRequest) returns (LoginWithUserNameResponse); // user_name login
+  rpc LoginWithPhone(LoginWithPhoneRequest) returns (LoginResponse); // phone login
+  rpc LoginWithUserName(LoginWithUserNameRequest) returns (LoginResponse); // user_name login
   rpc SendSMSCode(SendSMSCodeRequest) returns (Empty);
   rpc GetUser(GetUserRequest) returns (UserResponse);
   rpc SetInitPassword(SetInitPasswordRequest) returns (Empty); // set original password
   rpc InitUserExtraInfo(InitUserExtraInfoRequest) returns (InitUserExtraInfoResponse);
+  rpc BindPhone(BindPhoneRequest) returns (LoginResponse);
+  rpc WeChatLogin(WeChatLoginRequest) returns (LoginResponse);
 }
 
 message UserRequest {
@@ -42,28 +44,9 @@ message LoginWithPhoneRequest {
   string code = 3;
 }
 
-message LoginWithPhoneResponse {
-  string user_id = 1;
-  string token = 2; // 登录token, 如果没有设置密码或者没有公司名，返回空
-  string user_name = 3; // 手机注册时，手机号为用户名
-  bool has_password = 4; // 是否有密码
-  string company_name = 5; // 公司名称
-  bool is_first_login = 6; // 是否第一次登录
-  string temp_token = 7; // 临时token，用于初始化
-}
-
 message LoginWithUserNameRequest {
   string user_name = 1;
   string password = 2;
-}
-
-message LoginWithUserNameResponse {
-  string user_id = 1;
-  string token = 2; // 登录token, 如果没有设置密码或者没有公司名，返回空
-  string user_name = 3; // 手机注册时，手机号为用户名
-  bool has_password = 4; // 是否有密码
-  string company_name = 5; // 公司名称
-  bool is_first_login = 6; // 是否第一次登录
 }
 
 
@@ -101,4 +84,41 @@ message SetInitPasswordRequest {
   string user_id = 1;           // user ID to specify which user's password to reset
   string password = 2;     // the new password user wants to set
   string temp_token = 5; // 临时token，用于设置密码
+}
+
+// BindPhoneRequest defines the request format for BindPhone rpc method
+message BindPhoneRequest {
+    string provider_user_app_id = 1;    // OAuth User App ID to bind to the user
+    string phone_number = 2;         // Phone number of the user
+    string code = 3;                 // Verification code (possibly SMS) received on the phone
+    string country_code = 4;         // Country code of the phone number
+}
+
+// WeChatLoginRequest defines the request format for WeChatLogin rpc method
+message WeChatLoginRequest {
+    string code = 1; // WeChat code for authentication
+}
+
+// WeChatLoginResponse defines the response format for WeChatLogin rpc method
+message WeChatLoginResponse {
+    string provider_user_app_id = 1; // Identifier from OAuth provider (e.g., WeChat)
+    string user_id = 2;              // User ID
+    string user_name = 3;            // User name
+    string token = 4;                // Authentication token for the user
+    bool has_password = 5; // 是否有密码
+    string company_name = 6; // 公司名称
+    bool is_first_login = 7; // 是否第一次登录
+    string login_type = 8; // 用户类型
+}
+
+message LoginResponse {
+  string user_id = 1;
+  string token = 2; // 登录token, 如果没有设置密码或者没有公司名，返回空
+  string user_name = 3; // 手机注册时，手机号为用户名
+  bool has_password = 4; // 是否有密码
+  string company_name = 5; // 公司名称
+  bool is_first_login = 6; // 是否第一次登录
+  string temp_token = 7; // 临时token，用于初始化
+  string provider_user_app_id = 8; // Identifier from OAuth provider (e.g., WeChat)
+  string login_type = 9; // phone, email, wechat, username
 }
