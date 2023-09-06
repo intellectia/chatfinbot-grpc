@@ -24,12 +24,14 @@ const _ = grpc.SupportPackageIsVersion7
 type UserServiceClient interface {
 	Register(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	LoginWithEmail(ctx context.Context, in *LoginWithEmailRequest, opts ...grpc.CallOption) (*LoginWithEmailResponse, error)
-	LoginWithPhone(ctx context.Context, in *LoginWithPhoneRequest, opts ...grpc.CallOption) (*LoginWithPhoneResponse, error)
-	LoginWithUserName(ctx context.Context, in *LoginWithUserNameRequest, opts ...grpc.CallOption) (*LoginWithUserNameResponse, error)
+	LoginWithPhone(ctx context.Context, in *LoginWithPhoneRequest, opts ...grpc.CallOption) (*LoginResponse, error)
+	LoginWithUserName(ctx context.Context, in *LoginWithUserNameRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	SendSMSCode(ctx context.Context, in *SendSMSCodeRequest, opts ...grpc.CallOption) (*Empty, error)
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*UserResponse, error)
 	SetInitPassword(ctx context.Context, in *SetInitPasswordRequest, opts ...grpc.CallOption) (*Empty, error)
 	InitUserExtraInfo(ctx context.Context, in *InitUserExtraInfoRequest, opts ...grpc.CallOption) (*InitUserExtraInfoResponse, error)
+	BindPhone(ctx context.Context, in *BindPhoneRequest, opts ...grpc.CallOption) (*LoginResponse, error)
+	WeChatLogin(ctx context.Context, in *WeChatLoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 }
 
 type userServiceClient struct {
@@ -58,8 +60,8 @@ func (c *userServiceClient) LoginWithEmail(ctx context.Context, in *LoginWithEma
 	return out, nil
 }
 
-func (c *userServiceClient) LoginWithPhone(ctx context.Context, in *LoginWithPhoneRequest, opts ...grpc.CallOption) (*LoginWithPhoneResponse, error) {
-	out := new(LoginWithPhoneResponse)
+func (c *userServiceClient) LoginWithPhone(ctx context.Context, in *LoginWithPhoneRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+	out := new(LoginResponse)
 	err := c.cc.Invoke(ctx, "/chatfinbot.user.v1.UserService/LoginWithPhone", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -67,8 +69,8 @@ func (c *userServiceClient) LoginWithPhone(ctx context.Context, in *LoginWithPho
 	return out, nil
 }
 
-func (c *userServiceClient) LoginWithUserName(ctx context.Context, in *LoginWithUserNameRequest, opts ...grpc.CallOption) (*LoginWithUserNameResponse, error) {
-	out := new(LoginWithUserNameResponse)
+func (c *userServiceClient) LoginWithUserName(ctx context.Context, in *LoginWithUserNameRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+	out := new(LoginResponse)
 	err := c.cc.Invoke(ctx, "/chatfinbot.user.v1.UserService/LoginWithUserName", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -112,18 +114,38 @@ func (c *userServiceClient) InitUserExtraInfo(ctx context.Context, in *InitUserE
 	return out, nil
 }
 
+func (c *userServiceClient) BindPhone(ctx context.Context, in *BindPhoneRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+	out := new(LoginResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.user.v1.UserService/BindPhone", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) WeChatLogin(ctx context.Context, in *WeChatLoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+	out := new(LoginResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.user.v1.UserService/WeChatLogin", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
 type UserServiceServer interface {
 	Register(context.Context, *UserRequest) (*RegisterResponse, error)
 	LoginWithEmail(context.Context, *LoginWithEmailRequest) (*LoginWithEmailResponse, error)
-	LoginWithPhone(context.Context, *LoginWithPhoneRequest) (*LoginWithPhoneResponse, error)
-	LoginWithUserName(context.Context, *LoginWithUserNameRequest) (*LoginWithUserNameResponse, error)
+	LoginWithPhone(context.Context, *LoginWithPhoneRequest) (*LoginResponse, error)
+	LoginWithUserName(context.Context, *LoginWithUserNameRequest) (*LoginResponse, error)
 	SendSMSCode(context.Context, *SendSMSCodeRequest) (*Empty, error)
 	GetUser(context.Context, *GetUserRequest) (*UserResponse, error)
 	SetInitPassword(context.Context, *SetInitPasswordRequest) (*Empty, error)
 	InitUserExtraInfo(context.Context, *InitUserExtraInfoRequest) (*InitUserExtraInfoResponse, error)
+	BindPhone(context.Context, *BindPhoneRequest) (*LoginResponse, error)
+	WeChatLogin(context.Context, *WeChatLoginRequest) (*LoginResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -137,10 +159,10 @@ func (UnimplementedUserServiceServer) Register(context.Context, *UserRequest) (*
 func (UnimplementedUserServiceServer) LoginWithEmail(context.Context, *LoginWithEmailRequest) (*LoginWithEmailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoginWithEmail not implemented")
 }
-func (UnimplementedUserServiceServer) LoginWithPhone(context.Context, *LoginWithPhoneRequest) (*LoginWithPhoneResponse, error) {
+func (UnimplementedUserServiceServer) LoginWithPhone(context.Context, *LoginWithPhoneRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoginWithPhone not implemented")
 }
-func (UnimplementedUserServiceServer) LoginWithUserName(context.Context, *LoginWithUserNameRequest) (*LoginWithUserNameResponse, error) {
+func (UnimplementedUserServiceServer) LoginWithUserName(context.Context, *LoginWithUserNameRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoginWithUserName not implemented")
 }
 func (UnimplementedUserServiceServer) SendSMSCode(context.Context, *SendSMSCodeRequest) (*Empty, error) {
@@ -154,6 +176,12 @@ func (UnimplementedUserServiceServer) SetInitPassword(context.Context, *SetInitP
 }
 func (UnimplementedUserServiceServer) InitUserExtraInfo(context.Context, *InitUserExtraInfoRequest) (*InitUserExtraInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InitUserExtraInfo not implemented")
+}
+func (UnimplementedUserServiceServer) BindPhone(context.Context, *BindPhoneRequest) (*LoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BindPhone not implemented")
+}
+func (UnimplementedUserServiceServer) WeChatLogin(context.Context, *WeChatLoginRequest) (*LoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WeChatLogin not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -312,6 +340,42 @@ func _UserService_InitUserExtraInfo_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_BindPhone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BindPhoneRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).BindPhone(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.user.v1.UserService/BindPhone",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).BindPhone(ctx, req.(*BindPhoneRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_WeChatLogin_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WeChatLoginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).WeChatLogin(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.user.v1.UserService/WeChatLogin",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).WeChatLogin(ctx, req.(*WeChatLoginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -350,6 +414,14 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InitUserExtraInfo",
 			Handler:    _UserService_InitUserExtraInfo_Handler,
+		},
+		{
+			MethodName: "BindPhone",
+			Handler:    _UserService_BindPhone_Handler,
+		},
+		{
+			MethodName: "WeChatLogin",
+			Handler:    _UserService_WeChatLogin_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
