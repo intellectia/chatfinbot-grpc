@@ -19,15 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	ChatService_GiveFeedback_FullMethodName    = "/chatfinbot.chat.v1.ChatService/GiveFeedback"
-	ChatService_GetFeedbackList_FullMethodName = "/chatfinbot.chat.v1.ChatService/GetFeedbackList"
-	ChatService_CreateSession_FullMethodName   = "/chatfinbot.chat.v1.ChatService/CreateSession"
-	ChatService_UpdateSession_FullMethodName   = "/chatfinbot.chat.v1.ChatService/UpdateSession"
-	ChatService_DeleteSession_FullMethodName   = "/chatfinbot.chat.v1.ChatService/DeleteSession"
-	ChatService_GetSessionByID_FullMethodName  = "/chatfinbot.chat.v1.ChatService/GetSessionByID"
-	ChatService_GetSessionList_FullMethodName  = "/chatfinbot.chat.v1.ChatService/GetSessionList"
-	ChatService_GetChatHistory_FullMethodName  = "/chatfinbot.chat.v1.ChatService/GetChatHistory"
-	ChatService_IntelChat_FullMethodName       = "/chatfinbot.chat.v1.ChatService/IntelChat"
+	ChatService_GiveFeedback_FullMethodName          = "/chatfinbot.chat.v1.ChatService/GiveFeedback"
+	ChatService_GetFeedbackList_FullMethodName       = "/chatfinbot.chat.v1.ChatService/GetFeedbackList"
+	ChatService_CreateSession_FullMethodName         = "/chatfinbot.chat.v1.ChatService/CreateSession"
+	ChatService_UpdateSession_FullMethodName         = "/chatfinbot.chat.v1.ChatService/UpdateSession"
+	ChatService_DeleteSession_FullMethodName         = "/chatfinbot.chat.v1.ChatService/DeleteSession"
+	ChatService_GetSessionByID_FullMethodName        = "/chatfinbot.chat.v1.ChatService/GetSessionByID"
+	ChatService_GetSessionList_FullMethodName        = "/chatfinbot.chat.v1.ChatService/GetSessionList"
+	ChatService_GetChatHistory_FullMethodName        = "/chatfinbot.chat.v1.ChatService/GetChatHistory"
+	ChatService_IntelChat_FullMethodName             = "/chatfinbot.chat.v1.ChatService/IntelChat"
+	ChatService_CheckUserSessionInner_FullMethodName = "/chatfinbot.chat.v1.ChatService/CheckUserSessionInner"
 )
 
 // ChatServiceClient is the client API for ChatService service.
@@ -45,6 +46,7 @@ type ChatServiceClient interface {
 	// New RPC methods for managing chat
 	GetChatHistory(ctx context.Context, in *GetChatHistoryReq, opts ...grpc.CallOption) (*GetChatHistoryRsp, error)
 	IntelChat(ctx context.Context, in *IntelChatReq, opts ...grpc.CallOption) (*IntelChatRsp, error)
+	CheckUserSessionInner(ctx context.Context, in *CheckUserSessionReq, opts ...grpc.CallOption) (*CheckUserSessionRsp, error)
 }
 
 type chatServiceClient struct {
@@ -136,6 +138,15 @@ func (c *chatServiceClient) IntelChat(ctx context.Context, in *IntelChatReq, opt
 	return out, nil
 }
 
+func (c *chatServiceClient) CheckUserSessionInner(ctx context.Context, in *CheckUserSessionReq, opts ...grpc.CallOption) (*CheckUserSessionRsp, error) {
+	out := new(CheckUserSessionRsp)
+	err := c.cc.Invoke(ctx, ChatService_CheckUserSessionInner_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ChatServiceServer is the server API for ChatService service.
 // All implementations must embed UnimplementedChatServiceServer
 // for forward compatibility
@@ -151,6 +162,7 @@ type ChatServiceServer interface {
 	// New RPC methods for managing chat
 	GetChatHistory(context.Context, *GetChatHistoryReq) (*GetChatHistoryRsp, error)
 	IntelChat(context.Context, *IntelChatReq) (*IntelChatRsp, error)
+	CheckUserSessionInner(context.Context, *CheckUserSessionReq) (*CheckUserSessionRsp, error)
 	mustEmbedUnimplementedChatServiceServer()
 }
 
@@ -184,6 +196,9 @@ func (UnimplementedChatServiceServer) GetChatHistory(context.Context, *GetChatHi
 }
 func (UnimplementedChatServiceServer) IntelChat(context.Context, *IntelChatReq) (*IntelChatRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method IntelChat not implemented")
+}
+func (UnimplementedChatServiceServer) CheckUserSessionInner(context.Context, *CheckUserSessionReq) (*CheckUserSessionRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckUserSessionInner not implemented")
 }
 func (UnimplementedChatServiceServer) mustEmbedUnimplementedChatServiceServer() {}
 
@@ -360,6 +375,24 @@ func _ChatService_IntelChat_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ChatService_CheckUserSessionInner_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckUserSessionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).CheckUserSessionInner(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChatService_CheckUserSessionInner_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).CheckUserSessionInner(ctx, req.(*CheckUserSessionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ChatService_ServiceDesc is the grpc.ServiceDesc for ChatService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -402,6 +435,10 @@ var ChatService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "IntelChat",
 			Handler:    _ChatService_IntelChat_Handler,
+		},
+		{
+			MethodName: "CheckUserSessionInner",
+			Handler:    _ChatService_CheckUserSessionInner_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

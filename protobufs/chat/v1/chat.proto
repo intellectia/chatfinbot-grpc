@@ -112,6 +112,15 @@ message IntelChatRsp {
     
 }
 
+message CheckUserSessionReq {
+    string session_id = 1;
+    string user_id = 2;
+}
+
+message CheckUserSessionRsp {
+    bool match= 1;
+}
+
 
 service ChatService {
   rpc GiveFeedback(Feedback) returns (Empty);
@@ -127,7 +136,9 @@ service ChatService {
   
   // New RPC methods for managing chat
   rpc GetChatHistory (GetChatHistoryReq) returns (GetChatHistoryRsp);
-  rpc  IntelChat(IntelChatReq) returns (IntelChatRsp);
+  rpc IntelChat(IntelChatReq) returns (IntelChatRsp);
+
+  rpc CheckUserSessionInner(CheckUserSessionReq) returns (CheckUserSessionRsp);
 
 }
 
