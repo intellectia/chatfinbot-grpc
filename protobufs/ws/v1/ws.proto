@@ -8,6 +8,7 @@ enum MsgType {
     MsgTypeUnknown = 0; // 未知（不要使用）
     MsgTypeCommon = 1; // 普通消息
     MsgTypeControl = 2; // 控制消息
+    MsgTypeAudio = 3; // 语音消息
 }
 
 enum MsgL2Type {
@@ -15,12 +16,26 @@ enum MsgL2Type {
     MsgL2TypePing = 1; // ping 消息
     MsgL2TypePong = 2; // pong 消息
     MsgL2TypeTest = 3; // 测试 后面会废弃
+    MsgL2TypeAudioStart = 4; // 开启音频
+    MsgL2TypeAudioEnd = 5; // 结束音频
+}
+
+enum MsgAudioStatus {
+    MsgAudioStatusUnknown = 0; // 未知（不要使用）
+    MsgAudioStatusStart = 1; // 开始
+    MsgAudioStatusRecord = 2; // lu
+    MsgAudioStatusFinish = 3; // 完成
 }
 
 message Msg {
     MsgType msg_type = 1;
     MsgL2Type l2_type = 2;
-    MsgBody body = 3;      
+    MsgBody body = 3;
+    MsgAudio audio_data = 4;      
+}
+
+message MsgData {
+    repeated Msg datas = 1;
 }
 
 message MsgBody {
@@ -32,4 +47,18 @@ message MsgBody {
     string stage = 6;
     string status = 7;
     string message =8;     
+}
+
+message MsgAudio { 
+    string session_id = 1;
+    bytes data = 2;
+    XfYunMsgAudioData info = 3;
+}
+
+message XfYunMsgAudioData {
+    string action =1;
+    string code = 2;
+    string data = 3;
+    string desc = 4;
+    string sid = 5;
 }
