@@ -51,7 +51,7 @@ message MsgBody {
 
 message MsgAudio { 
     string session_id = 1;
-    bytes data = 2;
+    string data = 2;
     XfYunMsgAudioData info = 3;
 }
 
