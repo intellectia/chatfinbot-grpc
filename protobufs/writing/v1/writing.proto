@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+package chatfinbot.writing.v1;
+
+option go_package = ".;writingpb";
+
+import "google/api/annotations.proto";
+
+message Writing {
+    string article_id = 1;
+    string creator_id = 2;
+    string session_id = 3;
+    int64 created_at = 4;
+    int64 updated_at = 5;
+    int64 deleted_at = 6;
+    string title = 7;
+    string content = 8;
+}
+
+service WritingsService {
+    rpc CreateWriting(CreateWritingRequest) returns (WritingResponse) {
+        option (google.api.http) = {
+            post: "/writings"
+            body: "chat_writing"
+        };
+    };
+    
+    rpc GetWriting(GetWritingRequest) returns (WritingResponse) {
+        option (google.api.http) = {
+            get: "/writings/{article_id}"
+        };
+    };
+    
+    rpc UpdateWriting(UpdateWritingRequest) returns (WritingResponse) {
+        option (google.api.http) = {
+            put: "/writings/{chat_writing.article_id}"
+            body: "chat_writing"
+        };
+    };
+    
+    rpc DeleteWriting(DeleteWritingRequest) returns (DeleteWritingResponse) {
+        option (google.api.http) = {
+            delete: "/writings/{article_id}"
+        };
+    };
+    
+    rpc ListWritings(ListWritingsRequest) returns (ListWritingsResponse) {
+        option (google.api.http) = {
+            get: "/writings"
+        };
+    };
+}
+
+message CreateWritingRequest {
+    Writing chat_writing = 1;
+}
+
+message GetWritingRequest {
+    string article_id = 1;
+}
+
+message UpdateWritingRequest {
+    Writing chat_writing = 1;
+}
+
+message DeleteWritingRequest {
+    string article_id = 1;
+}
+
+message WritingResponse {
+    Writing chat_writing = 1;
+    string status = 2;
+    string message = 3;
+}
+
+message ListWritingsRequest {
+    int32 page = 1;
+    int32 limit = 2;
+    string sort_by = 3;
+    bool descending = 4;
+}
+
+message ListWritingsResponse {
+    repeated Writing chat_writings = 1;
+    int32 total_records = 2;
+    string status = 3;
+    string message = 4;
+}
+
+message DeleteWritingResponse {
+    string status = 1;
+    string message = 2;
+}
