@@ -445,6 +445,116 @@ func (x *GetRecordStatusRsp) GetData() *MediaRecord {
 	return nil
 }
 
+type TranscriptionReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	SessionId string `protobuf:"bytes,1,opt,name=session_id,json=sessionId,proto3" json:"session_id,omitempty"` // session id
+	Content   string `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"`                      // 内容
+	Status    uint32 `protobuf:"varint,3,opt,name=status,proto3" json:"status,omitempty"`                       // 状态 1=保存 2=保存并生成总结
+}
+
+func (x *TranscriptionReq) Reset() {
+	*x = TranscriptionReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_audio_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TranscriptionReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TranscriptionReq) ProtoMessage() {}
+
+func (x *TranscriptionReq) ProtoReflect() protoreflect.Message {
+	mi := &file_audio_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TranscriptionReq.ProtoReflect.Descriptor instead.
+func (*TranscriptionReq) Descriptor() ([]byte, []int) {
+	return file_audio_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *TranscriptionReq) GetSessionId() string {
+	if x != nil {
+		return x.SessionId
+	}
+	return ""
+}
+
+func (x *TranscriptionReq) GetContent() string {
+	if x != nil {
+		return x.Content
+	}
+	return ""
+}
+
+func (x *TranscriptionReq) GetStatus() uint32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
+type TranscriptionRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	JobId string `protobuf:"bytes,1,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"` // 任务id
+}
+
+func (x *TranscriptionRsp) Reset() {
+	*x = TranscriptionRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_audio_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *TranscriptionRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TranscriptionRsp) ProtoMessage() {}
+
+func (x *TranscriptionRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_audio_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TranscriptionRsp.ProtoReflect.Descriptor instead.
+func (*TranscriptionRsp) Descriptor() ([]byte, []int) {
+	return file_audio_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *TranscriptionRsp) GetJobId() string {
+	if x != nil {
+		return x.JobId
+	}
+	return ""
+}
+
 var File_audio_proto protoreflect.FileDescriptor
 
 var file_audio_proto_rawDesc = []byte{
@@ -493,7 +603,16 @@ var file_audio_proto_rawDesc = []byte{
 	0x34, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e,
 	0x63, 0x68, 0x61, 0x74, 0x66, 0x69, 0x6e, 0x62, 0x6f, 0x74, 0x2e, 0x61, 0x75, 0x64, 0x69, 0x6f,
 	0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x65, 0x64, 0x69, 0x61, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x52,
-	0x04, 0x64, 0x61, 0x74, 0x61, 0x32, 0xae, 0x02, 0x0a, 0x0c, 0x41, 0x75, 0x64, 0x69, 0x6f, 0x53,
+	0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x63, 0x0a, 0x10, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72,
+	0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x12, 0x1d, 0x0a, 0x0a, 0x73, 0x65, 0x73,
+	0x73, 0x69, 0x6f, 0x6e, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x73,
+	0x65, 0x73, 0x73, 0x69, 0x6f, 0x6e, 0x49, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x6f, 0x6e, 0x74,
+	0x65, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x6f, 0x6e, 0x74, 0x65,
+	0x6e, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x03, 0x20, 0x01,
+	0x28, 0x0d, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0x29, 0x0a, 0x10, 0x54, 0x72,
+	0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x73, 0x70, 0x12, 0x15,
+	0x0a, 0x06, 0x6a, 0x6f, 0x62, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05,
+	0x6a, 0x6f, 0x62, 0x49, 0x64, 0x32, 0x8d, 0x03, 0x0a, 0x0c, 0x41, 0x75, 0x64, 0x69, 0x6f, 0x53,
 	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x5a, 0x0a, 0x0c, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65,
 	0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x12, 0x24, 0x2e, 0x63, 0x68, 0x61, 0x74, 0x66, 0x69, 0x6e,
 	0x62, 0x6f, 0x74, 0x2e, 0x61, 0x75, 0x64, 0x69, 0x6f, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x72, 0x65,
@@ -512,8 +631,14 @@ var file_audio_proto_rawDesc = []byte{
 	0x63, 0x6f, 0x72, 0x64, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x71, 0x1a, 0x27, 0x2e,
 	0x63, 0x68, 0x61, 0x74, 0x66, 0x69, 0x6e, 0x62, 0x6f, 0x74, 0x2e, 0x61, 0x75, 0x64, 0x69, 0x6f,
 	0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x53, 0x74, 0x61,
-	0x74, 0x75, 0x73, 0x52, 0x73, 0x70, 0x42, 0x0b, 0x5a, 0x09, 0x2e, 0x3b, 0x61, 0x75, 0x64, 0x69,
-	0x6f, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x74, 0x75, 0x73, 0x52, 0x73, 0x70, 0x12, 0x5d, 0x0a, 0x0d, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63,
+	0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x25, 0x2e, 0x63, 0x68, 0x61, 0x74, 0x66, 0x69,
+	0x6e, 0x62, 0x6f, 0x74, 0x2e, 0x61, 0x75, 0x64, 0x69, 0x6f, 0x2e, 0x76, 0x31, 0x2e, 0x54, 0x72,
+	0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x65, 0x71, 0x1a, 0x25,
+	0x2e, 0x63, 0x68, 0x61, 0x74, 0x66, 0x69, 0x6e, 0x62, 0x6f, 0x74, 0x2e, 0x61, 0x75, 0x64, 0x69,
+	0x6f, 0x2e, 0x76, 0x31, 0x2e, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69,
+	0x6f, 0x6e, 0x52, 0x73, 0x70, 0x42, 0x0b, 0x5a, 0x09, 0x2e, 0x3b, 0x61, 0x75, 0x64, 0x69, 0x6f,
+	0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -528,7 +653,7 @@ func file_audio_proto_rawDescGZIP() []byte {
 	return file_audio_proto_rawDescData
 }
 
-var file_audio_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_audio_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_audio_proto_goTypes = []interface{}{
 	(*CreateRecordReq)(nil),    // 0: chatfinbot.audio.v1.CreateRecordReq
 	(*CreateRecordRsp)(nil),    // 1: chatfinbot.audio.v1.CreateRecordRsp
@@ -537,6 +662,8 @@ var file_audio_proto_goTypes = []interface{}{
 	(*MediaRecord)(nil),        // 4: chatfinbot.audio.v1.MediaRecord
 	(*GetRecordStatusReq)(nil), // 5: chatfinbot.audio.v1.GetRecordStatusReq
 	(*GetRecordStatusRsp)(nil), // 6: chatfinbot.audio.v1.GetRecordStatusRsp
+	(*TranscriptionReq)(nil),   // 7: chatfinbot.audio.v1.TranscriptionReq
+	(*TranscriptionRsp)(nil),   // 8: chatfinbot.audio.v1.TranscriptionRsp
 }
 var file_audio_proto_depIdxs = []int32{
 	4, // 0: chatfinbot.audio.v1.GetRecordListRsp.list:type_name -> chatfinbot.audio.v1.MediaRecord
@@ -544,11 +671,13 @@ var file_audio_proto_depIdxs = []int32{
 	0, // 2: chatfinbot.audio.v1.AudioService.CreateRecord:input_type -> chatfinbot.audio.v1.CreateRecordReq
 	2, // 3: chatfinbot.audio.v1.AudioService.GetRecordList:input_type -> chatfinbot.audio.v1.GetRecordListReq
 	5, // 4: chatfinbot.audio.v1.AudioService.GetRecordStatus:input_type -> chatfinbot.audio.v1.GetRecordStatusReq
-	1, // 5: chatfinbot.audio.v1.AudioService.CreateRecord:output_type -> chatfinbot.audio.v1.CreateRecordRsp
-	3, // 6: chatfinbot.audio.v1.AudioService.GetRecordList:output_type -> chatfinbot.audio.v1.GetRecordListRsp
-	6, // 7: chatfinbot.audio.v1.AudioService.GetRecordStatus:output_type -> chatfinbot.audio.v1.GetRecordStatusRsp
-	5, // [5:8] is the sub-list for method output_type
-	2, // [2:5] is the sub-list for method input_type
+	7, // 5: chatfinbot.audio.v1.AudioService.Transcription:input_type -> chatfinbot.audio.v1.TranscriptionReq
+	1, // 6: chatfinbot.audio.v1.AudioService.CreateRecord:output_type -> chatfinbot.audio.v1.CreateRecordRsp
+	3, // 7: chatfinbot.audio.v1.AudioService.GetRecordList:output_type -> chatfinbot.audio.v1.GetRecordListRsp
+	6, // 8: chatfinbot.audio.v1.AudioService.GetRecordStatus:output_type -> chatfinbot.audio.v1.GetRecordStatusRsp
+	8, // 9: chatfinbot.audio.v1.AudioService.Transcription:output_type -> chatfinbot.audio.v1.TranscriptionRsp
+	6, // [6:10] is the sub-list for method output_type
+	2, // [2:6] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name
 	2, // [2:2] is the sub-list for extension extendee
 	0, // [0:2] is the sub-list for field type_name
@@ -644,6 +773,30 @@ func file_audio_proto_init() {
 				return nil
 			}
 		}
+		file_audio_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TranscriptionReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_audio_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*TranscriptionRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -651,7 +804,7 @@ func file_audio_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_audio_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

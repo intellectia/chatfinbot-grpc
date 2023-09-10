@@ -8,6 +8,7 @@ service AudioService {
     rpc CreateRecord(CreateRecordReq) returns (CreateRecordRsp);
     rpc GetRecordList(GetRecordListReq) returns (GetRecordListRsp);
     rpc GetRecordStatus(GetRecordStatusReq) returns (GetRecordStatusRsp);
+    rpc Transcription(TranscriptionReq) returns (TranscriptionRsp);
 }
 
 message CreateRecordReq {
@@ -48,4 +49,14 @@ message GetRecordStatusReq {
 
 message GetRecordStatusRsp {
     MediaRecord data = 1;
+}
+
+message TranscriptionReq {
+    string session_id = 1; // session id
+    string content = 2; // 内容
+    uint32 status = 3; // 状态 1=保存 2=保存并生成总结
+}
+
+message TranscriptionRsp {
+    string job_id = 1; // 任务id
 }

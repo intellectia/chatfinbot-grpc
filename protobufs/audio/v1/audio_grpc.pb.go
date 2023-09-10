@@ -22,6 +22,7 @@ const (
 	AudioService_CreateRecord_FullMethodName    = "/chatfinbot.audio.v1.AudioService/CreateRecord"
 	AudioService_GetRecordList_FullMethodName   = "/chatfinbot.audio.v1.AudioService/GetRecordList"
 	AudioService_GetRecordStatus_FullMethodName = "/chatfinbot.audio.v1.AudioService/GetRecordStatus"
+	AudioService_Transcription_FullMethodName   = "/chatfinbot.audio.v1.AudioService/Transcription"
 )
 
 // AudioServiceClient is the client API for AudioService service.
@@ -31,6 +32,7 @@ type AudioServiceClient interface {
 	CreateRecord(ctx context.Context, in *CreateRecordReq, opts ...grpc.CallOption) (*CreateRecordRsp, error)
 	GetRecordList(ctx context.Context, in *GetRecordListReq, opts ...grpc.CallOption) (*GetRecordListRsp, error)
 	GetRecordStatus(ctx context.Context, in *GetRecordStatusReq, opts ...grpc.CallOption) (*GetRecordStatusRsp, error)
+	Transcription(ctx context.Context, in *TranscriptionReq, opts ...grpc.CallOption) (*TranscriptionRsp, error)
 }
 
 type audioServiceClient struct {
@@ -68,6 +70,15 @@ func (c *audioServiceClient) GetRecordStatus(ctx context.Context, in *GetRecordS
 	return out, nil
 }
 
+func (c *audioServiceClient) Transcription(ctx context.Context, in *TranscriptionReq, opts ...grpc.CallOption) (*TranscriptionRsp, error) {
+	out := new(TranscriptionRsp)
+	err := c.cc.Invoke(ctx, AudioService_Transcription_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AudioServiceServer is the server API for AudioService service.
 // All implementations must embed UnimplementedAudioServiceServer
 // for forward compatibility
@@ -75,6 +86,7 @@ type AudioServiceServer interface {
 	CreateRecord(context.Context, *CreateRecordReq) (*CreateRecordRsp, error)
 	GetRecordList(context.Context, *GetRecordListReq) (*GetRecordListRsp, error)
 	GetRecordStatus(context.Context, *GetRecordStatusReq) (*GetRecordStatusRsp, error)
+	Transcription(context.Context, *TranscriptionReq) (*TranscriptionRsp, error)
 	mustEmbedUnimplementedAudioServiceServer()
 }
 
@@ -90,6 +102,9 @@ func (UnimplementedAudioServiceServer) GetRecordList(context.Context, *GetRecord
 }
 func (UnimplementedAudioServiceServer) GetRecordStatus(context.Context, *GetRecordStatusReq) (*GetRecordStatusRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRecordStatus not implemented")
+}
+func (UnimplementedAudioServiceServer) Transcription(context.Context, *TranscriptionReq) (*TranscriptionRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Transcription not implemented")
 }
 func (UnimplementedAudioServiceServer) mustEmbedUnimplementedAudioServiceServer() {}
 
@@ -158,6 +173,24 @@ func _AudioService_GetRecordStatus_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AudioService_Transcription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TranscriptionReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AudioServiceServer).Transcription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AudioService_Transcription_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AudioServiceServer).Transcription(ctx, req.(*TranscriptionReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AudioService_ServiceDesc is the grpc.ServiceDesc for AudioService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -176,6 +209,10 @@ var AudioService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetRecordStatus",
 			Handler:    _AudioService_GetRecordStatus_Handler,
+		},
+		{
+			MethodName: "Transcription",
+			Handler:    _AudioService_Transcription_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
