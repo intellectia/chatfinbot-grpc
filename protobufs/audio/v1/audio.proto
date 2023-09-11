@@ -56,7 +56,7 @@ message TranscriptionReq {
     string doc_id = 1; // 音频id
     string session_id = 2; // session id
     string content = 3; // 追加内容
-    uint32 status = 4; // 状态 1=追加 2=覆盖 3=结束录制
+    uint32 stype = 4; // 状态 1=追加 2=覆盖 3=结束录制
 }
 
 message TranscriptionRsp {
