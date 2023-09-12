@@ -29,7 +29,7 @@ type ChatServiceClient interface {
 	UpdateSession(ctx context.Context, in *Session, opts ...grpc.CallOption) (*SessionResponse, error)
 	DeleteSession(ctx context.Context, in *Session, opts ...grpc.CallOption) (*Empty, error)
 	GetSessionByID(ctx context.Context, in *Session, opts ...grpc.CallOption) (*SessionResponse, error)
-	GetSessionList(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetSessionListResponse, error)
+	GetSessionList(ctx context.Context, in *GetSessionListReq, opts ...grpc.CallOption) (*GetSessionListResponse, error)
 	// New RPC methods for managing chat
 	GetChatHistory(ctx context.Context, in *GetChatHistoryReq, opts ...grpc.CallOption) (*GetChatHistoryRsp, error)
 	IntelChat(ctx context.Context, in *IntelChatReq, opts ...grpc.CallOption) (*IntelChatRsp, error)
@@ -98,7 +98,7 @@ func (c *chatServiceClient) GetSessionByID(ctx context.Context, in *Session, opt
 	return out, nil
 }
 
-func (c *chatServiceClient) GetSessionList(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetSessionListResponse, error) {
+func (c *chatServiceClient) GetSessionList(ctx context.Context, in *GetSessionListReq, opts ...grpc.CallOption) (*GetSessionListResponse, error) {
 	out := new(GetSessionListResponse)
 	err := c.cc.Invoke(ctx, "/chatfinbot.chat.v1.ChatService/GetSessionList", in, out, opts...)
 	if err != nil {
@@ -145,7 +145,7 @@ type ChatServiceServer interface {
 	UpdateSession(context.Context, *Session) (*SessionResponse, error)
 	DeleteSession(context.Context, *Session) (*Empty, error)
 	GetSessionByID(context.Context, *Session) (*SessionResponse, error)
-	GetSessionList(context.Context, *Empty) (*GetSessionListResponse, error)
+	GetSessionList(context.Context, *GetSessionListReq) (*GetSessionListResponse, error)
 	// New RPC methods for managing chat
 	GetChatHistory(context.Context, *GetChatHistoryReq) (*GetChatHistoryRsp, error)
 	IntelChat(context.Context, *IntelChatReq) (*IntelChatRsp, error)
@@ -175,7 +175,7 @@ func (UnimplementedChatServiceServer) DeleteSession(context.Context, *Session) (
 func (UnimplementedChatServiceServer) GetSessionByID(context.Context, *Session) (*SessionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSessionByID not implemented")
 }
-func (UnimplementedChatServiceServer) GetSessionList(context.Context, *Empty) (*GetSessionListResponse, error) {
+func (UnimplementedChatServiceServer) GetSessionList(context.Context, *GetSessionListReq) (*GetSessionListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSessionList not implemented")
 }
 func (UnimplementedChatServiceServer) GetChatHistory(context.Context, *GetChatHistoryReq) (*GetChatHistoryRsp, error) {
@@ -309,7 +309,7 @@ func _ChatService_GetSessionByID_Handler(srv interface{}, ctx context.Context, d
 }
 
 func _ChatService_GetSessionList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Empty)
+	in := new(GetSessionListReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -321,7 +321,7 @@ func _ChatService_GetSessionList_Handler(srv interface{}, ctx context.Context, d
 		FullMethod: "/chatfinbot.chat.v1.ChatService/GetSessionList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).GetSessionList(ctx, req.(*Empty))
+		return srv.(ChatServiceServer).GetSessionList(ctx, req.(*GetSessionListReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
