@@ -78,14 +78,14 @@ message ChatHistory {
     ChatHistoryAdditionalData additional_data = 7;
     uint32 chat_type = 8; // 消息类型 0=普通消息 1=公司简介 2=行情指标 3=股东信息 4=高管 5=财务指标 6主营业务 7=员工构成
     string params = 9;
+    string context = 10;
+    string images = 11;
 }
 
 message ChatHistoryAdditionalData {
     string references = 1;
     string plotly_graph = 2;
     repeated ChatHistoryDocuments documents = 3;
-    string context = 4;
-    string images = 5;
 }
 
 message ChatHistoryDocuments {
