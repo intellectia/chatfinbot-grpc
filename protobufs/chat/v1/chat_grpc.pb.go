@@ -29,6 +29,7 @@ const (
 	ChatService_GetChatHistory_FullMethodName        = "/chatfinbot.chat.v1.ChatService/GetChatHistory"
 	ChatService_IntelChat_FullMethodName             = "/chatfinbot.chat.v1.ChatService/IntelChat"
 	ChatService_CheckUserSessionInner_FullMethodName = "/chatfinbot.chat.v1.ChatService/CheckUserSessionInner"
+	ChatService_GetAudioWsURL_FullMethodName         = "/chatfinbot.chat.v1.ChatService/GetAudioWsURL"
 )
 
 // ChatServiceClient is the client API for ChatService service.
@@ -47,6 +48,7 @@ type ChatServiceClient interface {
 	GetChatHistory(ctx context.Context, in *GetChatHistoryReq, opts ...grpc.CallOption) (*GetChatHistoryRsp, error)
 	IntelChat(ctx context.Context, in *IntelChatReq, opts ...grpc.CallOption) (*IntelChatRsp, error)
 	CheckUserSessionInner(ctx context.Context, in *CheckUserSessionReq, opts ...grpc.CallOption) (*CheckUserSessionRsp, error)
+	GetAudioWsURL(ctx context.Context, in *GetAudioWsURLReq, opts ...grpc.CallOption) (*GetAudioWsURLRsp, error)
 }
 
 type chatServiceClient struct {
@@ -147,6 +149,15 @@ func (c *chatServiceClient) CheckUserSessionInner(ctx context.Context, in *Check
 	return out, nil
 }
 
+func (c *chatServiceClient) GetAudioWsURL(ctx context.Context, in *GetAudioWsURLReq, opts ...grpc.CallOption) (*GetAudioWsURLRsp, error) {
+	out := new(GetAudioWsURLRsp)
+	err := c.cc.Invoke(ctx, ChatService_GetAudioWsURL_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ChatServiceServer is the server API for ChatService service.
 // All implementations must embed UnimplementedChatServiceServer
 // for forward compatibility
@@ -163,6 +174,7 @@ type ChatServiceServer interface {
 	GetChatHistory(context.Context, *GetChatHistoryReq) (*GetChatHistoryRsp, error)
 	IntelChat(context.Context, *IntelChatReq) (*IntelChatRsp, error)
 	CheckUserSessionInner(context.Context, *CheckUserSessionReq) (*CheckUserSessionRsp, error)
+	GetAudioWsURL(context.Context, *GetAudioWsURLReq) (*GetAudioWsURLRsp, error)
 	mustEmbedUnimplementedChatServiceServer()
 }
 
@@ -199,6 +211,9 @@ func (UnimplementedChatServiceServer) IntelChat(context.Context, *IntelChatReq) 
 }
 func (UnimplementedChatServiceServer) CheckUserSessionInner(context.Context, *CheckUserSessionReq) (*CheckUserSessionRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckUserSessionInner not implemented")
+}
+func (UnimplementedChatServiceServer) GetAudioWsURL(context.Context, *GetAudioWsURLReq) (*GetAudioWsURLRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAudioWsURL not implemented")
 }
 func (UnimplementedChatServiceServer) mustEmbedUnimplementedChatServiceServer() {}
 
@@ -393,6 +408,24 @@ func _ChatService_CheckUserSessionInner_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ChatService_GetAudioWsURL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAudioWsURLReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ChatServiceServer).GetAudioWsURL(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ChatService_GetAudioWsURL_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ChatServiceServer).GetAudioWsURL(ctx, req.(*GetAudioWsURLReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ChatService_ServiceDesc is the grpc.ServiceDesc for ChatService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -439,6 +472,10 @@ var ChatService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckUserSessionInner",
 			Handler:    _ChatService_CheckUserSessionInner_Handler,
+		},
+		{
+			MethodName: "GetAudioWsURL",
+			Handler:    _ChatService_GetAudioWsURL_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
