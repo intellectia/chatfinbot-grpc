@@ -33,7 +33,7 @@ message GetRecordListRsp {
 
 message MediaRecord {
     string doc_id = 1; // 文件id
-    string content = 2; // 内容
+    repeated MediaContent content = 2; // 内容
     string session_id = 3; // session id
     string summary = 4; // 总结
     string create_at = 5; // 创建时间
@@ -55,11 +55,11 @@ message GetRecordStatusRsp {
 message TranscriptionReq {
     string doc_id = 1; // 音频id
     string session_id = 2; // session id
-    repeated TransContent content = 3; // 追加内容
+    repeated MediaContent content = 3; // 追加内容
     uint32 stype = 4; // 状态 1=追加 2=覆盖 3=结束录制   2=后面会去掉
 }
 
-message TransContent {
+message MediaContent {
     double start = 1;
     string text = 2;
     double duration = 3;
