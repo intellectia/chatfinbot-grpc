@@ -31,7 +31,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_WritingsService_ScanningText_0(ctx context.Context, marshaler runtime.Marshaler, client WritingsServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ScanningService_ScanningText_0(ctx context.Context, marshaler runtime.Marshaler, client ScanningServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ScanningTextRequest
 	var metadata runtime.ServerMetadata
 
@@ -48,7 +48,7 @@ func request_WritingsService_ScanningText_0(ctx context.Context, marshaler runti
 
 }
 
-func local_request_WritingsService_ScanningText_0(ctx context.Context, marshaler runtime.Marshaler, server WritingsServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ScanningService_ScanningText_0(ctx context.Context, marshaler runtime.Marshaler, server ScanningServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ScanningTextRequest
 	var metadata runtime.ServerMetadata
 
@@ -65,13 +65,13 @@ func local_request_WritingsService_ScanningText_0(ctx context.Context, marshaler
 
 }
 
-// RegisterWritingsServiceHandlerServer registers the http handlers for service WritingsService to "mux".
-// UnaryRPC     :call WritingsServiceServer directly.
+// RegisterScanningServiceHandlerServer registers the http handlers for service ScanningService to "mux".
+// UnaryRPC     :call ScanningServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterWritingsServiceHandlerFromEndpoint instead.
-func RegisterWritingsServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server WritingsServiceServer) error {
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterScanningServiceHandlerFromEndpoint instead.
+func RegisterScanningServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server ScanningServiceServer) error {
 
-	mux.Handle("POST", pattern_WritingsService_ScanningText_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_ScanningService_ScanningText_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -79,12 +79,12 @@ func RegisterWritingsServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.scanning.v1.WritingsService/ScanningText", runtime.WithHTTPPathPattern("/scanning/text"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.scanning.v1.ScanningService/ScanningText", runtime.WithHTTPPathPattern("/scanning/text"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_WritingsService_ScanningText_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ScanningService_ScanningText_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -92,16 +92,16 @@ func RegisterWritingsServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			return
 		}
 
-		forward_WritingsService_ScanningText_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ScanningService_ScanningText_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterWritingsServiceHandlerFromEndpoint is same as RegisterWritingsServiceHandler but
+// RegisterScanningServiceHandlerFromEndpoint is same as RegisterScanningServiceHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterWritingsServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterScanningServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.DialContext(ctx, endpoint, opts...)
 	if err != nil {
 		return err
@@ -121,41 +121,41 @@ func RegisterWritingsServiceHandlerFromEndpoint(ctx context.Context, mux *runtim
 		}()
 	}()
 
-	return RegisterWritingsServiceHandler(ctx, mux, conn)
+	return RegisterScanningServiceHandler(ctx, mux, conn)
 }
 
-// RegisterWritingsServiceHandler registers the http handlers for service WritingsService to "mux".
+// RegisterScanningServiceHandler registers the http handlers for service ScanningService to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterWritingsServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterWritingsServiceHandlerClient(ctx, mux, NewWritingsServiceClient(conn))
+func RegisterScanningServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterScanningServiceHandlerClient(ctx, mux, NewScanningServiceClient(conn))
 }
 
-// RegisterWritingsServiceHandlerClient registers the http handlers for service WritingsService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "WritingsServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "WritingsServiceClient"
+// RegisterScanningServiceHandlerClient registers the http handlers for service ScanningService
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "ScanningServiceClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "ScanningServiceClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "WritingsServiceClient" to call the correct interceptors.
-func RegisterWritingsServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client WritingsServiceClient) error {
+// "ScanningServiceClient" to call the correct interceptors.
+func RegisterScanningServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client ScanningServiceClient) error {
 
-	mux.Handle("POST", pattern_WritingsService_ScanningText_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_ScanningService_ScanningText_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.scanning.v1.WritingsService/ScanningText", runtime.WithHTTPPathPattern("/scanning/text"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.scanning.v1.ScanningService/ScanningText", runtime.WithHTTPPathPattern("/scanning/text"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_WritingsService_ScanningText_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ScanningService_ScanningText_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_WritingsService_ScanningText_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ScanningService_ScanningText_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -163,9 +163,9 @@ func RegisterWritingsServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 }
 
 var (
-	pattern_WritingsService_ScanningText_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"scanning", "text"}, ""))
+	pattern_ScanningService_ScanningText_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"scanning", "text"}, ""))
 )
 
 var (
-	forward_WritingsService_ScanningText_0 = runtime.ForwardResponseMessage
+	forward_ScanningService_ScanningText_0 = runtime.ForwardResponseMessage
 )
