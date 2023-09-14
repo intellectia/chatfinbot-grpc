@@ -7,7 +7,7 @@ option go_package = ".;scanningpb";
 import "google/api/annotations.proto";
 
 
-service WritingsService {
+service ScanningService {
     rpc ScanningText(ScanningTextRequest) returns (ScanningTextResponse) {
         option (google.api.http) = {
             post: "/scanning/text"
