@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package chatfinbot.scanning.v1;
+
+option go_package = ".;scanningpb";
+
+import "google/api/annotations.proto";
+
+
+service WritingsService {
+    rpc ScanningText(ScanningTextRequest) returns (ScanningTextResponse) {
+        option (google.api.http) = {
+            post: "/scanning/text"
+            body: "text"
+        };
+    };
+}
+
+message ScanningTextRequest {
+    string text = 1;
+}
+
+message ScanningTextResponse {
+    bool valid = 1;
+    string reason = 2;
+}
+
