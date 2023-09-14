@@ -4,6 +4,21 @@ package chatfinbot.user.v1;
 
 option go_package = ".;userpb";
 
+enum VipType {
+  VipTypeUnknown = 0; // 未知（不要使用）
+  VipTypePerson = 1; // 个人
+  VipTypeMember = 2; // 会员
+  VipTypeBusiness = 3; // 企业
+}
+
+enum EditInfoType {
+  EditInfoTypeUnknown = 0; // 未知（不要使用）
+  EditInfoTypePass = 1; // 修改密码
+  EditInfoTypeNick = 2; // 修改昵称
+  EditInfoTypeJob = 3; // 修改职业
+  EditInfoTypeCompany = 4; // 修改公司
+}
+
 service UserService {
   rpc Register(UserRequest) returns (RegisterResponse);
   rpc LoginWithEmail(LoginWithEmailRequest) returns (LoginWithEmailResponse); // email login
@@ -15,6 +30,8 @@ service UserService {
   rpc InitUserExtraInfo(InitUserExtraInfoRequest) returns (InitUserExtraInfoResponse);
   rpc BindPhone(BindPhoneRequest) returns (LoginResponse);
   rpc WeChatLogin(WeChatLoginRequest) returns (LoginResponse);
+  rpc GetInfo(GetInfoRequest) returns (GetInfoResponse);
+  rpc EditInfo(EditInfoRequest) returns (EditInfoResponse);
 }
 
 message UserRequest {
@@ -109,4 +126,34 @@ message LoginResponse {
   string temp_token = 7; // 临时token，用于初始化
   string provider_user_app_id = 8; // Identifier from OAuth provider (e.g., WeChat)
   string login_type = 9; // phone, email, wechat, username
+}
+
+message GetInfoRequest {
+
+}
+
+message UserInfo {
+  string user_id = 1;
+  string nickname = 2;
+  string job = 3;
+  string company_name = 4;  
+  VipType level = 5;
+}
+
+message GetInfoResponse {
+  UserInfo info = 1;
+}
+
+message EditInfoRequest {
+  EditInfoType stype = 1;
+  string nickname = 2; 
+  string old_pass = 3; 
+  string new_pass = 4; 
+  string comfirm_pass = 5; 
+  string job = 6; 
+  string company_name = 7; 
+}
+
+message EditInfoResponse {
+
 }
