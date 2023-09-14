@@ -42,6 +42,8 @@ message MediaRecord {
     string schedule = 8; // 进度 
     string url = 9; // 视频链接地址 
     uint32 media_type = 10; // 媒体类型 
+    repeated MediaSummary partial_summary = 11; // 部分内容
+    
 }
 
 message GetRecordStatusReq {
@@ -60,14 +62,20 @@ message TranscriptionReq {
 }
 
 message MediaContent {
-    double start = 1;
+    string start = 1;
     string text = 2;
     double duration = 3;
     string role = 4;
 }
 
+message MediaSummary {
+    string start = 1;
+    string text = 2;
+}
+
 message TranscriptionRsp {
-    
+    int32 code = 1; 
+    string message = 2;
 }
 
 message GetTransDataReq {
