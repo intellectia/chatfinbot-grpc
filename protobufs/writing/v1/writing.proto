@@ -16,6 +16,7 @@ message Writing {
     string title = 7;
     string content = 8;
     string writing_type = 9;
+    bool is_template = 10;
 }
 
 service WritingsService {
