@@ -139,6 +139,7 @@ message UserInfo {
   string company_name = 4;  
   VipType level = 5;
   string mobile = 6;
+  string country_code = 7;
 }
 
 message GetInfoResponse {
