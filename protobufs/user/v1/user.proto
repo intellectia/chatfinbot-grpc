@@ -138,6 +138,7 @@ message UserInfo {
   string job = 3;
   string company_name = 4;  
   VipType level = 5;
+  string mobile = 6;
 }
 
 message GetInfoResponse {
