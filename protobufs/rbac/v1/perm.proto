@@ -1,0 +1,244 @@
+syntax = "proto3";
+
+package chatfinbot.rbac.v1;
+
+option go_package = ".;rbacpb";
+import "google/api/annotations.proto";
+
+service RbacService {
+    rpc CheckChatPerm(CheckChatPermReq) returns (CheckChatPermRsp) {
+        option (google.api.http) = {
+			post: "/v1/rbac/checkchatperm",
+			body: "*"
+		};
+    };
+    rpc CheckWritingPerm(CheckWritingPermReq) returns (CheckWritingPermRsp) {
+        option (google.api.http) = {
+			post: "/v1/rbac/checkwritingperm",
+			body: "*"
+		};
+    };
+    rpc CheckMediaPerm(CheckMediaPermReq) returns (CheckMediaPermRsp) {
+        option (google.api.http) = {
+			post: "/v1/rbac/checkmediaperm",
+			body: "*"
+		};
+    };
+    rpc CheckChatPermInner(CheckChatPermReq) returns (CheckChatPermRsp) {
+        option (google.api.http) = {
+			post: "/v1/rbac/checkchatperm-inner",
+			body: "*"
+		};
+    };
+    rpc CheckWritingPermInner(CheckWritingPermReq) returns (CheckWritingPermRsp) {
+        option (google.api.http) = {
+			post: "/v1/rbac/checkwritingperm-inner",
+			body: "*"
+		};
+    };
+    rpc CheckMediaPermInner(CheckMediaPermReq) returns (CheckMediaPermRsp) {
+        option (google.api.http) = {
+			post: "/v1/rbac/checkmediaperm-inner",
+			body: "*"
+		};
+    };
+    rpc SetChatPerm(SetChatPermReq) returns (SetChatPermRsp) {
+        option (google.api.http) = {
+			post: "/v1/rbac/setchatperm",
+			body: "*"
+		};
+    };
+    rpc SetWritingPerm(SetWritingPermReq) returns (SetWritingPermRsp)  {
+        option (google.api.http) = {
+			post: "/v1/rbac/setwritingperm",
+			body: "*"
+		};
+    };
+    rpc SetMediaPerm(SetMediaPermReq) returns (SetMediaPermRsp)  {
+        option (google.api.http) = {
+			post: "/v1/rbac/setmediaperm",
+			body: "*"
+		};
+    };
+    rpc SetChatPermInner(SetChatPermReq) returns (SetChatPermRsp)  {
+        option (google.api.http) = {
+			post: "/v1/rbac/setchatperm-inner",
+			body: "*"
+		};
+    };
+    rpc SetWritingPermInner(SetWritingPermReq) returns (SetWritingPermRsp) {
+        option (google.api.http) = {
+			post: "/v1/rbac/setwritingperm-inner",
+			body: "*"
+		};
+    };
+    rpc SetMediaPermInner(SetMediaPermReq) returns (SetMediaPermRsp)  {
+        option (google.api.http) = {
+			post: "/v1/rbac/setmediaperm-inner",
+			body: "*"
+		};
+    };
+}
+
+enum ChatType {
+    ChatTypeUnknown = 0; // 未知（不要使用）
+    ChatTypeChat = 1; // 问答
+    ChatTypeWriting = 2; // 写作
+    ChatTypeMedia = 3; // 音视频
+}
+
+enum ChatOpt {
+    ChatOptUnknown = 0; // 未知（不要使用）
+    ChatOptAnswerNum = 1; // 聊天问答数量
+    ChatOptUploadFormat = 2; // 上传文件格式
+    ChatOptOCR = 3; // ocr
+    ChatOptFileNum = 4; // 文件数量
+    ChatOptPageSize = 5; // 文件页数
+    ChatOptFileSize = 6; // 文件大小
+    ChatOptGraph = 7; // 图表生成
+    ChatOptMultiDoc = 8;  //多文档分析
+}
+
+enum WritingOpt {
+    WritingOptUnknown = 0; // 未知（不要使用）
+    WritingOptOutput = 1; // 输出文字数量
+    WritingOptInput = 2; // 输入文件数量及页数
+    WritingOptEdit = 3; // 写作编辑
+    WritingOptGraph = 4; // 图表生成
+    WritingOptExport = 5; // 导出格式
+    WritingOptGraphNum = 6; // 图表数量
+    WritingOptCustomColor = 7; // 自定义配色方案
+}
+
+enum MediaOpt {
+    MediaOptUnknown = 0; // 未知（不要使用）
+    MediaOptAudio = 1; // 输出音频
+    MediaOptVideo = 2; // 视频
+}
+
+message CheckChatPermReq {
+    string user_id = 1; // 用户id
+    repeated ChatPermItem list = 2;
+    int64 ts = 3; // 时间  外部接口才有效
+    string nonce = 4; // 随机数  外部接口才有效
+    string access_token = 5; // token 外部接口才有效
+}
+
+message ChatPermItem {
+    ChatOpt opt = 1; // 选项
+    string upload_format = 2; // 上传文件格式 只有在opt=ChatOptUploadFormat生效
+    uint32 ocr_num = 3; // OCR数量     只有在opt=ChatOptOCR生效
+    uint32 file_num = 4; // 文件数量    只有在opt=ChatOptFileNum  生效
+    uint32 page_size = 5; // 文件页数   只有在opt=ChatOptPageSize  生效
+    uint32 file_size = 6; // 文件大小 有在opt=ChatOptFileSize  生效
+}
+
+message PermData {
+    string title = 1; // 标题
+    string config = 2;  // 格式
+    bool perm = 3; // 权限
+    int32 limit = 4; // 限制
+}
+
+message CheckChatPermRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    repeated PermData list = 3; // 数据
+}
+
+message CheckWritingPermReq {
+    string user_id = 1; // 用户id
+    repeated WritingPermItem list = 2;
+    int64 ts = 3; // 时间  外部接口才有效
+    string nonce = 4; // 随机数  外部接口才有效
+    string access_token = 5; // token 外部接口才有效
+}
+
+message WritingPermItem {
+    WritingOpt opt = 1; // 选项
+    int32 intput_file_num = 2; // 输入文件数量
+    int32 intput_page_size = 3; // 输入文件页数
+    string export_format = 4; // 导出格式
+    int32 graph_num = 5; // 图表数量
+}
+
+message CheckWritingPermRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    repeated PermData list = 3; // 数据
+}
+
+message CheckMediaPermReq {
+    string user_id = 1; // 用户id
+    repeated MediaPermItem list = 2;
+    int64 ts = 3; // 时间  外部接口才有效
+    string nonce = 4; // 随机数  外部接口才有效
+    string access_token = 5; // token 外部接口才有效
+}
+
+message MediaPermItem {
+    MediaOpt opt = 1; // 选项
+    double duration = 2; // 花费的时长 
+}
+
+message CheckMediaPermRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    repeated PermData list = 3; // 数据
+}
+
+message SetChatPermReq {
+    string user_id = 1; // 用户id
+    repeated SetChatPermItem list = 2;
+    int64 ts = 3; // 时间  外部接口才有效
+    string nonce = 4; // 随机数  外部接口才有效
+    string access_token = 5; // token 外部接口才有效
+}
+
+message SetChatPermItem {
+    ChatOpt opt = 1; // 选项
+    uint32 ocr_num = 2; // OCR数量     只有在opt=ChatOptOCR生效
+    uint32 file_num = 3; // 文件数量    只有在opt=ChatOptFileNum  生效
+}
+
+message SetChatPermRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+}
+
+message SetWritingPermReq {
+    string user_id = 1; // 用户id
+    repeated SetWritingPermItem list = 2;
+    int64 ts = 3; // 时间  外部接口才有效
+    string nonce = 4; // 随机数  外部接口才有效
+    string access_token = 5; // token 外部接口才有效
+}
+
+message SetWritingPermItem {
+    WritingOpt opt = 1; // 选项
+    int32 intput_file_num = 2; // 输入文件数量
+    int32 graph_num = 3; // 图表数量
+}
+
+message SetWritingPermRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+}
+
+message SetMediaPermReq {
+    string user_id = 1; // 用户id
+    repeated SetMediaPermItem list = 2;
+    int64 ts = 3; // 时间  外部接口才有效
+    string nonce = 4; // 随机数  外部接口才有效
+    string access_token = 5; // token 外部接口才有效
+}
+
+message SetMediaPermItem {
+    MediaOpt opt = 1; // 选项
+    double duration = 2; // 花费的时长 
+}
+
+message SetMediaPermRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+}
