@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package chatfinbot.payment.v1;
+
+option go_package = ".;paymentpb";
+
+import "google/api/annotations.proto";
+
+message Order {
+    string order_id = 1;
+    string user_id = 2;
+    string plan_id = 3;
+    float total_amount = 4;  // Remember to handle decimals in a suitable manner for protobuf.
+    string currency = 5;
+    string order_status = 6; // Pending, Completed, Failed, Refunded, etc.
+    int64 created_at = 7;
+    int64 updated_at = 8;
+    string payment_method = 9; // Wechat, Alipay, Paypal.
+}
+
+service PaymentsService {
+    rpc CreateOrder(CreateOrderRequest) returns (OrderResponse) {
+        option (google.api.http) = {
+            post: "/orders"
+            body: "order_data"
+        };
+    };
+    
+    rpc ListOrders(ListOrdersRequest) returns (ListOrdersResponse) {
+        option (google.api.http) = {
+            get: "/orders"
+        };
+    };
+    
+    rpc GetOrderStatus(GetOrderStatusRequest) returns (GetOrderStatusResponse) {
+        option (google.api.http) = {
+            get: "/orders/{order_id}/status"
+        };
+    };
+}
+
+// Messages for CreateOrder
+message CreateOrderRequest {
+    Order order_data = 1;
+}
+
+message OrderResponse {
+    Order order_data = 1;
+    string status = 2;
+    string message = 3;
+}
+
+// Messages for ListOrders
+message ListOrdersRequest {
+    int32 page = 1;
+    int32 limit = 2;
+    string sort_by = 3;
+    bool descending = 4;
+}
+
+message ListOrdersResponse {
+    repeated Order orders = 1;
+    int32 total_records = 2;
+    string status = 3;
+    string message = 4;
+}
+
+// Messages for GetOrderStatus
+message GetOrderStatusRequest {
+    string order_id = 1;
+}
+
+message GetOrderStatusResponse {
+    string order_status = 1;
+    string status = 2;  // General status for the response (e.g., success, failure).
+    string message = 3;  // Optional message providing more details.
+}
