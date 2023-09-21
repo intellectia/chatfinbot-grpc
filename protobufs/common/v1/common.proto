@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package chatfinbot.common.v1;
+
+option go_package = ".;commonpb";
+
+message ErrorMsg {
+    int32 ret = 1; //
+    string msg = 2; //
+}

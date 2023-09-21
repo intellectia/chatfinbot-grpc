@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package chatfinbot.common.v1;
+
+option go_package = ".;commonpb";
+
+
+enum RetCode {
+    // 通用错误码
+    SUCCEED = 0;
+    ERR_PARAMETER_WRONG                     = 10000;    // 请求参数错误
+    ERR_AUTH_FAILED                         = 10001;    // 鉴权失败
+    ERR_PERMISSION_DENIED                   = 10002;    // 没有权限
+    ERR_SYSTEM_BUSY                         = 10003;    // 系统错误
+    ERR_BACKEND_RPC_FAILED                  = 10004;    // 后端访问错误
+    ERR_REDIS_FAILED                        = 10005;    // 后端访问REDIS错误
+    ERR_MYSQL_FAILED                        = 10006;    // 后端访问MySQL错误
+    ERR_JSON_MARSHAL_FAILED                 = 10007;    // JSON序列化失败
+    ERR_GET_USER_INFO_FAILED                = 10008;    // 获取用户基本信息失败
+    ERR_UID_NIL                             = 10009;    // 登录态获取UID为空
+    ERR_FREQUENCY_LIMIT                     = 10010;    // 频率限制了
+    ERR_SERVER_FAILED                       = 10011;    // 服务器发生一般性错误
+    ERR_ES                                  = 10012;    // 操作 ES 失败
+    ERR_JSON_UNMARSHAL_FAILED               = 10013;    // JSON反序列化失败
+    ERR_HTTP_REQUEST_FAILED                 = 10014;    // http请求失败
+    ERR_HTTP_GET_RSP_FAILED                 = 10015;    // http解包失败
+    ERR_PB_MARSHAL_FAILED                   = 10016;    // Protobuf序列化失败
+    ERR_PB_UNMARSHAL_FAILED                 = 10017;    // Protobuf反序列化失败
+    ERR_GET_COMM_REQ_FAILED                 = 10018;    // 获取CommReq失败
+    ERR_NEW_HTTP_CLIENT_WITH_ADDRESS_FAILED = 10019;    // 新建HTTP Client失败
+    ERR_HTTP_CLIENT_DO_FAILED               = 10020;    // HTTPClient.Do 失败
+    ERR_HTTP_CLIENT_GET_HTTP_RSP_FAILED     = 10021;    // HTTPClient GetHTTPRsp失败
+    ERR_KAFKA_FAILED                        = 10022;    // kafka失败
+    ERR_USER_NOT_LOGIN                      = 10023;    // 用户未登录
+    ERR_SESSION_INVALID                     = 10024;    // session无效
+}
+
