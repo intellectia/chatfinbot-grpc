@@ -250,6 +250,19 @@ message SetMediaPermRsp {
     string msg = 2; // msg
 }
 
+message UserQuotaUsage {
+    uint32 answer_num = 1; // 回答次数
+    uint32 ocr_num = 2; // ocr次数
+    uint32 file_num = 3; // 文件次数
+}
+
+enum UserType {
+    UserTypeUnknown = 0; // 未知（不要使用）
+    UserTypePerson = 1; // 个人
+    UserTypeVip = 2; // 会员
+    UserTypeBusiness = 3; // 企业
+}
+
 message PermConfig {
     ChatPermConfig chat_config = 1;
     WritingPermConfig writing_config = 2;
