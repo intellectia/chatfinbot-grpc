@@ -30,6 +30,7 @@ message UploadRequest {
   bytes file_content = 1;
   string file_name = 2;
   string bucket_name = 3;
+  string doc_id = 4;
 }
 
 message GetFileListRequest {}

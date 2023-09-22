@@ -9,7 +9,7 @@ import "google/api/annotations.proto";
 message Order {
     string order_id = 1;
     string user_id = 2;
-    string plan_id = 3;
+    string item_id = 3;
     float total_amount = 4;  // Remember to handle decimals in a suitable manner for protobuf.
     string currency = 5;
     string order_status = 6; // Pending, Completed, Failed, Refunded, etc.
