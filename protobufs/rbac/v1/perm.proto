@@ -247,5 +247,7 @@ message SetMediaPermRsp {
 message UserQuotaUsage {
     uint32 answer_num = 1; // 回答次数
     uint32 ocr_num = 2; // ocr次数
-    uint32 file_num = 3; // 文件次数
+    uint32 chat_file_num = 3; // 聊天使用文件数量
+    uint32 writing_file_num = 4; // 写作输入文件数量
+    uint32 writing_graph_num = 5; // 写作生成图表数量
 }
