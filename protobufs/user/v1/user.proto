@@ -32,6 +32,16 @@ service UserService {
   rpc WeChatLogin(WeChatLoginRequest) returns (LoginResponse);
   rpc GetInfo(GetInfoRequest) returns (GetInfoResponse);
   rpc EditInfo(EditInfoRequest) returns (EditInfoResponse);
+  rpc GetUserUsage(GetUserUsageRequest) returns (GetUserUsageResponse);
+}
+
+message GetUserUsageRequest {
+  string user_id = 1;
+}
+
+message GetUserUsageResponse {
+  int64 video_time = 1;
+  int64 audio_time = 2;
 }
 
 message UserRequest {
@@ -140,6 +150,8 @@ message UserInfo {
   VipType level = 5;
   string mobile = 6;
   string country_code = 7;
+  int64 VipStartTime = 8;
+  int64 VipEndTime = 9;
 }
 
 message GetInfoResponse {
