@@ -25,6 +25,7 @@ type PaymentsServiceClient interface {
 	CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*OrderResponse, error)
 	ListOrders(ctx context.Context, in *ListOrdersRequest, opts ...grpc.CallOption) (*ListOrdersResponse, error)
 	GetOrderStatus(ctx context.Context, in *GetOrderStatusRequest, opts ...grpc.CallOption) (*GetOrderStatusResponse, error)
+	GetPlanDetail(ctx context.Context, in *GetPlanDetailRequest, opts ...grpc.CallOption) (*GetPlanDetailResponse, error)
 }
 
 type paymentsServiceClient struct {
@@ -62,6 +63,15 @@ func (c *paymentsServiceClient) GetOrderStatus(ctx context.Context, in *GetOrder
 	return out, nil
 }
 
+func (c *paymentsServiceClient) GetPlanDetail(ctx context.Context, in *GetPlanDetailRequest, opts ...grpc.CallOption) (*GetPlanDetailResponse, error) {
+	out := new(GetPlanDetailResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.payment.v1.PaymentsService/GetPlanDetail", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PaymentsServiceServer is the server API for PaymentsService service.
 // All implementations must embed UnimplementedPaymentsServiceServer
 // for forward compatibility
@@ -69,6 +79,7 @@ type PaymentsServiceServer interface {
 	CreateOrder(context.Context, *CreateOrderRequest) (*OrderResponse, error)
 	ListOrders(context.Context, *ListOrdersRequest) (*ListOrdersResponse, error)
 	GetOrderStatus(context.Context, *GetOrderStatusRequest) (*GetOrderStatusResponse, error)
+	GetPlanDetail(context.Context, *GetPlanDetailRequest) (*GetPlanDetailResponse, error)
 	mustEmbedUnimplementedPaymentsServiceServer()
 }
 
@@ -84,6 +95,9 @@ func (UnimplementedPaymentsServiceServer) ListOrders(context.Context, *ListOrder
 }
 func (UnimplementedPaymentsServiceServer) GetOrderStatus(context.Context, *GetOrderStatusRequest) (*GetOrderStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrderStatus not implemented")
+}
+func (UnimplementedPaymentsServiceServer) GetPlanDetail(context.Context, *GetPlanDetailRequest) (*GetPlanDetailResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPlanDetail not implemented")
 }
 func (UnimplementedPaymentsServiceServer) mustEmbedUnimplementedPaymentsServiceServer() {}
 
@@ -152,6 +166,24 @@ func _PaymentsService_GetOrderStatus_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PaymentsService_GetPlanDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPlanDetailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentsServiceServer).GetPlanDetail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.payment.v1.PaymentsService/GetPlanDetail",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentsServiceServer).GetPlanDetail(ctx, req.(*GetPlanDetailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PaymentsService_ServiceDesc is the grpc.ServiceDesc for PaymentsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -170,6 +202,10 @@ var PaymentsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetOrderStatus",
 			Handler:    _PaymentsService_GetOrderStatus_Handler,
+		},
+		{
+			MethodName: "GetPlanDetail",
+			Handler:    _PaymentsService_GetPlanDetail_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
