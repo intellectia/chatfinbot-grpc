@@ -251,3 +251,8 @@ message UserQuotaUsage {
     uint32 writing_file_num = 4; // 写作输入文件数量
     uint32 writing_graph_num = 5; // 写作生成图表数量
 }
+
+message UserMediaQuotaUsage {
+    int64 video_time = 1; // 花费视频时间
+    int64 audio_time =2; // 花费音频时间
+}
