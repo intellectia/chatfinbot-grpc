@@ -60,8 +60,9 @@ message GetSessionListResponse {
 }
 
 message GetChatHistoryReq {
-    string session_id = 1;
-    uint32 limit = 2;
+  string session_id = 1;
+  uint32 limit = 2;
+  uint32 message_id = 3;
 }
 
 message GetChatHistoryRsp {
