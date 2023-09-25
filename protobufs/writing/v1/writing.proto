@@ -6,6 +6,13 @@ option go_package = ".;writingpb";
 
 import "google/api/annotations.proto";
 
+enum WritingType {
+    UNKNOWN = 0;
+    ARTICLE = 1;
+    TEMPLATE = 2;
+    NOTE = 3;
+}
+
 message Writing {
     string article_id = 1;
     string creator_id = 2;
@@ -15,8 +22,7 @@ message Writing {
     int64 deleted_at = 6;
     string title = 7;
     string content = 8;
-    string writing_type = 9;
-    bool is_template = 10;
+    WritingType writing_type = 9;
 }
 
 service WritingsService {
@@ -31,7 +37,7 @@ service WritingsService {
         option (google.api.http) = {
             get: "/writings/{article_id}"
         };
-    };
+    }; 
     
     rpc UpdateWriting(UpdateWritingRequest) returns (WritingResponse) {
         option (google.api.http) = {
@@ -80,6 +86,7 @@ message ListWritingsRequest {
     int32 limit = 2;
     string sort_by = 3;
     bool descending = 4;
+    int64 writing_type = 5;
 }
 
 message ListWritingsResponse {
