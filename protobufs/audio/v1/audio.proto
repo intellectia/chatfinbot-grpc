@@ -3,13 +3,36 @@ syntax = "proto3";
 package chatfinbot.audio.v1;
 
 option go_package = ".;audiopb";
+import "google/api/annotations.proto";
 
 service AudioService {
-    rpc CreateRecord(CreateRecordReq) returns (CreateRecordRsp);
-    rpc GetRecordList(GetRecordListReq) returns (GetRecordListRsp);
-    rpc GetRecordStatus(GetRecordStatusReq) returns (GetRecordStatusRsp);
-    rpc Transcription(TranscriptionReq) returns (TranscriptionRsp);
-    rpc GetTransData(GetTransDataReq) returns (GetTransDataRsp);
+    rpc CreateRecord(CreateRecordReq) returns (CreateRecordRsp) {
+        option (google.api.http) = {
+			post: "/v1/audio/record",
+			body: "*"
+		};
+    };
+    rpc GetRecordList(GetRecordListReq) returns (GetRecordListRsp) {
+        option (google.api.http) = {
+			get: "/v1/audio/record-list"
+		};
+    };
+    rpc GetRecordStatus(GetRecordStatusReq) returns (GetRecordStatusRsp) {
+        option (google.api.http) = {
+			get: "/v1/audio/record-status"
+		};
+    };
+    rpc Transcription(TranscriptionReq) returns (TranscriptionRsp) {
+        option (google.api.http) = {
+			post: "/v1/audio/trans",
+            body: "*"
+		};
+    };
+    rpc GetTransData(GetTransDataReq) returns (GetTransDataRsp) {
+        option (google.api.http) = {
+			get: "/v1/audio/trans-data"
+		};
+    };
 }
 
 message CreateRecordReq {
