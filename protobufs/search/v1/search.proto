@@ -332,6 +332,8 @@ message SearchPublicReportReq {
     string till = 6;
     int32 size = 7;
     bool return_fulltext = 8;
+    int32 year = 9;
+    string file_name = 10;
 }
 
 message SearchPublicReportRsp {
@@ -354,6 +356,7 @@ message PublicReport {
     string company_name = 13;
     string file_path = 14;
     string update_date = 15;
+    int32 total_pages = 16;
 }
 
 message GetAccountsReceivableReq {
