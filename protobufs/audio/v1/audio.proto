@@ -41,7 +41,11 @@ message CreateRecordReq {
 }
 
 message CreateRecordRsp {
-    string job_id = 1; // 获取任务id
+    int32 ret = 1; 
+    string msg = 2;
+    string job_id = 3; // 获取任务id
+
+
 }
 
 message GetRecordListReq {
@@ -51,7 +55,9 @@ message GetRecordListReq {
 }
 
 message GetRecordListRsp {
-    repeated MediaRecord list = 1;
+    int32 ret = 1; 
+    string msg = 2;
+    repeated MediaRecord list = 3;
 }
 
 message MediaRecord {
@@ -74,7 +80,9 @@ message GetRecordStatusReq {
 }
 
 message GetRecordStatusRsp {
-    MediaRecord data = 1;
+    int32 ret = 1; 
+    string msg = 2;
+    MediaRecord data = 3;
 }
 
 message TranscriptionReq {
@@ -97,8 +105,8 @@ message MediaSummary {
 }
 
 message TranscriptionRsp {
-    int32 code = 1; 
-    string message = 2;
+    int32 ret = 1; 
+    string msg = 2;
 }
 
 message GetTransDataReq {
@@ -106,5 +114,7 @@ message GetTransDataReq {
 }
 
 message GetTransDataRsp {
-    MediaRecord data = 1;
+    int32 ret = 1; 
+    string msg = 2;
+    MediaRecord data = 3;
 }
