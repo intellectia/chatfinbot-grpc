@@ -49,7 +49,7 @@ service AudioService {
 
     rpc UpdateSummary(UpdateSummaryReq) returns (UpdateSummaryRsp) {
         option (google.api.http) = {
-			post: "/v1/audio/udpate-summary",
+			post: "/v1/audio/update-summary",
             body: "*"
 		};
     };

@@ -500,7 +500,7 @@ func RegisterAudioServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.audio.v1.AudioService/UpdateSummary", runtime.WithHTTPPathPattern("/v1/audio/udpate-summary"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.audio.v1.AudioService/UpdateSummary", runtime.WithHTTPPathPattern("/v1/audio/update-summary"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -718,7 +718,7 @@ func RegisterAudioServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.audio.v1.AudioService/UpdateSummary", runtime.WithHTTPPathPattern("/v1/audio/udpate-summary"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.audio.v1.AudioService/UpdateSummary", runtime.WithHTTPPathPattern("/v1/audio/update-summary"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -752,7 +752,7 @@ var (
 
 	pattern_AudioService_GetSummaryDepth_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "audio", "summary-depth"}, ""))
 
-	pattern_AudioService_UpdateSummary_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "audio", "udpate-summary"}, ""))
+	pattern_AudioService_UpdateSummary_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "audio", "update-summary"}, ""))
 )
 
 var (
