@@ -195,10 +195,12 @@ message SummaryDepthRsp {
     string msg = 2;
 }
 
+
 message UpdateSummaryReq {
     string session_id = 1;
     string doc_id = 2;
     string content = 3;
+    uint32 content_type = 4; // 总结类型 1=普通总结 2=深度总结
 }
 
 message UpdateSummaryRsp {
