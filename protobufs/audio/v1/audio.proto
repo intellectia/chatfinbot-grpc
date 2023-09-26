@@ -118,3 +118,47 @@ message GetTransDataRsp {
     string msg = 2;
     MediaRecord data = 3;
 }
+
+enum ChatMediaStatus {
+    ChatMediaStatusPending = 0;// 待开始
+    ChatMediaStatusDownload = 1; // 下载
+    ChatMediaStatusSplitMedia = 2;  // 拆分音频
+    ChatMediaStatusToText = 3; // 转文字中
+    ChatMediaStatusSummary = 4; // 总结中
+    ChatMediaStatusSuccess = 5; // 成功
+    ChatMediaStatusFail = 6; // 失败
+    ChatMediaStatusTrans = 7; // 录制中
+    ChatMediaStatusTransEnd = 8; // 结束录制
+}
+
+
+enum AudioSummaryType {
+    AudioSummaryTypeUnknown = 0; // 未知（不要使用）
+    AudioSummaryTypePartialSummary = 1; // 部分总结
+    AudioSummaryTypeCommSummary = 2; // 普通总结
+    AudioSummaryTypeDepthSummary = 3; // 深度总结
+    AudioSummaryTypeToDo= 4; // 待办事项
+}
+
+enum MediaType{
+    MediaTypeUnknown = 0; // 未知（不要使用）
+    MediaTypeRecordAudio = 1; // 录音文件
+    MediaTypeLiveAudio = 2; // 实时语音
+    MediaTypeMeetingAudio = 3; // 会议音频
+    MediaTypeMeetingVideo = 4; // 会议视频
+}
+
+message AudioSummary {
+    AudioSummaryType summary_type = 1;
+    string doc_id = 2; 
+    string session_id = 3;
+    string user_id = 4;
+    string content = 5;
+    string start = 6;
+    MediaType media_type = 7;
+}
+
+message AudioSummaryStatus {
+    AudioSummary data = 1;
+    string job_id = 2;
+}
