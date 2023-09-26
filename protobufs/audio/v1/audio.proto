@@ -33,6 +33,26 @@ service AudioService {
 			get: "/v1/audio/trans-data"
 		};
     };
+
+    rpc SummaryDepth(SummaryDepthReq) returns (SummaryDepthRsp) {
+        option (google.api.http) = {
+			post: "/v1/audio/summary-depth",
+            body: "*"
+		};
+    };
+
+    rpc GetSummaryDepth(GetSummaryDepthReq) returns (GetSummaryDepthRsp) {
+        option (google.api.http) = {
+			get: "/v1/audio/summary-depth"
+		};
+    };
+
+    rpc UpdateSummary(UpdateSummaryReq) returns (UpdateSummaryRsp) {
+        option (google.api.http) = {
+			post: "/v1/audio/udpate-summary",
+            body: "*"
+		};
+    };
 }
 
 message CreateRecordReq {
@@ -72,7 +92,9 @@ message MediaRecord {
     string url = 9; // 视频链接地址 
     uint32 media_type = 10; // 媒体类型 
     repeated MediaSummary partial_summary = 11; // 部分内容
-    
+    repeated string todo = 12; // 待办事项
+    bool is_depth_summary = 13; // 是否有深度总结
+    string depth_summary = 14; // 深度总结
 }
 
 message GetRecordStatusReq {
@@ -161,4 +183,36 @@ message AudioSummary {
 message AudioSummaryStatus {
     AudioSummary data = 1;
     string job_id = 2;
+}
+
+message SummaryDepthReq {
+    string session_id = 1;
+    string doc_id = 2;
+}
+
+message SummaryDepthRsp {
+    int32 ret = 1; 
+    string msg = 2;
+}
+
+message UpdateSummaryReq {
+    string session_id = 1;
+    string doc_id = 2;
+    string content = 3;
+}
+
+message UpdateSummaryRsp {
+    int32 ret = 1; 
+    string msg = 2;
+}
+
+message GetSummaryDepthReq {
+    string session_id = 1;
+    string doc_id = 2;
+}
+
+message GetSummaryDepthRsp {
+    int32 ret = 1; 
+    string msg = 2;
+    string content = 3;
 }
