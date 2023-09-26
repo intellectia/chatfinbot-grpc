@@ -43,6 +43,12 @@ service PaymentsService {
             get: "/plan-details"
         };
     };
+    
+    rpc GetUserUsagePermissions(GetUserUsagePermissionsRequest) returns (GetUserUsagePermissionsResponse) {
+        option (google.api.http) = {
+            get: "/usage-details"
+        };
+    };
 }
 
 enum PlanId {
@@ -56,6 +62,14 @@ message GetPlanDetailRequest {
 }
 
 message GetPlanDetailResponse {
+    PermConfig perm_config = 1;
+}
+
+message GetUserUsagePermissionsRequest {
+    string user_id = 1;
+}
+
+message GetUserUsagePermissionsResponse {
     PermConfig perm_config = 1;
 }
 
@@ -74,7 +88,7 @@ message PermConfig {
 message ChatPermConfig {
     PermConfigMode mode = 1; // 模式
     uint32 answer_num = 2; // 回答数量
-    string upload_format = 3; // 上传文件格式 多个英语逗号分隔 doc,PDF,docx,md,txt
+    string upload_format = 3; // 上传文件格式 多个英语逗号分隔 doc,pdf,docx,md,txt
     bool ocr = 4; // 是否能ocr
     uint32 oc_num = 5; // ocr次数， 0=未限制
     uint32 file_num = 6; // 文件数量
@@ -99,8 +113,9 @@ message WritingPermConfig {
 }
 
 message MediaPermConfig {
-    uint32 free_audio_time = 1; // 免费音频时长
-    uint32 free_video_time = 2; // 免费视频时长
+    uint32 audio_time = 1; // 音频时长
+    uint32 video_time = 2; // 视频时长
+    uint32 live_meeting_time = 3; // 实时转录时长
 }
 
 
