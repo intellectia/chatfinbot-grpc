@@ -33,5 +33,10 @@ enum RetCode {
     ERR_KAFKA_FAILED                        = 10022;    // kafka失败
     ERR_USER_NOT_LOGIN                      = 10023;    // 用户未登录
     ERR_SESSION_INVALID                     = 10024;    // session无效
+
+
+    ERR_AUDIO_FILE_OVERLIMIT = 11001;  // 音频文件超额
+    ERR_AUDIO_LIVE_OVERLIMIT = 11002;  // 录音超额
+    ERR_VIDEO_OVERLIMIT = 11003;  // 视频超额
 }
 
