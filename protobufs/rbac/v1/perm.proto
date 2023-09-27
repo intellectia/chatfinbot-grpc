@@ -113,8 +113,9 @@ enum WritingOpt {
 
 enum MediaOpt {
     MediaOptUnknown = 0; // 未知（不要使用）
-    MediaOptAudio = 1; // 输出音频
+    MediaOptAudioFile = 1; // 音频文件
     MediaOptVideo = 2; // 视频
+    MediaOptAudioLive = 3; // 录音
 }
 
 message CheckChatPermReq {
@@ -254,5 +255,6 @@ message UserQuotaUsage {
 
 message UserMediaQuotaUsage {
     int64 video_time = 1; // 花费视频时间
-    int64 audio_time =2; // 花费音频时间
+    int64 audio_file_time = 2; // 花费音频文件时间
+    int64 audio_live_time =3 ; // 花费录音时间
 }
