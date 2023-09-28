@@ -34,6 +34,8 @@ enum RetCode {
     ERR_USER_NOT_LOGIN                      = 10023;    // 用户未登录
     ERR_SESSION_INVALID                     = 10024;    // session无效
 
+    // 视频错误码
+    ERR_BVIDEO_FAILED        = 12000;    // 获取B站视频信息失败失败
 
     ERR_AUDIO_FILE_OVERLIMIT = 11001;  // 音频文件超额
     ERR_AUDIO_LIVE_OVERLIMIT = 11002;  // 录音超额
