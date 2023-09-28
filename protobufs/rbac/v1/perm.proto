@@ -113,8 +113,9 @@ enum WritingOpt {
 
 enum MediaOpt {
     MediaOptUnknown = 0; // 未知（不要使用）
-    MediaOptAudio = 1; // 输出音频
+    MediaOptAudioFile = 1; // 音频文件
     MediaOptVideo = 2; // 视频
+    MediaOptAudioLive = 3; // 录音
 }
 
 message CheckChatPermReq {
@@ -247,12 +248,13 @@ message SetMediaPermRsp {
 message UserQuotaUsage {
     uint32 answer_num = 1; // 回答次数
     uint32 ocr_num = 2; // ocr次数
-    uint32 file_num = 3; // 文件次数
+    uint32 chat_file_num = 3; // 聊天使用文件数量
+    uint32 writing_file_num = 4; // 写作输入文件数量
+    uint32 writing_graph_num = 5; // 写作生成图表数量
 }
 
-enum UserType {
-    UserTypeUnknown = 0; // 未知（不要使用）
-    UserTypePerson = 1; // 个人
-    UserTypeVip = 2; // 会员
-    UserTypeBusiness = 3; // 企业
+message UserMediaQuotaUsage {
+    int64 video_time = 1; // 花费视频时间
+    int64 audio_file_time = 2; // 花费音频文件时间
+    int64 audio_live_time =3 ; // 花费录音时间
 }

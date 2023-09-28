@@ -3,13 +3,56 @@ syntax = "proto3";
 package chatfinbot.audio.v1;
 
 option go_package = ".;audiopb";
+import "google/api/annotations.proto";
 
 service AudioService {
-    rpc CreateRecord(CreateRecordReq) returns (CreateRecordRsp);
-    rpc GetRecordList(GetRecordListReq) returns (GetRecordListRsp);
-    rpc GetRecordStatus(GetRecordStatusReq) returns (GetRecordStatusRsp);
-    rpc Transcription(TranscriptionReq) returns (TranscriptionRsp);
-    rpc GetTransData(GetTransDataReq) returns (GetTransDataRsp);
+    rpc CreateRecord(CreateRecordReq) returns (CreateRecordRsp) {
+        option (google.api.http) = {
+			post: "/v1/audio/record",
+			body: "*"
+		};
+    };
+    rpc GetRecordList(GetRecordListReq) returns (GetRecordListRsp) {
+        option (google.api.http) = {
+			get: "/v1/audio/record-list"
+		};
+    };
+    rpc GetRecordStatus(GetRecordStatusReq) returns (GetRecordStatusRsp) {
+        option (google.api.http) = {
+			get: "/v1/audio/record-status"
+		};
+    };
+    rpc Transcription(TranscriptionReq) returns (TranscriptionRsp) {
+        option (google.api.http) = {
+			post: "/v1/audio/trans",
+            body: "*"
+		};
+    };
+    rpc GetTransData(GetTransDataReq) returns (GetTransDataRsp) {
+        option (google.api.http) = {
+			get: "/v1/audio/trans-data"
+		};
+    };
+
+    rpc SummaryDepth(SummaryDepthReq) returns (SummaryDepthRsp) {
+        option (google.api.http) = {
+			post: "/v1/audio/summary-depth",
+            body: "*"
+		};
+    };
+
+    rpc GetSummaryDepth(GetSummaryDepthReq) returns (GetSummaryDepthRsp) {
+        option (google.api.http) = {
+			get: "/v1/audio/summary-depth"
+		};
+    };
+
+    rpc UpdateSummary(UpdateSummaryReq) returns (UpdateSummaryRsp) {
+        option (google.api.http) = {
+			post: "/v1/audio/update-summary",
+            body: "*"
+		};
+    };
 }
 
 message CreateRecordReq {
@@ -18,7 +61,11 @@ message CreateRecordReq {
 }
 
 message CreateRecordRsp {
-    string job_id = 1; // 获取任务id
+    int32 ret = 1; 
+    string msg = 2;
+    string job_id = 3; // 获取任务id
+
+
 }
 
 message GetRecordListReq {
@@ -28,7 +75,9 @@ message GetRecordListReq {
 }
 
 message GetRecordListRsp {
-    repeated MediaRecord list = 1;
+    int32 ret = 1; 
+    string msg = 2;
+    repeated MediaRecord list = 3;
 }
 
 message MediaRecord {
@@ -43,7 +92,9 @@ message MediaRecord {
     string url = 9; // 视频链接地址 
     uint32 media_type = 10; // 媒体类型 
     repeated MediaSummary partial_summary = 11; // 部分内容
-    
+    repeated string todo = 12; // 待办事项
+    bool is_depth_summary = 13; // 是否有深度总结
+    string depth_summary = 14; // 深度总结
 }
 
 message GetRecordStatusReq {
@@ -51,7 +102,9 @@ message GetRecordStatusReq {
 }
 
 message GetRecordStatusRsp {
-    MediaRecord data = 1;
+    int32 ret = 1; 
+    string msg = 2;
+    MediaRecord data = 3;
 }
 
 message TranscriptionReq {
@@ -74,8 +127,8 @@ message MediaSummary {
 }
 
 message TranscriptionRsp {
-    int32 code = 1; 
-    string message = 2;
+    int32 ret = 1; 
+    string msg = 2;
 }
 
 message GetTransDataReq {
@@ -83,5 +136,85 @@ message GetTransDataReq {
 }
 
 message GetTransDataRsp {
-    MediaRecord data = 1;
+    int32 ret = 1; 
+    string msg = 2;
+    MediaRecord data = 3;
+}
+
+enum ChatMediaStatus {
+    ChatMediaStatusPending = 0;// 待开始
+    ChatMediaStatusDownload = 1; // 下载
+    ChatMediaStatusSplitMedia = 2;  // 拆分音频
+    ChatMediaStatusToText = 3; // 转文字中
+    ChatMediaStatusSummary = 4; // 总结中
+    ChatMediaStatusSuccess = 5; // 成功
+    ChatMediaStatusFail = 6; // 失败
+    ChatMediaStatusTrans = 7; // 录制中
+    ChatMediaStatusTransEnd = 8; // 结束录制
+}
+
+
+enum AudioSummaryType {
+    AudioSummaryTypeUnknown = 0; // 未知（不要使用）
+    AudioSummaryTypePartialSummary = 1; // 部分总结
+    AudioSummaryTypeCommSummary = 2; // 普通总结
+    AudioSummaryTypeDepthSummary = 3; // 深度总结
+    AudioSummaryTypeToDo= 4; // 待办事项
+}
+
+enum MediaType{
+    MediaTypeUnknown = 0; // 未知（不要使用）
+    MediaTypeRecordAudio = 1; // 录音文件
+    MediaTypeLiveAudio = 2; // 实时语音
+    MediaTypeMeetingAudio = 3; // 会议音频
+    MediaTypeMeetingVideo = 4; // 会议视频
+}
+
+message AudioSummary {
+    AudioSummaryType summary_type = 1;
+    string doc_id = 2; 
+    string session_id = 3;
+    string user_id = 4;
+    string content = 5;
+    string start = 6;
+    MediaType media_type = 7;
+}
+
+message AudioSummaryStatus {
+    AudioSummary data = 1;
+    string job_id = 2;
+}
+
+message SummaryDepthReq {
+    string session_id = 1;
+    string doc_id = 2;
+}
+
+message SummaryDepthRsp {
+    int32 ret = 1; 
+    string msg = 2;
+}
+
+
+message UpdateSummaryReq {
+    string session_id = 1;
+    string doc_id = 2;
+    string content = 3;
+    uint32 content_type = 4; // 总结类型 1=普通总结 2=深度总结
+}
+
+message UpdateSummaryRsp {
+    int32 ret = 1; 
+    string msg = 2;
+}
+
+message GetSummaryDepthReq {
+    string session_id = 1;
+    string doc_id = 2;
+}
+
+message GetSummaryDepthRsp {
+    int32 ret = 1; 
+    string msg = 2;
+    string content = 3;
 }
