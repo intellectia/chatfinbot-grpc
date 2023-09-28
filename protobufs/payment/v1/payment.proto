@@ -116,6 +116,7 @@ message MediaPermConfig {
     uint32 audio_time = 1; // 音频时长
     uint32 video_time = 2; // 视频时长
     uint32 live_meeting_time = 3; // 实时转录时长
+    uint32 deep_summary = 4; // 深度总结
 }
 
 
