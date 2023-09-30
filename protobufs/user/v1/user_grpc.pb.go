@@ -29,7 +29,7 @@ type UserServiceClient interface {
 	SendSMSCode(ctx context.Context, in *SendSMSCodeRequest, opts ...grpc.CallOption) (*Empty, error)
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*UserResponse, error)
 	SetInitPassword(ctx context.Context, in *SetInitPasswordRequest, opts ...grpc.CallOption) (*Empty, error)
-	InitUserExtraInfo(ctx context.Context, in *InitUserExtraInfoRequest, opts ...grpc.CallOption) (*InitUserExtraInfoResponse, error)
+	InitUserExtraInfo(ctx context.Context, in *InitUserExtraInfoRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	BindPhone(ctx context.Context, in *BindPhoneRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	WeChatLogin(ctx context.Context, in *WeChatLoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	GetInfo(ctx context.Context, in *GetInfoRequest, opts ...grpc.CallOption) (*GetInfoResponse, error)
@@ -108,8 +108,8 @@ func (c *userServiceClient) SetInitPassword(ctx context.Context, in *SetInitPass
 	return out, nil
 }
 
-func (c *userServiceClient) InitUserExtraInfo(ctx context.Context, in *InitUserExtraInfoRequest, opts ...grpc.CallOption) (*InitUserExtraInfoResponse, error) {
-	out := new(InitUserExtraInfoResponse)
+func (c *userServiceClient) InitUserExtraInfo(ctx context.Context, in *InitUserExtraInfoRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+	out := new(LoginResponse)
 	err := c.cc.Invoke(ctx, "/chatfinbot.user.v1.UserService/InitUserExtraInfo", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -173,7 +173,7 @@ type UserServiceServer interface {
 	SendSMSCode(context.Context, *SendSMSCodeRequest) (*Empty, error)
 	GetUser(context.Context, *GetUserRequest) (*UserResponse, error)
 	SetInitPassword(context.Context, *SetInitPasswordRequest) (*Empty, error)
-	InitUserExtraInfo(context.Context, *InitUserExtraInfoRequest) (*InitUserExtraInfoResponse, error)
+	InitUserExtraInfo(context.Context, *InitUserExtraInfoRequest) (*LoginResponse, error)
 	BindPhone(context.Context, *BindPhoneRequest) (*LoginResponse, error)
 	WeChatLogin(context.Context, *WeChatLoginRequest) (*LoginResponse, error)
 	GetInfo(context.Context, *GetInfoRequest) (*GetInfoResponse, error)
@@ -207,7 +207,7 @@ func (UnimplementedUserServiceServer) GetUser(context.Context, *GetUserRequest) 
 func (UnimplementedUserServiceServer) SetInitPassword(context.Context, *SetInitPasswordRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetInitPassword not implemented")
 }
-func (UnimplementedUserServiceServer) InitUserExtraInfo(context.Context, *InitUserExtraInfoRequest) (*InitUserExtraInfoResponse, error) {
+func (UnimplementedUserServiceServer) InitUserExtraInfo(context.Context, *InitUserExtraInfoRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InitUserExtraInfo not implemented")
 }
 func (UnimplementedUserServiceServer) BindPhone(context.Context, *BindPhoneRequest) (*LoginResponse, error) {
