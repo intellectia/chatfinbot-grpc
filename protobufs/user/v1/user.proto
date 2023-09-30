@@ -19,6 +19,13 @@ enum EditInfoType {
   EditInfoTypeCompany = 4; // 修改公司
 }
 
+enum UserType {
+  UserTypeUnknown = 0; // 未知（不要使用）
+  Normal = 1; // 正常用户
+  Beta = 8; // 内测用户
+  Admin = 9; // 管理员
+}
+
 service UserService {
   rpc Register(UserRequest) returns (RegisterResponse);
   rpc LoginWithEmail(LoginWithEmailRequest) returns (LoginWithEmailResponse); // email login
@@ -27,7 +34,7 @@ service UserService {
   rpc SendSMSCode(SendSMSCodeRequest) returns (Empty);
   rpc GetUser(GetUserRequest) returns (UserResponse);
   rpc SetInitPassword(SetInitPasswordRequest) returns (Empty); // set original password
-  rpc InitUserExtraInfo(InitUserExtraInfoRequest) returns (InitUserExtraInfoResponse);
+  rpc InitUserExtraInfo(InitUserExtraInfoRequest) returns (LoginResponse);
   rpc BindPhone(BindPhoneRequest) returns (LoginResponse);
   rpc WeChatLogin(WeChatLoginRequest) returns (LoginResponse);
   rpc GetInfo(GetInfoRequest) returns (GetInfoResponse);
@@ -99,12 +106,15 @@ message InitUserExtraInfoRequest {
   string company_name = 2;     
   string real_name = 3;        
   string job = 4;
-  string temp_token = 5; // 临时token，用于额外信息            
+  string temp_token = 5; // 临时token，用于额外信息
+  string invitation_code = 6; // 邀请码           
 }
 
 message InitUserExtraInfoResponse {
   string user_id = 1;           // user ID to specify which user to update 
-  string token = 2;             // 登录token        
+  string token = 2;             // 登录token
+  bool is_first_login = 3;      // 是否第一次登录
+  string provider_user_app_id = 4; // Identifier from OAuth provider (e.g., WeChat)        
 }
 
 message SetInitPasswordRequest {
@@ -136,6 +146,7 @@ message LoginResponse {
   string temp_token = 7; // 临时token，用于初始化
   string provider_user_app_id = 8; // Identifier from OAuth provider (e.g., WeChat)
   string login_type = 9; // phone, email, wechat, username
+  UserType user_type = 10; // 用户类型
 }
 
 message GetInfoRequest {
@@ -150,8 +161,7 @@ message UserInfo {
   VipType level = 5;
   string mobile = 6;
   string country_code = 7;
-  int64 VipStartTime = 8;
-  int64 VipEndTime = 9;
+  UserType user_type = 8;
 }
 
 message GetInfoResponse {
