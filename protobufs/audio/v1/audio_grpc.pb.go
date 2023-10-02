@@ -27,6 +27,7 @@ const (
 	AudioService_SummaryDepth_FullMethodName    = "/chatfinbot.audio.v1.AudioService/SummaryDepth"
 	AudioService_GetSummaryDepth_FullMethodName = "/chatfinbot.audio.v1.AudioService/GetSummaryDepth"
 	AudioService_UpdateSummary_FullMethodName   = "/chatfinbot.audio.v1.AudioService/UpdateSummary"
+	AudioService_CheckTrans_FullMethodName      = "/chatfinbot.audio.v1.AudioService/CheckTrans"
 )
 
 // AudioServiceClient is the client API for AudioService service.
@@ -41,6 +42,7 @@ type AudioServiceClient interface {
 	SummaryDepth(ctx context.Context, in *SummaryDepthReq, opts ...grpc.CallOption) (*SummaryDepthRsp, error)
 	GetSummaryDepth(ctx context.Context, in *GetSummaryDepthReq, opts ...grpc.CallOption) (*GetSummaryDepthRsp, error)
 	UpdateSummary(ctx context.Context, in *UpdateSummaryReq, opts ...grpc.CallOption) (*UpdateSummaryRsp, error)
+	CheckTrans(ctx context.Context, in *CheckTransReq, opts ...grpc.CallOption) (*CheckTransRsp, error)
 }
 
 type audioServiceClient struct {
@@ -123,6 +125,15 @@ func (c *audioServiceClient) UpdateSummary(ctx context.Context, in *UpdateSummar
 	return out, nil
 }
 
+func (c *audioServiceClient) CheckTrans(ctx context.Context, in *CheckTransReq, opts ...grpc.CallOption) (*CheckTransRsp, error) {
+	out := new(CheckTransRsp)
+	err := c.cc.Invoke(ctx, AudioService_CheckTrans_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AudioServiceServer is the server API for AudioService service.
 // All implementations must embed UnimplementedAudioServiceServer
 // for forward compatibility
@@ -135,6 +146,7 @@ type AudioServiceServer interface {
 	SummaryDepth(context.Context, *SummaryDepthReq) (*SummaryDepthRsp, error)
 	GetSummaryDepth(context.Context, *GetSummaryDepthReq) (*GetSummaryDepthRsp, error)
 	UpdateSummary(context.Context, *UpdateSummaryReq) (*UpdateSummaryRsp, error)
+	CheckTrans(context.Context, *CheckTransReq) (*CheckTransRsp, error)
 	mustEmbedUnimplementedAudioServiceServer()
 }
 
@@ -165,6 +177,9 @@ func (UnimplementedAudioServiceServer) GetSummaryDepth(context.Context, *GetSumm
 }
 func (UnimplementedAudioServiceServer) UpdateSummary(context.Context, *UpdateSummaryReq) (*UpdateSummaryRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateSummary not implemented")
+}
+func (UnimplementedAudioServiceServer) CheckTrans(context.Context, *CheckTransReq) (*CheckTransRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckTrans not implemented")
 }
 func (UnimplementedAudioServiceServer) mustEmbedUnimplementedAudioServiceServer() {}
 
@@ -323,6 +338,24 @@ func _AudioService_UpdateSummary_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AudioService_CheckTrans_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckTransReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AudioServiceServer).CheckTrans(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AudioService_CheckTrans_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AudioServiceServer).CheckTrans(ctx, req.(*CheckTransReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AudioService_ServiceDesc is the grpc.ServiceDesc for AudioService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -361,6 +394,10 @@ var AudioService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateSummary",
 			Handler:    _AudioService_UpdateSummary_Handler,
+		},
+		{
+			MethodName: "CheckTrans",
+			Handler:    _AudioService_CheckTrans_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

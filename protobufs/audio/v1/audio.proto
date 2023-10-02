@@ -53,6 +53,13 @@ service AudioService {
             body: "*"
 		};
     };
+
+    rpc CheckTrans(CheckTransReq) returns (CheckTransRsp) {
+        option (google.api.http) = {
+			post: "/v1/audio/check-trans",
+            body: "*"
+		};
+    };
 }
 
 message CreateRecordReq {
@@ -217,4 +224,20 @@ message GetSummaryDepthRsp {
     int32 ret = 1; 
     string msg = 2;
     string content = 3;
+}
+
+enum  CheckTransType {
+    CheckTransTypeUnknown = 0; // 未知（不要使用）
+    CheckTransTypeStart = 1; // 开始检测
+    CheckTransTypeCost = 2; // 耗时
+}
+
+message CheckTransReq {
+    CheckTransType stype = 1; // 类型
+    uint32 cost = 2; // 耗时
+}
+
+message CheckTransRsp {
+    int32 ret = 1; 
+    string msg = 2;
 }
