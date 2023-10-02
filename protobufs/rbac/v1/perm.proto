@@ -116,6 +116,7 @@ enum MediaOpt {
     MediaOptAudioFile = 1; // 音频文件
     MediaOptVideo = 2; // 视频
     MediaOptAudioLive = 3; // 录音
+    MediaOptDeepSummary = 4; // 深度总结次数
 }
 
 message CheckChatPermReq {
