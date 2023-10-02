@@ -258,4 +258,5 @@ message UserMediaQuotaUsage {
     int64 video_time = 1; // 花费视频时间
     int64 audio_file_time = 2; // 花费音频文件时间
     int64 audio_live_time =3 ; // 花费录音时间
+    int64 deep_summary = 4; // 深度总结次数
 }
