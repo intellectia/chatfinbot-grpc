@@ -90,7 +90,7 @@ message ChatPermConfig {
     uint32 answer_num = 2; // 回答数量
     string upload_format = 3; // 上传文件格式 多个英语逗号分隔 doc,pdf,docx,md,txt
     bool ocr = 4; // 是否能ocr
-    uint32 oc_num = 5; // ocr次数， 0=未限制
+    uint32 ocr_num = 5; // ocr次数， 0=未限制
     uint32 file_num = 6; // 文件数量
     uint32 page_size = 7; // 每个文件限制页数
     uint32 file_size = 8; // 文件大小
