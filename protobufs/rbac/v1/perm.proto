@@ -122,9 +122,6 @@ enum MediaOpt {
 message CheckChatPermReq {
     string user_id = 1; // 用户id
     repeated ChatPermItem list = 2;
-    int64 ts = 3; // 时间  外部接口才有效
-    string nonce = 4; // 随机数  外部接口才有效
-    string access_token = 5; // token 外部接口才有效
 }
 
 message ChatPermItem {
@@ -152,9 +149,6 @@ message CheckChatPermRsp {
 message CheckWritingPermReq {
     string user_id = 1; // 用户id
     repeated WritingPermItem list = 2;
-    int64 ts = 3; // 时间  外部接口才有效
-    string nonce = 4; // 随机数  外部接口才有效
-    string access_token = 5; // token 外部接口才有效
 }
 
 message WritingPermItem {
@@ -174,9 +168,6 @@ message CheckWritingPermRsp {
 message CheckMediaPermReq {
     string user_id = 1; // 用户id
     repeated MediaPermItem list = 2;
-    int64 ts = 3; // 时间  外部接口才有效
-    string nonce = 4; // 随机数  外部接口才有效
-    string access_token = 5; // token 外部接口才有效
 }
 
 message MediaPermItem {
@@ -193,9 +184,6 @@ message CheckMediaPermRsp {
 message SetChatPermReq {
     string user_id = 1; // 用户id
     repeated SetChatPermItem list = 2;
-    int64 ts = 3; // 时间  外部接口才有效
-    string nonce = 4; // 随机数  外部接口才有效
-    string access_token = 5; // token 外部接口才有效
 }
 
 message SetChatPermItem {
@@ -212,9 +200,6 @@ message SetChatPermRsp {
 message SetWritingPermReq {
     string user_id = 1; // 用户id
     repeated SetWritingPermItem list = 2;
-    int64 ts = 3; // 时间  外部接口才有效
-    string nonce = 4; // 随机数  外部接口才有效
-    string access_token = 5; // token 外部接口才有效
 }
 
 message SetWritingPermItem {
@@ -231,9 +216,6 @@ message SetWritingPermRsp {
 message SetMediaPermReq {
     string user_id = 1; // 用户id
     repeated SetMediaPermItem list = 2;
-    int64 ts = 3; // 时间  外部接口才有效
-    string nonce = 4; // 随机数  外部接口才有效
-    string access_token = 5; // token 外部接口才有效
 }
 
 message SetMediaPermItem {
