@@ -130,11 +130,16 @@ message CheckUserSessionRsp {
     bool match= 1;
 }
 
+
+
 message GetAudioWsURLReq {
+    uint32 type = 1; // 类型
 }
 
 message GetAudioWsURLRsp {
-    string url = 1; 
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    string url = 3; 
 }
 
 
