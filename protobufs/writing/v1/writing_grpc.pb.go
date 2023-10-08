@@ -27,6 +27,7 @@ type WritingsServiceClient interface {
 	UpdateWriting(ctx context.Context, in *UpdateWritingRequest, opts ...grpc.CallOption) (*WritingResponse, error)
 	DeleteWriting(ctx context.Context, in *DeleteWritingRequest, opts ...grpc.CallOption) (*DeleteWritingResponse, error)
 	ListWritings(ctx context.Context, in *ListWritingsRequest, opts ...grpc.CallOption) (*ListWritingsResponse, error)
+	ListPublicTemplates(ctx context.Context, in *ListPublicTemplatesRequest, opts ...grpc.CallOption) (*ListPublicTemplatesResponse, error)
 }
 
 type writingsServiceClient struct {
@@ -82,6 +83,15 @@ func (c *writingsServiceClient) ListWritings(ctx context.Context, in *ListWritin
 	return out, nil
 }
 
+func (c *writingsServiceClient) ListPublicTemplates(ctx context.Context, in *ListPublicTemplatesRequest, opts ...grpc.CallOption) (*ListPublicTemplatesResponse, error) {
+	out := new(ListPublicTemplatesResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.writing.v1.WritingsService/ListPublicTemplates", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // WritingsServiceServer is the server API for WritingsService service.
 // All implementations must embed UnimplementedWritingsServiceServer
 // for forward compatibility
@@ -91,6 +101,7 @@ type WritingsServiceServer interface {
 	UpdateWriting(context.Context, *UpdateWritingRequest) (*WritingResponse, error)
 	DeleteWriting(context.Context, *DeleteWritingRequest) (*DeleteWritingResponse, error)
 	ListWritings(context.Context, *ListWritingsRequest) (*ListWritingsResponse, error)
+	ListPublicTemplates(context.Context, *ListPublicTemplatesRequest) (*ListPublicTemplatesResponse, error)
 	mustEmbedUnimplementedWritingsServiceServer()
 }
 
@@ -112,6 +123,9 @@ func (UnimplementedWritingsServiceServer) DeleteWriting(context.Context, *Delete
 }
 func (UnimplementedWritingsServiceServer) ListWritings(context.Context, *ListWritingsRequest) (*ListWritingsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListWritings not implemented")
+}
+func (UnimplementedWritingsServiceServer) ListPublicTemplates(context.Context, *ListPublicTemplatesRequest) (*ListPublicTemplatesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPublicTemplates not implemented")
 }
 func (UnimplementedWritingsServiceServer) mustEmbedUnimplementedWritingsServiceServer() {}
 
@@ -216,6 +230,24 @@ func _WritingsService_ListWritings_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WritingsService_ListPublicTemplates_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPublicTemplatesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WritingsServiceServer).ListPublicTemplates(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.writing.v1.WritingsService/ListPublicTemplates",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WritingsServiceServer).ListPublicTemplates(ctx, req.(*ListPublicTemplatesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WritingsService_ServiceDesc is the grpc.ServiceDesc for WritingsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +274,10 @@ var WritingsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListWritings",
 			Handler:    _WritingsService_ListWritings_Handler,
+		},
+		{
+			MethodName: "ListPublicTemplates",
+			Handler:    _WritingsService_ListPublicTemplates_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

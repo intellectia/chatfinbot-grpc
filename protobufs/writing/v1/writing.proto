@@ -13,6 +13,28 @@ enum WritingType {
     NOTE = 3;
 }
 
+// Enum for Template Type
+enum TemplateType {
+    TEMPLATE_UNKNOWN = 0;
+    IPO_REPORT = 1;             // 新股报告
+    PERFORMANCE_REVIEW = 2;    // 业绩点评
+    EVENT_COMMENTARY = 3;      // 事件点评
+    IN_DEPTH_COMMENTARY = 4;   // 深度点评
+    // Add other template types as needed
+}
+
+
+// Message for a Public Template
+message PublicTemplate {
+    string template_id = 1; // corresponds to article_template_id in your table
+    int64 created_at = 2;
+    int64 updated_at = 3;
+    int64 deleted_at = 4; 
+    string title = 5;
+    string content = 6;
+    TemplateType template_type = 7;
+}
+
 message Writing {
     string article_id = 1;
     string creator_id = 2;
@@ -57,6 +79,11 @@ service WritingsService {
             get: "/writings"
         };
     };
+    rpc ListPublicTemplates(ListPublicTemplatesRequest) returns (ListPublicTemplatesResponse) {
+        option (google.api.http) = {
+            get: "/public-templates"
+        };
+    };
 }
 
 message CreateWritingRequest {
@@ -99,4 +126,19 @@ message ListWritingsResponse {
 message DeleteWritingResponse {
     string status = 1;
     string message = 2;
+}
+
+message ListPublicTemplatesRequest {
+    int32 page = 1;
+    int32 limit = 2;
+    string sort_by = 3;
+    bool descending = 4;
+    TemplateType template_filter = 5; // Filter templates by type if needed
+}
+
+message ListPublicTemplatesResponse {
+    repeated PublicTemplate public_templates = 1;
+    int32 total_records = 2;
+    string status = 3;
+    string message = 4;
 }
