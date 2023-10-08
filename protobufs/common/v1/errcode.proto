@@ -42,5 +42,7 @@ enum RetCode {
     ERR_AUDIO_LIVE_OVERLIMIT = 11002;  // 录音超额
     ERR_VIDEO_OVERLIMIT = 11003;  // 视频超额
     ERR_DEEP_SUMMARY_OVERLIMIT = 11004;  // 深度总结超额
+    ERR_CHATDOC_OVERLIMIT = 11005;  // chatdoc超额
+    ERR_WRITING_OVERLIMIT = 11006;  // 写作超额
 }
 
