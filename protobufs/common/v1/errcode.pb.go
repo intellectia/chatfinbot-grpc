@@ -59,6 +59,8 @@ const (
 	RetCode_ERR_DEEP_SUMMARY_OVERLIMIT RetCode = 11004 // 深度总结超额
 	RetCode_ERR_CHATDOC_OVERLIMIT      RetCode = 11005 // chatdoc超额
 	RetCode_ERR_WRITING_OVERLIMIT      RetCode = 11006 // 写作超额
+	// 写作错误码
+	RetCode_ERR_GET_WRITING_TEMPLATE_FAILED      RetCode = 13001 // 获取写作模板失败
 )
 
 // Enum value maps for RetCode.
