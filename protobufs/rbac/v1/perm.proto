@@ -138,6 +138,7 @@ message PermData {
     string config = 2;  // 格式
     bool perm = 3; // 权限
     int32 limit = 4; // 限制
+    uint32 opt = 5; // 选项
 }
 
 message CheckChatPermRsp {
