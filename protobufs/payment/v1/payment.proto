@@ -83,6 +83,7 @@ message PermConfig {
     ChatPermConfig chat_config = 1;
     WritingPermConfig writing_config = 2;
     MediaPermConfig media_config = 3;
+    ExtraPermConfig extra_config = 4;
 }
 
 message ChatPermConfig {
@@ -117,6 +118,12 @@ message MediaPermConfig {
     uint32 video_time = 2; // 视频时长
     uint32 live_meeting_time = 3; // 实时转录时长
     uint32 deep_summary = 4; // 深度总结
+}
+
+message ExtraPermConfig {
+    PermConfigMode mode = 1; // 模式
+    bool has_watermark = 2;  // 水印
+    uint32 chart_num = 3;  // 图表生成数量
 }
 
 
