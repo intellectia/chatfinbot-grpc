@@ -109,6 +109,7 @@ enum WritingOpt {
     WritingOptExport = 6; // 导出格式
     WritingOptGraphNum = 7; // 图表数量
     WritingOptCustomColor = 8; // 自定义配色方案
+    WritingOptOCR = 9; // ocr
 }
 
 enum MediaOpt {
@@ -158,6 +159,7 @@ message WritingPermItem {
     int32 intput_page_size = 3; // 输入文件页数
     string export_format = 4; // 导出格式
     int32 graph_num = 5; // 图表数量
+    uint32 ocr_num = 6; // OCR数量     只有在opt=WritingOptOCR生效
 }
 
 message CheckWritingPermRsp {
@@ -191,6 +193,8 @@ message SetChatPermItem {
     ChatOpt opt = 1; // 选项
     uint32 ocr_num = 2; // OCR数量     只有在opt=ChatOptOCR生效
     uint32 file_num = 3; // 文件数量    只有在opt=ChatOptFileNum  生效
+    uint32 page_size = 4; // 页数数量    只有在opt=ChatOptPageSize   生效
+    string remark = 5; // 备注
 }
 
 message SetChatPermRsp {
@@ -207,6 +211,8 @@ message SetWritingPermItem {
     WritingOpt opt = 1; // 选项
     int32 intput_file_num = 2; // 输入文件数量
     int32 graph_num = 3; // 图表数量
+    uint32 intput_page_size = 4; // 页数数量    只有在opt=WritingOptInputPageSize   生效
+    string remark = 5; // 备注
 }
 
 message SetWritingPermRsp {
