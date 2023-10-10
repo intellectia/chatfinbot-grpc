@@ -1549,7 +1549,7 @@ func (x *UserQuotaUsage) GetWritingGraphNum() uint32 {
 	return 0
 }
 
-type UserPakcageUsage struct {
+type UserPackageUsage struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -1561,8 +1561,8 @@ type UserPakcageUsage struct {
 	Ocr           int64 `protobuf:"varint,5,opt,name=ocr,proto3" json:"ocr,omitempty"`                                            // ocr次数
 }
 
-func (x *UserPakcageUsage) Reset() {
-	*x = UserPakcageUsage{}
+func (x *UserPackageUsage) Reset() {
+	*x = UserPackageUsage{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_perm_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1570,13 +1570,13 @@ func (x *UserPakcageUsage) Reset() {
 	}
 }
 
-func (x *UserPakcageUsage) String() string {
+func (x *UserPackageUsage) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*UserPakcageUsage) ProtoMessage() {}
+func (*UserPackageUsage) ProtoMessage() {}
 
-func (x *UserPakcageUsage) ProtoReflect() protoreflect.Message {
+func (x *UserPackageUsage) ProtoReflect() protoreflect.Message {
 	mi := &file_perm_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1588,40 +1588,40 @@ func (x *UserPakcageUsage) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use UserPakcageUsage.ProtoReflect.Descriptor instead.
-func (*UserPakcageUsage) Descriptor() ([]byte, []int) {
+// Deprecated: Use UserPackageUsage.ProtoReflect.Descriptor instead.
+func (*UserPackageUsage) Descriptor() ([]byte, []int) {
 	return file_perm_proto_rawDescGZIP(), []int{20}
 }
 
-func (x *UserPakcageUsage) GetVideoTime() int64 {
+func (x *UserPackageUsage) GetVideoTime() int64 {
 	if x != nil {
 		return x.VideoTime
 	}
 	return 0
 }
 
-func (x *UserPakcageUsage) GetAudioFileTime() int64 {
+func (x *UserPackageUsage) GetAudioFileTime() int64 {
 	if x != nil {
 		return x.AudioFileTime
 	}
 	return 0
 }
 
-func (x *UserPakcageUsage) GetAudioLiveTime() int64 {
+func (x *UserPackageUsage) GetAudioLiveTime() int64 {
 	if x != nil {
 		return x.AudioLiveTime
 	}
 	return 0
 }
 
-func (x *UserPakcageUsage) GetDeepSummary() int64 {
+func (x *UserPackageUsage) GetDeepSummary() int64 {
 	if x != nil {
 		return x.DeepSummary
 	}
 	return 0
 }
 
-func (x *UserPakcageUsage) GetOcr() int64 {
+func (x *UserPackageUsage) GetOcr() int64 {
 	if x != nil {
 		return x.Ocr
 	}
@@ -1788,7 +1788,7 @@ var file_perm_proto_rawDesc = []byte{
 	0x74, 0x69, 0x6e, 0x67, 0x5f, 0x67, 0x72, 0x61, 0x70, 0x68, 0x5f, 0x6e, 0x75, 0x6d, 0x18, 0x05,
 	0x20, 0x01, 0x28, 0x0d, 0x52, 0x0f, 0x77, 0x72, 0x69, 0x74, 0x69, 0x6e, 0x67, 0x47, 0x72, 0x61,
 	0x70, 0x68, 0x4e, 0x75, 0x6d, 0x22, 0xb6, 0x01, 0x0a, 0x10, 0x55, 0x73, 0x65, 0x72, 0x50, 0x61,
-	0x6b, 0x63, 0x61, 0x67, 0x65, 0x55, 0x73, 0x61, 0x67, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x76, 0x69,
+	0x63, 0x6b, 0x61, 0x67, 0x65, 0x55, 0x73, 0x61, 0x67, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x76, 0x69,
 	0x64, 0x65, 0x6f, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x09,
 	0x76, 0x69, 0x64, 0x65, 0x6f, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x26, 0x0a, 0x0f, 0x61, 0x75, 0x64,
 	0x69, 0x6f, 0x5f, 0x66, 0x69, 0x6c, 0x65, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01,
@@ -1986,7 +1986,7 @@ var file_perm_proto_goTypes = []interface{}{
 	(*SetMediaPermItem)(nil),    // 21: chatfinbot.rbac.v1.SetMediaPermItem
 	(*SetMediaPermRsp)(nil),     // 22: chatfinbot.rbac.v1.SetMediaPermRsp
 	(*UserQuotaUsage)(nil),      // 23: chatfinbot.rbac.v1.UserQuotaUsage
-	(*UserPakcageUsage)(nil),    // 24: chatfinbot.rbac.v1.UserPakcageUsage
+	(*UserPackageUsage)(nil),    // 24: chatfinbot.rbac.v1.UserPackageUsage
 }
 var file_perm_proto_depIdxs = []int32{
 	5,  // 0: chatfinbot.rbac.v1.CheckChatPermReq.list:type_name -> chatfinbot.rbac.v1.ChatPermItem
@@ -2282,7 +2282,7 @@ func file_perm_proto_init() {
 			}
 		}
 		file_perm_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UserPakcageUsage); i {
+			switch v := v.(*UserPackageUsage); i {
 			case 0:
 				return &v.state
 			case 1:
