@@ -84,6 +84,7 @@ message PermConfig {
     WritingPermConfig writing_config = 2;
     MediaPermConfig media_config = 3;
     ExtraPermConfig extra_config = 4;
+    PackageConfig package_config = 5;
 }
 
 message ChatPermConfig {
@@ -124,6 +125,10 @@ message ExtraPermConfig {
     PermConfigMode mode = 1; // 模式
     bool has_watermark = 2;  // 水印
     uint32 chart_num = 3;  // 图表生成数量
+}
+
+message PackageConfig {
+    uint32 ocr_num = 1; // ocr 次数
 }
 
 
