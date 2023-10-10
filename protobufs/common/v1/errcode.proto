@@ -33,7 +33,7 @@ enum RetCode {
     ERR_KAFKA_FAILED                        = 10022;    // kafka失败
     ERR_USER_NOT_LOGIN                      = 10023;    // 用户未登录
     ERR_SESSION_INVALID                     = 10024;    // session无效
-
+    
     // 视频错误码
     ERR_BVIDEO_FAILED        = 12000;    // 获取B站视频信息失败失败
 
@@ -44,5 +44,11 @@ enum RetCode {
     ERR_DEEP_SUMMARY_OVERLIMIT = 11004;  // 深度总结超额
     ERR_CHATDOC_OVERLIMIT = 11005;  // chatdoc超额
     ERR_WRITING_OVERLIMIT = 11006;  // 写作超额
+
+    // 文件上传错误
+    ERR_FILE_UPLOAD_FORMAT_LIMITED = 13001; // 文件上传文件限制
+    ERR_FILE_NUMBER_LIMITED = 13002; // 文件数量限制
+    ERR_FILE_PAGE_SIZE_LIMITED = 13003; // 文件页数限制
+    ERR_AUDIO_DURATION_LIMITED = 13004; // Audio时长限制 
 }
 
