@@ -17,6 +17,7 @@ enum EditInfoType {
   EditInfoTypeNick = 2; // 修改昵称
   EditInfoTypeJob = 3; // 修改职业
   EditInfoTypeCompany = 4; // 修改公司
+  EditInfoTypeHead = 5; // 修改头像
 }
 
 enum UserType {
@@ -162,6 +163,7 @@ message UserInfo {
   string mobile = 6;
   string country_code = 7;
   UserType user_type = 8;
+  string head_url = 9;
 }
 
 message GetInfoResponse {
@@ -176,6 +178,7 @@ message EditInfoRequest {
   string comfirm_pass = 5; 
   string job = 6; 
   string company_name = 7; 
+  string head_url = 8; 
 }
 
 message EditInfoResponse {
