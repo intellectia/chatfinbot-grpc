@@ -41,6 +41,9 @@ service UserService {
   rpc GetInfo(GetInfoRequest) returns (GetInfoResponse);
   rpc EditInfo(EditInfoRequest) returns (EditInfoResponse);
   rpc GetUserUsage(GetUserUsageRequest) returns (GetUserUsageResponse);
+  rpc SendEmail(SendEmailRequest) returns (Empty);
+  rpc CheckInvitationCode(CheckInvitationCodeRequest) returns (LoginResponse);
+  rpc ApplyInvitationCode(ApplyInvitationCodeRequest) returns (Empty);
 }
 
 message GetUserUsageRequest {
@@ -108,7 +111,9 @@ message InitUserExtraInfoRequest {
   string real_name = 3;        
   string job = 4;
   string temp_token = 5; // 临时token，用于额外信息
-  string invitation_code = 6; // 邀请码           
+  string invitation_code = 6; // 邀请码     
+  string email = 7; // 邮箱
+  string email_code = 8; // 邮箱验证码      
 }
 
 message InitUserExtraInfoResponse {
@@ -148,6 +153,7 @@ message LoginResponse {
   string provider_user_app_id = 8; // Identifier from OAuth provider (e.g., WeChat)
   string login_type = 9; // phone, email, wechat, username
   UserType user_type = 10; // 用户类型
+  int32 login_status = 11; // 登录状态
 }
 
 message GetInfoRequest {
@@ -183,4 +189,18 @@ message EditInfoRequest {
 
 message EditInfoResponse {
 
+}
+
+message SendEmailRequest {
+    string email = 1;
+    string verification_code = 2;
+}
+
+message CheckInvitationCodeRequest {
+    string invitation_code = 1;
+    string temp_token = 2;
+}
+
+message ApplyInvitationCodeRequest {
+    string email = 1;   // User's email
 }
