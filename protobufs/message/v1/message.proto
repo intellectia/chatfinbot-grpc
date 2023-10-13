@@ -5,7 +5,13 @@ package chatfinbot.message.v1;
 option go_package = ".;messagepb";
 
 service MessageService {
+  rpc SendEmail(SendEmailRequest) returns (Empty);
   rpc SendSMS(SendSMSRequest) returns (Empty);
+}
+
+message SendEmailRequest {
+    string email = 1;
+    string verification_code = 2;
 }
 
 message Empty {}

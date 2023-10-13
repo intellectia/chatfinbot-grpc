@@ -22,6 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MessageServiceClient interface {
+	SendEmail(ctx context.Context, in *SendEmailRequest, opts ...grpc.CallOption) (*Empty, error)
 	SendSMS(ctx context.Context, in *SendSMSRequest, opts ...grpc.CallOption) (*Empty, error)
 }
 
@@ -31,6 +32,15 @@ type messageServiceClient struct {
 
 func NewMessageServiceClient(cc grpc.ClientConnInterface) MessageServiceClient {
 	return &messageServiceClient{cc}
+}
+
+func (c *messageServiceClient) SendEmail(ctx context.Context, in *SendEmailRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/chatfinbot.message.v1.MessageService/SendEmail", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *messageServiceClient) SendSMS(ctx context.Context, in *SendSMSRequest, opts ...grpc.CallOption) (*Empty, error) {
@@ -46,6 +56,7 @@ func (c *messageServiceClient) SendSMS(ctx context.Context, in *SendSMSRequest, 
 // All implementations must embed UnimplementedMessageServiceServer
 // for forward compatibility
 type MessageServiceServer interface {
+	SendEmail(context.Context, *SendEmailRequest) (*Empty, error)
 	SendSMS(context.Context, *SendSMSRequest) (*Empty, error)
 	mustEmbedUnimplementedMessageServiceServer()
 }
@@ -54,6 +65,9 @@ type MessageServiceServer interface {
 type UnimplementedMessageServiceServer struct {
 }
 
+func (UnimplementedMessageServiceServer) SendEmail(context.Context, *SendEmailRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendEmail not implemented")
+}
 func (UnimplementedMessageServiceServer) SendSMS(context.Context, *SendSMSRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendSMS not implemented")
 }
@@ -68,6 +82,24 @@ type UnsafeMessageServiceServer interface {
 
 func RegisterMessageServiceServer(s grpc.ServiceRegistrar, srv MessageServiceServer) {
 	s.RegisterService(&MessageService_ServiceDesc, srv)
+}
+
+func _MessageService_SendEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendEmailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MessageServiceServer).SendEmail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.message.v1.MessageService/SendEmail",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MessageServiceServer).SendEmail(ctx, req.(*SendEmailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _MessageService_SendSMS_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -95,6 +127,10 @@ var MessageService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "chatfinbot.message.v1.MessageService",
 	HandlerType: (*MessageServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "SendEmail",
+			Handler:    _MessageService_SendEmail_Handler,
+		},
 		{
 			MethodName: "SendSMS",
 			Handler:    _MessageService_SendSMS_Handler,

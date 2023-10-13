@@ -35,6 +35,9 @@ type UserServiceClient interface {
 	GetInfo(ctx context.Context, in *GetInfoRequest, opts ...grpc.CallOption) (*GetInfoResponse, error)
 	EditInfo(ctx context.Context, in *EditInfoRequest, opts ...grpc.CallOption) (*EditInfoResponse, error)
 	GetUserUsage(ctx context.Context, in *GetUserUsageRequest, opts ...grpc.CallOption) (*GetUserUsageResponse, error)
+	SendEmail(ctx context.Context, in *SendEmailRequest, opts ...grpc.CallOption) (*Empty, error)
+	CheckInvitationCode(ctx context.Context, in *CheckInvitationCodeRequest, opts ...grpc.CallOption) (*LoginResponse, error)
+	ApplyInvitationCode(ctx context.Context, in *ApplyInvitationCodeRequest, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type userServiceClient struct {
@@ -162,6 +165,33 @@ func (c *userServiceClient) GetUserUsage(ctx context.Context, in *GetUserUsageRe
 	return out, nil
 }
 
+func (c *userServiceClient) SendEmail(ctx context.Context, in *SendEmailRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/chatfinbot.user.v1.UserService/SendEmail", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) CheckInvitationCode(ctx context.Context, in *CheckInvitationCodeRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+	out := new(LoginResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.user.v1.UserService/CheckInvitationCode", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) ApplyInvitationCode(ctx context.Context, in *ApplyInvitationCodeRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/chatfinbot.user.v1.UserService/ApplyInvitationCode", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
@@ -179,6 +209,9 @@ type UserServiceServer interface {
 	GetInfo(context.Context, *GetInfoRequest) (*GetInfoResponse, error)
 	EditInfo(context.Context, *EditInfoRequest) (*EditInfoResponse, error)
 	GetUserUsage(context.Context, *GetUserUsageRequest) (*GetUserUsageResponse, error)
+	SendEmail(context.Context, *SendEmailRequest) (*Empty, error)
+	CheckInvitationCode(context.Context, *CheckInvitationCodeRequest) (*LoginResponse, error)
+	ApplyInvitationCode(context.Context, *ApplyInvitationCodeRequest) (*Empty, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -224,6 +257,15 @@ func (UnimplementedUserServiceServer) EditInfo(context.Context, *EditInfoRequest
 }
 func (UnimplementedUserServiceServer) GetUserUsage(context.Context, *GetUserUsageRequest) (*GetUserUsageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserUsage not implemented")
+}
+func (UnimplementedUserServiceServer) SendEmail(context.Context, *SendEmailRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendEmail not implemented")
+}
+func (UnimplementedUserServiceServer) CheckInvitationCode(context.Context, *CheckInvitationCodeRequest) (*LoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckInvitationCode not implemented")
+}
+func (UnimplementedUserServiceServer) ApplyInvitationCode(context.Context, *ApplyInvitationCodeRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ApplyInvitationCode not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -472,6 +514,60 @@ func _UserService_GetUserUsage_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_SendEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendEmailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).SendEmail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.user.v1.UserService/SendEmail",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).SendEmail(ctx, req.(*SendEmailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_CheckInvitationCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckInvitationCodeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).CheckInvitationCode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.user.v1.UserService/CheckInvitationCode",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).CheckInvitationCode(ctx, req.(*CheckInvitationCodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_ApplyInvitationCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ApplyInvitationCodeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).ApplyInvitationCode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.user.v1.UserService/ApplyInvitationCode",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).ApplyInvitationCode(ctx, req.(*ApplyInvitationCodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -530,6 +626,18 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUserUsage",
 			Handler:    _UserService_GetUserUsage_Handler,
+		},
+		{
+			MethodName: "SendEmail",
+			Handler:    _UserService_SendEmail_Handler,
+		},
+		{
+			MethodName: "CheckInvitationCode",
+			Handler:    _UserService_CheckInvitationCode_Handler,
+		},
+		{
+			MethodName: "ApplyInvitationCode",
+			Handler:    _UserService_ApplyInvitationCode_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
