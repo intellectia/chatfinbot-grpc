@@ -343,7 +343,7 @@ message ScheduleInfoSubtitles {
 
 message ScheduleInfoChapter {
     ScheduleStatus status = 1;
-    repeated MediaContent partial_summary = 2;
+    repeated MediaSummary partial_summary = 2;
     string schedule = 3; 
 }
 

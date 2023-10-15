@@ -2503,7 +2503,7 @@ type ScheduleInfoChapter struct {
 	unknownFields protoimpl.UnknownFields
 
 	Status         ScheduleStatus  `protobuf:"varint,1,opt,name=status,proto3,enum=chatfinbot.audio.v1.ScheduleStatus" json:"status,omitempty"`
-	PartialSummary []*MediaContent `protobuf:"bytes,2,rep,name=partial_summary,json=partialSummary,proto3" json:"partial_summary,omitempty"`
+	PartialSummary []*MediaSummary `protobuf:"bytes,2,rep,name=partial_summary,json=partialSummary,proto3" json:"partial_summary,omitempty"`
 	Schedule       string          `protobuf:"bytes,3,opt,name=schedule,proto3" json:"schedule,omitempty"`
 }
 
@@ -2546,7 +2546,7 @@ func (x *ScheduleInfoChapter) GetStatus() ScheduleStatus {
 	return ScheduleStatus_ScheduleStatusUnknown
 }
 
-func (x *ScheduleInfoChapter) GetPartialSummary() []*MediaContent {
+func (x *ScheduleInfoChapter) GetPartialSummary() []*MediaSummary {
 	if x != nil {
 		return x.PartialSummary
 	}
@@ -3067,7 +3067,7 @@ var file_audio_proto_rawDesc = []byte{
 	0x0a, 0x0f, 0x70, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x5f, 0x73, 0x75, 0x6d, 0x6d, 0x61, 0x72,
 	0x79, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x21, 0x2e, 0x63, 0x68, 0x61, 0x74, 0x66, 0x69,
 	0x6e, 0x62, 0x6f, 0x74, 0x2e, 0x61, 0x75, 0x64, 0x69, 0x6f, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x65,
-	0x64, 0x69, 0x61, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x52, 0x0e, 0x70, 0x61, 0x72, 0x74,
+	0x64, 0x69, 0x61, 0x53, 0x75, 0x6d, 0x6d, 0x61, 0x72, 0x79, 0x52, 0x0e, 0x70, 0x61, 0x72, 0x74,
 	0x69, 0x61, 0x6c, 0x53, 0x75, 0x6d, 0x6d, 0x61, 0x72, 0x79, 0x12, 0x1a, 0x0a, 0x08, 0x73, 0x63,
 	0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x73, 0x63,
 	0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x22, 0x88, 0x01, 0x0a, 0x13, 0x53, 0x63, 0x68, 0x65, 0x64,
@@ -3341,7 +3341,7 @@ var file_audio_proto_depIdxs = []int32{
 	5,  // 26: chatfinbot.audio.v1.ScheduleInfoSubtitles.status:type_name -> chatfinbot.audio.v1.ScheduleStatus
 	14, // 27: chatfinbot.audio.v1.ScheduleInfoSubtitles.content:type_name -> chatfinbot.audio.v1.MediaContent
 	5,  // 28: chatfinbot.audio.v1.ScheduleInfoChapter.status:type_name -> chatfinbot.audio.v1.ScheduleStatus
-	14, // 29: chatfinbot.audio.v1.ScheduleInfoChapter.partial_summary:type_name -> chatfinbot.audio.v1.MediaContent
+	15, // 29: chatfinbot.audio.v1.ScheduleInfoChapter.partial_summary:type_name -> chatfinbot.audio.v1.MediaSummary
 	5,  // 30: chatfinbot.audio.v1.ScheduleInfoSummary.status:type_name -> chatfinbot.audio.v1.ScheduleStatus
 	5,  // 31: chatfinbot.audio.v1.ScheduleInfoDepthSummary.status:type_name -> chatfinbot.audio.v1.ScheduleStatus
 	5,  // 32: chatfinbot.audio.v1.ScheduleInfoTodo.status:type_name -> chatfinbot.audio.v1.ScheduleStatus
