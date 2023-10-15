@@ -60,6 +60,20 @@ service AudioService {
             body: "*"
 		};
     };
+
+    rpc UpdateRecord(UpdateRecordReq) returns (UpdateRecordRsp) {
+        option (google.api.http) = {
+			post: "/v1/audio/update-record",
+            body: "*"
+		};
+    };
+
+    rpc GetdSchedule(GetScheduleReq) returns (GetScheduleRsp) {
+        option (google.api.http) = {
+			get: "/v1/audio/schedule"
+		};
+    };
+    
 }
 
 message CreateRecordReq {
@@ -240,4 +254,91 @@ message CheckTransReq {
 message CheckTransRsp {
     int32 ret = 1; 
     string msg = 2;
+}
+
+enum UpdateRecordType {
+    UpdateRecordTypeUnknown = 0; // 未知（不要使用）
+    UpdateRecordTypeContent = 1; // 更新字幕
+    UpdateRecordTypePartialSummary = 2; // 更新分段总结
+    UpdateRecordTypeSummary = 3; // 更新概要总结
+    UpdateRecordTypeDepthSummary = 4; // 更新深度总结
+    UpdateRecordTypeDepthTodo = 5; // 更新TODO
+}
+
+message UpdateRecordReq {
+    string session_id = 1;   // session的id
+    string doc_id = 2;      // 文档id
+    UpdateRecordType stype = 3; // 更新类型
+    MediaContent content = 4; // 更新字幕内容
+    MediaSummary partial_summary = 5; // 分段总结
+    string summary = 6; // 概要总结和深度总结
+    repeated string todo = 7; // 编辑todo
+}
+
+
+message UpdateRecordRsp {
+    int32 ret = 1; 
+    string msg = 2;
+}
+
+message GetScheduleReq {
+    string session_id = 1;   // session的id
+    string doc_id = 2;      // 文档id
+    bool show_content = 3; // 是否返回字幕
+    bool show_partial_summary = 4; // 是否返回章节信息
+    bool show_summary = 5; // 是否返回概要总结
+    bool show_depth_summary = 6; // 是否返回深度总结
+    bool show_todo = 7; // 是否返回todo
+}
+
+message GetScheduleRsp {
+    int32 ret = 1; 
+    string msg = 2;
+    repeated ScheduleInfo list = 3;
+}
+
+enum ScheduleStatus {
+    ScheduleStatusUnknown = 0; // 未知（不要使用）
+    ScheduleStatusProccess = 1; // 处理中
+    ScheduleStatusSuccess = 2; // 成功
+    ScheduleStatusFail = 3; // 失败
+    ScheduleStatusNotStart = 4; // 没有开始
+} 
+
+message ScheduleInfo { 
+    ScheduleInfoSubtitles subtitles_info = 1;  // 字幕数据
+    ScheduleInfoChapter  chapter_info = 2;     // 章节总结
+    ScheduleInfoSummary summary_info = 3; // 概要总结信息
+    ScheduleInfoDepthSummary  depth_summary_info = 4; // 深度总结信息
+    ScheduleInfoTodo  todo_info = 5; // todo
+}
+
+message ScheduleInfoSubtitles {
+    ScheduleStatus status = 1;
+    repeated MediaContent content = 2;
+    string schedule = 3; 
+}
+
+message ScheduleInfoChapter {
+    ScheduleStatus status = 1;
+    repeated MediaSummary partial_summary = 2;
+    string schedule = 3; 
+}
+
+message ScheduleInfoSummary {
+    ScheduleStatus status = 1;
+    string text = 2;
+    string schedule = 3; 
+}
+
+message ScheduleInfoDepthSummary {
+    ScheduleStatus status = 1;
+    string text = 2;
+    string schedule = 3; 
+}
+
+message ScheduleInfoTodo {
+    ScheduleStatus status = 1;
+    repeated string todo = 2;
+    string schedule = 3; 
 }
