@@ -207,6 +207,7 @@ message AudioSummary {
     string content = 5;
     string start = 6;
     MediaType media_type = 7;
+    string end = 8;
 }
 
 message AudioSummaryStatus {
