@@ -124,6 +124,8 @@ message MediaRecord {
     string todo_schedule = 20; // 待办事项进度
     ScheduleStatus partial_summary_status = 21; // 分段总结状态
     string partial_summary_schedule = 22; // 分段总结进度
+    ScheduleStatus content_status = 23; // 字幕状态
+    string content_schedule = 24; // 字幕进度
 }
 
 message GetRecordStatusReq {
