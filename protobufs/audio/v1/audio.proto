@@ -213,6 +213,7 @@ message AudioSummary {
 message AudioSummaryStatus {
     AudioSummary data = 1;
     string job_id = 2;
+    int64 submit_time = 3;
 }
 
 message SummaryDepthReq {
