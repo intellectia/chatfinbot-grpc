@@ -129,8 +129,11 @@ message ExtraPermConfig {
 
 message PackageConfig {
     uint32 ocr_num = 1; // ocr 次数
+    uint32 file_num = 2; // file num 次数
+    uint32 writing_num = 4; // writing num 次数 
+    uint32 writing_file_num = 5; // writing file num 次数
+    uint32 deep_summary_num = 6; // 深度总结次数
 }
-
 
 // Messages for CreateOrder
 message CreateOrderRequest {
