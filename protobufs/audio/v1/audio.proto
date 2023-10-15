@@ -207,7 +207,17 @@ message AudioSummary {
     string content = 5;
     string start = 6;
     MediaType media_type = 7;
-    string end = 8;
+    AudioSummaryPartialData partial_data = 8;
+}
+
+message AudioSummaryPartialData {
+    int32 cur_pos = 1;
+    repeated AudioSummaryPartialPos list = 2;
+}
+
+message AudioSummaryPartialPos {
+    int32 begin =  1;
+    int32 end =  2;
 }
 
 message AudioSummaryStatus {
