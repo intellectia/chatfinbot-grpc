@@ -29,7 +29,7 @@ const (
 	AudioService_UpdateSummary_FullMethodName   = "/chatfinbot.audio.v1.AudioService/UpdateSummary"
 	AudioService_CheckTrans_FullMethodName      = "/chatfinbot.audio.v1.AudioService/CheckTrans"
 	AudioService_UpdateRecord_FullMethodName    = "/chatfinbot.audio.v1.AudioService/UpdateRecord"
-	AudioService_GetdSchedule_FullMethodName    = "/chatfinbot.audio.v1.AudioService/GetdSchedule"
+	AudioService_GetSchedule_FullMethodName     = "/chatfinbot.audio.v1.AudioService/GetSchedule"
 )
 
 // AudioServiceClient is the client API for AudioService service.
@@ -46,7 +46,7 @@ type AudioServiceClient interface {
 	UpdateSummary(ctx context.Context, in *UpdateSummaryReq, opts ...grpc.CallOption) (*UpdateSummaryRsp, error)
 	CheckTrans(ctx context.Context, in *CheckTransReq, opts ...grpc.CallOption) (*CheckTransRsp, error)
 	UpdateRecord(ctx context.Context, in *UpdateRecordReq, opts ...grpc.CallOption) (*UpdateRecordRsp, error)
-	GetdSchedule(ctx context.Context, in *GetScheduleReq, opts ...grpc.CallOption) (*GetScheduleRsp, error)
+	GetSchedule(ctx context.Context, in *GetScheduleReq, opts ...grpc.CallOption) (*GetScheduleRsp, error)
 }
 
 type audioServiceClient struct {
@@ -147,9 +147,9 @@ func (c *audioServiceClient) UpdateRecord(ctx context.Context, in *UpdateRecordR
 	return out, nil
 }
 
-func (c *audioServiceClient) GetdSchedule(ctx context.Context, in *GetScheduleReq, opts ...grpc.CallOption) (*GetScheduleRsp, error) {
+func (c *audioServiceClient) GetSchedule(ctx context.Context, in *GetScheduleReq, opts ...grpc.CallOption) (*GetScheduleRsp, error) {
 	out := new(GetScheduleRsp)
-	err := c.cc.Invoke(ctx, AudioService_GetdSchedule_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, AudioService_GetSchedule_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -170,7 +170,7 @@ type AudioServiceServer interface {
 	UpdateSummary(context.Context, *UpdateSummaryReq) (*UpdateSummaryRsp, error)
 	CheckTrans(context.Context, *CheckTransReq) (*CheckTransRsp, error)
 	UpdateRecord(context.Context, *UpdateRecordReq) (*UpdateRecordRsp, error)
-	GetdSchedule(context.Context, *GetScheduleReq) (*GetScheduleRsp, error)
+	GetSchedule(context.Context, *GetScheduleReq) (*GetScheduleRsp, error)
 	mustEmbedUnimplementedAudioServiceServer()
 }
 
@@ -208,8 +208,8 @@ func (UnimplementedAudioServiceServer) CheckTrans(context.Context, *CheckTransRe
 func (UnimplementedAudioServiceServer) UpdateRecord(context.Context, *UpdateRecordReq) (*UpdateRecordRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateRecord not implemented")
 }
-func (UnimplementedAudioServiceServer) GetdSchedule(context.Context, *GetScheduleReq) (*GetScheduleRsp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetdSchedule not implemented")
+func (UnimplementedAudioServiceServer) GetSchedule(context.Context, *GetScheduleReq) (*GetScheduleRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSchedule not implemented")
 }
 func (UnimplementedAudioServiceServer) mustEmbedUnimplementedAudioServiceServer() {}
 
@@ -404,20 +404,20 @@ func _AudioService_UpdateRecord_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AudioService_GetdSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AudioService_GetSchedule_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetScheduleReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AudioServiceServer).GetdSchedule(ctx, in)
+		return srv.(AudioServiceServer).GetSchedule(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AudioService_GetdSchedule_FullMethodName,
+		FullMethod: AudioService_GetSchedule_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AudioServiceServer).GetdSchedule(ctx, req.(*GetScheduleReq))
+		return srv.(AudioServiceServer).GetSchedule(ctx, req.(*GetScheduleReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -470,8 +470,8 @@ var AudioService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AudioService_UpdateRecord_Handler,
 		},
 		{
-			MethodName: "GetdSchedule",
-			Handler:    _AudioService_GetdSchedule_Handler,
+			MethodName: "GetSchedule",
+			Handler:    _AudioService_GetSchedule_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
