@@ -193,7 +193,7 @@ message EditInfoResponse {
 
 message SendEmailRequest {
     string email = 1;
-    string verification_code = 2;
+    string temp_token = 2;
 }
 
 message CheckInvitationCodeRequest {
@@ -203,4 +203,5 @@ message CheckInvitationCodeRequest {
 
 message ApplyInvitationCodeRequest {
     string email = 1;   // User's email
+    string temp_token = 2;
 }
