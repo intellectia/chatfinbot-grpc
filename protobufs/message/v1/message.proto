@@ -11,7 +11,8 @@ service MessageService {
 
 message SendEmailRequest {
     string email = 1;
-    string verification_code = 2;
+    string subject = 2;
+    string content = 3;
 }
 
 message Empty {}
