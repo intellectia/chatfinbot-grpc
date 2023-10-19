@@ -9,7 +9,7 @@ service FileService {
   rpc UploadPublicFile(UploadRequest) returns (UploadResponse);
   rpc DeleteFile(DeleteFileRequest) returns (Empty);
   rpc UpdateFile(UpdateFileRequest) returns (Empty);
-  rpc UploadTinyAudioFile(UploadRequest) returns (Empty);
+  rpc UploadTinyAudioFile(UploadTinyAudioFileRequest) returns (UploadTinyAudioFileResponse);
   rpc GetFileList(GetFileListRequest) returns (GetFileListResponse);
   rpc GetFileInfo(GetFileInfoRequest) returns (GetFileInfoResponse);
   rpc GetPublicS3DownloadURL(GetPublicS3DownloadURLRequest) returns (GetS3DownloadURLResponse);
@@ -105,4 +105,24 @@ message S3Documents {
 
 message GetS3DownloadURLRsp {
     map<string, string> documents = 1;  //
+}
+
+message UploadTinyAudioFileRequest {
+    bytes file_content = 1;
+    string start = 2;
+    int64 seg_id = 3;
+}
+
+message UploadTinyAudioFileResponse {
+    int32 ret = 1;
+    string msg = 2;
+    UploadTinyAudioFileData data = 3;
+} 
+
+message UploadTinyAudioFileData {
+    string start = 1;
+    string text = 2;
+    double duration = 3;
+    string role = 4;
+    int64 seg_id = 5;
 }

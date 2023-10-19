@@ -78,6 +78,12 @@ service RbacService {
 			body: "*"
 		};
     };
+
+    rpc GetUserQuota(GetUserQuotaReq) returns (GetUserQuotaRsp)  {
+        option (google.api.http) = {
+			get: "/v1/rbac/user-quota"
+		};
+    };
 }
 
 enum ChatType {
@@ -251,3 +257,19 @@ message UserPackageUsage {
     int64 ocr = 5; // ocr次数
 }
 
+message GetUserQuotaReq {
+
+}
+
+enum UserQuotaType {
+    UserQuotaTypeUnk
+}
+
+message GetUserQuotaRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+}
+
+message UserQuota {
+    
+}
