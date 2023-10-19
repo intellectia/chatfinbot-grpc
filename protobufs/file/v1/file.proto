@@ -9,6 +9,7 @@ service FileService {
   rpc UploadPublicFile(UploadRequest) returns (UploadResponse);
   rpc DeleteFile(DeleteFileRequest) returns (Empty);
   rpc UpdateFile(UpdateFileRequest) returns (Empty);
+  rpc UploadTinyAudioFile(UploadRequest) returns (Empty);
   rpc GetFileList(GetFileListRequest) returns (GetFileListResponse);
   rpc GetFileInfo(GetFileInfoRequest) returns (GetFileInfoResponse);
   rpc GetPublicS3DownloadURL(GetPublicS3DownloadURLRequest) returns (GetS3DownloadURLResponse);

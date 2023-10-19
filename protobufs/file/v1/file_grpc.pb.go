@@ -26,6 +26,7 @@ type FileServiceClient interface {
 	UploadPublicFile(ctx context.Context, in *UploadRequest, opts ...grpc.CallOption) (*UploadResponse, error)
 	DeleteFile(ctx context.Context, in *DeleteFileRequest, opts ...grpc.CallOption) (*Empty, error)
 	UpdateFile(ctx context.Context, in *UpdateFileRequest, opts ...grpc.CallOption) (*Empty, error)
+	UploadTinyAudioFile(ctx context.Context, in *UploadRequest, opts ...grpc.CallOption) (*Empty, error)
 	GetFileList(ctx context.Context, in *GetFileListRequest, opts ...grpc.CallOption) (*GetFileListResponse, error)
 	GetFileInfo(ctx context.Context, in *GetFileInfoRequest, opts ...grpc.CallOption) (*GetFileInfoResponse, error)
 	GetPublicS3DownloadURL(ctx context.Context, in *GetPublicS3DownloadURLRequest, opts ...grpc.CallOption) (*GetS3DownloadURLResponse, error)
@@ -72,6 +73,15 @@ func (c *fileServiceClient) DeleteFile(ctx context.Context, in *DeleteFileReques
 func (c *fileServiceClient) UpdateFile(ctx context.Context, in *UpdateFileRequest, opts ...grpc.CallOption) (*Empty, error) {
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, "/chatfinbot.file.v1.FileService/UpdateFile", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *fileServiceClient) UploadTinyAudioFile(ctx context.Context, in *UploadRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/chatfinbot.file.v1.FileService/UploadTinyAudioFile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -140,6 +150,7 @@ type FileServiceServer interface {
 	UploadPublicFile(context.Context, *UploadRequest) (*UploadResponse, error)
 	DeleteFile(context.Context, *DeleteFileRequest) (*Empty, error)
 	UpdateFile(context.Context, *UpdateFileRequest) (*Empty, error)
+	UploadTinyAudioFile(context.Context, *UploadRequest) (*Empty, error)
 	GetFileList(context.Context, *GetFileListRequest) (*GetFileListResponse, error)
 	GetFileInfo(context.Context, *GetFileInfoRequest) (*GetFileInfoResponse, error)
 	GetPublicS3DownloadURL(context.Context, *GetPublicS3DownloadURLRequest) (*GetS3DownloadURLResponse, error)
@@ -164,6 +175,9 @@ func (UnimplementedFileServiceServer) DeleteFile(context.Context, *DeleteFileReq
 }
 func (UnimplementedFileServiceServer) UpdateFile(context.Context, *UpdateFileRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateFile not implemented")
+}
+func (UnimplementedFileServiceServer) UploadTinyAudioFile(context.Context, *UploadRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadTinyAudioFile not implemented")
 }
 func (UnimplementedFileServiceServer) GetFileList(context.Context, *GetFileListRequest) (*GetFileListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFileList not implemented")
@@ -264,6 +278,24 @@ func _FileService_UpdateFile_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(FileServiceServer).UpdateFile(ctx, req.(*UpdateFileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _FileService_UploadTinyAudioFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FileServiceServer).UploadTinyAudioFile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.file.v1.FileService/UploadTinyAudioFile",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FileServiceServer).UploadTinyAudioFile(ctx, req.(*UploadRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -398,6 +430,10 @@ var FileService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateFile",
 			Handler:    _FileService_UpdateFile_Handler,
+		},
+		{
+			MethodName: "UploadTinyAudioFile",
+			Handler:    _FileService_UploadTinyAudioFile_Handler,
 		},
 		{
 			MethodName: "GetFileList",
