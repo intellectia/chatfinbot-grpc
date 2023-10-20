@@ -111,6 +111,7 @@ message UploadTinyAudioFileRequest {
     bytes file_content = 1;
     string start = 2;
     int64 seg_id = 3;
+    int32 duration =4; 
 }
 
 message UploadTinyAudioFileResponse {
