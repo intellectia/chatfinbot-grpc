@@ -19,6 +19,7 @@ message Empty {}
 
 message SendSMSRequest {
     string phone_number = 1; // 手机号 8613211112222
-    string code = 2;
+    string code = 2; // 验证码
     int32 message_type = 3; // 1: 验证码
+    string country_code = 4; // 国家代码
 }
