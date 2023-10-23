@@ -49,6 +49,19 @@ service PaymentsService {
             get: "/usage-details"
         };
     };
+
+    rpc GetUserUsage(GetUserUsageRequest) returns (GetUserUsageResponse) {
+        option (google.api.http) = {
+            get: "/usage"
+        };
+    };
+
+    rpc ConsumeUserPackageUsage(ConsumeUserPackageUsageRequest) returns (ConsumeUserPackageUsageResponse) {
+        option (google.api.http) = {
+            post: "/consume-package-usage"
+            body: "*"
+        };
+    };
 }
 
 enum PlanId {
@@ -170,4 +183,57 @@ message GetOrderStatusResponse {
     string order_status = 1;
     string status = 2;  // General status for the response (e.g., success, failure).
     string message = 3;  // Optional message providing more details.
+}
+
+message GetUserUsageRequest {
+    string user_id = 1;
+}
+
+
+message GetUserUsageResponse {
+    int32 ret = 1;
+    string msg = 2;
+    UserBasicUsage basic_info = 3;
+    repeated UserPackageUsage package_list = 4;
+}
+
+message UserBasicUsage {
+    ChatPermConfig chat_config = 1; // 聊天
+    WritingPermConfig writing_config = 2; // 写作
+}
+
+enum PackageType {
+    PackageTypeUnknown = 0; // 未知（不要使用）
+    PackageTypeRecordAudio = 1; //  录音
+    PackageTypeUploadAudio = 2; //  上传音频文件
+    PackageTypeVideo = 3; //  视频
+    PackageTypeDepthSummary = 4; // 深度总结
+    PackageTypeDocumentNum = 5; // 文档数量
+    PackageTypeChatNum = 6; // 回答流量包
+    PackageTypeOCR = 7;   // ocr包
+    PackageTypeWritingFileUpload = 8;   // 写作上传文件包
+}
+
+message UserPackageUsage {
+    PackageType package_type = 1; // 包类型
+    string title = 2; // 标题
+    int64 start_time = 3; // 开始时间
+    int64 end_time = 4; // 结束时间
+    int64 quota = 5; // 用量
+    int64 usage = 6; // 使用量
+}
+
+message ConsumeUserPackageUsageRequest {
+    string user_id = 1;
+    repeated ConsumePackageData list = 2;
+}
+
+message ConsumePackageData {
+    PackageType package_type = 1; // 包类型
+    int64 usage = 2; // 使用量
+}
+
+message ConsumeUserPackageUsageResponse {
+    int32 ret = 1;
+    string msg = 2;
 }
