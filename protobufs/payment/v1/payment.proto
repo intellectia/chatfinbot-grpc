@@ -200,6 +200,7 @@ message GetUserUsageResponse {
 message UserBasicUsage {
     ChatPermConfig chat_config = 1; // 聊天
     WritingPermConfig writing_config = 2; // 写作
+    ExtraPermConfig extra_config = 3;
 }
 
 enum PackageType {
@@ -215,12 +216,13 @@ enum PackageType {
 }
 
 message UserPackageUsage {
-    PackageType package_type = 1; // 包类型
-    string title = 2; // 标题
-    int64 start_time = 3; // 开始时间
-    int64 end_time = 4; // 结束时间
-    int64 quota = 5; // 用量
-    int64 usage = 6; // 使用量
+    string id = 1;
+    PackageType package_type = 2; // 包类型
+    string title = 3; // 标题
+    int64 start_time = 4; // 开始时间
+    int64 end_time = 5; // 结束时间
+    int64 quota = 6; // 用量
+    int64 usage = 7; // 使用量
 }
 
 message ConsumeUserPackageUsageRequest {
@@ -229,7 +231,7 @@ message ConsumeUserPackageUsageRequest {
 }
 
 message ConsumePackageData {
-    PackageType package_type = 1; // 包类型
+    string id = 1;  // id
     int64 usage = 2; // 使用量
 }
 
