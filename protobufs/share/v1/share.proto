@@ -6,11 +6,40 @@ option go_package = ".;sharepb";
 import "google/api/annotations.proto";
 
 service ShareService {
+    rpc ShareChat(ShareChatReq) returns (ShareChatRsp) {
+        option (google.api.http) = {
+			post: "/v1/share/share-chat",
+			body: "*"
+		};
+    }
+
+    rpc UnshareChat(UnshareChatReq) returns (UnshareChatRsp) {
+        option (google.api.http) = {
+			post: "/v1/share/unshare-chat",
+			body: "*"
+		};
+    }
+
     rpc GetChatInfo(GetChatInfoReq) returns (GetChatInfoRsp) {
         option (google.api.http) = {
 			get: "/v1/share/chat-info"
 		};
     };
+
+
+    rpc ShareDoc(ShareDocReq) returns (ShareDocRsp) {
+        option (google.api.http) = {
+			post: "/v1/share/share-doc",
+			body: "*"
+		};
+    }
+
+    rpc UnshareDoc(UnshareDocReq) returns (UnshareDocRsp) {
+        option (google.api.http) = {
+			post: "/v1/share/unshare-doc",
+			body: "*"
+		};
+    }
 
     rpc GetDocInfo(GetDocInfoReq) returns (GetDocInfoRsp) {
         option (google.api.http) = {
@@ -100,6 +129,45 @@ message GetVideoInfoReq {
 }
 
 message GetVideoInfoRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+}
+
+
+message ShareChatReq {
+    string sid = 1;
+    int64 mid = 2;
+}
+
+message ShareChatRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+}
+
+message UnshareChatReq {
+    string sid = 1;
+}
+
+message UnshareChatRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+}
+
+message ShareDocReq {
+    string sid = 1;
+    int64 mid = 2;
+}
+
+message ShareDocRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+}
+
+message UnshareDocReq {
+    string sid = 1;
+}
+
+message UnshareDocRsp {
     int32 ret = 1; // 错误码
     string msg = 2; // msg
 }

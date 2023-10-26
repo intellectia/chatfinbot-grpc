@@ -19,7 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
+	ShareService_ShareChat_FullMethodName    = "/chatfinbot.share.v1.ShareService/ShareChat"
+	ShareService_UnshareChat_FullMethodName  = "/chatfinbot.share.v1.ShareService/UnshareChat"
 	ShareService_GetChatInfo_FullMethodName  = "/chatfinbot.share.v1.ShareService/GetChatInfo"
+	ShareService_ShareDoc_FullMethodName     = "/chatfinbot.share.v1.ShareService/ShareDoc"
+	ShareService_UnshareDoc_FullMethodName   = "/chatfinbot.share.v1.ShareService/UnshareDoc"
 	ShareService_GetDocInfo_FullMethodName   = "/chatfinbot.share.v1.ShareService/GetDocInfo"
 	ShareService_GetAudioInfo_FullMethodName = "/chatfinbot.share.v1.ShareService/GetAudioInfo"
 	ShareService_GetVideoInfo_FullMethodName = "/chatfinbot.share.v1.ShareService/GetVideoInfo"
@@ -29,7 +33,11 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ShareServiceClient interface {
+	ShareChat(ctx context.Context, in *ShareChatReq, opts ...grpc.CallOption) (*ShareChatRsp, error)
+	UnshareChat(ctx context.Context, in *UnshareChatReq, opts ...grpc.CallOption) (*UnshareChatRsp, error)
 	GetChatInfo(ctx context.Context, in *GetChatInfoReq, opts ...grpc.CallOption) (*GetChatInfoRsp, error)
+	ShareDoc(ctx context.Context, in *ShareDocReq, opts ...grpc.CallOption) (*ShareDocRsp, error)
+	UnshareDoc(ctx context.Context, in *UnshareDocReq, opts ...grpc.CallOption) (*UnshareDocRsp, error)
 	GetDocInfo(ctx context.Context, in *GetDocInfoReq, opts ...grpc.CallOption) (*GetDocInfoRsp, error)
 	GetAudioInfo(ctx context.Context, in *GetAudioInfoReq, opts ...grpc.CallOption) (*GetAudioInfoRsp, error)
 	GetVideoInfo(ctx context.Context, in *GetVideoInfoReq, opts ...grpc.CallOption) (*GetVideoInfoRsp, error)
@@ -43,9 +51,45 @@ func NewShareServiceClient(cc grpc.ClientConnInterface) ShareServiceClient {
 	return &shareServiceClient{cc}
 }
 
+func (c *shareServiceClient) ShareChat(ctx context.Context, in *ShareChatReq, opts ...grpc.CallOption) (*ShareChatRsp, error) {
+	out := new(ShareChatRsp)
+	err := c.cc.Invoke(ctx, ShareService_ShareChat_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shareServiceClient) UnshareChat(ctx context.Context, in *UnshareChatReq, opts ...grpc.CallOption) (*UnshareChatRsp, error) {
+	out := new(UnshareChatRsp)
+	err := c.cc.Invoke(ctx, ShareService_UnshareChat_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *shareServiceClient) GetChatInfo(ctx context.Context, in *GetChatInfoReq, opts ...grpc.CallOption) (*GetChatInfoRsp, error) {
 	out := new(GetChatInfoRsp)
 	err := c.cc.Invoke(ctx, ShareService_GetChatInfo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shareServiceClient) ShareDoc(ctx context.Context, in *ShareDocReq, opts ...grpc.CallOption) (*ShareDocRsp, error) {
+	out := new(ShareDocRsp)
+	err := c.cc.Invoke(ctx, ShareService_ShareDoc_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shareServiceClient) UnshareDoc(ctx context.Context, in *UnshareDocReq, opts ...grpc.CallOption) (*UnshareDocRsp, error) {
+	out := new(UnshareDocRsp)
+	err := c.cc.Invoke(ctx, ShareService_UnshareDoc_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +127,11 @@ func (c *shareServiceClient) GetVideoInfo(ctx context.Context, in *GetVideoInfoR
 // All implementations must embed UnimplementedShareServiceServer
 // for forward compatibility
 type ShareServiceServer interface {
+	ShareChat(context.Context, *ShareChatReq) (*ShareChatRsp, error)
+	UnshareChat(context.Context, *UnshareChatReq) (*UnshareChatRsp, error)
 	GetChatInfo(context.Context, *GetChatInfoReq) (*GetChatInfoRsp, error)
+	ShareDoc(context.Context, *ShareDocReq) (*ShareDocRsp, error)
+	UnshareDoc(context.Context, *UnshareDocReq) (*UnshareDocRsp, error)
 	GetDocInfo(context.Context, *GetDocInfoReq) (*GetDocInfoRsp, error)
 	GetAudioInfo(context.Context, *GetAudioInfoReq) (*GetAudioInfoRsp, error)
 	GetVideoInfo(context.Context, *GetVideoInfoReq) (*GetVideoInfoRsp, error)
@@ -94,8 +142,20 @@ type ShareServiceServer interface {
 type UnimplementedShareServiceServer struct {
 }
 
+func (UnimplementedShareServiceServer) ShareChat(context.Context, *ShareChatReq) (*ShareChatRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ShareChat not implemented")
+}
+func (UnimplementedShareServiceServer) UnshareChat(context.Context, *UnshareChatReq) (*UnshareChatRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UnshareChat not implemented")
+}
 func (UnimplementedShareServiceServer) GetChatInfo(context.Context, *GetChatInfoReq) (*GetChatInfoRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetChatInfo not implemented")
+}
+func (UnimplementedShareServiceServer) ShareDoc(context.Context, *ShareDocReq) (*ShareDocRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ShareDoc not implemented")
+}
+func (UnimplementedShareServiceServer) UnshareDoc(context.Context, *UnshareDocReq) (*UnshareDocRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UnshareDoc not implemented")
 }
 func (UnimplementedShareServiceServer) GetDocInfo(context.Context, *GetDocInfoReq) (*GetDocInfoRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDocInfo not implemented")
@@ -119,6 +179,42 @@ func RegisterShareServiceServer(s grpc.ServiceRegistrar, srv ShareServiceServer)
 	s.RegisterService(&ShareService_ServiceDesc, srv)
 }
 
+func _ShareService_ShareChat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ShareChatReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShareServiceServer).ShareChat(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShareService_ShareChat_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShareServiceServer).ShareChat(ctx, req.(*ShareChatReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShareService_UnshareChat_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UnshareChatReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShareServiceServer).UnshareChat(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShareService_UnshareChat_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShareServiceServer).UnshareChat(ctx, req.(*UnshareChatReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ShareService_GetChatInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetChatInfoReq)
 	if err := dec(in); err != nil {
@@ -133,6 +229,42 @@ func _ShareService_GetChatInfo_Handler(srv interface{}, ctx context.Context, dec
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ShareServiceServer).GetChatInfo(ctx, req.(*GetChatInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShareService_ShareDoc_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ShareDocReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShareServiceServer).ShareDoc(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShareService_ShareDoc_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShareServiceServer).ShareDoc(ctx, req.(*ShareDocReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShareService_UnshareDoc_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UnshareDocReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShareServiceServer).UnshareDoc(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShareService_UnshareDoc_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShareServiceServer).UnshareDoc(ctx, req.(*UnshareDocReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -199,8 +331,24 @@ var ShareService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ShareServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "ShareChat",
+			Handler:    _ShareService_ShareChat_Handler,
+		},
+		{
+			MethodName: "UnshareChat",
+			Handler:    _ShareService_UnshareChat_Handler,
+		},
+		{
 			MethodName: "GetChatInfo",
 			Handler:    _ShareService_GetChatInfo_Handler,
+		},
+		{
+			MethodName: "ShareDoc",
+			Handler:    _ShareService_ShareDoc_Handler,
+		},
+		{
+			MethodName: "UnshareDoc",
+			Handler:    _ShareService_UnshareDoc_Handler,
 		},
 		{
 			MethodName: "GetDocInfo",
