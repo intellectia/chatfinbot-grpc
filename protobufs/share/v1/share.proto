@@ -106,11 +106,13 @@ message ChatHistoryDocuments {
 
 message GetDocInfoReq {
     string sid = 1;
+    int32 mid = 2;
 }
 
 message GetDocInfoRsp {
     int32 ret = 1; // 错误码
     string msg = 2; // msg
+    repeated ChatHistory list = 3;
 }
 
 
