@@ -285,6 +285,7 @@ enum UpdateRecordType {
     UpdateRecordTypeSummary = 3; // 更新概要总结
     UpdateRecordTypeDepthSummary = 4; // 更新深度总结
     UpdateRecordTypeDepthTodo = 5; // 更新TODO
+    UpdateRecordTypeAllContent = 6; // 更新全文字幕
 }
 
 message UpdateRecordReq {
@@ -295,6 +296,7 @@ message UpdateRecordReq {
     MediaSummary partial_summary = 5; // 分段总结
     string summary = 6; // 概要总结和深度总结
     repeated string todo = 7; // 编辑todo
+    repeated MediaContent contents = 8; // 更新全部字幕内容
 }
 
 
