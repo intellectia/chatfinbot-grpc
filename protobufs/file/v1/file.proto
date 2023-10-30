@@ -118,6 +118,7 @@ message UploadTinyAudioFileResponse {
     int32 ret = 1;
     string msg = 2;
     UploadTinyAudioFileData data = 3;
+    int32 remaining_time = 4; // 剩余时间
 } 
 
 message UploadTinyAudioFileData {
