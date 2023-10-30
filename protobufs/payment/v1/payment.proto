@@ -62,6 +62,9 @@ service PaymentsService {
             body: "*"
         };
     };
+
+    rpc CreateFreeUsages(CreateFreeUsagesRequest) returns (Empty);
+
 }
 
 enum PlanId {
@@ -205,14 +208,14 @@ message UserBasicUsage {
 
 enum PackageType {
     PackageTypeUnknown = 0; // 未知（不要使用）
-    PackageTypeRecordAudio = 1; //  录音
-    PackageTypeUploadAudio = 2; //  上传音频文件
-    PackageTypeVideo = 3; //  视频
-    PackageTypeDepthSummary = 4; // 深度总结
-    PackageTypeDocumentNum = 5; // 文档数量
-    PackageTypeChatNum = 6; // 回答流量包
-    PackageTypeOCR = 7;   // ocr包
-    PackageTypeWritingFileUpload = 8;   // 写作上传文件包
+    PackageTypeUploadAudio = 4; //  上传音频文件
+    PackageTypeVideo = 5; //  视频
+    PackageTypeRecordAudio = 6; //  录音
+    PackageTypeDepthSummary = 7; // 深度总结
+    PackageTypeOCR = 8;   // ocr包
+    PackageTypeWritingFileUpload = 9;   // 写作上传文件包
+    PackageTypeDocumentNum = 10; // 文档数量
+    PackageTypeChatNum = 11; // 回答流量包
 }
 
 message UserPackageUsage {
@@ -239,3 +242,12 @@ message ConsumeUserPackageUsageResponse {
     int32 ret = 1;
     string msg = 2;
 }
+
+// Request message for CreateFreeUsages RPC
+message CreateFreeUsagesRequest {
+  repeated string plan_ids = 1;
+  string user_id = 2;
+}
+
+message Empty {}
+
