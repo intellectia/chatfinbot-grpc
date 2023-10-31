@@ -63,7 +63,7 @@ service PaymentsService {
         };
     };
 
-    rpc CreateFreeUsages(CreateFreeUsagesRequest) returns (Empty);
+    rpc CreateUsages(CreateUsagesRequest) returns (Empty);
 
 }
 
@@ -244,7 +244,7 @@ message ConsumeUserPackageUsageResponse {
 }
 
 // Request message for CreateFreeUsages RPC
-message CreateFreeUsagesRequest {
+message CreateUsagesRequest {
   repeated string plan_ids = 1;
   string user_id = 2;
 }

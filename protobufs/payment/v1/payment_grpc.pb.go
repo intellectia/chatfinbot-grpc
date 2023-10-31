@@ -29,7 +29,7 @@ type PaymentsServiceClient interface {
 	GetUserUsagePermissions(ctx context.Context, in *GetUserUsagePermissionsRequest, opts ...grpc.CallOption) (*GetUserUsagePermissionsResponse, error)
 	GetUserUsage(ctx context.Context, in *GetUserUsageRequest, opts ...grpc.CallOption) (*GetUserUsageResponse, error)
 	ConsumeUserPackageUsage(ctx context.Context, in *ConsumeUserPackageUsageRequest, opts ...grpc.CallOption) (*ConsumeUserPackageUsageResponse, error)
-	CreateFreeUsages(ctx context.Context, in *CreateFreeUsagesRequest, opts ...grpc.CallOption) (*Empty, error)
+	CreateUsages(ctx context.Context, in *CreateUsagesRequest, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type paymentsServiceClient struct {
@@ -103,9 +103,9 @@ func (c *paymentsServiceClient) ConsumeUserPackageUsage(ctx context.Context, in 
 	return out, nil
 }
 
-func (c *paymentsServiceClient) CreateFreeUsages(ctx context.Context, in *CreateFreeUsagesRequest, opts ...grpc.CallOption) (*Empty, error) {
+func (c *paymentsServiceClient) CreateUsages(ctx context.Context, in *CreateUsagesRequest, opts ...grpc.CallOption) (*Empty, error) {
 	out := new(Empty)
-	err := c.cc.Invoke(ctx, "/chatfinbot.payment.v1.PaymentsService/CreateFreeUsages", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/chatfinbot.payment.v1.PaymentsService/CreateUsages", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -123,7 +123,7 @@ type PaymentsServiceServer interface {
 	GetUserUsagePermissions(context.Context, *GetUserUsagePermissionsRequest) (*GetUserUsagePermissionsResponse, error)
 	GetUserUsage(context.Context, *GetUserUsageRequest) (*GetUserUsageResponse, error)
 	ConsumeUserPackageUsage(context.Context, *ConsumeUserPackageUsageRequest) (*ConsumeUserPackageUsageResponse, error)
-	CreateFreeUsages(context.Context, *CreateFreeUsagesRequest) (*Empty, error)
+	CreateUsages(context.Context, *CreateUsagesRequest) (*Empty, error)
 	mustEmbedUnimplementedPaymentsServiceServer()
 }
 
@@ -152,8 +152,8 @@ func (UnimplementedPaymentsServiceServer) GetUserUsage(context.Context, *GetUser
 func (UnimplementedPaymentsServiceServer) ConsumeUserPackageUsage(context.Context, *ConsumeUserPackageUsageRequest) (*ConsumeUserPackageUsageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ConsumeUserPackageUsage not implemented")
 }
-func (UnimplementedPaymentsServiceServer) CreateFreeUsages(context.Context, *CreateFreeUsagesRequest) (*Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateFreeUsages not implemented")
+func (UnimplementedPaymentsServiceServer) CreateUsages(context.Context, *CreateUsagesRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateUsages not implemented")
 }
 func (UnimplementedPaymentsServiceServer) mustEmbedUnimplementedPaymentsServiceServer() {}
 
@@ -294,20 +294,20 @@ func _PaymentsService_ConsumeUserPackageUsage_Handler(srv interface{}, ctx conte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PaymentsService_CreateFreeUsages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateFreeUsagesRequest)
+func _PaymentsService_CreateUsages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateUsagesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentsServiceServer).CreateFreeUsages(ctx, in)
+		return srv.(PaymentsServiceServer).CreateUsages(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/chatfinbot.payment.v1.PaymentsService/CreateFreeUsages",
+		FullMethod: "/chatfinbot.payment.v1.PaymentsService/CreateUsages",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentsServiceServer).CreateFreeUsages(ctx, req.(*CreateFreeUsagesRequest))
+		return srv.(PaymentsServiceServer).CreateUsages(ctx, req.(*CreateUsagesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -348,8 +348,8 @@ var PaymentsService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _PaymentsService_ConsumeUserPackageUsage_Handler,
 		},
 		{
-			MethodName: "CreateFreeUsages",
-			Handler:    _PaymentsService_CreateFreeUsages_Handler,
+			MethodName: "CreateUsages",
+			Handler:    _PaymentsService_CreateUsages_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
