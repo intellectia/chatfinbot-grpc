@@ -13,6 +13,12 @@ service ShareService {
 		};
     }
 
+    rpc CheckShareChat(CheckShareChatReq) returns (CheckShareChatRsp) {
+        option (google.api.http) = {
+			get: "/v1/share/check-chat"
+		};
+    }
+
     rpc UnshareChat(UnshareChatReq) returns (UnshareChatRsp) {
         option (google.api.http) = {
 			post: "/v1/share/unshare-chat",
@@ -46,6 +52,12 @@ service ShareService {
 			get: "/v1/share/doc-info"
 		};
     };
+
+    rpc CheckShareDoc(CheckShareDocReq) returns (CheckShareDocRsp) {
+        option (google.api.http) = {
+			get: "/v1/share/check-doc"
+		};
+    }
 
     rpc GetAudioInfo(GetAudioInfoReq) returns (GetAudioInfoRsp) {
         option (google.api.http) = {
@@ -173,4 +185,25 @@ message UnshareDocReq {
 message UnshareDocRsp {
     int32 ret = 1; // 错误码
     string msg = 2; // msg
+}
+
+message CheckShareChatReq {
+    string sid = 1;
+}
+
+message CheckShareChatRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    bool is_share = 3; // 
+}
+
+
+message CheckShareDocReq {
+    string sid = 1;
+}
+
+message CheckShareDocRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    bool is_share = 3; // 
 }
