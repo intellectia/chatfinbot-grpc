@@ -151,7 +151,7 @@ message GetVideoInfoRsp {
 
 message ShareChatReq {
     string sid = 1;
-    int64 mid = 2;
+    int64 cid = 2;
 }
 
 message ShareChatRsp {
@@ -170,7 +170,7 @@ message UnshareChatRsp {
 
 message ShareDocReq {
     string sid = 1;
-    int64 mid = 2;
+    int64 cid = 2;
 }
 
 message ShareDocRsp {
