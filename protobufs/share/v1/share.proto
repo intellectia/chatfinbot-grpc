@@ -1,0 +1,207 @@
+syntax = "proto3";
+
+package chatfinbot.share.v1;
+
+option go_package = ".;sharepb";
+import "google/api/annotations.proto";
+
+service ShareService {
+    rpc ShareChat(ShareChatReq) returns (ShareChatRsp) {
+        option (google.api.http) = {
+			post: "/v1/share/share-chat",
+			body: "*"
+		};
+    }
+
+    rpc CheckShareChat(CheckShareChatReq) returns (CheckShareChatRsp) {
+        option (google.api.http) = {
+			get: "/v1/share/check-chat"
+		};
+    }
+
+    rpc UnshareChat(UnshareChatReq) returns (UnshareChatRsp) {
+        option (google.api.http) = {
+			post: "/v1/share/unshare-chat",
+			body: "*"
+		};
+    }
+
+    rpc GetChatInfo(GetChatInfoReq) returns (GetChatInfoRsp) {
+        option (google.api.http) = {
+			get: "/v1/share/chat-info"
+		};
+    };
+
+
+    rpc ShareDoc(ShareDocReq) returns (ShareDocRsp) {
+        option (google.api.http) = {
+			post: "/v1/share/share-doc",
+			body: "*"
+		};
+    }
+
+    rpc UnshareDoc(UnshareDocReq) returns (UnshareDocRsp) {
+        option (google.api.http) = {
+			post: "/v1/share/unshare-doc",
+			body: "*"
+		};
+    }
+
+    rpc GetDocInfo(GetDocInfoReq) returns (GetDocInfoRsp) {
+        option (google.api.http) = {
+			get: "/v1/share/doc-info"
+		};
+    };
+
+    rpc CheckShareDoc(CheckShareDocReq) returns (CheckShareDocRsp) {
+        option (google.api.http) = {
+			get: "/v1/share/check-doc"
+		};
+    }
+
+    rpc GetAudioInfo(GetAudioInfoReq) returns (GetAudioInfoRsp) {
+        option (google.api.http) = {
+			get: "/v1/share/audio-info"
+		};
+    };
+
+    rpc GetVideoInfo(GetVideoInfoReq) returns (GetVideoInfoRsp) {
+        option (google.api.http) = {
+			get: "/v1/share/video-info"
+		};
+    };
+}
+
+message GetChatInfoReq {
+    string sid = 1;
+    int32 mid = 2;
+}
+
+message GetChatInfoRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    repeated ChatHistory list = 3;
+}
+
+message ChatHistory {
+    string role = 1;
+    string name = 2;
+    string message = 3;
+    int64 message_id = 4;
+    bool is_rated = 5;
+    int32 rate_score = 6;
+    ChatHistoryAdditionalData additional_data = 7;
+    uint32 chat_type = 8; // 消息类型 0=普通消息 1=公司简介 2=行情指标 3=股东信息 4=高管 5=财务指标 6主营业务 7=员工构成
+    string params = 9;
+    string context = 10;
+    string images = 11;
+    string chat_id = 12;
+}
+
+message ChatHistoryAdditionalData {
+    string references = 1;
+    string plotly_graph = 2;
+    repeated ChatHistoryDocuments documents = 3;
+}
+
+message ChatHistoryDocuments {
+    string title = 1;   // 标题
+    string name = 2; // 文件名
+    string doc_id = 3; // doc id
+    string type = 4;    // 文件类型
+    string s3_bucket = 5; // bucket
+    string s3_path = 6;  // s3路径
+    string language = 7; // 语言
+    int32 total_pages = 8;  // 总的页数
+    string url = 9; // url
+}
+
+
+message GetDocInfoReq {
+    string sid = 1;
+    int32 mid = 2;
+}
+
+message GetDocInfoRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    repeated ChatHistory list = 3;
+}
+
+
+message GetAudioInfoReq {
+    string sid = 1;
+}
+
+message GetAudioInfoRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+}
+
+
+message GetVideoInfoReq {
+    string sid = 1;
+}
+
+message GetVideoInfoRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+}
+
+
+message ShareChatReq {
+    string sid = 1;
+}
+
+message ShareChatRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+}
+
+message UnshareChatReq {
+    string sid = 1;
+}
+
+message UnshareChatRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+}
+
+message ShareDocReq {
+    string sid = 1;
+}
+
+message ShareDocRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+}
+
+message UnshareDocReq {
+    string sid = 1;
+}
+
+message UnshareDocRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+}
+
+message CheckShareChatReq {
+    string sid = 1;
+}
+
+message CheckShareChatRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    bool is_share = 3; // 
+}
+
+
+message CheckShareDocReq {
+    string sid = 1;
+}
+
+message CheckShareDocRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    bool is_share = 3; // 
+}

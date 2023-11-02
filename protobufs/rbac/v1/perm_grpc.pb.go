@@ -31,6 +31,7 @@ const (
 	RbacService_SetChatPermInner_FullMethodName      = "/chatfinbot.rbac.v1.RbacService/SetChatPermInner"
 	RbacService_SetWritingPermInner_FullMethodName   = "/chatfinbot.rbac.v1.RbacService/SetWritingPermInner"
 	RbacService_SetMediaPermInner_FullMethodName     = "/chatfinbot.rbac.v1.RbacService/SetMediaPermInner"
+	RbacService_GetUserQuota_FullMethodName          = "/chatfinbot.rbac.v1.RbacService/GetUserQuota"
 )
 
 // RbacServiceClient is the client API for RbacService service.
@@ -49,6 +50,7 @@ type RbacServiceClient interface {
 	SetChatPermInner(ctx context.Context, in *SetChatPermReq, opts ...grpc.CallOption) (*SetChatPermRsp, error)
 	SetWritingPermInner(ctx context.Context, in *SetWritingPermReq, opts ...grpc.CallOption) (*SetWritingPermRsp, error)
 	SetMediaPermInner(ctx context.Context, in *SetMediaPermReq, opts ...grpc.CallOption) (*SetMediaPermRsp, error)
+	GetUserQuota(ctx context.Context, in *GetUserQuotaReq, opts ...grpc.CallOption) (*GetUserQuotaRsp, error)
 }
 
 type rbacServiceClient struct {
@@ -167,6 +169,15 @@ func (c *rbacServiceClient) SetMediaPermInner(ctx context.Context, in *SetMediaP
 	return out, nil
 }
 
+func (c *rbacServiceClient) GetUserQuota(ctx context.Context, in *GetUserQuotaReq, opts ...grpc.CallOption) (*GetUserQuotaRsp, error) {
+	out := new(GetUserQuotaRsp)
+	err := c.cc.Invoke(ctx, RbacService_GetUserQuota_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RbacServiceServer is the server API for RbacService service.
 // All implementations must embed UnimplementedRbacServiceServer
 // for forward compatibility
@@ -183,6 +194,7 @@ type RbacServiceServer interface {
 	SetChatPermInner(context.Context, *SetChatPermReq) (*SetChatPermRsp, error)
 	SetWritingPermInner(context.Context, *SetWritingPermReq) (*SetWritingPermRsp, error)
 	SetMediaPermInner(context.Context, *SetMediaPermReq) (*SetMediaPermRsp, error)
+	GetUserQuota(context.Context, *GetUserQuotaReq) (*GetUserQuotaRsp, error)
 	mustEmbedUnimplementedRbacServiceServer()
 }
 
@@ -225,6 +237,9 @@ func (UnimplementedRbacServiceServer) SetWritingPermInner(context.Context, *SetW
 }
 func (UnimplementedRbacServiceServer) SetMediaPermInner(context.Context, *SetMediaPermReq) (*SetMediaPermRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetMediaPermInner not implemented")
+}
+func (UnimplementedRbacServiceServer) GetUserQuota(context.Context, *GetUserQuotaReq) (*GetUserQuotaRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserQuota not implemented")
 }
 func (UnimplementedRbacServiceServer) mustEmbedUnimplementedRbacServiceServer() {}
 
@@ -455,6 +470,24 @@ func _RbacService_SetMediaPermInner_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RbacService_GetUserQuota_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserQuotaReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RbacServiceServer).GetUserQuota(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RbacService_GetUserQuota_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RbacServiceServer).GetUserQuota(ctx, req.(*GetUserQuotaReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // RbacService_ServiceDesc is the grpc.ServiceDesc for RbacService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -509,6 +542,10 @@ var RbacService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetMediaPermInner",
 			Handler:    _RbacService_SetMediaPermInner_Handler,
+		},
+		{
+			MethodName: "GetUserQuota",
+			Handler:    _RbacService_GetUserQuota_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

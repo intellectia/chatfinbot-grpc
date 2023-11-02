@@ -261,15 +261,38 @@ message GetUserQuotaReq {
 
 }
 
-enum UserQuotaType {
-    UserQuotaTypeUnk
+
+message BasicInfoQuota {
+    int32 mode = 1; // 模式  1=天 2=月
+    int32 chat_num = 2; // 聊天数量
+    int32 doc_num = 3; // 文档数
+    int32 doc_page_size = 4; // 文档页数
+    int32 writing_file_num = 5; // 写作文件数
+    int32 writing_file_page_size = 6; // 写作文件页数
+}
+
+message PackageInfoQuota {
+    int32 doc_num = 1; // 文档数量 
+    int32 doc_usage_num = 2; //使用文档数量
+    int32 chat_num = 3; // 问答数量 
+    int32 chat_usage_num = 4; //使用问答数量 
+    int32 audio_file_duration = 5; // 音频数量 
+    int32 audio_usage_file_duration = 6; //使用音频数量
+    int32 record_audio_duration= 7; // 转录时长
+    int32 record_audio_usage_duration = 8; //使用转录时长
+    int32 video_duration= 9; // 视频时长
+    int32 video_usage_duration = 10; //使用视频时长
+    int32 ocr_num = 11; // ocr数量
+    int32 ocr_usage_num = 12; // 使用ocr数量
+    int32 depth_summary_num = 13; // 深度总结数量
+    int32 depth_summary_usage_num = 14; // 使用深度总结数量
+    int32 writing_file_num = 15; // 写作的文件数量
+    int32 writing_file_usage_num = 16; //  使用写作的文件数量
 }
 
 message GetUserQuotaRsp {
     int32 ret = 1; // 错误码
     string msg = 2; // msg
-}
-
-message UserQuota {
-    
+    BasicInfoQuota basic_info = 3;
+    PackageInfoQuota package_info = 4;
 }

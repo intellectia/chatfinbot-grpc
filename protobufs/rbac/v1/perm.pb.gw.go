@@ -439,6 +439,24 @@ func local_request_RbacService_SetMediaPermInner_0(ctx context.Context, marshale
 
 }
 
+func request_RbacService_GetUserQuota_0(ctx context.Context, marshaler runtime.Marshaler, client RbacServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetUserQuotaReq
+	var metadata runtime.ServerMetadata
+
+	msg, err := client.GetUserQuota(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_RbacService_GetUserQuota_0(ctx context.Context, marshaler runtime.Marshaler, server RbacServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetUserQuotaReq
+	var metadata runtime.ServerMetadata
+
+	msg, err := server.GetUserQuota(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
 // RegisterRbacServiceHandlerServer registers the http handlers for service RbacService to "mux".
 // UnaryRPC     :call RbacServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
@@ -742,6 +760,31 @@ func RegisterRbacServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		}
 
 		forward_RbacService_SetMediaPermInner_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_RbacService_GetUserQuota_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		var err error
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.rbac.v1.RbacService/GetUserQuota", runtime.WithHTTPPathPattern("/v1/rbac/user-quota"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_RbacService_GetUserQuota_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RbacService_GetUserQuota_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -1050,6 +1093,28 @@ func RegisterRbacServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 
 	})
 
+	mux.Handle("GET", pattern_RbacService_GetUserQuota_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		var err error
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.rbac.v1.RbacService/GetUserQuota", runtime.WithHTTPPathPattern("/v1/rbac/user-quota"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_RbacService_GetUserQuota_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_RbacService_GetUserQuota_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
 	return nil
 }
 
@@ -1077,6 +1142,8 @@ var (
 	pattern_RbacService_SetWritingPermInner_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "rbac", "setwritingperm-inner"}, ""))
 
 	pattern_RbacService_SetMediaPermInner_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "rbac", "setmediaperm-inner"}, ""))
+
+	pattern_RbacService_GetUserQuota_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "rbac", "user-quota"}, ""))
 )
 
 var (
@@ -1103,4 +1170,6 @@ var (
 	forward_RbacService_SetWritingPermInner_0 = runtime.ForwardResponseMessage
 
 	forward_RbacService_SetMediaPermInner_0 = runtime.ForwardResponseMessage
+
+	forward_RbacService_GetUserQuota_0 = runtime.ForwardResponseMessage
 )
