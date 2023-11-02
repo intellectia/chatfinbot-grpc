@@ -101,6 +101,7 @@ message ChatHistoryDocuments {
     string s3_path = 6;  // s3路径
     string language = 7; // 语言
     int32 total_pages = 8;  // 总的页数
+    string url = 9; // url
 }
 
 
