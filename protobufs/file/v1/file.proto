@@ -16,6 +16,7 @@ service FileService {
   rpc GetPrivateS3DownloadURL(GetPrivateS3DownloadURLRequest) returns (GetS3DownloadURLResponse);
   rpc GetPrivateS3DownloadURLInner(GetPrivateS3DownloadURLRequest) returns (GetS3DownloadURLResponse);
   rpc GetS3DownloadURL(GetS3DownloadURLReq) returns (GetS3DownloadURLRsp);
+  rpc GetFileDownloadURL(GetFileDownloadURLRequest) returns (GetFileDownloadURLResponse);
 }
 
 message DeleteFileRequest {
@@ -127,3 +128,34 @@ message UploadTinyAudioFileData {
     string role = 4;
     int64 seg_id = 5;
 }
+
+enum FileDownloadStatus {
+    UNKNOWN = 0;          // Default value, used when the status is not set or unknown
+    SUCCESS = 1;          // Indicates that the file URL was successfully retrieved
+    NOT_FOUND = 2;        // Indicates that the file was not found
+    UNAUTHORIZED = 3;     // Indicates a lack of permission to access the file
+    FAILED = 4;           // General failure, when specific error category is not applicable
+    // Add more statuses as needed
+}
+
+message GetFileDownloadURLResponse {
+    repeated FileDownloadURLItem download_urls = 1;
+}
+
+message FileDownloadURLItem {
+    string download_url = 1;              // The URL for downloading the file
+    FileDownloadStatus status = 2;        // Status of the request
+    string s3_path = 3;  // S3 path for public files
+    string doc_id = 4;   // Document ID for private files
+}
+
+message GetFileDownloadURLRequest {
+    repeated FileIdentifier file_identifiers = 1;
+}
+
+message FileIdentifier {
+    string s3_path = 1;  // S3 path for public files
+    string doc_id = 2;   // Document ID for private files
+}
+
+
