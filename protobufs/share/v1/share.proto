@@ -65,6 +65,26 @@ service ShareService {
 		};
     };
 
+    rpc ShareAudio(ShareAudioReq) returns (ShareAudioRsp) {
+        option (google.api.http) = {
+			post: "/v1/share/share-audio",
+			body: "*"
+		};
+    }
+
+    rpc UnshareAudio(UnshareAudioReq) returns (UnshareAudioRsp) {
+        option (google.api.http) = {
+			post: "/v1/share/unshare-audio",
+			body: "*"
+		};
+    }
+
+    rpc CheckAudio(CheckAudioReq) returns (CheckAudioRsp) {
+        option (google.api.http) = {
+			get: "/v1/share/check-audio"
+		};
+    }
+
     rpc GetVideoInfo(GetVideoInfoReq) returns (GetVideoInfoRsp) {
         option (google.api.http) = {
 			get: "/v1/share/video-info"
@@ -201,6 +221,35 @@ message CheckShareDocReq {
 }
 
 message CheckShareDocRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    bool is_share = 3; // 
+}
+
+message ShareAudioReq {
+    string sid = 1;
+}
+
+message ShareAudioRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+}
+
+message UnshareAudioReq {
+    string sid = 1;
+}
+
+message UnshareAudioRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+}
+
+
+message CheckAudioReq {
+    string sid = 1;
+}
+
+message CheckAudioRsp {
     int32 ret = 1; // 错误码
     string msg = 2; // msg
     bool is_share = 3; // 

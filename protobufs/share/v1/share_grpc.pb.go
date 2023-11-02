@@ -28,6 +28,9 @@ const (
 	ShareService_GetDocInfo_FullMethodName     = "/chatfinbot.share.v1.ShareService/GetDocInfo"
 	ShareService_CheckShareDoc_FullMethodName  = "/chatfinbot.share.v1.ShareService/CheckShareDoc"
 	ShareService_GetAudioInfo_FullMethodName   = "/chatfinbot.share.v1.ShareService/GetAudioInfo"
+	ShareService_ShareAudio_FullMethodName     = "/chatfinbot.share.v1.ShareService/ShareAudio"
+	ShareService_UnshareAudio_FullMethodName   = "/chatfinbot.share.v1.ShareService/UnshareAudio"
+	ShareService_CheckAudio_FullMethodName     = "/chatfinbot.share.v1.ShareService/CheckAudio"
 	ShareService_GetVideoInfo_FullMethodName   = "/chatfinbot.share.v1.ShareService/GetVideoInfo"
 )
 
@@ -44,6 +47,9 @@ type ShareServiceClient interface {
 	GetDocInfo(ctx context.Context, in *GetDocInfoReq, opts ...grpc.CallOption) (*GetDocInfoRsp, error)
 	CheckShareDoc(ctx context.Context, in *CheckShareDocReq, opts ...grpc.CallOption) (*CheckShareDocRsp, error)
 	GetAudioInfo(ctx context.Context, in *GetAudioInfoReq, opts ...grpc.CallOption) (*GetAudioInfoRsp, error)
+	ShareAudio(ctx context.Context, in *ShareAudioReq, opts ...grpc.CallOption) (*ShareAudioRsp, error)
+	UnshareAudio(ctx context.Context, in *UnshareAudioReq, opts ...grpc.CallOption) (*UnshareAudioRsp, error)
+	CheckAudio(ctx context.Context, in *CheckAudioReq, opts ...grpc.CallOption) (*CheckAudioRsp, error)
 	GetVideoInfo(ctx context.Context, in *GetVideoInfoReq, opts ...grpc.CallOption) (*GetVideoInfoRsp, error)
 }
 
@@ -136,6 +142,33 @@ func (c *shareServiceClient) GetAudioInfo(ctx context.Context, in *GetAudioInfoR
 	return out, nil
 }
 
+func (c *shareServiceClient) ShareAudio(ctx context.Context, in *ShareAudioReq, opts ...grpc.CallOption) (*ShareAudioRsp, error) {
+	out := new(ShareAudioRsp)
+	err := c.cc.Invoke(ctx, ShareService_ShareAudio_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shareServiceClient) UnshareAudio(ctx context.Context, in *UnshareAudioReq, opts ...grpc.CallOption) (*UnshareAudioRsp, error) {
+	out := new(UnshareAudioRsp)
+	err := c.cc.Invoke(ctx, ShareService_UnshareAudio_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shareServiceClient) CheckAudio(ctx context.Context, in *CheckAudioReq, opts ...grpc.CallOption) (*CheckAudioRsp, error) {
+	out := new(CheckAudioRsp)
+	err := c.cc.Invoke(ctx, ShareService_CheckAudio_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *shareServiceClient) GetVideoInfo(ctx context.Context, in *GetVideoInfoReq, opts ...grpc.CallOption) (*GetVideoInfoRsp, error) {
 	out := new(GetVideoInfoRsp)
 	err := c.cc.Invoke(ctx, ShareService_GetVideoInfo_FullMethodName, in, out, opts...)
@@ -158,6 +191,9 @@ type ShareServiceServer interface {
 	GetDocInfo(context.Context, *GetDocInfoReq) (*GetDocInfoRsp, error)
 	CheckShareDoc(context.Context, *CheckShareDocReq) (*CheckShareDocRsp, error)
 	GetAudioInfo(context.Context, *GetAudioInfoReq) (*GetAudioInfoRsp, error)
+	ShareAudio(context.Context, *ShareAudioReq) (*ShareAudioRsp, error)
+	UnshareAudio(context.Context, *UnshareAudioReq) (*UnshareAudioRsp, error)
+	CheckAudio(context.Context, *CheckAudioReq) (*CheckAudioRsp, error)
 	GetVideoInfo(context.Context, *GetVideoInfoReq) (*GetVideoInfoRsp, error)
 	mustEmbedUnimplementedShareServiceServer()
 }
@@ -192,6 +228,15 @@ func (UnimplementedShareServiceServer) CheckShareDoc(context.Context, *CheckShar
 }
 func (UnimplementedShareServiceServer) GetAudioInfo(context.Context, *GetAudioInfoReq) (*GetAudioInfoRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAudioInfo not implemented")
+}
+func (UnimplementedShareServiceServer) ShareAudio(context.Context, *ShareAudioReq) (*ShareAudioRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ShareAudio not implemented")
+}
+func (UnimplementedShareServiceServer) UnshareAudio(context.Context, *UnshareAudioReq) (*UnshareAudioRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UnshareAudio not implemented")
+}
+func (UnimplementedShareServiceServer) CheckAudio(context.Context, *CheckAudioReq) (*CheckAudioRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckAudio not implemented")
 }
 func (UnimplementedShareServiceServer) GetVideoInfo(context.Context, *GetVideoInfoReq) (*GetVideoInfoRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetVideoInfo not implemented")
@@ -371,6 +416,60 @@ func _ShareService_GetAudioInfo_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ShareService_ShareAudio_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ShareAudioReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShareServiceServer).ShareAudio(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShareService_ShareAudio_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShareServiceServer).ShareAudio(ctx, req.(*ShareAudioReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShareService_UnshareAudio_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UnshareAudioReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShareServiceServer).UnshareAudio(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShareService_UnshareAudio_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShareServiceServer).UnshareAudio(ctx, req.(*UnshareAudioReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShareService_CheckAudio_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckAudioReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShareServiceServer).CheckAudio(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShareService_CheckAudio_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShareServiceServer).CheckAudio(ctx, req.(*CheckAudioReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ShareService_GetVideoInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetVideoInfoReq)
 	if err := dec(in); err != nil {
@@ -431,6 +530,18 @@ var ShareService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAudioInfo",
 			Handler:    _ShareService_GetAudioInfo_Handler,
+		},
+		{
+			MethodName: "ShareAudio",
+			Handler:    _ShareService_ShareAudio_Handler,
+		},
+		{
+			MethodName: "UnshareAudio",
+			Handler:    _ShareService_UnshareAudio_Handler,
+		},
+		{
+			MethodName: "CheckAudio",
+			Handler:    _ShareService_CheckAudio_Handler,
 		},
 		{
 			MethodName: "GetVideoInfo",
