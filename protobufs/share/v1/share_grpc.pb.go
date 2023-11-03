@@ -19,19 +19,20 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	ShareService_ShareChat_FullMethodName      = "/chatfinbot.share.v1.ShareService/ShareChat"
-	ShareService_CheckShareChat_FullMethodName = "/chatfinbot.share.v1.ShareService/CheckShareChat"
-	ShareService_UnshareChat_FullMethodName    = "/chatfinbot.share.v1.ShareService/UnshareChat"
-	ShareService_GetChatInfo_FullMethodName    = "/chatfinbot.share.v1.ShareService/GetChatInfo"
-	ShareService_ShareDoc_FullMethodName       = "/chatfinbot.share.v1.ShareService/ShareDoc"
-	ShareService_UnshareDoc_FullMethodName     = "/chatfinbot.share.v1.ShareService/UnshareDoc"
-	ShareService_GetDocInfo_FullMethodName     = "/chatfinbot.share.v1.ShareService/GetDocInfo"
-	ShareService_CheckShareDoc_FullMethodName  = "/chatfinbot.share.v1.ShareService/CheckShareDoc"
-	ShareService_GetAudioInfo_FullMethodName   = "/chatfinbot.share.v1.ShareService/GetAudioInfo"
-	ShareService_ShareAudio_FullMethodName     = "/chatfinbot.share.v1.ShareService/ShareAudio"
-	ShareService_UnshareAudio_FullMethodName   = "/chatfinbot.share.v1.ShareService/UnshareAudio"
-	ShareService_CheckAudio_FullMethodName     = "/chatfinbot.share.v1.ShareService/CheckAudio"
-	ShareService_GetVideoInfo_FullMethodName   = "/chatfinbot.share.v1.ShareService/GetVideoInfo"
+	ShareService_ShareChat_FullMethodName        = "/chatfinbot.share.v1.ShareService/ShareChat"
+	ShareService_CheckShareChat_FullMethodName   = "/chatfinbot.share.v1.ShareService/CheckShareChat"
+	ShareService_UnshareChat_FullMethodName      = "/chatfinbot.share.v1.ShareService/UnshareChat"
+	ShareService_GetChatInfo_FullMethodName      = "/chatfinbot.share.v1.ShareService/GetChatInfo"
+	ShareService_ShareDoc_FullMethodName         = "/chatfinbot.share.v1.ShareService/ShareDoc"
+	ShareService_UnshareDoc_FullMethodName       = "/chatfinbot.share.v1.ShareService/UnshareDoc"
+	ShareService_GetDocInfo_FullMethodName       = "/chatfinbot.share.v1.ShareService/GetDocInfo"
+	ShareService_CheckShareDoc_FullMethodName    = "/chatfinbot.share.v1.ShareService/CheckShareDoc"
+	ShareService_GetAudioInfo_FullMethodName     = "/chatfinbot.share.v1.ShareService/GetAudioInfo"
+	ShareService_GetAudioChatInfo_FullMethodName = "/chatfinbot.share.v1.ShareService/GetAudioChatInfo"
+	ShareService_ShareAudio_FullMethodName       = "/chatfinbot.share.v1.ShareService/ShareAudio"
+	ShareService_UnshareAudio_FullMethodName     = "/chatfinbot.share.v1.ShareService/UnshareAudio"
+	ShareService_CheckAudio_FullMethodName       = "/chatfinbot.share.v1.ShareService/CheckAudio"
+	ShareService_GetVideoInfo_FullMethodName     = "/chatfinbot.share.v1.ShareService/GetVideoInfo"
 )
 
 // ShareServiceClient is the client API for ShareService service.
@@ -47,6 +48,7 @@ type ShareServiceClient interface {
 	GetDocInfo(ctx context.Context, in *GetDocInfoReq, opts ...grpc.CallOption) (*GetDocInfoRsp, error)
 	CheckShareDoc(ctx context.Context, in *CheckShareDocReq, opts ...grpc.CallOption) (*CheckShareDocRsp, error)
 	GetAudioInfo(ctx context.Context, in *GetAudioInfoReq, opts ...grpc.CallOption) (*GetAudioInfoRsp, error)
+	GetAudioChatInfo(ctx context.Context, in *GetAudioChatInfoReq, opts ...grpc.CallOption) (*GetAudioChatInfoRsp, error)
 	ShareAudio(ctx context.Context, in *ShareAudioReq, opts ...grpc.CallOption) (*ShareAudioRsp, error)
 	UnshareAudio(ctx context.Context, in *UnshareAudioReq, opts ...grpc.CallOption) (*UnshareAudioRsp, error)
 	CheckAudio(ctx context.Context, in *CheckAudioReq, opts ...grpc.CallOption) (*CheckAudioRsp, error)
@@ -142,6 +144,15 @@ func (c *shareServiceClient) GetAudioInfo(ctx context.Context, in *GetAudioInfoR
 	return out, nil
 }
 
+func (c *shareServiceClient) GetAudioChatInfo(ctx context.Context, in *GetAudioChatInfoReq, opts ...grpc.CallOption) (*GetAudioChatInfoRsp, error) {
+	out := new(GetAudioChatInfoRsp)
+	err := c.cc.Invoke(ctx, ShareService_GetAudioChatInfo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *shareServiceClient) ShareAudio(ctx context.Context, in *ShareAudioReq, opts ...grpc.CallOption) (*ShareAudioRsp, error) {
 	out := new(ShareAudioRsp)
 	err := c.cc.Invoke(ctx, ShareService_ShareAudio_FullMethodName, in, out, opts...)
@@ -191,6 +202,7 @@ type ShareServiceServer interface {
 	GetDocInfo(context.Context, *GetDocInfoReq) (*GetDocInfoRsp, error)
 	CheckShareDoc(context.Context, *CheckShareDocReq) (*CheckShareDocRsp, error)
 	GetAudioInfo(context.Context, *GetAudioInfoReq) (*GetAudioInfoRsp, error)
+	GetAudioChatInfo(context.Context, *GetAudioChatInfoReq) (*GetAudioChatInfoRsp, error)
 	ShareAudio(context.Context, *ShareAudioReq) (*ShareAudioRsp, error)
 	UnshareAudio(context.Context, *UnshareAudioReq) (*UnshareAudioRsp, error)
 	CheckAudio(context.Context, *CheckAudioReq) (*CheckAudioRsp, error)
@@ -228,6 +240,9 @@ func (UnimplementedShareServiceServer) CheckShareDoc(context.Context, *CheckShar
 }
 func (UnimplementedShareServiceServer) GetAudioInfo(context.Context, *GetAudioInfoReq) (*GetAudioInfoRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAudioInfo not implemented")
+}
+func (UnimplementedShareServiceServer) GetAudioChatInfo(context.Context, *GetAudioChatInfoReq) (*GetAudioChatInfoRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAudioChatInfo not implemented")
 }
 func (UnimplementedShareServiceServer) ShareAudio(context.Context, *ShareAudioReq) (*ShareAudioRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ShareAudio not implemented")
@@ -416,6 +431,24 @@ func _ShareService_GetAudioInfo_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ShareService_GetAudioChatInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAudioChatInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShareServiceServer).GetAudioChatInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShareService_GetAudioChatInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShareServiceServer).GetAudioChatInfo(ctx, req.(*GetAudioChatInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ShareService_ShareAudio_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ShareAudioReq)
 	if err := dec(in); err != nil {
@@ -530,6 +563,10 @@ var ShareService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAudioInfo",
 			Handler:    _ShareService_GetAudioInfo_Handler,
+		},
+		{
+			MethodName: "GetAudioChatInfo",
+			Handler:    _ShareService_GetAudioChatInfo_Handler,
 		},
 		{
 			MethodName: "ShareAudio",

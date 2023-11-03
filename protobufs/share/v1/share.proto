@@ -65,6 +65,12 @@ service ShareService {
 		};
     };
 
+    rpc GetAudioChatInfo(GetAudioChatInfoReq) returns (GetAudioChatInfoRsp) {
+        option (google.api.http) = {
+			get: "/v1/share/audio-chat"
+		};
+    };
+
     rpc ShareAudio(ShareAudioReq) returns (ShareAudioRsp) {
         option (google.api.http) = {
 			post: "/v1/share/share-audio",
@@ -148,6 +154,31 @@ message GetDocInfoRsp {
     repeated ChatHistory list = 3;
 }
 
+message AudioInfo {
+    string session_id = 1; // session id
+    string doc_id = 2; // 文件id
+    repeated MediaContent content = 3; // 内容
+    string summary = 4; // 总结
+    repeated MediaSummary partial_summary = 5; // 部分内容
+    repeated string todo = 6; // 待办事项
+    bool is_depth_summary = 7; // 是否有深度总结
+    string depth_summary = 8; // 深度总结
+    string url = 9; // 链接地址 
+    uint32 media_type = 10; // 媒体类型 
+    string notes = 11; // 笔记 
+}
+
+message MediaContent {
+    string start = 1;
+    string text = 2;
+    double duration = 3;
+    string role = 4;
+}
+
+message MediaSummary {
+    string start = 1;
+    string text = 2;
+}
 
 message GetAudioInfoReq {
     string sid = 1;
@@ -156,6 +187,18 @@ message GetAudioInfoReq {
 message GetAudioInfoRsp {
     int32 ret = 1; // 错误码
     string msg = 2; // msg
+    AudioInfo data = 3;  // 数据
+}
+
+message GetAudioChatInfoReq {
+    string sid = 1;
+    int32 mid= 2;
+}
+
+message GetAudioChatInfoRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    repeated ChatHistory list = 3;
 }
 
 
