@@ -75,5 +75,8 @@ enum RetCode {
     // message 相关错误码
     ERR_EMAIL_SEND_FAILED = 16000; // 邮件发送失败
     ERR_SMS_SEND_FAILED = 16001; // sms发送失败
+
+    // writing 相关错误码
+    ERR_FETCH_WRITING_TEMPLATE_FAILED = 17000; // 邮件发送失败
 }
 

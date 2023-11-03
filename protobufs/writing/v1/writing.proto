@@ -114,6 +114,8 @@ message ListWritingsRequest {
     string sort_by = 3;
     bool descending = 4;
     int64 writing_type = 5;
+    string session_id = 6;
+    string user_id = 7; 
 }
 
 message ListWritingsResponse {
