@@ -73,7 +73,7 @@ service AudioService {
 			get: "/v1/audio/schedule"
 		};
     };
-    
+    rpc GetRecord(GetRecordReq) returns (GetRecordRsp);
 }
 
 message CreateRecordReq {
@@ -365,4 +365,14 @@ message ScheduleInfoTodo {
     ScheduleStatus status = 1;
     repeated string todo = 2;
     string schedule = 3; 
+}
+
+message GetRecordReq {
+    string session_id = 1; // session id
+}
+
+message GetRecordRsp {
+    int32 ret = 1; 
+    string msg = 2;
+    MediaRecord data = 3;
 }
