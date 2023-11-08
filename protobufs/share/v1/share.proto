@@ -2,8 +2,9 @@ syntax = "proto3";
 
 package chatfinbot.share.v1;
 
-option go_package = ".;sharepb";
+option go_package = "github.com/intellectia/chatfinbot-grpc/tree/main/protobufs/share/v1;sharepb";
 import "google/api/annotations.proto";
+import "search/v1/search.proto";
 
 service ShareService {
     rpc ShareChat(ShareChatReq) returns (ShareChatRsp) {
@@ -95,7 +96,63 @@ service ShareService {
         option (google.api.http) = {
 			get: "/v1/share/video-info"
 		};
-    };
+    }
+
+    // 获取公司数据 
+    rpc GetCompanyInfo(GetCompanyInfoReq) returns (chatfinbot.search.v1.GetCompanyInfoRsp) {
+        option (google.api.http) = {
+			get: "/v1/share/company-info"
+		};
+    }
+    // 获取公司行情指标
+    rpc GetIndicators(GetIndicatorsReq) returns (chatfinbot.search.v1.GetIndicatorsRsp) {
+        option (google.api.http) = {
+			get: "/v1/share/indicators"
+		};
+    }
+    // 获取公司股权结构
+    rpc GetShareholders(GetShareholdersReq) returns (chatfinbot.search.v1.GetShareholdersRsp){ 
+        option (google.api.http) = {
+			get: "/v1/share/shareholders"
+		};
+    }
+    // 获取公司管理层信息
+    rpc GetExecutives(GetExecutivesReq) returns (chatfinbot.search.v1.GetExecutivesRsp) {
+        option (google.api.http) = {
+			get: "/v1/share/executives"
+		};
+    }
+    // 获取员工构成
+    rpc GetStaffInfo(GetStaffInfoReq) returns (chatfinbot.search.v1.GetStaffInfoRsp) {
+        option (google.api.http) = {
+			get: "/v1/share/staff-info"
+		};
+    }
+    // 获取主营营收
+    rpc GetMBRevenue(GetMBRevenueReq) returns (chatfinbot.search.v1.GetMBRevenueRsp) {
+        option (google.api.http) = {
+			get: "/v1/share/mb_revenue"
+		};
+    }
+    // 获取财务概况
+    rpc GetFinancial(GetFinancialReq) returns (chatfinbot.search.v1.GetFinancialRsp) {
+        option (google.api.http) = {
+			get: "/v1/share/financial"
+		};
+    }
+    
+    // 获取应收款
+    rpc GetAccountsReceivable(GetAccountsReceivableReq) returns (chatfinbot.search.v1.GetAccountsReceivableRsp) {
+        option (google.api.http) = {
+			get: "/v1/share/accounts_receivable"
+		};
+    }
+    // 获取研发支出
+    rpc GetRdExpenditure(GetRdExpenditureReq) returns (chatfinbot.search.v1.GetRdExpenditureRsp) {
+        option (google.api.http) = {
+			get: "/v1/share/rd_expenditure"
+		};
+    }
 }
 
 message GetChatInfoReq {
@@ -298,3 +355,65 @@ message CheckAudioRsp {
     string msg = 2; // msg
     bool is_share = 3; // 
 }
+
+
+message GetCompanyInfoReq {
+    string sid = 1;
+    string mid = 2; 
+    chatfinbot.search.v1.GetCompanyInfoReq params = 3;
+}
+
+message GetIndicatorsReq {
+    string sid = 1;
+    string mid = 2; 
+    chatfinbot.search.v1.GetIndicatorsReq params = 3;
+}
+
+message GetShareholdersReq {
+    string sid = 1;
+    string mid = 2; 
+    chatfinbot.search.v1.GetShareholdersReq params = 3;
+}
+
+message GetExecutivesReq {
+    string sid = 1;
+    string mid = 2; 
+    chatfinbot.search.v1.GetExecutivesReq params = 3;
+}
+
+message GetStaffInfoReq {
+    string sid = 1;
+    string mid = 2; 
+    chatfinbot.search.v1.GetStaffInfoReq params = 3;
+}
+
+message GetMBRevenueReq {
+    string sid = 1;
+    string mid = 2; 
+    chatfinbot.search.v1.GetMBRevenueReq params = 3;
+}
+
+
+
+
+message GetFinancialReq {
+    string sid = 1;
+    string mid = 2; 
+    search.v1.GetFinancialReq params = 3;
+}
+
+
+message GetAccountsReceivableReq {
+    string sid = 1;
+    string mid = 2; 
+    search.v1.GetAccountsReceivableReq params = 3;
+}
+
+message  GetRdExpenditureReq {
+    string sid = 1;
+    string mid = 2; 
+    search.v1.GetRdExpenditureReq params = 3;
+}
+
+
+

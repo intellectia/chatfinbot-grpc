@@ -2,11 +2,12 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v4.23.4
-// source: share.proto
+// source: share/v1/share.proto
 
 package sharepb
 
 import (
+	__ "."
 	context "context"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
@@ -19,20 +20,29 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	ShareService_ShareChat_FullMethodName        = "/chatfinbot.share.v1.ShareService/ShareChat"
-	ShareService_CheckShareChat_FullMethodName   = "/chatfinbot.share.v1.ShareService/CheckShareChat"
-	ShareService_UnshareChat_FullMethodName      = "/chatfinbot.share.v1.ShareService/UnshareChat"
-	ShareService_GetChatInfo_FullMethodName      = "/chatfinbot.share.v1.ShareService/GetChatInfo"
-	ShareService_ShareDoc_FullMethodName         = "/chatfinbot.share.v1.ShareService/ShareDoc"
-	ShareService_UnshareDoc_FullMethodName       = "/chatfinbot.share.v1.ShareService/UnshareDoc"
-	ShareService_GetDocInfo_FullMethodName       = "/chatfinbot.share.v1.ShareService/GetDocInfo"
-	ShareService_CheckShareDoc_FullMethodName    = "/chatfinbot.share.v1.ShareService/CheckShareDoc"
-	ShareService_GetAudioInfo_FullMethodName     = "/chatfinbot.share.v1.ShareService/GetAudioInfo"
-	ShareService_GetAudioChatInfo_FullMethodName = "/chatfinbot.share.v1.ShareService/GetAudioChatInfo"
-	ShareService_ShareAudio_FullMethodName       = "/chatfinbot.share.v1.ShareService/ShareAudio"
-	ShareService_UnshareAudio_FullMethodName     = "/chatfinbot.share.v1.ShareService/UnshareAudio"
-	ShareService_CheckAudio_FullMethodName       = "/chatfinbot.share.v1.ShareService/CheckAudio"
-	ShareService_GetVideoInfo_FullMethodName     = "/chatfinbot.share.v1.ShareService/GetVideoInfo"
+	ShareService_ShareChat_FullMethodName             = "/chatfinbot.share.v1.ShareService/ShareChat"
+	ShareService_CheckShareChat_FullMethodName        = "/chatfinbot.share.v1.ShareService/CheckShareChat"
+	ShareService_UnshareChat_FullMethodName           = "/chatfinbot.share.v1.ShareService/UnshareChat"
+	ShareService_GetChatInfo_FullMethodName           = "/chatfinbot.share.v1.ShareService/GetChatInfo"
+	ShareService_ShareDoc_FullMethodName              = "/chatfinbot.share.v1.ShareService/ShareDoc"
+	ShareService_UnshareDoc_FullMethodName            = "/chatfinbot.share.v1.ShareService/UnshareDoc"
+	ShareService_GetDocInfo_FullMethodName            = "/chatfinbot.share.v1.ShareService/GetDocInfo"
+	ShareService_CheckShareDoc_FullMethodName         = "/chatfinbot.share.v1.ShareService/CheckShareDoc"
+	ShareService_GetAudioInfo_FullMethodName          = "/chatfinbot.share.v1.ShareService/GetAudioInfo"
+	ShareService_GetAudioChatInfo_FullMethodName      = "/chatfinbot.share.v1.ShareService/GetAudioChatInfo"
+	ShareService_ShareAudio_FullMethodName            = "/chatfinbot.share.v1.ShareService/ShareAudio"
+	ShareService_UnshareAudio_FullMethodName          = "/chatfinbot.share.v1.ShareService/UnshareAudio"
+	ShareService_CheckAudio_FullMethodName            = "/chatfinbot.share.v1.ShareService/CheckAudio"
+	ShareService_GetVideoInfo_FullMethodName          = "/chatfinbot.share.v1.ShareService/GetVideoInfo"
+	ShareService_GetCompanyInfo_FullMethodName        = "/chatfinbot.share.v1.ShareService/GetCompanyInfo"
+	ShareService_GetIndicators_FullMethodName         = "/chatfinbot.share.v1.ShareService/GetIndicators"
+	ShareService_GetShareholders_FullMethodName       = "/chatfinbot.share.v1.ShareService/GetShareholders"
+	ShareService_GetExecutives_FullMethodName         = "/chatfinbot.share.v1.ShareService/GetExecutives"
+	ShareService_GetStaffInfo_FullMethodName          = "/chatfinbot.share.v1.ShareService/GetStaffInfo"
+	ShareService_GetMBRevenue_FullMethodName          = "/chatfinbot.share.v1.ShareService/GetMBRevenue"
+	ShareService_GetFinancial_FullMethodName          = "/chatfinbot.share.v1.ShareService/GetFinancial"
+	ShareService_GetAccountsReceivable_FullMethodName = "/chatfinbot.share.v1.ShareService/GetAccountsReceivable"
+	ShareService_GetRdExpenditure_FullMethodName      = "/chatfinbot.share.v1.ShareService/GetRdExpenditure"
 )
 
 // ShareServiceClient is the client API for ShareService service.
@@ -53,6 +63,24 @@ type ShareServiceClient interface {
 	UnshareAudio(ctx context.Context, in *UnshareAudioReq, opts ...grpc.CallOption) (*UnshareAudioRsp, error)
 	CheckAudio(ctx context.Context, in *CheckAudioReq, opts ...grpc.CallOption) (*CheckAudioRsp, error)
 	GetVideoInfo(ctx context.Context, in *GetVideoInfoReq, opts ...grpc.CallOption) (*GetVideoInfoRsp, error)
+	// 获取公司数据
+	GetCompanyInfo(ctx context.Context, in *GetCompanyInfoReq, opts ...grpc.CallOption) (*__.GetCompanyInfoRsp, error)
+	// 获取公司行情指标
+	GetIndicators(ctx context.Context, in *GetIndicatorsReq, opts ...grpc.CallOption) (*__.GetIndicatorsRsp, error)
+	// 获取公司股权结构
+	GetShareholders(ctx context.Context, in *GetShareholdersReq, opts ...grpc.CallOption) (*__.GetShareholdersRsp, error)
+	// 获取公司管理层信息
+	GetExecutives(ctx context.Context, in *GetExecutivesReq, opts ...grpc.CallOption) (*__.GetExecutivesRsp, error)
+	// 获取员工构成
+	GetStaffInfo(ctx context.Context, in *GetStaffInfoReq, opts ...grpc.CallOption) (*__.GetStaffInfoRsp, error)
+	// 获取主营营收
+	GetMBRevenue(ctx context.Context, in *GetMBRevenueReq, opts ...grpc.CallOption) (*__.GetMBRevenueRsp, error)
+	// 获取财务概况
+	GetFinancial(ctx context.Context, in *GetFinancialReq, opts ...grpc.CallOption) (*__.GetFinancialRsp, error)
+	// 获取应收款
+	GetAccountsReceivable(ctx context.Context, in *GetAccountsReceivableReq, opts ...grpc.CallOption) (*__.GetAccountsReceivableRsp, error)
+	// 获取研发支出
+	GetRdExpenditure(ctx context.Context, in *GetRdExpenditureReq, opts ...grpc.CallOption) (*__.GetRdExpenditureRsp, error)
 }
 
 type shareServiceClient struct {
@@ -189,6 +217,87 @@ func (c *shareServiceClient) GetVideoInfo(ctx context.Context, in *GetVideoInfoR
 	return out, nil
 }
 
+func (c *shareServiceClient) GetCompanyInfo(ctx context.Context, in *GetCompanyInfoReq, opts ...grpc.CallOption) (*__.GetCompanyInfoRsp, error) {
+	out := new(__.GetCompanyInfoRsp)
+	err := c.cc.Invoke(ctx, ShareService_GetCompanyInfo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shareServiceClient) GetIndicators(ctx context.Context, in *GetIndicatorsReq, opts ...grpc.CallOption) (*__.GetIndicatorsRsp, error) {
+	out := new(__.GetIndicatorsRsp)
+	err := c.cc.Invoke(ctx, ShareService_GetIndicators_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shareServiceClient) GetShareholders(ctx context.Context, in *GetShareholdersReq, opts ...grpc.CallOption) (*__.GetShareholdersRsp, error) {
+	out := new(__.GetShareholdersRsp)
+	err := c.cc.Invoke(ctx, ShareService_GetShareholders_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shareServiceClient) GetExecutives(ctx context.Context, in *GetExecutivesReq, opts ...grpc.CallOption) (*__.GetExecutivesRsp, error) {
+	out := new(__.GetExecutivesRsp)
+	err := c.cc.Invoke(ctx, ShareService_GetExecutives_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shareServiceClient) GetStaffInfo(ctx context.Context, in *GetStaffInfoReq, opts ...grpc.CallOption) (*__.GetStaffInfoRsp, error) {
+	out := new(__.GetStaffInfoRsp)
+	err := c.cc.Invoke(ctx, ShareService_GetStaffInfo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shareServiceClient) GetMBRevenue(ctx context.Context, in *GetMBRevenueReq, opts ...grpc.CallOption) (*__.GetMBRevenueRsp, error) {
+	out := new(__.GetMBRevenueRsp)
+	err := c.cc.Invoke(ctx, ShareService_GetMBRevenue_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shareServiceClient) GetFinancial(ctx context.Context, in *GetFinancialReq, opts ...grpc.CallOption) (*__.GetFinancialRsp, error) {
+	out := new(__.GetFinancialRsp)
+	err := c.cc.Invoke(ctx, ShareService_GetFinancial_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shareServiceClient) GetAccountsReceivable(ctx context.Context, in *GetAccountsReceivableReq, opts ...grpc.CallOption) (*__.GetAccountsReceivableRsp, error) {
+	out := new(__.GetAccountsReceivableRsp)
+	err := c.cc.Invoke(ctx, ShareService_GetAccountsReceivable_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *shareServiceClient) GetRdExpenditure(ctx context.Context, in *GetRdExpenditureReq, opts ...grpc.CallOption) (*__.GetRdExpenditureRsp, error) {
+	out := new(__.GetRdExpenditureRsp)
+	err := c.cc.Invoke(ctx, ShareService_GetRdExpenditure_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ShareServiceServer is the server API for ShareService service.
 // All implementations must embed UnimplementedShareServiceServer
 // for forward compatibility
@@ -207,6 +316,24 @@ type ShareServiceServer interface {
 	UnshareAudio(context.Context, *UnshareAudioReq) (*UnshareAudioRsp, error)
 	CheckAudio(context.Context, *CheckAudioReq) (*CheckAudioRsp, error)
 	GetVideoInfo(context.Context, *GetVideoInfoReq) (*GetVideoInfoRsp, error)
+	// 获取公司数据
+	GetCompanyInfo(context.Context, *GetCompanyInfoReq) (*__.GetCompanyInfoRsp, error)
+	// 获取公司行情指标
+	GetIndicators(context.Context, *GetIndicatorsReq) (*__.GetIndicatorsRsp, error)
+	// 获取公司股权结构
+	GetShareholders(context.Context, *GetShareholdersReq) (*__.GetShareholdersRsp, error)
+	// 获取公司管理层信息
+	GetExecutives(context.Context, *GetExecutivesReq) (*__.GetExecutivesRsp, error)
+	// 获取员工构成
+	GetStaffInfo(context.Context, *GetStaffInfoReq) (*__.GetStaffInfoRsp, error)
+	// 获取主营营收
+	GetMBRevenue(context.Context, *GetMBRevenueReq) (*__.GetMBRevenueRsp, error)
+	// 获取财务概况
+	GetFinancial(context.Context, *GetFinancialReq) (*__.GetFinancialRsp, error)
+	// 获取应收款
+	GetAccountsReceivable(context.Context, *GetAccountsReceivableReq) (*__.GetAccountsReceivableRsp, error)
+	// 获取研发支出
+	GetRdExpenditure(context.Context, *GetRdExpenditureReq) (*__.GetRdExpenditureRsp, error)
 	mustEmbedUnimplementedShareServiceServer()
 }
 
@@ -255,6 +382,33 @@ func (UnimplementedShareServiceServer) CheckAudio(context.Context, *CheckAudioRe
 }
 func (UnimplementedShareServiceServer) GetVideoInfo(context.Context, *GetVideoInfoReq) (*GetVideoInfoRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetVideoInfo not implemented")
+}
+func (UnimplementedShareServiceServer) GetCompanyInfo(context.Context, *GetCompanyInfoReq) (*__.GetCompanyInfoRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyInfo not implemented")
+}
+func (UnimplementedShareServiceServer) GetIndicators(context.Context, *GetIndicatorsReq) (*__.GetIndicatorsRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetIndicators not implemented")
+}
+func (UnimplementedShareServiceServer) GetShareholders(context.Context, *GetShareholdersReq) (*__.GetShareholdersRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetShareholders not implemented")
+}
+func (UnimplementedShareServiceServer) GetExecutives(context.Context, *GetExecutivesReq) (*__.GetExecutivesRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetExecutives not implemented")
+}
+func (UnimplementedShareServiceServer) GetStaffInfo(context.Context, *GetStaffInfoReq) (*__.GetStaffInfoRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetStaffInfo not implemented")
+}
+func (UnimplementedShareServiceServer) GetMBRevenue(context.Context, *GetMBRevenueReq) (*__.GetMBRevenueRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMBRevenue not implemented")
+}
+func (UnimplementedShareServiceServer) GetFinancial(context.Context, *GetFinancialReq) (*__.GetFinancialRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetFinancial not implemented")
+}
+func (UnimplementedShareServiceServer) GetAccountsReceivable(context.Context, *GetAccountsReceivableReq) (*__.GetAccountsReceivableRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAccountsReceivable not implemented")
+}
+func (UnimplementedShareServiceServer) GetRdExpenditure(context.Context, *GetRdExpenditureReq) (*__.GetRdExpenditureRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRdExpenditure not implemented")
 }
 func (UnimplementedShareServiceServer) mustEmbedUnimplementedShareServiceServer() {}
 
@@ -521,6 +675,168 @@ func _ShareService_GetVideoInfo_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ShareService_GetCompanyInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCompanyInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShareServiceServer).GetCompanyInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShareService_GetCompanyInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShareServiceServer).GetCompanyInfo(ctx, req.(*GetCompanyInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShareService_GetIndicators_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetIndicatorsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShareServiceServer).GetIndicators(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShareService_GetIndicators_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShareServiceServer).GetIndicators(ctx, req.(*GetIndicatorsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShareService_GetShareholders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetShareholdersReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShareServiceServer).GetShareholders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShareService_GetShareholders_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShareServiceServer).GetShareholders(ctx, req.(*GetShareholdersReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShareService_GetExecutives_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetExecutivesReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShareServiceServer).GetExecutives(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShareService_GetExecutives_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShareServiceServer).GetExecutives(ctx, req.(*GetExecutivesReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShareService_GetStaffInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetStaffInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShareServiceServer).GetStaffInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShareService_GetStaffInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShareServiceServer).GetStaffInfo(ctx, req.(*GetStaffInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShareService_GetMBRevenue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMBRevenueReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShareServiceServer).GetMBRevenue(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShareService_GetMBRevenue_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShareServiceServer).GetMBRevenue(ctx, req.(*GetMBRevenueReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShareService_GetFinancial_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetFinancialReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShareServiceServer).GetFinancial(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShareService_GetFinancial_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShareServiceServer).GetFinancial(ctx, req.(*GetFinancialReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShareService_GetAccountsReceivable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAccountsReceivableReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShareServiceServer).GetAccountsReceivable(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShareService_GetAccountsReceivable_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShareServiceServer).GetAccountsReceivable(ctx, req.(*GetAccountsReceivableReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ShareService_GetRdExpenditure_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRdExpenditureReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShareServiceServer).GetRdExpenditure(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ShareService_GetRdExpenditure_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShareServiceServer).GetRdExpenditure(ctx, req.(*GetRdExpenditureReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ShareService_ServiceDesc is the grpc.ServiceDesc for ShareService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -584,7 +900,43 @@ var ShareService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "GetVideoInfo",
 			Handler:    _ShareService_GetVideoInfo_Handler,
 		},
+		{
+			MethodName: "GetCompanyInfo",
+			Handler:    _ShareService_GetCompanyInfo_Handler,
+		},
+		{
+			MethodName: "GetIndicators",
+			Handler:    _ShareService_GetIndicators_Handler,
+		},
+		{
+			MethodName: "GetShareholders",
+			Handler:    _ShareService_GetShareholders_Handler,
+		},
+		{
+			MethodName: "GetExecutives",
+			Handler:    _ShareService_GetExecutives_Handler,
+		},
+		{
+			MethodName: "GetStaffInfo",
+			Handler:    _ShareService_GetStaffInfo_Handler,
+		},
+		{
+			MethodName: "GetMBRevenue",
+			Handler:    _ShareService_GetMBRevenue_Handler,
+		},
+		{
+			MethodName: "GetFinancial",
+			Handler:    _ShareService_GetFinancial_Handler,
+		},
+		{
+			MethodName: "GetAccountsReceivable",
+			Handler:    _ShareService_GetAccountsReceivable_Handler,
+		},
+		{
+			MethodName: "GetRdExpenditure",
+			Handler:    _ShareService_GetRdExpenditure_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "share.proto",
+	Metadata: "share/v1/share.proto",
 }
