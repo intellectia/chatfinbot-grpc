@@ -7,8 +7,8 @@
 package sharepb
 
 import (
-	__ "."
 	context "context"
+	v1 "github.com/intellectia/chatfinbot-grpc/tree/main/protobufs/search/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -64,23 +64,23 @@ type ShareServiceClient interface {
 	CheckAudio(ctx context.Context, in *CheckAudioReq, opts ...grpc.CallOption) (*CheckAudioRsp, error)
 	GetVideoInfo(ctx context.Context, in *GetVideoInfoReq, opts ...grpc.CallOption) (*GetVideoInfoRsp, error)
 	// 获取公司数据
-	GetCompanyInfo(ctx context.Context, in *GetCompanyInfoReq, opts ...grpc.CallOption) (*__.GetCompanyInfoRsp, error)
+	GetCompanyInfo(ctx context.Context, in *GetCompanyInfoReq, opts ...grpc.CallOption) (*v1.GetCompanyInfoRsp, error)
 	// 获取公司行情指标
-	GetIndicators(ctx context.Context, in *GetIndicatorsReq, opts ...grpc.CallOption) (*__.GetIndicatorsRsp, error)
+	GetIndicators(ctx context.Context, in *GetIndicatorsReq, opts ...grpc.CallOption) (*v1.GetIndicatorsRsp, error)
 	// 获取公司股权结构
-	GetShareholders(ctx context.Context, in *GetShareholdersReq, opts ...grpc.CallOption) (*__.GetShareholdersRsp, error)
+	GetShareholders(ctx context.Context, in *GetShareholdersReq, opts ...grpc.CallOption) (*v1.GetShareholdersRsp, error)
 	// 获取公司管理层信息
-	GetExecutives(ctx context.Context, in *GetExecutivesReq, opts ...grpc.CallOption) (*__.GetExecutivesRsp, error)
+	GetExecutives(ctx context.Context, in *GetExecutivesReq, opts ...grpc.CallOption) (*v1.GetExecutivesRsp, error)
 	// 获取员工构成
-	GetStaffInfo(ctx context.Context, in *GetStaffInfoReq, opts ...grpc.CallOption) (*__.GetStaffInfoRsp, error)
+	GetStaffInfo(ctx context.Context, in *GetStaffInfoReq, opts ...grpc.CallOption) (*v1.GetStaffInfoRsp, error)
 	// 获取主营营收
-	GetMBRevenue(ctx context.Context, in *GetMBRevenueReq, opts ...grpc.CallOption) (*__.GetMBRevenueRsp, error)
+	GetMBRevenue(ctx context.Context, in *GetMBRevenueReq, opts ...grpc.CallOption) (*v1.GetMBRevenueRsp, error)
 	// 获取财务概况
-	GetFinancial(ctx context.Context, in *GetFinancialReq, opts ...grpc.CallOption) (*__.GetFinancialRsp, error)
+	GetFinancial(ctx context.Context, in *GetFinancialReq, opts ...grpc.CallOption) (*v1.GetFinancialRsp, error)
 	// 获取应收款
-	GetAccountsReceivable(ctx context.Context, in *GetAccountsReceivableReq, opts ...grpc.CallOption) (*__.GetAccountsReceivableRsp, error)
+	GetAccountsReceivable(ctx context.Context, in *GetAccountsReceivableReq, opts ...grpc.CallOption) (*v1.GetAccountsReceivableRsp, error)
 	// 获取研发支出
-	GetRdExpenditure(ctx context.Context, in *GetRdExpenditureReq, opts ...grpc.CallOption) (*__.GetRdExpenditureRsp, error)
+	GetRdExpenditure(ctx context.Context, in *GetRdExpenditureReq, opts ...grpc.CallOption) (*v1.GetRdExpenditureRsp, error)
 }
 
 type shareServiceClient struct {
@@ -217,8 +217,8 @@ func (c *shareServiceClient) GetVideoInfo(ctx context.Context, in *GetVideoInfoR
 	return out, nil
 }
 
-func (c *shareServiceClient) GetCompanyInfo(ctx context.Context, in *GetCompanyInfoReq, opts ...grpc.CallOption) (*__.GetCompanyInfoRsp, error) {
-	out := new(__.GetCompanyInfoRsp)
+func (c *shareServiceClient) GetCompanyInfo(ctx context.Context, in *GetCompanyInfoReq, opts ...grpc.CallOption) (*v1.GetCompanyInfoRsp, error) {
+	out := new(v1.GetCompanyInfoRsp)
 	err := c.cc.Invoke(ctx, ShareService_GetCompanyInfo_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -226,8 +226,8 @@ func (c *shareServiceClient) GetCompanyInfo(ctx context.Context, in *GetCompanyI
 	return out, nil
 }
 
-func (c *shareServiceClient) GetIndicators(ctx context.Context, in *GetIndicatorsReq, opts ...grpc.CallOption) (*__.GetIndicatorsRsp, error) {
-	out := new(__.GetIndicatorsRsp)
+func (c *shareServiceClient) GetIndicators(ctx context.Context, in *GetIndicatorsReq, opts ...grpc.CallOption) (*v1.GetIndicatorsRsp, error) {
+	out := new(v1.GetIndicatorsRsp)
 	err := c.cc.Invoke(ctx, ShareService_GetIndicators_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -235,8 +235,8 @@ func (c *shareServiceClient) GetIndicators(ctx context.Context, in *GetIndicator
 	return out, nil
 }
 
-func (c *shareServiceClient) GetShareholders(ctx context.Context, in *GetShareholdersReq, opts ...grpc.CallOption) (*__.GetShareholdersRsp, error) {
-	out := new(__.GetShareholdersRsp)
+func (c *shareServiceClient) GetShareholders(ctx context.Context, in *GetShareholdersReq, opts ...grpc.CallOption) (*v1.GetShareholdersRsp, error) {
+	out := new(v1.GetShareholdersRsp)
 	err := c.cc.Invoke(ctx, ShareService_GetShareholders_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -244,8 +244,8 @@ func (c *shareServiceClient) GetShareholders(ctx context.Context, in *GetShareho
 	return out, nil
 }
 
-func (c *shareServiceClient) GetExecutives(ctx context.Context, in *GetExecutivesReq, opts ...grpc.CallOption) (*__.GetExecutivesRsp, error) {
-	out := new(__.GetExecutivesRsp)
+func (c *shareServiceClient) GetExecutives(ctx context.Context, in *GetExecutivesReq, opts ...grpc.CallOption) (*v1.GetExecutivesRsp, error) {
+	out := new(v1.GetExecutivesRsp)
 	err := c.cc.Invoke(ctx, ShareService_GetExecutives_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -253,8 +253,8 @@ func (c *shareServiceClient) GetExecutives(ctx context.Context, in *GetExecutive
 	return out, nil
 }
 
-func (c *shareServiceClient) GetStaffInfo(ctx context.Context, in *GetStaffInfoReq, opts ...grpc.CallOption) (*__.GetStaffInfoRsp, error) {
-	out := new(__.GetStaffInfoRsp)
+func (c *shareServiceClient) GetStaffInfo(ctx context.Context, in *GetStaffInfoReq, opts ...grpc.CallOption) (*v1.GetStaffInfoRsp, error) {
+	out := new(v1.GetStaffInfoRsp)
 	err := c.cc.Invoke(ctx, ShareService_GetStaffInfo_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -262,8 +262,8 @@ func (c *shareServiceClient) GetStaffInfo(ctx context.Context, in *GetStaffInfoR
 	return out, nil
 }
 
-func (c *shareServiceClient) GetMBRevenue(ctx context.Context, in *GetMBRevenueReq, opts ...grpc.CallOption) (*__.GetMBRevenueRsp, error) {
-	out := new(__.GetMBRevenueRsp)
+func (c *shareServiceClient) GetMBRevenue(ctx context.Context, in *GetMBRevenueReq, opts ...grpc.CallOption) (*v1.GetMBRevenueRsp, error) {
+	out := new(v1.GetMBRevenueRsp)
 	err := c.cc.Invoke(ctx, ShareService_GetMBRevenue_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -271,8 +271,8 @@ func (c *shareServiceClient) GetMBRevenue(ctx context.Context, in *GetMBRevenueR
 	return out, nil
 }
 
-func (c *shareServiceClient) GetFinancial(ctx context.Context, in *GetFinancialReq, opts ...grpc.CallOption) (*__.GetFinancialRsp, error) {
-	out := new(__.GetFinancialRsp)
+func (c *shareServiceClient) GetFinancial(ctx context.Context, in *GetFinancialReq, opts ...grpc.CallOption) (*v1.GetFinancialRsp, error) {
+	out := new(v1.GetFinancialRsp)
 	err := c.cc.Invoke(ctx, ShareService_GetFinancial_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -280,8 +280,8 @@ func (c *shareServiceClient) GetFinancial(ctx context.Context, in *GetFinancialR
 	return out, nil
 }
 
-func (c *shareServiceClient) GetAccountsReceivable(ctx context.Context, in *GetAccountsReceivableReq, opts ...grpc.CallOption) (*__.GetAccountsReceivableRsp, error) {
-	out := new(__.GetAccountsReceivableRsp)
+func (c *shareServiceClient) GetAccountsReceivable(ctx context.Context, in *GetAccountsReceivableReq, opts ...grpc.CallOption) (*v1.GetAccountsReceivableRsp, error) {
+	out := new(v1.GetAccountsReceivableRsp)
 	err := c.cc.Invoke(ctx, ShareService_GetAccountsReceivable_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -289,8 +289,8 @@ func (c *shareServiceClient) GetAccountsReceivable(ctx context.Context, in *GetA
 	return out, nil
 }
 
-func (c *shareServiceClient) GetRdExpenditure(ctx context.Context, in *GetRdExpenditureReq, opts ...grpc.CallOption) (*__.GetRdExpenditureRsp, error) {
-	out := new(__.GetRdExpenditureRsp)
+func (c *shareServiceClient) GetRdExpenditure(ctx context.Context, in *GetRdExpenditureReq, opts ...grpc.CallOption) (*v1.GetRdExpenditureRsp, error) {
+	out := new(v1.GetRdExpenditureRsp)
 	err := c.cc.Invoke(ctx, ShareService_GetRdExpenditure_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -317,23 +317,23 @@ type ShareServiceServer interface {
 	CheckAudio(context.Context, *CheckAudioReq) (*CheckAudioRsp, error)
 	GetVideoInfo(context.Context, *GetVideoInfoReq) (*GetVideoInfoRsp, error)
 	// 获取公司数据
-	GetCompanyInfo(context.Context, *GetCompanyInfoReq) (*__.GetCompanyInfoRsp, error)
+	GetCompanyInfo(context.Context, *GetCompanyInfoReq) (*v1.GetCompanyInfoRsp, error)
 	// 获取公司行情指标
-	GetIndicators(context.Context, *GetIndicatorsReq) (*__.GetIndicatorsRsp, error)
+	GetIndicators(context.Context, *GetIndicatorsReq) (*v1.GetIndicatorsRsp, error)
 	// 获取公司股权结构
-	GetShareholders(context.Context, *GetShareholdersReq) (*__.GetShareholdersRsp, error)
+	GetShareholders(context.Context, *GetShareholdersReq) (*v1.GetShareholdersRsp, error)
 	// 获取公司管理层信息
-	GetExecutives(context.Context, *GetExecutivesReq) (*__.GetExecutivesRsp, error)
+	GetExecutives(context.Context, *GetExecutivesReq) (*v1.GetExecutivesRsp, error)
 	// 获取员工构成
-	GetStaffInfo(context.Context, *GetStaffInfoReq) (*__.GetStaffInfoRsp, error)
+	GetStaffInfo(context.Context, *GetStaffInfoReq) (*v1.GetStaffInfoRsp, error)
 	// 获取主营营收
-	GetMBRevenue(context.Context, *GetMBRevenueReq) (*__.GetMBRevenueRsp, error)
+	GetMBRevenue(context.Context, *GetMBRevenueReq) (*v1.GetMBRevenueRsp, error)
 	// 获取财务概况
-	GetFinancial(context.Context, *GetFinancialReq) (*__.GetFinancialRsp, error)
+	GetFinancial(context.Context, *GetFinancialReq) (*v1.GetFinancialRsp, error)
 	// 获取应收款
-	GetAccountsReceivable(context.Context, *GetAccountsReceivableReq) (*__.GetAccountsReceivableRsp, error)
+	GetAccountsReceivable(context.Context, *GetAccountsReceivableReq) (*v1.GetAccountsReceivableRsp, error)
 	// 获取研发支出
-	GetRdExpenditure(context.Context, *GetRdExpenditureReq) (*__.GetRdExpenditureRsp, error)
+	GetRdExpenditure(context.Context, *GetRdExpenditureReq) (*v1.GetRdExpenditureRsp, error)
 	mustEmbedUnimplementedShareServiceServer()
 }
 
@@ -383,31 +383,31 @@ func (UnimplementedShareServiceServer) CheckAudio(context.Context, *CheckAudioRe
 func (UnimplementedShareServiceServer) GetVideoInfo(context.Context, *GetVideoInfoReq) (*GetVideoInfoRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetVideoInfo not implemented")
 }
-func (UnimplementedShareServiceServer) GetCompanyInfo(context.Context, *GetCompanyInfoReq) (*__.GetCompanyInfoRsp, error) {
+func (UnimplementedShareServiceServer) GetCompanyInfo(context.Context, *GetCompanyInfoReq) (*v1.GetCompanyInfoRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyInfo not implemented")
 }
-func (UnimplementedShareServiceServer) GetIndicators(context.Context, *GetIndicatorsReq) (*__.GetIndicatorsRsp, error) {
+func (UnimplementedShareServiceServer) GetIndicators(context.Context, *GetIndicatorsReq) (*v1.GetIndicatorsRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetIndicators not implemented")
 }
-func (UnimplementedShareServiceServer) GetShareholders(context.Context, *GetShareholdersReq) (*__.GetShareholdersRsp, error) {
+func (UnimplementedShareServiceServer) GetShareholders(context.Context, *GetShareholdersReq) (*v1.GetShareholdersRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetShareholders not implemented")
 }
-func (UnimplementedShareServiceServer) GetExecutives(context.Context, *GetExecutivesReq) (*__.GetExecutivesRsp, error) {
+func (UnimplementedShareServiceServer) GetExecutives(context.Context, *GetExecutivesReq) (*v1.GetExecutivesRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetExecutives not implemented")
 }
-func (UnimplementedShareServiceServer) GetStaffInfo(context.Context, *GetStaffInfoReq) (*__.GetStaffInfoRsp, error) {
+func (UnimplementedShareServiceServer) GetStaffInfo(context.Context, *GetStaffInfoReq) (*v1.GetStaffInfoRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStaffInfo not implemented")
 }
-func (UnimplementedShareServiceServer) GetMBRevenue(context.Context, *GetMBRevenueReq) (*__.GetMBRevenueRsp, error) {
+func (UnimplementedShareServiceServer) GetMBRevenue(context.Context, *GetMBRevenueReq) (*v1.GetMBRevenueRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMBRevenue not implemented")
 }
-func (UnimplementedShareServiceServer) GetFinancial(context.Context, *GetFinancialReq) (*__.GetFinancialRsp, error) {
+func (UnimplementedShareServiceServer) GetFinancial(context.Context, *GetFinancialReq) (*v1.GetFinancialRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetFinancial not implemented")
 }
-func (UnimplementedShareServiceServer) GetAccountsReceivable(context.Context, *GetAccountsReceivableReq) (*__.GetAccountsReceivableRsp, error) {
+func (UnimplementedShareServiceServer) GetAccountsReceivable(context.Context, *GetAccountsReceivableReq) (*v1.GetAccountsReceivableRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAccountsReceivable not implemented")
 }
-func (UnimplementedShareServiceServer) GetRdExpenditure(context.Context, *GetRdExpenditureReq) (*__.GetRdExpenditureRsp, error) {
+func (UnimplementedShareServiceServer) GetRdExpenditure(context.Context, *GetRdExpenditureReq) (*v1.GetRdExpenditureRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRdExpenditure not implemented")
 }
 func (UnimplementedShareServiceServer) mustEmbedUnimplementedShareServiceServer() {}

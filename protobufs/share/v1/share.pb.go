@@ -7,7 +7,7 @@
 package sharepb
 
 import (
-	__ "."
+	v1 "github.com/intellectia/chatfinbot-grpc/tree/main/protobufs/search/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -2115,7 +2115,7 @@ type GetCompanyInfoReq struct {
 
 	Sid    string                `protobuf:"bytes,1,opt,name=sid,proto3" json:"sid,omitempty"`
 	Mid    string                `protobuf:"bytes,2,opt,name=mid,proto3" json:"mid,omitempty"`
-	Params *__.GetCompanyInfoReq `protobuf:"bytes,3,opt,name=params,proto3" json:"params,omitempty"`
+	Params *v1.GetCompanyInfoReq `protobuf:"bytes,3,opt,name=params,proto3" json:"params,omitempty"`
 }
 
 func (x *GetCompanyInfoReq) Reset() {
@@ -2164,7 +2164,7 @@ func (x *GetCompanyInfoReq) GetMid() string {
 	return ""
 }
 
-func (x *GetCompanyInfoReq) GetParams() *__.GetCompanyInfoReq {
+func (x *GetCompanyInfoReq) GetParams() *v1.GetCompanyInfoReq {
 	if x != nil {
 		return x.Params
 	}
@@ -2178,7 +2178,7 @@ type GetIndicatorsReq struct {
 
 	Sid    string               `protobuf:"bytes,1,opt,name=sid,proto3" json:"sid,omitempty"`
 	Mid    string               `protobuf:"bytes,2,opt,name=mid,proto3" json:"mid,omitempty"`
-	Params *__.GetIndicatorsReq `protobuf:"bytes,3,opt,name=params,proto3" json:"params,omitempty"`
+	Params *v1.GetIndicatorsReq `protobuf:"bytes,3,opt,name=params,proto3" json:"params,omitempty"`
 }
 
 func (x *GetIndicatorsReq) Reset() {
@@ -2227,7 +2227,7 @@ func (x *GetIndicatorsReq) GetMid() string {
 	return ""
 }
 
-func (x *GetIndicatorsReq) GetParams() *__.GetIndicatorsReq {
+func (x *GetIndicatorsReq) GetParams() *v1.GetIndicatorsReq {
 	if x != nil {
 		return x.Params
 	}
@@ -2241,7 +2241,7 @@ type GetShareholdersReq struct {
 
 	Sid    string                 `protobuf:"bytes,1,opt,name=sid,proto3" json:"sid,omitempty"`
 	Mid    string                 `protobuf:"bytes,2,opt,name=mid,proto3" json:"mid,omitempty"`
-	Params *__.GetShareholdersReq `protobuf:"bytes,3,opt,name=params,proto3" json:"params,omitempty"`
+	Params *v1.GetShareholdersReq `protobuf:"bytes,3,opt,name=params,proto3" json:"params,omitempty"`
 }
 
 func (x *GetShareholdersReq) Reset() {
@@ -2290,7 +2290,7 @@ func (x *GetShareholdersReq) GetMid() string {
 	return ""
 }
 
-func (x *GetShareholdersReq) GetParams() *__.GetShareholdersReq {
+func (x *GetShareholdersReq) GetParams() *v1.GetShareholdersReq {
 	if x != nil {
 		return x.Params
 	}
@@ -2304,7 +2304,7 @@ type GetExecutivesReq struct {
 
 	Sid    string               `protobuf:"bytes,1,opt,name=sid,proto3" json:"sid,omitempty"`
 	Mid    string               `protobuf:"bytes,2,opt,name=mid,proto3" json:"mid,omitempty"`
-	Params *__.GetExecutivesReq `protobuf:"bytes,3,opt,name=params,proto3" json:"params,omitempty"`
+	Params *v1.GetExecutivesReq `protobuf:"bytes,3,opt,name=params,proto3" json:"params,omitempty"`
 }
 
 func (x *GetExecutivesReq) Reset() {
@@ -2353,7 +2353,7 @@ func (x *GetExecutivesReq) GetMid() string {
 	return ""
 }
 
-func (x *GetExecutivesReq) GetParams() *__.GetExecutivesReq {
+func (x *GetExecutivesReq) GetParams() *v1.GetExecutivesReq {
 	if x != nil {
 		return x.Params
 	}
@@ -2367,7 +2367,7 @@ type GetStaffInfoReq struct {
 
 	Sid    string              `protobuf:"bytes,1,opt,name=sid,proto3" json:"sid,omitempty"`
 	Mid    string              `protobuf:"bytes,2,opt,name=mid,proto3" json:"mid,omitempty"`
-	Params *__.GetStaffInfoReq `protobuf:"bytes,3,opt,name=params,proto3" json:"params,omitempty"`
+	Params *v1.GetStaffInfoReq `protobuf:"bytes,3,opt,name=params,proto3" json:"params,omitempty"`
 }
 
 func (x *GetStaffInfoReq) Reset() {
@@ -2416,7 +2416,7 @@ func (x *GetStaffInfoReq) GetMid() string {
 	return ""
 }
 
-func (x *GetStaffInfoReq) GetParams() *__.GetStaffInfoReq {
+func (x *GetStaffInfoReq) GetParams() *v1.GetStaffInfoReq {
 	if x != nil {
 		return x.Params
 	}
@@ -2430,7 +2430,7 @@ type GetMBRevenueReq struct {
 
 	Sid    string              `protobuf:"bytes,1,opt,name=sid,proto3" json:"sid,omitempty"`
 	Mid    string              `protobuf:"bytes,2,opt,name=mid,proto3" json:"mid,omitempty"`
-	Params *__.GetMBRevenueReq `protobuf:"bytes,3,opt,name=params,proto3" json:"params,omitempty"`
+	Params *v1.GetMBRevenueReq `protobuf:"bytes,3,opt,name=params,proto3" json:"params,omitempty"`
 }
 
 func (x *GetMBRevenueReq) Reset() {
@@ -2479,7 +2479,7 @@ func (x *GetMBRevenueReq) GetMid() string {
 	return ""
 }
 
-func (x *GetMBRevenueReq) GetParams() *__.GetMBRevenueReq {
+func (x *GetMBRevenueReq) GetParams() *v1.GetMBRevenueReq {
 	if x != nil {
 		return x.Params
 	}
@@ -2493,7 +2493,7 @@ type GetFinancialReq struct {
 
 	Sid    string              `protobuf:"bytes,1,opt,name=sid,proto3" json:"sid,omitempty"`
 	Mid    string              `protobuf:"bytes,2,opt,name=mid,proto3" json:"mid,omitempty"`
-	Params *__.GetFinancialReq `protobuf:"bytes,3,opt,name=params,proto3" json:"params,omitempty"`
+	Params *v1.GetFinancialReq `protobuf:"bytes,3,opt,name=params,proto3" json:"params,omitempty"`
 }
 
 func (x *GetFinancialReq) Reset() {
@@ -2542,7 +2542,7 @@ func (x *GetFinancialReq) GetMid() string {
 	return ""
 }
 
-func (x *GetFinancialReq) GetParams() *__.GetFinancialReq {
+func (x *GetFinancialReq) GetParams() *v1.GetFinancialReq {
 	if x != nil {
 		return x.Params
 	}
@@ -2556,7 +2556,7 @@ type GetAccountsReceivableReq struct {
 
 	Sid    string                       `protobuf:"bytes,1,opt,name=sid,proto3" json:"sid,omitempty"`
 	Mid    string                       `protobuf:"bytes,2,opt,name=mid,proto3" json:"mid,omitempty"`
-	Params *__.GetAccountsReceivableReq `protobuf:"bytes,3,opt,name=params,proto3" json:"params,omitempty"`
+	Params *v1.GetAccountsReceivableReq `protobuf:"bytes,3,opt,name=params,proto3" json:"params,omitempty"`
 }
 
 func (x *GetAccountsReceivableReq) Reset() {
@@ -2605,7 +2605,7 @@ func (x *GetAccountsReceivableReq) GetMid() string {
 	return ""
 }
 
-func (x *GetAccountsReceivableReq) GetParams() *__.GetAccountsReceivableReq {
+func (x *GetAccountsReceivableReq) GetParams() *v1.GetAccountsReceivableReq {
 	if x != nil {
 		return x.Params
 	}
@@ -2619,7 +2619,7 @@ type GetRdExpenditureReq struct {
 
 	Sid    string                  `protobuf:"bytes,1,opt,name=sid,proto3" json:"sid,omitempty"`
 	Mid    string                  `protobuf:"bytes,2,opt,name=mid,proto3" json:"mid,omitempty"`
-	Params *__.GetRdExpenditureReq `protobuf:"bytes,3,opt,name=params,proto3" json:"params,omitempty"`
+	Params *v1.GetRdExpenditureReq `protobuf:"bytes,3,opt,name=params,proto3" json:"params,omitempty"`
 }
 
 func (x *GetRdExpenditureReq) Reset() {
@@ -2668,7 +2668,7 @@ func (x *GetRdExpenditureReq) GetMid() string {
 	return ""
 }
 
-func (x *GetRdExpenditureReq) GetParams() *__.GetRdExpenditureReq {
+func (x *GetRdExpenditureReq) GetParams() *v1.GetRdExpenditureReq {
 	if x != nil {
 		return x.Params
 	}
@@ -3190,24 +3190,24 @@ var file_share_v1_share_proto_goTypes = []interface{}{
 	(*GetFinancialReq)(nil),             // 40: chatfinbot.share.v1.GetFinancialReq
 	(*GetAccountsReceivableReq)(nil),    // 41: chatfinbot.share.v1.GetAccountsReceivableReq
 	(*GetRdExpenditureReq)(nil),         // 42: chatfinbot.share.v1.GetRdExpenditureReq
-	(*__.GetCompanyInfoReq)(nil),        // 43: chatfinbot.search.v1.GetCompanyInfoReq
-	(*__.GetIndicatorsReq)(nil),         // 44: chatfinbot.search.v1.GetIndicatorsReq
-	(*__.GetShareholdersReq)(nil),       // 45: chatfinbot.search.v1.GetShareholdersReq
-	(*__.GetExecutivesReq)(nil),         // 46: chatfinbot.search.v1.GetExecutivesReq
-	(*__.GetStaffInfoReq)(nil),          // 47: chatfinbot.search.v1.GetStaffInfoReq
-	(*__.GetMBRevenueReq)(nil),          // 48: chatfinbot.search.v1.GetMBRevenueReq
-	(*__.GetFinancialReq)(nil),          // 49: chatfinbot.search.v1.GetFinancialReq
-	(*__.GetAccountsReceivableReq)(nil), // 50: chatfinbot.search.v1.GetAccountsReceivableReq
-	(*__.GetRdExpenditureReq)(nil),      // 51: chatfinbot.search.v1.GetRdExpenditureReq
-	(*__.GetCompanyInfoRsp)(nil),        // 52: chatfinbot.search.v1.GetCompanyInfoRsp
-	(*__.GetIndicatorsRsp)(nil),         // 53: chatfinbot.search.v1.GetIndicatorsRsp
-	(*__.GetShareholdersRsp)(nil),       // 54: chatfinbot.search.v1.GetShareholdersRsp
-	(*__.GetExecutivesRsp)(nil),         // 55: chatfinbot.search.v1.GetExecutivesRsp
-	(*__.GetStaffInfoRsp)(nil),          // 56: chatfinbot.search.v1.GetStaffInfoRsp
-	(*__.GetMBRevenueRsp)(nil),          // 57: chatfinbot.search.v1.GetMBRevenueRsp
-	(*__.GetFinancialRsp)(nil),          // 58: chatfinbot.search.v1.GetFinancialRsp
-	(*__.GetAccountsReceivableRsp)(nil), // 59: chatfinbot.search.v1.GetAccountsReceivableRsp
-	(*__.GetRdExpenditureRsp)(nil),      // 60: chatfinbot.search.v1.GetRdExpenditureRsp
+	(*v1.GetCompanyInfoReq)(nil),        // 43: chatfinbot.search.v1.GetCompanyInfoReq
+	(*v1.GetIndicatorsReq)(nil),         // 44: chatfinbot.search.v1.GetIndicatorsReq
+	(*v1.GetShareholdersReq)(nil),       // 45: chatfinbot.search.v1.GetShareholdersReq
+	(*v1.GetExecutivesReq)(nil),         // 46: chatfinbot.search.v1.GetExecutivesReq
+	(*v1.GetStaffInfoReq)(nil),          // 47: chatfinbot.search.v1.GetStaffInfoReq
+	(*v1.GetMBRevenueReq)(nil),          // 48: chatfinbot.search.v1.GetMBRevenueReq
+	(*v1.GetFinancialReq)(nil),          // 49: chatfinbot.search.v1.GetFinancialReq
+	(*v1.GetAccountsReceivableReq)(nil), // 50: chatfinbot.search.v1.GetAccountsReceivableReq
+	(*v1.GetRdExpenditureReq)(nil),      // 51: chatfinbot.search.v1.GetRdExpenditureReq
+	(*v1.GetCompanyInfoRsp)(nil),        // 52: chatfinbot.search.v1.GetCompanyInfoRsp
+	(*v1.GetIndicatorsRsp)(nil),         // 53: chatfinbot.search.v1.GetIndicatorsRsp
+	(*v1.GetShareholdersRsp)(nil),       // 54: chatfinbot.search.v1.GetShareholdersRsp
+	(*v1.GetExecutivesRsp)(nil),         // 55: chatfinbot.search.v1.GetExecutivesRsp
+	(*v1.GetStaffInfoRsp)(nil),          // 56: chatfinbot.search.v1.GetStaffInfoRsp
+	(*v1.GetMBRevenueRsp)(nil),          // 57: chatfinbot.search.v1.GetMBRevenueRsp
+	(*v1.GetFinancialRsp)(nil),          // 58: chatfinbot.search.v1.GetFinancialRsp
+	(*v1.GetAccountsReceivableRsp)(nil), // 59: chatfinbot.search.v1.GetAccountsReceivableRsp
+	(*v1.GetRdExpenditureRsp)(nil),      // 60: chatfinbot.search.v1.GetRdExpenditureRsp
 }
 var file_share_v1_share_proto_depIdxs = []int32{
 	2,  // 0: chatfinbot.share.v1.GetChatInfoRsp.list:type_name -> chatfinbot.share.v1.ChatHistory
