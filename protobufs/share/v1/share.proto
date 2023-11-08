@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package chatfinbot.share.v1;
 
-option go_package = "github.com/intellectia/chatfinbot-grpc/tree/main/protobufs/share/v1;sharepb";
+option go_package = "github.com/intellectia/chatfinbot-grpc/protobufs/share/v1;sharepb";
 import "google/api/annotations.proto";
 import "search/v1/search.proto";
 

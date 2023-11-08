@@ -8,7 +8,7 @@ package sharepb
 
 import (
 	context "context"
-	v1 "github.com/intellectia/chatfinbot-grpc/tree/main/protobufs/search/v1"
+	v1 "github.com/intellectia/chatfinbot-grpc/protobufs/search/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
