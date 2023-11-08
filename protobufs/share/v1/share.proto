@@ -131,7 +131,7 @@ service ShareService {
     // 获取主营营收
     rpc GetMBRevenue(GetMBRevenueReq) returns (GetMBRevenueRsp) {
         option (google.api.http) = {
-			get: "/v1/share/mb_revenue"
+			get: "/v1/share/mbrevenue"
 		};
     }
     // 获取财务概况
@@ -144,13 +144,13 @@ service ShareService {
     // 获取应收款
     rpc GetAccountsReceivable(GetAccountsReceivableReq) returns (GetAccountsReceivableRsp) {
         option (google.api.http) = {
-			get: "/v1/share/accounts_receivable"
+			get: "/v1/share/ar"
 		};
     }
     // 获取研发支出
     rpc GetRdExpenditure(GetRdExpenditureReq) returns (GetRdExpenditureRsp) {
         option (google.api.http) = {
-			get: "/v1/share/rd_expenditure"
+			get: "/v1/share/rd-expenditure"
 		};
     }
 }
