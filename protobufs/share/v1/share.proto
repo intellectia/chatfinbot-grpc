@@ -360,7 +360,7 @@ message CheckAudioRsp {
 
 message GetCompanyInfoReq {
     string sid = 1;
-    string mid = 2; 
+    int32 mid = 2; 
     chatfinbot.search.v1.GetCompanyInfoReq params = 3;
 }
 
@@ -372,7 +372,7 @@ message GetCompanyInfoRsp {
 
 message GetIndicatorsReq {
     string sid = 1;
-    string mid = 2; 
+    int32 mid = 2; 
     chatfinbot.search.v1.GetIndicatorsReq params = 3;
 }
 
@@ -384,7 +384,7 @@ message GetIndicatorsRsp {
 
 message GetShareholdersReq {
     string sid = 1;
-    string mid = 2; 
+    int32 mid = 2; 
     chatfinbot.search.v1.GetShareholdersReq params = 3;
 }
 
@@ -396,7 +396,7 @@ message GetShareholdersRsp {
 
 message GetExecutivesReq {
     string sid = 1;
-    string mid = 2; 
+    int32 mid = 2; 
     chatfinbot.search.v1.GetExecutivesReq params = 3;
 }
 
@@ -408,7 +408,7 @@ message GetExecutivesRsp {
 
 message GetStaffInfoReq {
     string sid = 1;
-    string mid = 2; 
+    int32 mid = 2; 
     chatfinbot.search.v1.GetStaffInfoReq params = 3;
 }
 
@@ -420,7 +420,7 @@ message GetStaffInfoRsp {
 
 message GetMBRevenueReq {
     string sid = 1;
-    string mid = 2; 
+    int32 mid = 2; 
     chatfinbot.search.v1.GetMBRevenueReq params = 3;
 }
 
@@ -432,7 +432,7 @@ message GetMBRevenueRsp {
 
 message GetFinancialReq {
     string sid = 1;
-    string mid = 2; 
+    int32 mid = 2; 
     search.v1.GetFinancialReq params = 3;
 }
 
@@ -444,7 +444,7 @@ message GetFinancialRsp {
 
 message GetAccountsReceivableReq {
     string sid = 1;
-    string mid = 2; 
+    int32 mid = 2; 
     search.v1.GetAccountsReceivableReq params = 3;
 }
 
@@ -456,7 +456,7 @@ message GetAccountsReceivableRsp {
 
 message  GetRdExpenditureReq {
     string sid = 1;
-    string mid = 2; 
+    int32 mid = 2; 
     search.v1.GetRdExpenditureReq params = 3;
 }
 
