@@ -112,6 +112,7 @@ message IntelChatReq {
     string message = 2;
     uint32 chat_type = 3;
     string params = 4;
+    string chat_id = 5;
 }
 
 message GetSessionListReq {
@@ -143,6 +144,16 @@ message GetAudioWsURLRsp {
     string url = 3; 
 }
 
+message CheckHistoryBySessionAndMIDReq {
+  uint32 type = 1; // 类型
+}
+
+message CheckHistoryBySessionAndMIDRsp {
+  int32 ret = 1; // 错误码
+  string msg = 2; // msg
+  string url = 3; 
+}
+
 
 service ChatService {
   rpc GiveFeedback(Feedback) returns (Empty);
@@ -163,5 +174,6 @@ service ChatService {
   rpc CheckUserSessionInner(CheckUserSessionReq) returns (CheckUserSessionRsp);
 
   rpc GetAudioWsURL(GetAudioWsURLReq) returns (GetAudioWsURLRsp);
+
 }
 
