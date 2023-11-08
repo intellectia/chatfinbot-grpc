@@ -1336,7 +1336,7 @@ func RegisterShareServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.share.v1.ShareService/GetMBRevenue", runtime.WithHTTPPathPattern("/v1/share/mb_revenue"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.share.v1.ShareService/GetMBRevenue", runtime.WithHTTPPathPattern("/v1/share/mbrevenue"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1386,7 +1386,7 @@ func RegisterShareServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.share.v1.ShareService/GetAccountsReceivable", runtime.WithHTTPPathPattern("/v1/share/accounts_receivable"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.share.v1.ShareService/GetAccountsReceivable", runtime.WithHTTPPathPattern("/v1/share/ar"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1411,7 +1411,7 @@ func RegisterShareServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.share.v1.ShareService/GetRdExpenditure", runtime.WithHTTPPathPattern("/v1/share/rd_expenditure"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.share.v1.ShareService/GetRdExpenditure", runtime.WithHTTPPathPattern("/v1/share/rd-expenditure"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1893,7 +1893,7 @@ func RegisterShareServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.share.v1.ShareService/GetMBRevenue", runtime.WithHTTPPathPattern("/v1/share/mb_revenue"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.share.v1.ShareService/GetMBRevenue", runtime.WithHTTPPathPattern("/v1/share/mbrevenue"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1937,7 +1937,7 @@ func RegisterShareServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.share.v1.ShareService/GetAccountsReceivable", runtime.WithHTTPPathPattern("/v1/share/accounts_receivable"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.share.v1.ShareService/GetAccountsReceivable", runtime.WithHTTPPathPattern("/v1/share/ar"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1959,7 +1959,7 @@ func RegisterShareServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.share.v1.ShareService/GetRdExpenditure", runtime.WithHTTPPathPattern("/v1/share/rd_expenditure"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.share.v1.ShareService/GetRdExpenditure", runtime.WithHTTPPathPattern("/v1/share/rd-expenditure"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2017,13 +2017,13 @@ var (
 
 	pattern_ShareService_GetStaffInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "share", "staff-info"}, ""))
 
-	pattern_ShareService_GetMBRevenue_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "share", "mb_revenue"}, ""))
+	pattern_ShareService_GetMBRevenue_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "share", "mbrevenue"}, ""))
 
 	pattern_ShareService_GetFinancial_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "share", "financial"}, ""))
 
-	pattern_ShareService_GetAccountsReceivable_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "share", "accounts_receivable"}, ""))
+	pattern_ShareService_GetAccountsReceivable_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "share", "ar"}, ""))
 
-	pattern_ShareService_GetRdExpenditure_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "share", "rd_expenditure"}, ""))
+	pattern_ShareService_GetRdExpenditure_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "share", "rd-expenditure"}, ""))
 )
 
 var (
