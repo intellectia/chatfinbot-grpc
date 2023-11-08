@@ -99,56 +99,56 @@ service ShareService {
     }
 
     // 获取公司数据 
-    rpc GetCompanyInfo(GetCompanyInfoReq) returns (chatfinbot.search.v1.GetCompanyInfoRsp) {
+    rpc GetCompanyInfo(GetCompanyInfoReq) returns (GetCompanyInfoRsp) {
         option (google.api.http) = {
 			get: "/v1/share/company-info"
 		};
     }
     // 获取公司行情指标
-    rpc GetIndicators(GetIndicatorsReq) returns (chatfinbot.search.v1.GetIndicatorsRsp) {
+    rpc GetIndicators(GetIndicatorsReq) returns (GetIndicatorsRsp) {
         option (google.api.http) = {
 			get: "/v1/share/indicators"
 		};
     }
     // 获取公司股权结构
-    rpc GetShareholders(GetShareholdersReq) returns (chatfinbot.search.v1.GetShareholdersRsp){ 
+    rpc GetShareholders(GetShareholdersReq) returns (GetShareholdersRsp){ 
         option (google.api.http) = {
 			get: "/v1/share/shareholders"
 		};
     }
     // 获取公司管理层信息
-    rpc GetExecutives(GetExecutivesReq) returns (chatfinbot.search.v1.GetExecutivesRsp) {
+    rpc GetExecutives(GetExecutivesReq) returns (GetExecutivesRsp) {
         option (google.api.http) = {
 			get: "/v1/share/executives"
 		};
     }
     // 获取员工构成
-    rpc GetStaffInfo(GetStaffInfoReq) returns (chatfinbot.search.v1.GetStaffInfoRsp) {
+    rpc GetStaffInfo(GetStaffInfoReq) returns (GetStaffInfoRsp) {
         option (google.api.http) = {
 			get: "/v1/share/staff-info"
 		};
     }
     // 获取主营营收
-    rpc GetMBRevenue(GetMBRevenueReq) returns (chatfinbot.search.v1.GetMBRevenueRsp) {
+    rpc GetMBRevenue(GetMBRevenueReq) returns (GetMBRevenueRsp) {
         option (google.api.http) = {
 			get: "/v1/share/mb_revenue"
 		};
     }
     // 获取财务概况
-    rpc GetFinancial(GetFinancialReq) returns (chatfinbot.search.v1.GetFinancialRsp) {
+    rpc GetFinancial(GetFinancialReq) returns (GetFinancialRsp) {
         option (google.api.http) = {
 			get: "/v1/share/financial"
 		};
     }
     
     // 获取应收款
-    rpc GetAccountsReceivable(GetAccountsReceivableReq) returns (chatfinbot.search.v1.GetAccountsReceivableRsp) {
+    rpc GetAccountsReceivable(GetAccountsReceivableReq) returns (GetAccountsReceivableRsp) {
         option (google.api.http) = {
 			get: "/v1/share/accounts_receivable"
 		};
     }
     // 获取研发支出
-    rpc GetRdExpenditure(GetRdExpenditureReq) returns (chatfinbot.search.v1.GetRdExpenditureRsp) {
+    rpc GetRdExpenditure(GetRdExpenditureReq) returns (GetRdExpenditureRsp) {
         option (google.api.http) = {
 			get: "/v1/share/rd_expenditure"
 		};
@@ -364,10 +364,22 @@ message GetCompanyInfoReq {
     chatfinbot.search.v1.GetCompanyInfoReq params = 3;
 }
 
+message GetCompanyInfoRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    chatfinbot.search.v1.GetCompanyInfoRsp data = 3;
+}
+
 message GetIndicatorsReq {
     string sid = 1;
     string mid = 2; 
     chatfinbot.search.v1.GetIndicatorsReq params = 3;
+}
+
+message GetIndicatorsRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    chatfinbot.search.v1.GetIndicatorsRsp data = 3;
 }
 
 message GetShareholdersReq {
@@ -376,10 +388,22 @@ message GetShareholdersReq {
     chatfinbot.search.v1.GetShareholdersReq params = 3;
 }
 
+message GetShareholdersRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    chatfinbot.search.v1.GetShareholdersRsp data = 3;
+}
+
 message GetExecutivesReq {
     string sid = 1;
     string mid = 2; 
     chatfinbot.search.v1.GetExecutivesReq params = 3;
+}
+
+message GetExecutivesRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    chatfinbot.search.v1.GetExecutivesRsp data = 3;
 }
 
 message GetStaffInfoReq {
@@ -388,14 +412,23 @@ message GetStaffInfoReq {
     chatfinbot.search.v1.GetStaffInfoReq params = 3;
 }
 
+message GetStaffInfoRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    chatfinbot.search.v1.GetStaffInfoRsp data = 3;
+}
+
 message GetMBRevenueReq {
     string sid = 1;
     string mid = 2; 
     chatfinbot.search.v1.GetMBRevenueReq params = 3;
 }
 
-
-
+message GetMBRevenueRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    chatfinbot.search.v1.GetMBRevenueRsp data = 3;
+}
 
 message GetFinancialReq {
     string sid = 1;
@@ -403,6 +436,11 @@ message GetFinancialReq {
     search.v1.GetFinancialReq params = 3;
 }
 
+message GetFinancialRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    chatfinbot.search.v1.GetFinancialRsp data = 3;
+}
 
 message GetAccountsReceivableReq {
     string sid = 1;
@@ -410,10 +448,22 @@ message GetAccountsReceivableReq {
     search.v1.GetAccountsReceivableReq params = 3;
 }
 
+message GetAccountsReceivableRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    chatfinbot.search.v1.GetAccountsReceivableRsp data = 3;
+}
+
 message  GetRdExpenditureReq {
     string sid = 1;
     string mid = 2; 
     search.v1.GetRdExpenditureReq params = 3;
+}
+
+message GetRdExpenditureRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    chatfinbot.search.v1.GetRdExpenditureRsp data = 3;
 }
 
 
