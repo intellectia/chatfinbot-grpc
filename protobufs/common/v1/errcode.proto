@@ -71,6 +71,9 @@ enum RetCode {
     ERR_USER_INFO_INVALID = 15001; // 用户信息无效
     ERR_USER_NOT_FOUND = 15002; // 用户不存在
     ERR_USER_ALREADY_VERIFIED = 15003; // 用户已经验证过了
+    ERR_USER_SERVICE_FAILED = 15004; // user service error
+    ERR_USER_ALREADY_EXISTS = 15005; // 用户已经存在
+    ERR_USER_VERIFY_CODE_FAILED = 15006; // 验证码错误
 
     // message 相关错误码
     ERR_EMAIL_SEND_FAILED = 16000; // 邮件发送失败

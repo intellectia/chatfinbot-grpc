@@ -30,6 +30,7 @@ enum UserType {
 
 service UserService {
   rpc Register(UserRequest) returns (RegisterResponse);
+  rpc SignUpWithEmail(SignUpWithEmailRequest) returns (LoginResponse); // email login
   rpc LoginWithEmail(LoginWithEmailRequest) returns (LoginWithEmailResponse); // email login
   rpc LoginWithPhone(LoginWithPhoneRequest) returns (LoginResponse); // phone login
   rpc LoginWithUserName(LoginWithUserNameRequest) returns (LoginResponse); // user_name login
@@ -37,6 +38,7 @@ service UserService {
   rpc GetUser(GetUserRequest) returns (UserResponse);
   rpc SetInitPassword(SetInitPasswordRequest) returns (Empty); // set original password
   rpc InitUserExtraInfo(InitUserExtraInfoRequest) returns (LoginResponse);
+  rpc VerifyEmail(VerifyEmailRequest) returns (LoginResponse);
   rpc BindPhone(BindPhoneRequest) returns (LoginResponse);
   rpc WeChatLogin(WeChatLoginRequest) returns (LoginResponse);
   rpc GetInfo(GetInfoRequest) returns (GetInfoResponse);
@@ -45,7 +47,7 @@ service UserService {
   rpc SendEmail(SendEmailRequest) returns (Empty);
   rpc CheckInvitationCode(CheckInvitationCodeRequest) returns (LoginResponse);
   rpc ApplyInvitationCode(ApplyInvitationCodeRequest) returns (Empty);
-}
+}  
 
 message GetUserUsageRequest {
   string user_id = 1;
@@ -65,6 +67,10 @@ message UserRequest {
 message RegisterResponse {
   string id = 1;
   string user_name = 2;
+}
+
+message SignUpWithEmailRequest {
+  string email = 1;
 }
 
 message LoginWithEmailRequest {
@@ -118,6 +124,11 @@ message InitUserExtraInfoRequest {
   string email_code = 8; // 邮箱验证码      
 }
 
+message VerifyEmailRequest { 
+  string email = 1; // 邮箱
+  string code = 2; // 邮箱验证码      
+}
+
 message InitUserExtraInfoResponse {
   string user_id = 1;           // user ID to specify which user to update 
   string token = 2;             // 登录token
@@ -147,7 +158,7 @@ message WeChatLoginRequest {
 message LoginResponse {
   string user_id = 1;
   string token = 2; // 登录token, 如果没有设置密码或者没有公司名，返回空
-  string user_name = 3; // 手机注册时，手机号为用户名
+  string user_name = 3; // 手机注册时，手机号为用户名, 邮箱注册时，邮箱为用户名
   bool has_password = 4; // 是否有密码
   string company_name = 5; // 公司名称
   bool is_first_login = 6; // 是否第一次登录
@@ -156,6 +167,7 @@ message LoginResponse {
   string login_type = 9; // phone, email, wechat, username
   UserType user_type = 10; // 用户类型
   int32 login_status = 11; // 登录状态
+  string email = 12; // 邮箱
 }
 
 message GetInfoRequest {

@@ -23,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserServiceClient interface {
 	Register(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
+	SignUpWithEmail(ctx context.Context, in *SignUpWithEmailRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	LoginWithEmail(ctx context.Context, in *LoginWithEmailRequest, opts ...grpc.CallOption) (*LoginWithEmailResponse, error)
 	LoginWithPhone(ctx context.Context, in *LoginWithPhoneRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	LoginWithUserName(ctx context.Context, in *LoginWithUserNameRequest, opts ...grpc.CallOption) (*LoginResponse, error)
@@ -30,6 +31,7 @@ type UserServiceClient interface {
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*UserResponse, error)
 	SetInitPassword(ctx context.Context, in *SetInitPasswordRequest, opts ...grpc.CallOption) (*Empty, error)
 	InitUserExtraInfo(ctx context.Context, in *InitUserExtraInfoRequest, opts ...grpc.CallOption) (*LoginResponse, error)
+	VerifyEmail(ctx context.Context, in *VerifyEmailRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	BindPhone(ctx context.Context, in *BindPhoneRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	WeChatLogin(ctx context.Context, in *WeChatLoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	GetInfo(ctx context.Context, in *GetInfoRequest, opts ...grpc.CallOption) (*GetInfoResponse, error)
@@ -51,6 +53,15 @@ func NewUserServiceClient(cc grpc.ClientConnInterface) UserServiceClient {
 func (c *userServiceClient) Register(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*RegisterResponse, error) {
 	out := new(RegisterResponse)
 	err := c.cc.Invoke(ctx, "/chatfinbot.user.v1.UserService/Register", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) SignUpWithEmail(ctx context.Context, in *SignUpWithEmailRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+	out := new(LoginResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.user.v1.UserService/SignUpWithEmail", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -114,6 +125,15 @@ func (c *userServiceClient) SetInitPassword(ctx context.Context, in *SetInitPass
 func (c *userServiceClient) InitUserExtraInfo(ctx context.Context, in *InitUserExtraInfoRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
 	out := new(LoginResponse)
 	err := c.cc.Invoke(ctx, "/chatfinbot.user.v1.UserService/InitUserExtraInfo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) VerifyEmail(ctx context.Context, in *VerifyEmailRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+	out := new(LoginResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.user.v1.UserService/VerifyEmail", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -197,6 +217,7 @@ func (c *userServiceClient) ApplyInvitationCode(ctx context.Context, in *ApplyIn
 // for forward compatibility
 type UserServiceServer interface {
 	Register(context.Context, *UserRequest) (*RegisterResponse, error)
+	SignUpWithEmail(context.Context, *SignUpWithEmailRequest) (*LoginResponse, error)
 	LoginWithEmail(context.Context, *LoginWithEmailRequest) (*LoginWithEmailResponse, error)
 	LoginWithPhone(context.Context, *LoginWithPhoneRequest) (*LoginResponse, error)
 	LoginWithUserName(context.Context, *LoginWithUserNameRequest) (*LoginResponse, error)
@@ -204,6 +225,7 @@ type UserServiceServer interface {
 	GetUser(context.Context, *GetUserRequest) (*UserResponse, error)
 	SetInitPassword(context.Context, *SetInitPasswordRequest) (*Empty, error)
 	InitUserExtraInfo(context.Context, *InitUserExtraInfoRequest) (*LoginResponse, error)
+	VerifyEmail(context.Context, *VerifyEmailRequest) (*LoginResponse, error)
 	BindPhone(context.Context, *BindPhoneRequest) (*LoginResponse, error)
 	WeChatLogin(context.Context, *WeChatLoginRequest) (*LoginResponse, error)
 	GetInfo(context.Context, *GetInfoRequest) (*GetInfoResponse, error)
@@ -221,6 +243,9 @@ type UnimplementedUserServiceServer struct {
 
 func (UnimplementedUserServiceServer) Register(context.Context, *UserRequest) (*RegisterResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
+}
+func (UnimplementedUserServiceServer) SignUpWithEmail(context.Context, *SignUpWithEmailRequest) (*LoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SignUpWithEmail not implemented")
 }
 func (UnimplementedUserServiceServer) LoginWithEmail(context.Context, *LoginWithEmailRequest) (*LoginWithEmailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoginWithEmail not implemented")
@@ -242,6 +267,9 @@ func (UnimplementedUserServiceServer) SetInitPassword(context.Context, *SetInitP
 }
 func (UnimplementedUserServiceServer) InitUserExtraInfo(context.Context, *InitUserExtraInfoRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InitUserExtraInfo not implemented")
+}
+func (UnimplementedUserServiceServer) VerifyEmail(context.Context, *VerifyEmailRequest) (*LoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method VerifyEmail not implemented")
 }
 func (UnimplementedUserServiceServer) BindPhone(context.Context, *BindPhoneRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BindPhone not implemented")
@@ -294,6 +322,24 @@ func _UserService_Register_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).Register(ctx, req.(*UserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_SignUpWithEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SignUpWithEmailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).SignUpWithEmail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.user.v1.UserService/SignUpWithEmail",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).SignUpWithEmail(ctx, req.(*SignUpWithEmailRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -420,6 +466,24 @@ func _UserService_InitUserExtraInfo_Handler(srv interface{}, ctx context.Context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).InitUserExtraInfo(ctx, req.(*InitUserExtraInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_VerifyEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VerifyEmailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).VerifyEmail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.user.v1.UserService/VerifyEmail",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).VerifyEmail(ctx, req.(*VerifyEmailRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -580,6 +644,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _UserService_Register_Handler,
 		},
 		{
+			MethodName: "SignUpWithEmail",
+			Handler:    _UserService_SignUpWithEmail_Handler,
+		},
+		{
 			MethodName: "LoginWithEmail",
 			Handler:    _UserService_LoginWithEmail_Handler,
 		},
@@ -606,6 +674,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "InitUserExtraInfo",
 			Handler:    _UserService_InitUserExtraInfo_Handler,
+		},
+		{
+			MethodName: "VerifyEmail",
+			Handler:    _UserService_VerifyEmail_Handler,
 		},
 		{
 			MethodName: "BindPhone",
