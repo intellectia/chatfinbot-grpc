@@ -216,6 +216,7 @@ enum PackageType {
     PackageTypeWritingFileUpload = 9;   // 写作上传文件包
     PackageTypeDocumentNum = 10; // 文档数量
     PackageTypeChatNum = 11; // 回答流量包
+    PackageTypeDocNum = 12; // 文档流量包
 }
 
 message UserPackageUsage {
