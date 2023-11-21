@@ -29,7 +29,8 @@ type UserServiceClient interface {
 	LoginWithUserName(ctx context.Context, in *LoginWithUserNameRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	SendSMSCode(ctx context.Context, in *SendSMSCodeRequest, opts ...grpc.CallOption) (*Empty, error)
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*UserResponse, error)
-	SetInitPassword(ctx context.Context, in *SetInitPasswordRequest, opts ...grpc.CallOption) (*LoginResponse, error)
+	SetInitPassword(ctx context.Context, in *SetInitPasswordRequest, opts ...grpc.CallOption) (*Empty, error)
+	SetInitPasswordEN(ctx context.Context, in *SetInitPasswordRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	InitUserExtraInfo(ctx context.Context, in *InitUserExtraInfoRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	VerifyEmail(ctx context.Context, in *VerifyEmailRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	BindPhone(ctx context.Context, in *BindPhoneRequest, opts ...grpc.CallOption) (*LoginResponse, error)
@@ -115,9 +116,18 @@ func (c *userServiceClient) GetUser(ctx context.Context, in *GetUserRequest, opt
 	return out, nil
 }
 
-func (c *userServiceClient) SetInitPassword(ctx context.Context, in *SetInitPasswordRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
-	out := new(LoginResponse)
+func (c *userServiceClient) SetInitPassword(ctx context.Context, in *SetInitPasswordRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
 	err := c.cc.Invoke(ctx, "/chatfinbot.user.v1.UserService/SetInitPassword", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userServiceClient) SetInitPasswordEN(ctx context.Context, in *SetInitPasswordRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+	out := new(LoginResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.user.v1.UserService/SetInitPasswordEN", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -243,7 +253,8 @@ type UserServiceServer interface {
 	LoginWithUserName(context.Context, *LoginWithUserNameRequest) (*LoginResponse, error)
 	SendSMSCode(context.Context, *SendSMSCodeRequest) (*Empty, error)
 	GetUser(context.Context, *GetUserRequest) (*UserResponse, error)
-	SetInitPassword(context.Context, *SetInitPasswordRequest) (*LoginResponse, error)
+	SetInitPassword(context.Context, *SetInitPasswordRequest) (*Empty, error)
+	SetInitPasswordEN(context.Context, *SetInitPasswordRequest) (*LoginResponse, error)
 	InitUserExtraInfo(context.Context, *InitUserExtraInfoRequest) (*LoginResponse, error)
 	VerifyEmail(context.Context, *VerifyEmailRequest) (*LoginResponse, error)
 	BindPhone(context.Context, *BindPhoneRequest) (*LoginResponse, error)
@@ -284,8 +295,11 @@ func (UnimplementedUserServiceServer) SendSMSCode(context.Context, *SendSMSCodeR
 func (UnimplementedUserServiceServer) GetUser(context.Context, *GetUserRequest) (*UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
 }
-func (UnimplementedUserServiceServer) SetInitPassword(context.Context, *SetInitPasswordRequest) (*LoginResponse, error) {
+func (UnimplementedUserServiceServer) SetInitPassword(context.Context, *SetInitPasswordRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetInitPassword not implemented")
+}
+func (UnimplementedUserServiceServer) SetInitPasswordEN(context.Context, *SetInitPasswordRequest) (*LoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetInitPasswordEN not implemented")
 }
 func (UnimplementedUserServiceServer) InitUserExtraInfo(context.Context, *InitUserExtraInfoRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InitUserExtraInfo not implemented")
@@ -476,6 +490,24 @@ func _UserService_SetInitPassword_Handler(srv interface{}, ctx context.Context, 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).SetInitPassword(ctx, req.(*SetInitPasswordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_SetInitPasswordEN_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetInitPasswordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).SetInitPasswordEN(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.user.v1.UserService/SetInitPasswordEN",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).SetInitPasswordEN(ctx, req.(*SetInitPasswordRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -734,6 +766,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SetInitPassword",
 			Handler:    _UserService_SetInitPassword_Handler,
+		},
+		{
+			MethodName: "SetInitPasswordEN",
+			Handler:    _UserService_SetInitPasswordEN_Handler,
 		},
 		{
 			MethodName: "InitUserExtraInfo",
