@@ -29,7 +29,7 @@ type UserServiceClient interface {
 	LoginWithUserName(ctx context.Context, in *LoginWithUserNameRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	SendSMSCode(ctx context.Context, in *SendSMSCodeRequest, opts ...grpc.CallOption) (*Empty, error)
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*UserResponse, error)
-	SetInitPassword(ctx context.Context, in *SetInitPasswordRequest, opts ...grpc.CallOption) (*Empty, error)
+	SetInitPassword(ctx context.Context, in *SetInitPasswordRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	InitUserExtraInfo(ctx context.Context, in *InitUserExtraInfoRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	VerifyEmail(ctx context.Context, in *VerifyEmailRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	BindPhone(ctx context.Context, in *BindPhoneRequest, opts ...grpc.CallOption) (*LoginResponse, error)
@@ -38,8 +38,10 @@ type UserServiceClient interface {
 	EditInfo(ctx context.Context, in *EditInfoRequest, opts ...grpc.CallOption) (*EditInfoResponse, error)
 	GetUserUsage(ctx context.Context, in *GetUserUsageRequest, opts ...grpc.CallOption) (*GetUserUsageResponse, error)
 	SendEmail(ctx context.Context, in *SendEmailRequest, opts ...grpc.CallOption) (*Empty, error)
+	SendForgotEmail(ctx context.Context, in *SendForgotEmailRequest, opts ...grpc.CallOption) (*Empty, error)
 	CheckInvitationCode(ctx context.Context, in *CheckInvitationCodeRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	ApplyInvitationCode(ctx context.Context, in *ApplyInvitationCodeRequest, opts ...grpc.CallOption) (*Empty, error)
+	ForgotPassword(ctx context.Context, in *ForgotPasswordRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 }
 
 type userServiceClient struct {
@@ -113,8 +115,8 @@ func (c *userServiceClient) GetUser(ctx context.Context, in *GetUserRequest, opt
 	return out, nil
 }
 
-func (c *userServiceClient) SetInitPassword(ctx context.Context, in *SetInitPasswordRequest, opts ...grpc.CallOption) (*Empty, error) {
-	out := new(Empty)
+func (c *userServiceClient) SetInitPassword(ctx context.Context, in *SetInitPasswordRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+	out := new(LoginResponse)
 	err := c.cc.Invoke(ctx, "/chatfinbot.user.v1.UserService/SetInitPassword", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -194,6 +196,15 @@ func (c *userServiceClient) SendEmail(ctx context.Context, in *SendEmailRequest,
 	return out, nil
 }
 
+func (c *userServiceClient) SendForgotEmail(ctx context.Context, in *SendForgotEmailRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/chatfinbot.user.v1.UserService/SendForgotEmail", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userServiceClient) CheckInvitationCode(ctx context.Context, in *CheckInvitationCodeRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
 	out := new(LoginResponse)
 	err := c.cc.Invoke(ctx, "/chatfinbot.user.v1.UserService/CheckInvitationCode", in, out, opts...)
@@ -212,6 +223,15 @@ func (c *userServiceClient) ApplyInvitationCode(ctx context.Context, in *ApplyIn
 	return out, nil
 }
 
+func (c *userServiceClient) ForgotPassword(ctx context.Context, in *ForgotPasswordRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+	out := new(LoginResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.user.v1.UserService/ForgotPassword", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
@@ -223,7 +243,7 @@ type UserServiceServer interface {
 	LoginWithUserName(context.Context, *LoginWithUserNameRequest) (*LoginResponse, error)
 	SendSMSCode(context.Context, *SendSMSCodeRequest) (*Empty, error)
 	GetUser(context.Context, *GetUserRequest) (*UserResponse, error)
-	SetInitPassword(context.Context, *SetInitPasswordRequest) (*Empty, error)
+	SetInitPassword(context.Context, *SetInitPasswordRequest) (*LoginResponse, error)
 	InitUserExtraInfo(context.Context, *InitUserExtraInfoRequest) (*LoginResponse, error)
 	VerifyEmail(context.Context, *VerifyEmailRequest) (*LoginResponse, error)
 	BindPhone(context.Context, *BindPhoneRequest) (*LoginResponse, error)
@@ -232,8 +252,10 @@ type UserServiceServer interface {
 	EditInfo(context.Context, *EditInfoRequest) (*EditInfoResponse, error)
 	GetUserUsage(context.Context, *GetUserUsageRequest) (*GetUserUsageResponse, error)
 	SendEmail(context.Context, *SendEmailRequest) (*Empty, error)
+	SendForgotEmail(context.Context, *SendForgotEmailRequest) (*Empty, error)
 	CheckInvitationCode(context.Context, *CheckInvitationCodeRequest) (*LoginResponse, error)
 	ApplyInvitationCode(context.Context, *ApplyInvitationCodeRequest) (*Empty, error)
+	ForgotPassword(context.Context, *ForgotPasswordRequest) (*LoginResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -262,7 +284,7 @@ func (UnimplementedUserServiceServer) SendSMSCode(context.Context, *SendSMSCodeR
 func (UnimplementedUserServiceServer) GetUser(context.Context, *GetUserRequest) (*UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
 }
-func (UnimplementedUserServiceServer) SetInitPassword(context.Context, *SetInitPasswordRequest) (*Empty, error) {
+func (UnimplementedUserServiceServer) SetInitPassword(context.Context, *SetInitPasswordRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SetInitPassword not implemented")
 }
 func (UnimplementedUserServiceServer) InitUserExtraInfo(context.Context, *InitUserExtraInfoRequest) (*LoginResponse, error) {
@@ -289,11 +311,17 @@ func (UnimplementedUserServiceServer) GetUserUsage(context.Context, *GetUserUsag
 func (UnimplementedUserServiceServer) SendEmail(context.Context, *SendEmailRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendEmail not implemented")
 }
+func (UnimplementedUserServiceServer) SendForgotEmail(context.Context, *SendForgotEmailRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendForgotEmail not implemented")
+}
 func (UnimplementedUserServiceServer) CheckInvitationCode(context.Context, *CheckInvitationCodeRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckInvitationCode not implemented")
 }
 func (UnimplementedUserServiceServer) ApplyInvitationCode(context.Context, *ApplyInvitationCodeRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ApplyInvitationCode not implemented")
+}
+func (UnimplementedUserServiceServer) ForgotPassword(context.Context, *ForgotPasswordRequest) (*LoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ForgotPassword not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -596,6 +624,24 @@ func _UserService_SendEmail_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_SendForgotEmail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendForgotEmailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).SendForgotEmail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.user.v1.UserService/SendForgotEmail",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).SendForgotEmail(ctx, req.(*SendForgotEmailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _UserService_CheckInvitationCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CheckInvitationCodeRequest)
 	if err := dec(in); err != nil {
@@ -628,6 +674,24 @@ func _UserService_ApplyInvitationCode_Handler(srv interface{}, ctx context.Conte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(UserServiceServer).ApplyInvitationCode(ctx, req.(*ApplyInvitationCodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UserService_ForgotPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ForgotPasswordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).ForgotPassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.user.v1.UserService/ForgotPassword",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).ForgotPassword(ctx, req.(*ForgotPasswordRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -704,12 +768,20 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _UserService_SendEmail_Handler,
 		},
 		{
+			MethodName: "SendForgotEmail",
+			Handler:    _UserService_SendForgotEmail_Handler,
+		},
+		{
 			MethodName: "CheckInvitationCode",
 			Handler:    _UserService_CheckInvitationCode_Handler,
 		},
 		{
 			MethodName: "ApplyInvitationCode",
 			Handler:    _UserService_ApplyInvitationCode_Handler,
+		},
+		{
+			MethodName: "ForgotPassword",
+			Handler:    _UserService_ForgotPassword_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
