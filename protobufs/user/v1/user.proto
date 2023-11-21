@@ -37,7 +37,8 @@ service UserService {
   rpc LoginWithUserName(LoginWithUserNameRequest) returns (LoginResponse); // user_name login
   rpc SendSMSCode(SendSMSCodeRequest) returns (Empty);
   rpc GetUser(GetUserRequest) returns (UserResponse);
-  rpc SetInitPassword(SetInitPasswordRequest) returns (LoginResponse); // set original password
+  rpc SetInitPassword(SetInitPasswordRequest) returns (Empty); // set original password
+  rpc SetInitPasswordEN(SetInitPasswordRequest) returns (LoginResponse); // set original password
   rpc InitUserExtraInfo(InitUserExtraInfoRequest) returns (LoginResponse);
   rpc VerifyEmail(VerifyEmailRequest) returns (LoginResponse);
   rpc BindPhone(BindPhoneRequest) returns (LoginResponse);
