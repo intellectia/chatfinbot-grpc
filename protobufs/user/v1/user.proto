@@ -11,6 +11,7 @@ enum VipType {
   VipTypeBusiness = 3; // 企业
 }
 
+
 enum EditInfoType {
   EditInfoTypeUnknown = 0; // 未知（不要使用）
   EditInfoTypePass = 1; // 修改密码
@@ -36,7 +37,7 @@ service UserService {
   rpc LoginWithUserName(LoginWithUserNameRequest) returns (LoginResponse); // user_name login
   rpc SendSMSCode(SendSMSCodeRequest) returns (Empty);
   rpc GetUser(GetUserRequest) returns (UserResponse);
-  rpc SetInitPassword(SetInitPasswordRequest) returns (Empty); // set original password
+  rpc SetInitPassword(SetInitPasswordRequest) returns (LoginResponse); // set original password
   rpc InitUserExtraInfo(InitUserExtraInfoRequest) returns (LoginResponse);
   rpc VerifyEmail(VerifyEmailRequest) returns (LoginResponse);
   rpc BindPhone(BindPhoneRequest) returns (LoginResponse);
@@ -45,8 +46,10 @@ service UserService {
   rpc EditInfo(EditInfoRequest) returns (EditInfoResponse);
   rpc GetUserUsage(GetUserUsageRequest) returns (GetUserUsageResponse);
   rpc SendEmail(SendEmailRequest) returns (Empty);
+  rpc SendForgotEmail(SendForgotEmailRequest) returns (Empty);
   rpc CheckInvitationCode(CheckInvitationCodeRequest) returns (LoginResponse);
   rpc ApplyInvitationCode(ApplyInvitationCodeRequest) returns (Empty);
+  rpc ForgotPassword(ForgotPasswordRequest) returns (LoginResponse);
 }  
 
 message GetUserUsageRequest {
@@ -212,6 +215,10 @@ message SendEmailRequest {
     string temp_token = 2;
 }
 
+message SendForgotEmailRequest {
+    string email = 1;
+}
+
 message CheckInvitationCodeRequest {
     string invitation_code = 1;
     string temp_token = 2;
@@ -221,3 +228,11 @@ message ApplyInvitationCodeRequest {
     string email = 1;   // User's email
     string temp_token = 2;
 }
+
+// Request for resetting password
+message ForgotPasswordRequest {
+  string temp_token = 1; // Temporary token for authentication
+  string password = 2;   // New password to be set
+  string user_id = 3;    // User ID to specify which user's password to reset
+}
+
