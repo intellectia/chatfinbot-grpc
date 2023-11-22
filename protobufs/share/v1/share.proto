@@ -167,6 +167,13 @@ service ShareService {
             body: "*"
         };
     }
+
+    rpc GetVideoChatInfo(GetVideoChatInfoReq) returns (GetVideoChatInfoRsp) {
+        option (google.api.http) = {
+			get: "/v1/share/video-chat"
+		};
+    };
+
 }
 
 message GetChatInfoReq {
@@ -273,6 +280,20 @@ message GetAudioChatInfoRsp {
     string msg = 2; // msg
     repeated ChatHistory list = 3;
 }
+
+message GetVideoChatInfoReq {
+    string session_id = 1;
+    int32 mid= 2;
+}
+
+message GetVideoChatInfoRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    repeated ChatHistory list = 3;
+}
+
+
+
 
 
 message VideoInfo {
