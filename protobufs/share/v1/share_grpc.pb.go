@@ -56,6 +56,7 @@ type ShareServiceClient interface {
 	GetRdExpenditure(ctx context.Context, in *GetRdExpenditureReq, opts ...grpc.CallOption) (*GetRdExpenditureRsp, error)
 	ShareVideo(ctx context.Context, in *ShareVideoReq, opts ...grpc.CallOption) (*ShareVideoRsp, error)
 	UnshareVideo(ctx context.Context, in *UnshareVideoReq, opts ...grpc.CallOption) (*UnshareVideoRsp, error)
+	GetVideoChatInfo(ctx context.Context, in *GetVideoChatInfoReq, opts ...grpc.CallOption) (*GetVideoChatInfoRsp, error)
 }
 
 type shareServiceClient struct {
@@ -291,6 +292,15 @@ func (c *shareServiceClient) UnshareVideo(ctx context.Context, in *UnshareVideoR
 	return out, nil
 }
 
+func (c *shareServiceClient) GetVideoChatInfo(ctx context.Context, in *GetVideoChatInfoReq, opts ...grpc.CallOption) (*GetVideoChatInfoRsp, error) {
+	out := new(GetVideoChatInfoRsp)
+	err := c.cc.Invoke(ctx, "/chatfinbot.share.v1.ShareService/GetVideoChatInfo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ShareServiceServer is the server API for ShareService service.
 // All implementations must embed UnimplementedShareServiceServer
 // for forward compatibility
@@ -329,6 +339,7 @@ type ShareServiceServer interface {
 	GetRdExpenditure(context.Context, *GetRdExpenditureReq) (*GetRdExpenditureRsp, error)
 	ShareVideo(context.Context, *ShareVideoReq) (*ShareVideoRsp, error)
 	UnshareVideo(context.Context, *UnshareVideoReq) (*UnshareVideoRsp, error)
+	GetVideoChatInfo(context.Context, *GetVideoChatInfoReq) (*GetVideoChatInfoRsp, error)
 	mustEmbedUnimplementedShareServiceServer()
 }
 
@@ -410,6 +421,9 @@ func (UnimplementedShareServiceServer) ShareVideo(context.Context, *ShareVideoRe
 }
 func (UnimplementedShareServiceServer) UnshareVideo(context.Context, *UnshareVideoReq) (*UnshareVideoRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UnshareVideo not implemented")
+}
+func (UnimplementedShareServiceServer) GetVideoChatInfo(context.Context, *GetVideoChatInfoReq) (*GetVideoChatInfoRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetVideoChatInfo not implemented")
 }
 func (UnimplementedShareServiceServer) mustEmbedUnimplementedShareServiceServer() {}
 
@@ -874,6 +888,24 @@ func _ShareService_UnshareVideo_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ShareService_GetVideoChatInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetVideoChatInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ShareServiceServer).GetVideoChatInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.share.v1.ShareService/GetVideoChatInfo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ShareServiceServer).GetVideoChatInfo(ctx, req.(*GetVideoChatInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ShareService_ServiceDesc is the grpc.ServiceDesc for ShareService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -980,6 +1012,10 @@ var ShareService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UnshareVideo",
 			Handler:    _ShareService_UnshareVideo_Handler,
+		},
+		{
+			MethodName: "GetVideoChatInfo",
+			Handler:    _ShareService_GetVideoChatInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
