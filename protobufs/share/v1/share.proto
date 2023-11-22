@@ -153,6 +153,20 @@ service ShareService {
 			get: "/v1/share/rd-expenditure"
 		};
     }
+
+    rpc ShareVideo(ShareVideoReq) returns (ShareVideoRsp) {
+        option (google.api.http) = {
+            post: "/v1/share/share-video",
+            body: "*"
+        };
+    }
+
+    rpc UnshareVideo(UnshareVideoReq) returns (UnshareVideoRsp) {
+        option (google.api.http) = {
+            post: "/v1/share/unshare-video",
+            body: "*"
+        };
+    }
 }
 
 message GetChatInfoReq {
@@ -261,13 +275,47 @@ message GetAudioChatInfoRsp {
 }
 
 
+message VideoInfo {
+    string session_id = 1; // Corresponds to session_id in the table
+    string user_id = 2; // Corresponds to user_id in the table
+    string url = 3; // Corresponds to url in the table
+    string doc_id = 4; // Corresponds to doc_id in the table
+    string subtitles = 5; // Subtitles (JSON string)
+    string summary = 6; // Corresponds to summary in the table
+    string deep_summary = 7; // Corresponds to deep_summary in the table
+    string thumbnail = 8; // Corresponds to thumbnail in the table
+    string created_at = 9; // Timestamp as string, corresponds to created_at
+    string updated_at = 10; // Timestamp as string, corresponds to updated_at
+    string deleted_at = 11; // Timestamp as string, corresponds to deleted_at
+    // ... other fields as needed
+}
+
 message GetVideoInfoReq {
-    string sid = 1;
+    string session_id = 1; // session id or other relevant fields
 }
 
 message GetVideoInfoRsp {
-    int32 ret = 1; // 错误码
-    string msg = 2; // msg
+    int32 ret = 1; // Error code
+    string msg = 2; // Message
+    VideoInfo data = 3;  // Video information
+}
+
+message ShareVideoReq {
+    string session_id = 1; // session id or other relevant fields
+}
+
+message ShareVideoRsp {
+    int32 ret = 1; // Error code
+    string msg = 2; // Message
+}
+
+message UnshareVideoReq {
+    string session_id = 1; // session id or other relevant fields
+}
+
+message UnshareVideoRsp {
+    int32 ret = 1; // Error code
+    string msg = 2; // Message
 }
 
 
