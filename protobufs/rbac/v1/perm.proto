@@ -269,6 +269,9 @@ message BasicInfoQuota {
     int32 doc_page_size = 4; // 文档页数
     int32 writing_file_num = 5; // 写作文件数
     int32 writing_file_page_size = 6; // 写作文件页数
+    int32 chat_usage_num = 7; //使用问答数量 
+    int32 doc_usage_num = 8; //使用文档数量
+    int32 writing_file_usage_num = 9; //  使用写作的文件数量
 }
 
 message PackageInfoQuota {

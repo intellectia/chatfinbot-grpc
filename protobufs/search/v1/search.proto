@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package chatfinbot.search.v1;
 
-option go_package = ".;searchpb";
+option go_package = "github.com/intellectia/chatfinbot-grpc/protobufs/search/v1;searchpb";
 
 enum CompanyType {
     CompanyTypeUnknown = 0; // 未知（不要使用）
