@@ -308,6 +308,7 @@ message VideoInfo {
     string created_at = 9; // Timestamp as string, corresponds to created_at
     string updated_at = 10; // Timestamp as string, corresponds to updated_at
     string deleted_at = 11; // Timestamp as string, corresponds to deleted_at
+    string title = 12; 
     // ... other fields as needed
 }
 
