@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package chatfinbot.video.v1;
+
+option go_package = ".;videopb";
+
+import "google/api/annotations.proto";
+import "google/protobuf/struct.proto";
+
+// Message for a Video Record
+message VideoRecord {
+    uint64 id = 1;                           // Primary key
+    string doc_id = 2;                       // Document ID
+    string session_id = 3;                   // Session ID
+    string job_id = 4;                       // Job ID
+    string summary = 5;                      // Summary
+    string deep_summary = 6;                 // Deep Summary
+    string user_id = 7;                      // User ID
+    google.protobuf.Struct subtitles = 8;    // Subtitles in JSON format
+    string url = 9;                          // URL of the video
+    string title = 10;                       // Title of the video
+    int32 job_status = 11;                   // Job status
+    string thumbnail = 12;                   // Thumbnail URL
+}
+
+service VideoService {
+    rpc GetVideoRecord(GetVideoRecordRequest) returns (VideoRecordResponse) {
+        option (google.api.http) = {
+            get: "/videos/record/{session_id}"
+        };
+    };
+
+    rpc UpdateVideoRecord(UpdateVideoRecordRequest) returns (VideoRecordResponse) {
+        option (google.api.http) = {
+            put: "/videos/record/{session_id}"
+            body: "video_record"
+        };
+    };
+}
+
+message GetVideoRecordRequest {
+    string session_id = 1; // Session ID to fetch the video record
+}
+
+message UpdateVideoRecordRequest {
+    string session_id = 1; // Session ID of the video record to be updated
+    VideoRecord video_record = 2; // Video record data to be updated
+}
+
+message VideoRecordResponse {
+    VideoRecord video_record = 1; // The requested or updated video record
+    int32 ret = 2;                 // Status of the request (e.g., 0 for success)
+    string msg = 3;                // Additional message information
+}
