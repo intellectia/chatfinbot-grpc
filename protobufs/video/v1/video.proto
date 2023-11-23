@@ -5,7 +5,6 @@ package chatfinbot.video.v1;
 option go_package = ".;videopb";
 
 import "google/api/annotations.proto";
-import "google/protobuf/struct.proto";
 
 // Message for a Video Record
 message VideoRecord {
@@ -16,7 +15,7 @@ message VideoRecord {
     string summary = 5;                      // Summary
     string deep_summary = 6;                 // Deep Summary
     string user_id = 7;                      // User ID
-    google.protobuf.Struct subtitles = 8;    // Subtitles in JSON format
+    string subtitles = 8;                    // Subtitles
     string url = 9;                          // URL of the video
     string title = 10;                       // Title of the video
     int32 job_status = 11;                   // Job status
