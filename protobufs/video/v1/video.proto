@@ -20,6 +20,7 @@ message VideoRecord {
     string title = 10;                       // Title of the video
     int32 job_status = 11;                   // Job status
     string thumbnail = 12;                   // Thumbnail URL
+    string Title = 13;                       // Title of the video
 }
 
 service VideoService {
