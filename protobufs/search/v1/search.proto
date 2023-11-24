@@ -402,7 +402,9 @@ message SearchCompanyReq {
 }
 
 message SearchCompanyRsp {
-    repeated CompanyData list = 1;
+    int32 ret = 1; // 错误码
+    string msg = 2; // 消息
+    repeated CompanyData list = 3;
 }
 
 message CompanyData {
