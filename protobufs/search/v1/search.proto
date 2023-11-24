@@ -3,6 +3,7 @@ syntax = "proto3";
 package chatfinbot.search.v1;
 
 option go_package = "github.com/intellectia/chatfinbot-grpc/protobufs/search/v1;searchpb";
+import "google/api/annotations.proto";
 
 enum CompanyType {
     CompanyTypeUnknown = 0; // 未知（不要使用）
@@ -14,36 +15,90 @@ enum CompanyType {
 
 service SearchService {
     // 获取公司数据 
-    rpc GetCompanyInfo(GetCompanyInfoReq) returns (GetCompanyInfoRsp);
+    rpc GetCompanyInfo(GetCompanyInfoReq) returns (GetCompanyInfoRsp){
+        option (google.api.http) = {
+			get: "/v1/search/company-info"
+		};
+    }
     // 获取公司行情指标
-    rpc GetIndicators(GetIndicatorsReq) returns (GetIndicatorsRsp);
+    rpc GetIndicators(GetIndicatorsReq) returns (GetIndicatorsRsp){
+        option (google.api.http) = {
+			get: "/v1/search/indicators"
+		};
+    }
     // 获取公司股权结构
-    rpc GetShareholders(GetShareholdersReq) returns (GetShareholdersRsp);
+    rpc GetShareholders(GetShareholdersReq) returns (GetShareholdersRsp){
+        option (google.api.http) = {
+			get: "/v1/search/shareholders"
+		};
+    }
     // 获取公司管理层信息
-    rpc GetExecutives(GetExecutivesReq) returns (GetExecutivesRsp);
+    rpc GetExecutives(GetExecutivesReq) returns (GetExecutivesRsp){
+        option (google.api.http) = {
+			get: "/v1/search/executives"
+		};
+    }
     // 获取员工构成
-    rpc GetStaffInfo(GetStaffInfoReq) returns (GetStaffInfoRsp);
+    rpc GetStaffInfo(GetStaffInfoReq) returns (GetStaffInfoRsp){
+        option (google.api.http) = {
+			get: "/v1/search/staff-info"
+		};
+    }
     // 获取主营营收
-    rpc GetMBRevenue(GetMBRevenueReq) returns (GetMBRevenueRsp);
+    rpc GetMBRevenue(GetMBRevenueReq) returns (GetMBRevenueRsp){
+        option (google.api.http) = {
+			get: "/v1/search/mbrevenue"
+		};
+    }
     // 获取财务概况
-    rpc GetFinancial(GetFinancialReq) returns (GetFinancialRsp);
+    rpc GetFinancial(GetFinancialReq) returns (GetFinancialRsp){
+        option (google.api.http) = {
+			get: "/v1/search/financial"
+		};
+    }
     // 搜索公司
-    rpc SearchCompany(SearchCompanyReq) returns (SearchCompanyRsp);
+    rpc SearchCompany(SearchCompanyReq) returns (SearchCompanyRsp){
+        option (google.api.http) = {
+			get: "/v1/search/company"
+		};
+    }
     // 搜索公开报告
-    rpc SearchPublicReport(SearchPublicReportReq) returns (SearchPublicReportRsp);
+    rpc SearchPublicReport(SearchPublicReportReq) returns (SearchPublicReportRsp){
+        option (google.api.http) = {
+			get: "/v1/search/public/c"
+		};
+    }
     // 获取应收款
-    rpc GetAccountsReceivable(GetAccountsReceivableReq) returns (GetAccountsReceivableRsp);
+    rpc GetAccountsReceivable(GetAccountsReceivableReq) returns (GetAccountsReceivableRsp){
+        option (google.api.http) = {
+			get: "/v1/search/ar"
+		};
+    }
     // 获取研发支出
-    rpc GetRdExpenditure(GetRdExpenditureReq) returns (GetRdExpenditureRsp);
+    rpc GetRdExpenditure(GetRdExpenditureReq) returns (GetRdExpenditureRsp){
+        option (google.api.http) = {
+			get: "/v1/search/rd-expenditure"
+		};
+    }
+    // 获取股票信息
+    rpc GetStock(GetStockReq) returns (GetStockRsp){
+        option (google.api.http) = {
+			get: "/v1/search/stock"
+		};
+    }
 }
-
-
 
 message GetCompanyInfoReq {
     string code = 1; // 公司code 例如00030.SZ
 }
 
 message GetCompanyInfoRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // 消息
+    CompanyInfo data = 3; // 数据
+}
+
+message CompanyInfo {
     CompanyType type = 1; // 公司类型 
     CompanyInfoCh ch_data = 2; // 沪深，A股基本信息
     CompanyInfoHK hk_data = 3; // 港股基本信息
@@ -80,6 +135,12 @@ message GetIndicatorsReq {
 }
 
 message GetIndicatorsRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // 消息
+    IndicatorsInfo data = 3;
+}
+
+message IndicatorsInfo { 
     repeated CommonListData list = 1; // 列表数据
     string company_name = 2; // 公司名字
     string date = 3; // 更新时间
@@ -117,6 +178,12 @@ message GetShareholdersReq {
 }
 
 message GetShareholdersRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // 消息
+    ShareholdersInfo data = 3;
+}
+
+message ShareholdersInfo {
     repeated GetShareholdersChart charts = 1;  // 饼状图
     repeated GetShareholdersInfo list = 2;     // 股东数据
     string company_name = 3; // 公司名字
@@ -144,6 +211,12 @@ message GetExecutivesReq {
 }
 
 message GetExecutivesRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // 消息
+    ExecutivesInfo data = 3;
+}
+
+message ExecutivesInfo {
     repeated ExecutivesData list = 1;     // 高层信息
     string company_name = 2; // 公司名字
 }
@@ -169,6 +242,12 @@ message GetStaffInfoReq {
 }
 
 message GetStaffInfoRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // 消息
+    StaffInfo data = 3;
+}
+
+message StaffInfo {
     repeated GetStaffInfoChartList job_charts = 1;  // 饼状图
     repeated GetStaffInfoChartList edu_charts = 2;  // 饼状图
     repeated GetStaffInfoData job_list = 3;     // 专业构成
@@ -216,6 +295,12 @@ message GetMBRevenueReq {
 }
 
 message GetMBRevenueRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // 消息
+    MBRevenueInfo data = 3;
+}
+
+message MBRevenueInfo {
     repeated GetMBRevenueCharts charts = 1;  // 饼状图
     repeated GetMBRevenueList list =2; // 列表数据
     string company_name = 3; // 公司名字
@@ -244,6 +329,12 @@ message GetFinancialReq {
 }
 
 message GetFinancialRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // 消息
+    FinancialInfo data = 3;
+}
+
+message FinancialInfo {
     repeated GetFinancialChartsList charts = 1;  // 饼状图
     repeated GetFinancialList list = 2; // 列表数据
     string company_name = 3; // 公司名字
@@ -337,7 +428,9 @@ message SearchPublicReportReq {
 }
 
 message SearchPublicReportRsp {
-    repeated PublicReport list = 1;
+    int32 ret = 1; // 错误码
+    string msg = 2; // 消息
+    repeated PublicReport list = 3;
 }
 
 message PublicReport {
@@ -366,6 +459,12 @@ message GetAccountsReceivableReq {
 }
 
 message GetAccountsReceivableRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // 消息
+    AccountsReceivableInfo data = 3;
+}
+
+message AccountsReceivableInfo {
     repeated GetAccountsReceivableCharts charts = 1;  // 饼状图
     repeated GetAccountsReceivableList list =2; // 列表数据
     string company_name = 3; // 公司名字
@@ -400,10 +499,17 @@ message  GetRdExpenditureReq {
 }
 
 message GetRdExpenditureRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // 消息
+    RdExpenditureInfo data = 3;
+}
+
+message RdExpenditureInfo {
     repeated GetRdExpenditureChart charts = 1;  // 饼状图
     repeated GetRdExpenditureList list = 2; // 列表数据
     string company_name = 3; // 公司名字
 }
+
 message GetRdExpenditureChart {
     string id = 1;   // id
     double value = 2;  // 值
@@ -419,4 +525,62 @@ message RdExpenditureData {
     string rd_expend_cost = 2; // 研发支出-费用化
     string rd_expend_capital = 3; // 研发支出-资本化
     string rd_personnel = 4; // 研发人员人数
+}
+
+enum StockType {
+    StockTypeUnknown = 0; // 未知（不要使用）
+    StockTypeInfo = 1; // 股票基本信息
+    StockTypeGrossAndNetProfitMargin = 2; // 毛利率与净利率
+    StockTypeRevenue = 3; // 收入情况
+    StockTypeAssetAndGrowthRate = 4; // 总资产金额及同比增长率
+    StockTypeNetProfitAndCashFlow  = 5; // 净利润与经营现金流量
+    StockTypeGrowthRate   = 6; // 收入与净利润增长率
+    StockTypeEPS = 7; // EPS
+    StockTypeROE = 8; // ROE
+    StockTypeLiabilityRatio = 9; // 总资产负债率变化
+}
+
+message GetStockReq {
+    StockType stock_type = 1; //类型
+    string lang = 2; // 语言
+    uint32 stype  = 3; // 3=近三年 5=近五年 10=近十年  999=上市以来 
+    string code = 4; // 公司code 例如00030.SZ
+    uint32 unit = 5; // 单位 0=元 1=千元 2=万元 3=百万元 4=亿元 5=十亿元
+}
+
+message GetStockRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // 消息
+    StockInfo data = 3; // 
+}
+
+message StockInfo {
+    int32 graph_type = 1; // 0= 无图 1=柱状图 2=折线图
+    repeated StockInfoCharts charts = 2;  // 图形
+    StockInfoList list =3; // 列表数据
+    repeated StockTable item_list = 4; // 表格数据
+    string company_name = 5; // 公司名字
+    string remark = 6; // 备注
+    
+}
+
+message StockTable {
+    string name = 1;  // 字段中文名
+    string val = 2;      // 值
+}
+
+message StockInfoList {
+    repeated string headers = 1; // 标题
+    repeated StockData datas = 2; // 明细
+}
+
+message StockData {
+    string name = 1;              // 字段名
+    repeated string val = 2;      // 值
+}
+
+message StockInfoCharts {
+    string name = 1;   // name
+    string x = 2; // x
+    double y = 3;  // y
 }

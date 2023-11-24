@@ -30,6 +30,7 @@ const (
 	SearchService_SearchPublicReport_FullMethodName    = "/chatfinbot.search.v1.SearchService/SearchPublicReport"
 	SearchService_GetAccountsReceivable_FullMethodName = "/chatfinbot.search.v1.SearchService/GetAccountsReceivable"
 	SearchService_GetRdExpenditure_FullMethodName      = "/chatfinbot.search.v1.SearchService/GetRdExpenditure"
+	SearchService_GetStock_FullMethodName              = "/chatfinbot.search.v1.SearchService/GetStock"
 )
 
 // SearchServiceClient is the client API for SearchService service.
@@ -58,6 +59,8 @@ type SearchServiceClient interface {
 	GetAccountsReceivable(ctx context.Context, in *GetAccountsReceivableReq, opts ...grpc.CallOption) (*GetAccountsReceivableRsp, error)
 	// 获取研发支出
 	GetRdExpenditure(ctx context.Context, in *GetRdExpenditureReq, opts ...grpc.CallOption) (*GetRdExpenditureRsp, error)
+	// 获取股票信息
+	GetStock(ctx context.Context, in *GetStockReq, opts ...grpc.CallOption) (*GetStockRsp, error)
 }
 
 type searchServiceClient struct {
@@ -167,6 +170,15 @@ func (c *searchServiceClient) GetRdExpenditure(ctx context.Context, in *GetRdExp
 	return out, nil
 }
 
+func (c *searchServiceClient) GetStock(ctx context.Context, in *GetStockReq, opts ...grpc.CallOption) (*GetStockRsp, error) {
+	out := new(GetStockRsp)
+	err := c.cc.Invoke(ctx, SearchService_GetStock_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SearchServiceServer is the server API for SearchService service.
 // All implementations must embed UnimplementedSearchServiceServer
 // for forward compatibility
@@ -193,6 +205,8 @@ type SearchServiceServer interface {
 	GetAccountsReceivable(context.Context, *GetAccountsReceivableReq) (*GetAccountsReceivableRsp, error)
 	// 获取研发支出
 	GetRdExpenditure(context.Context, *GetRdExpenditureReq) (*GetRdExpenditureRsp, error)
+	// 获取股票信息
+	GetStock(context.Context, *GetStockReq) (*GetStockRsp, error)
 	mustEmbedUnimplementedSearchServiceServer()
 }
 
@@ -232,6 +246,9 @@ func (UnimplementedSearchServiceServer) GetAccountsReceivable(context.Context, *
 }
 func (UnimplementedSearchServiceServer) GetRdExpenditure(context.Context, *GetRdExpenditureReq) (*GetRdExpenditureRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRdExpenditure not implemented")
+}
+func (UnimplementedSearchServiceServer) GetStock(context.Context, *GetStockReq) (*GetStockRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetStock not implemented")
 }
 func (UnimplementedSearchServiceServer) mustEmbedUnimplementedSearchServiceServer() {}
 
@@ -444,6 +461,24 @@ func _SearchService_GetRdExpenditure_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SearchService_GetStock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetStockReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SearchServiceServer).GetStock(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SearchService_GetStock_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SearchServiceServer).GetStock(ctx, req.(*GetStockReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SearchService_ServiceDesc is the grpc.ServiceDesc for SearchService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -494,6 +529,10 @@ var SearchService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetRdExpenditure",
 			Handler:    _SearchService_GetRdExpenditure_Handler,
+		},
+		{
+			MethodName: "GetStock",
+			Handler:    _SearchService_GetStock_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
