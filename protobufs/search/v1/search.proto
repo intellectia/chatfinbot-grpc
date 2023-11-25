@@ -533,13 +533,13 @@ enum StockType {
     StockTypeUnknown = 0; // 未知（不要使用）
     StockTypeInfo = 1; // 股票基本信息
     StockTypeGrossAndNetProfitMargin = 2; // 毛利率与净利率
-    StockTypeRevenue = 3; // 收入情况
-    StockTypeAssetAndGrowthRate = 4; // 总资产金额及同比增长率
-    StockTypeNetProfitAndCashFlow  = 5; // 净利润与经营现金流量
-    StockTypeGrowthRate   = 6; // 收入与净利润增长率
-    StockTypeEPS = 7; // EPS
-    StockTypeROE = 8; // ROE
-    StockTypeLiabilityRatio = 9; // 总资产负债率变化
+    StockTypeRevenue = 3; // 营业收入
+    StockTypeNetProfit = 4; // 净利润
+    StockTypeTotalAssets  = 5; // 总资产
+    StockTypeTotalLiabilities   = 6; // 总负债
+    StockTypeOperatingIncome = 7; // 经营净额
+    StockTypeInvestmentIncome = 8; // 投资净额
+    StockTypeFinancingIncome = 9; // 融资净额
 }
 
 message GetStockReq {
