@@ -69,9 +69,9 @@ message StockData {
 enum IndicatorsOpt {
     IndicatorsOptUnknown = 0; // 未知（不要使用）
     IndicatorsOptSMA = 1; // sma
-    TimespanOptEMA = 2; // ema
-    TimespanOptMACD = 3; // macd
-    TimespanOptRSI = 4; // rsi
+    IndicatorsOptEMA = 2; // ema
+    IndicatorsOptMACD = 3; // macd
+    IndicatorsOptRSI = 4; // rsi
 }
 
 
