@@ -19,14 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	StockService_Query_FullMethodName = "/chatfinbot.stock.v1.StockService/Query"
+	StockService_Query_FullMethodName      = "/chatfinbot.stock.v1.StockService/Query"
+	StockService_Indicators_FullMethodName = "/chatfinbot.stock.v1.StockService/Indicators"
 )
 
 // StockServiceClient is the client API for StockService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type StockServiceClient interface {
+	// 查询数据
 	Query(ctx context.Context, in *QueryReq, opts ...grpc.CallOption) (*QueryRsp, error)
+	// 技术指标
+	Indicators(ctx context.Context, in *IndicatorsReq, opts ...grpc.CallOption) (*IndicatorsRsp, error)
 }
 
 type stockServiceClient struct {
@@ -46,11 +50,23 @@ func (c *stockServiceClient) Query(ctx context.Context, in *QueryReq, opts ...gr
 	return out, nil
 }
 
+func (c *stockServiceClient) Indicators(ctx context.Context, in *IndicatorsReq, opts ...grpc.CallOption) (*IndicatorsRsp, error) {
+	out := new(IndicatorsRsp)
+	err := c.cc.Invoke(ctx, StockService_Indicators_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // StockServiceServer is the server API for StockService service.
 // All implementations must embed UnimplementedStockServiceServer
 // for forward compatibility
 type StockServiceServer interface {
+	// 查询数据
 	Query(context.Context, *QueryReq) (*QueryRsp, error)
+	// 技术指标
+	Indicators(context.Context, *IndicatorsReq) (*IndicatorsRsp, error)
 	mustEmbedUnimplementedStockServiceServer()
 }
 
@@ -60,6 +76,9 @@ type UnimplementedStockServiceServer struct {
 
 func (UnimplementedStockServiceServer) Query(context.Context, *QueryReq) (*QueryRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Query not implemented")
+}
+func (UnimplementedStockServiceServer) Indicators(context.Context, *IndicatorsReq) (*IndicatorsRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Indicators not implemented")
 }
 func (UnimplementedStockServiceServer) mustEmbedUnimplementedStockServiceServer() {}
 
@@ -92,6 +111,24 @@ func _StockService_Query_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _StockService_Indicators_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IndicatorsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StockServiceServer).Indicators(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StockService_Indicators_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StockServiceServer).Indicators(ctx, req.(*IndicatorsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // StockService_ServiceDesc is the grpc.ServiceDesc for StockService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -102,6 +139,10 @@ var StockService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Query",
 			Handler:    _StockService_Query_Handler,
+		},
+		{
+			MethodName: "Indicators",
+			Handler:    _StockService_Indicators_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

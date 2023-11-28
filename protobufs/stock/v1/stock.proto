@@ -6,9 +6,17 @@ option go_package = ".;stockpb";
 import "google/api/annotations.proto";
 
 service StockService {
+    // 查询数据
     rpc Query(QueryReq) returns (QueryRsp) {
         option (google.api.http) = {
 			get: "/v1/stock/query",
+		};
+    };
+
+    // 技术指标
+    rpc Indicators(IndicatorsReq) returns (IndicatorsRsp) {
+        option (google.api.http) = {
+			get: "/v1/stock/indicators",
 		};
     };
 }
@@ -47,13 +55,37 @@ message QueryData {
 
 message StockData {
     string code = 1;
-    float close  = 2; // 收盘价
-    float high  = 3; // 最高价
-	float low  = 4; // 最低价
+    double close  = 2; // 收盘价
+    double high  = 3; // 最高价
+	double low  = 4; // 最低价
     int64 transactions  = 5; // 交易量
-    float open  = 6; // 开盘价
+    double open  = 6; // 开盘价
 	int64 timestamp = 7; // 时间戳
-	float volume = 8; // 成交额
-    float vwap = 9; // 。VWAP 是一种衡量某个证券在一定时间段内的平均价格的方法，这个价格是根据成交量加权计算的
+	double volume = 8; // 成交额
+    double vwap = 9; // 。VWAP 是一种衡量某个证券在一定时间段内的平均价格的方法，这个价格是根据成交量加权计算的
 	bool OTC  = 10; // 场外交易
 }
+
+message IndicatorsReq {
+    string code = 1; // 股票代码
+    TimespanOpt timespan = 2; // 时间的单位
+    int64 timestamp = 3; // 时间戳，不传则截止到当前为止，传就截止到传的时间为止
+    int32 count = 4; // 数量，最大传5000，建议传800
+}
+
+message IndicatorsRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    IndicatorsData data = 3; // 数据
+}
+
+message IndicatorsData {
+    repeated IndicatorInfo list = 1; // 股票数据
+    int64 last_time = 2; // 截止时间
+}
+
+message IndicatorInfo {
+    int64 timestamp = 1; // 时间戳
+    double value = 2; // 时间戳
+}
+
