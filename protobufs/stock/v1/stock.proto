@@ -63,14 +63,24 @@ message StockData {
 	int64 timestamp = 7; // 时间戳
 	double volume = 8; // 成交额
     double vwap = 9; // 。VWAP 是一种衡量某个证券在一定时间段内的平均价格的方法，这个价格是根据成交量加权计算的
-	bool OTC  = 10; // 场外交易
+	bool otc  = 10; // 场外交易
 }
 
+enum IndicatorsOpt {
+    IndicatorsOptUnknown = 0; // 未知（不要使用）
+    IndicatorsOptSMA = 1; // sma
+    TimespanOptEMA = 2; // ema
+    TimespanOptMACD = 3; // macd
+    TimespanOptRSI = 4; // rsi
+}
+
+
 message IndicatorsReq {
-    string code = 1; // 股票代码
-    TimespanOpt timespan = 2; // 时间的单位
-    int64 timestamp = 3; // 时间戳，不传则截止到当前为止，传就截止到传的时间为止
-    int32 count = 4; // 数量，最大传5000，建议传800
+    IndicatorsOpt opt = 1; // 技术指标类型
+    string code = 2; // 股票代码
+    TimespanOpt timespan = 3; // 时间的单位
+    int64 timestamp = 4; // 时间戳，不传则截止到当前为止，传就截止到传的时间为止
+    int32 count = 5; // 数量，最大传5000，建议传800
 }
 
 message IndicatorsRsp {
