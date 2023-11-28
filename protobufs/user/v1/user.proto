@@ -1,8 +1,10 @@
 syntax = "proto3";
 
 package chatfinbot.user.v1;
-
 option go_package = ".;userpb";
+
+import "google/api/annotations.proto";
+
 
 enum VipType {
   VipTypeUnknown = 0; // 未知（不要使用）
@@ -51,6 +53,11 @@ service UserService {
   rpc CheckInvitationCode(CheckInvitationCodeRequest) returns (LoginResponse);
   rpc ApplyInvitationCode(ApplyInvitationCodeRequest) returns (Empty);
   rpc ForgotPassword(ForgotPasswordRequest) returns (LoginResponse);
+  rpc GoogleOAuth(GetOauthTokenRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+			get: "/v1/login/google-oauth"
+		};
+  }
 }  
 
 message GetUserUsageRequest {
@@ -101,6 +108,10 @@ message LoginWithUserNameRequest {
 
 message GetUserRequest {
   string id = 1;
+}
+
+message GetOauthTokenRequest {
+  string token = 1;
 }
 
 message UserResponse {

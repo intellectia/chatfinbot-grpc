@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.20.3
-// source: user.proto
+// source: user/v1/user.proto
 
 package userpb
 
@@ -43,6 +43,7 @@ type UserServiceClient interface {
 	CheckInvitationCode(ctx context.Context, in *CheckInvitationCodeRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 	ApplyInvitationCode(ctx context.Context, in *ApplyInvitationCodeRequest, opts ...grpc.CallOption) (*Empty, error)
 	ForgotPassword(ctx context.Context, in *ForgotPasswordRequest, opts ...grpc.CallOption) (*LoginResponse, error)
+	GoogleOAuth(ctx context.Context, in *GetOauthTokenRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 }
 
 type userServiceClient struct {
@@ -242,6 +243,15 @@ func (c *userServiceClient) ForgotPassword(ctx context.Context, in *ForgotPasswo
 	return out, nil
 }
 
+func (c *userServiceClient) GoogleOAuth(ctx context.Context, in *GetOauthTokenRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+	out := new(LoginResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.user.v1.UserService/GoogleOAuth", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
@@ -267,6 +277,7 @@ type UserServiceServer interface {
 	CheckInvitationCode(context.Context, *CheckInvitationCodeRequest) (*LoginResponse, error)
 	ApplyInvitationCode(context.Context, *ApplyInvitationCodeRequest) (*Empty, error)
 	ForgotPassword(context.Context, *ForgotPasswordRequest) (*LoginResponse, error)
+	GoogleOAuth(context.Context, *GetOauthTokenRequest) (*LoginResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -336,6 +347,9 @@ func (UnimplementedUserServiceServer) ApplyInvitationCode(context.Context, *Appl
 }
 func (UnimplementedUserServiceServer) ForgotPassword(context.Context, *ForgotPasswordRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ForgotPassword not implemented")
+}
+func (UnimplementedUserServiceServer) GoogleOAuth(context.Context, *GetOauthTokenRequest) (*LoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GoogleOAuth not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -728,6 +742,24 @@ func _UserService_ForgotPassword_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_GoogleOAuth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOauthTokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).GoogleOAuth(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.user.v1.UserService/GoogleOAuth",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).GoogleOAuth(ctx, req.(*GetOauthTokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -819,7 +851,11 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "ForgotPassword",
 			Handler:    _UserService_ForgotPassword_Handler,
 		},
+		{
+			MethodName: "GoogleOAuth",
+			Handler:    _UserService_GoogleOAuth_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "user.proto",
+	Metadata: "user/v1/user.proto",
 }

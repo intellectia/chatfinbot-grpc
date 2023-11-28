@@ -35,6 +35,8 @@ enum RetCode {
     ERR_SESSION_INVALID                     = 10024;    // session无效
     ERR_RECORD_NOT_EXIST                    = 10025;    // 数据不存在
     ERR_RECORD_EXIST                        = 10026;    // 数据已存在
+    ERR_JWT_INVALID                         = 10027;    // jwt token无效
+    ERR_JWT_EXPIRED                         = 10028;    // jwt token过期
     
     // 视频错误码
     ERR_BVIDEO_FAILED        = 12000;    // 获取B站视频信息失败失败
