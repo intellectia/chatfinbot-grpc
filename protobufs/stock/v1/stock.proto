@@ -183,9 +183,10 @@ message WatchlistsData {
 
 message StockWatchlists {
     string code = 1;   // 代码
-    string symbol = 2; // 代码
-    double sort = 3;   // 排序
-    int64 create_time =4; // 创建时间
+    string name = 2; // 公司
+    string symbol = 3; // 代码
+    double sort = 4;   // 排序
+    int64 create_time =5; // 创建时间
 }
 
 message CreateWatchlistReq {
