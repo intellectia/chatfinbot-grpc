@@ -48,7 +48,7 @@ type StockServiceClient interface {
 	// 添加
 	AddToWatchlist(ctx context.Context, in *AddToWatchlistReq, opts ...grpc.CallOption) (*AddToWatchlistRsp, error)
 	// 删除
-	DelFromWatchlist(ctx context.Context, in *DelFromWatchReq, opts ...grpc.CallOption) (*DelFromWatchRsp, error)
+	DelFromWatchlist(ctx context.Context, in *DelFromWatchlistReq, opts ...grpc.CallOption) (*DelFromWatchlistRsp, error)
 	// 移动
 	MoveFromWatchlist(ctx context.Context, in *MoveFromWatchlistReq, opts ...grpc.CallOption) (*MoveFromWatchlistRsp, error)
 	// 排序
@@ -119,8 +119,8 @@ func (c *stockServiceClient) AddToWatchlist(ctx context.Context, in *AddToWatchl
 	return out, nil
 }
 
-func (c *stockServiceClient) DelFromWatchlist(ctx context.Context, in *DelFromWatchReq, opts ...grpc.CallOption) (*DelFromWatchRsp, error) {
-	out := new(DelFromWatchRsp)
+func (c *stockServiceClient) DelFromWatchlist(ctx context.Context, in *DelFromWatchlistReq, opts ...grpc.CallOption) (*DelFromWatchlistRsp, error) {
+	out := new(DelFromWatchlistRsp)
 	err := c.cc.Invoke(ctx, StockService_DelFromWatchlist_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -172,7 +172,7 @@ type StockServiceServer interface {
 	// 添加
 	AddToWatchlist(context.Context, *AddToWatchlistReq) (*AddToWatchlistRsp, error)
 	// 删除
-	DelFromWatchlist(context.Context, *DelFromWatchReq) (*DelFromWatchRsp, error)
+	DelFromWatchlist(context.Context, *DelFromWatchlistReq) (*DelFromWatchlistRsp, error)
 	// 移动
 	MoveFromWatchlist(context.Context, *MoveFromWatchlistReq) (*MoveFromWatchlistRsp, error)
 	// 排序
@@ -204,7 +204,7 @@ func (UnimplementedStockServiceServer) DelWatchlist(context.Context, *DelWatchli
 func (UnimplementedStockServiceServer) AddToWatchlist(context.Context, *AddToWatchlistReq) (*AddToWatchlistRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddToWatchlist not implemented")
 }
-func (UnimplementedStockServiceServer) DelFromWatchlist(context.Context, *DelFromWatchReq) (*DelFromWatchRsp, error) {
+func (UnimplementedStockServiceServer) DelFromWatchlist(context.Context, *DelFromWatchlistReq) (*DelFromWatchlistRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DelFromWatchlist not implemented")
 }
 func (UnimplementedStockServiceServer) MoveFromWatchlist(context.Context, *MoveFromWatchlistReq) (*MoveFromWatchlistRsp, error) {
@@ -338,7 +338,7 @@ func _StockService_AddToWatchlist_Handler(srv interface{}, ctx context.Context, 
 }
 
 func _StockService_DelFromWatchlist_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DelFromWatchReq)
+	in := new(DelFromWatchlistReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -350,7 +350,7 @@ func _StockService_DelFromWatchlist_Handler(srv interface{}, ctx context.Context
 		FullMethod: StockService_DelFromWatchlist_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StockServiceServer).DelFromWatchlist(ctx, req.(*DelFromWatchReq))
+		return srv.(StockServiceServer).DelFromWatchlist(ctx, req.(*DelFromWatchlistReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }

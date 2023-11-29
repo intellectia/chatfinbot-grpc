@@ -224,7 +224,7 @@ func local_request_StockService_AddToWatchlist_0(ctx context.Context, marshaler 
 }
 
 func request_StockService_DelFromWatchlist_0(ctx context.Context, marshaler runtime.Marshaler, client StockServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq DelFromWatchReq
+	var protoReq DelFromWatchlistReq
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -241,7 +241,7 @@ func request_StockService_DelFromWatchlist_0(ctx context.Context, marshaler runt
 }
 
 func local_request_StockService_DelFromWatchlist_0(ctx context.Context, marshaler runtime.Marshaler, server StockServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq DelFromWatchReq
+	var protoReq DelFromWatchlistReq
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)

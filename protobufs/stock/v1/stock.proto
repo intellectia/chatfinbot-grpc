@@ -52,7 +52,7 @@ service StockService {
     };
 
     // 删除
-    rpc DelFromWatchlist(DelFromWatchReq) returns (DelFromWatchRsp) {
+    rpc DelFromWatchlist(DelFromWatchlistReq) returns (DelFromWatchlistRsp) {
         option (google.api.http) = {
 			post: "/v1/stock/watchlists/del-stock",
             body: "*",
@@ -217,12 +217,12 @@ message AddToWatchlistRsp {
     string msg = 2; // msg
 }
 
-message DelFromWatchReq {
+message DelFromWatchlistReq {
     int64 pid = 1; // id
     string code = 2; // code
 }
 
-message DelFromWatchRsp {
+message DelFromWatchlistRsp {
     int32 ret = 1; // 错误码
     string msg = 2; // msg
 }
