@@ -173,12 +173,13 @@ message WatchlistsRsp {
 }
 
 message WatchlistsData {
-    int32 pid = 1; // id
-    string name = 2; // 名称 
-    double sort = 3; // 排序
-    repeated StockWatchlists list = 4; // 收藏的股票
-    int64 create_time = 5; // 创建时间
-    int64 update_time = 6; // 更新时间
+    int64 pid = 1; // pid
+    int64 id = 2; // id
+    string name = 3; // 名称 
+    double sort = 4; // 排序
+    repeated StockWatchlists list = 5; // 收藏的股票
+    int64 create_time = 6; // 创建时间
+    int64 update_time = 7; // 更新时间fi
 }
 
 message StockWatchlists {
