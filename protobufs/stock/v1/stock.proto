@@ -169,7 +169,7 @@ message WatchlistsReq {
 message WatchlistsRsp {
     int32 ret = 1; // 错误码
     string msg = 2; // msg
-    WatchlistsData list = 3; // 数据
+    repeated WatchlistsData list = 3; // 数据
 }
 
 message WatchlistsData {
