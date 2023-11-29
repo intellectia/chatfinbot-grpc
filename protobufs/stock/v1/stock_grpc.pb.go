@@ -19,8 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	StockService_Query_FullMethodName      = "/chatfinbot.stock.v1.StockService/Query"
-	StockService_Indicators_FullMethodName = "/chatfinbot.stock.v1.StockService/Indicators"
+	StockService_Query_FullMethodName             = "/chatfinbot.stock.v1.StockService/Query"
+	StockService_Indicators_FullMethodName        = "/chatfinbot.stock.v1.StockService/Indicators"
+	StockService_Watchlists_FullMethodName        = "/chatfinbot.stock.v1.StockService/Watchlists"
+	StockService_CreateWatchlist_FullMethodName   = "/chatfinbot.stock.v1.StockService/CreateWatchlist"
+	StockService_DelWatchlist_FullMethodName      = "/chatfinbot.stock.v1.StockService/DelWatchlist"
+	StockService_AddToWatchlist_FullMethodName    = "/chatfinbot.stock.v1.StockService/AddToWatchlist"
+	StockService_DelFromWatchlist_FullMethodName  = "/chatfinbot.stock.v1.StockService/DelFromWatchlist"
+	StockService_MoveFromWatchlist_FullMethodName = "/chatfinbot.stock.v1.StockService/MoveFromWatchlist"
+	StockService_SortFromWatchlist_FullMethodName = "/chatfinbot.stock.v1.StockService/SortFromWatchlist"
+	StockService_Realtime_FullMethodName          = "/chatfinbot.stock.v1.StockService/Realtime"
 )
 
 // StockServiceClient is the client API for StockService service.
@@ -31,6 +39,22 @@ type StockServiceClient interface {
 	Query(ctx context.Context, in *QueryReq, opts ...grpc.CallOption) (*QueryRsp, error)
 	// 技术指标
 	Indicators(ctx context.Context, in *IndicatorsReq, opts ...grpc.CallOption) (*IndicatorsRsp, error)
+	// 监视列表
+	Watchlists(ctx context.Context, in *WatchlistsReq, opts ...grpc.CallOption) (*WatchlistsRsp, error)
+	// 创建
+	CreateWatchlist(ctx context.Context, in *CreateWatchlistReq, opts ...grpc.CallOption) (*CreateWatchlistRsp, error)
+	// 删除
+	DelWatchlist(ctx context.Context, in *DelWatchlistReq, opts ...grpc.CallOption) (*DelWatchlistRsp, error)
+	// 添加
+	AddToWatchlist(ctx context.Context, in *AddToWatchlistReq, opts ...grpc.CallOption) (*AddToWatchlistRsp, error)
+	// 删除
+	DelFromWatchlist(ctx context.Context, in *DelFromWatchReq, opts ...grpc.CallOption) (*DelFromWatchRsp, error)
+	// 移动
+	MoveFromWatchlist(ctx context.Context, in *MoveFromWatchlistReq, opts ...grpc.CallOption) (*MoveFromWatchlistRsp, error)
+	// 排序
+	SortFromWatchlist(ctx context.Context, in *SortFromWatchlistReq, opts ...grpc.CallOption) (*SortFromWatchlistRsp, error)
+	// 实时数据
+	Realtime(ctx context.Context, in *RealtimeReq, opts ...grpc.CallOption) (*RealtimeRsp, error)
 }
 
 type stockServiceClient struct {
@@ -59,6 +83,78 @@ func (c *stockServiceClient) Indicators(ctx context.Context, in *IndicatorsReq, 
 	return out, nil
 }
 
+func (c *stockServiceClient) Watchlists(ctx context.Context, in *WatchlistsReq, opts ...grpc.CallOption) (*WatchlistsRsp, error) {
+	out := new(WatchlistsRsp)
+	err := c.cc.Invoke(ctx, StockService_Watchlists_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *stockServiceClient) CreateWatchlist(ctx context.Context, in *CreateWatchlistReq, opts ...grpc.CallOption) (*CreateWatchlistRsp, error) {
+	out := new(CreateWatchlistRsp)
+	err := c.cc.Invoke(ctx, StockService_CreateWatchlist_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *stockServiceClient) DelWatchlist(ctx context.Context, in *DelWatchlistReq, opts ...grpc.CallOption) (*DelWatchlistRsp, error) {
+	out := new(DelWatchlistRsp)
+	err := c.cc.Invoke(ctx, StockService_DelWatchlist_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *stockServiceClient) AddToWatchlist(ctx context.Context, in *AddToWatchlistReq, opts ...grpc.CallOption) (*AddToWatchlistRsp, error) {
+	out := new(AddToWatchlistRsp)
+	err := c.cc.Invoke(ctx, StockService_AddToWatchlist_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *stockServiceClient) DelFromWatchlist(ctx context.Context, in *DelFromWatchReq, opts ...grpc.CallOption) (*DelFromWatchRsp, error) {
+	out := new(DelFromWatchRsp)
+	err := c.cc.Invoke(ctx, StockService_DelFromWatchlist_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *stockServiceClient) MoveFromWatchlist(ctx context.Context, in *MoveFromWatchlistReq, opts ...grpc.CallOption) (*MoveFromWatchlistRsp, error) {
+	out := new(MoveFromWatchlistRsp)
+	err := c.cc.Invoke(ctx, StockService_MoveFromWatchlist_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *stockServiceClient) SortFromWatchlist(ctx context.Context, in *SortFromWatchlistReq, opts ...grpc.CallOption) (*SortFromWatchlistRsp, error) {
+	out := new(SortFromWatchlistRsp)
+	err := c.cc.Invoke(ctx, StockService_SortFromWatchlist_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *stockServiceClient) Realtime(ctx context.Context, in *RealtimeReq, opts ...grpc.CallOption) (*RealtimeRsp, error) {
+	out := new(RealtimeRsp)
+	err := c.cc.Invoke(ctx, StockService_Realtime_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // StockServiceServer is the server API for StockService service.
 // All implementations must embed UnimplementedStockServiceServer
 // for forward compatibility
@@ -67,6 +163,22 @@ type StockServiceServer interface {
 	Query(context.Context, *QueryReq) (*QueryRsp, error)
 	// 技术指标
 	Indicators(context.Context, *IndicatorsReq) (*IndicatorsRsp, error)
+	// 监视列表
+	Watchlists(context.Context, *WatchlistsReq) (*WatchlistsRsp, error)
+	// 创建
+	CreateWatchlist(context.Context, *CreateWatchlistReq) (*CreateWatchlistRsp, error)
+	// 删除
+	DelWatchlist(context.Context, *DelWatchlistReq) (*DelWatchlistRsp, error)
+	// 添加
+	AddToWatchlist(context.Context, *AddToWatchlistReq) (*AddToWatchlistRsp, error)
+	// 删除
+	DelFromWatchlist(context.Context, *DelFromWatchReq) (*DelFromWatchRsp, error)
+	// 移动
+	MoveFromWatchlist(context.Context, *MoveFromWatchlistReq) (*MoveFromWatchlistRsp, error)
+	// 排序
+	SortFromWatchlist(context.Context, *SortFromWatchlistReq) (*SortFromWatchlistRsp, error)
+	// 实时数据
+	Realtime(context.Context, *RealtimeReq) (*RealtimeRsp, error)
 	mustEmbedUnimplementedStockServiceServer()
 }
 
@@ -79,6 +191,30 @@ func (UnimplementedStockServiceServer) Query(context.Context, *QueryReq) (*Query
 }
 func (UnimplementedStockServiceServer) Indicators(context.Context, *IndicatorsReq) (*IndicatorsRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Indicators not implemented")
+}
+func (UnimplementedStockServiceServer) Watchlists(context.Context, *WatchlistsReq) (*WatchlistsRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Watchlists not implemented")
+}
+func (UnimplementedStockServiceServer) CreateWatchlist(context.Context, *CreateWatchlistReq) (*CreateWatchlistRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateWatchlist not implemented")
+}
+func (UnimplementedStockServiceServer) DelWatchlist(context.Context, *DelWatchlistReq) (*DelWatchlistRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DelWatchlist not implemented")
+}
+func (UnimplementedStockServiceServer) AddToWatchlist(context.Context, *AddToWatchlistReq) (*AddToWatchlistRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddToWatchlist not implemented")
+}
+func (UnimplementedStockServiceServer) DelFromWatchlist(context.Context, *DelFromWatchReq) (*DelFromWatchRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DelFromWatchlist not implemented")
+}
+func (UnimplementedStockServiceServer) MoveFromWatchlist(context.Context, *MoveFromWatchlistReq) (*MoveFromWatchlistRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MoveFromWatchlist not implemented")
+}
+func (UnimplementedStockServiceServer) SortFromWatchlist(context.Context, *SortFromWatchlistReq) (*SortFromWatchlistRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SortFromWatchlist not implemented")
+}
+func (UnimplementedStockServiceServer) Realtime(context.Context, *RealtimeReq) (*RealtimeRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Realtime not implemented")
 }
 func (UnimplementedStockServiceServer) mustEmbedUnimplementedStockServiceServer() {}
 
@@ -129,6 +265,150 @@ func _StockService_Indicators_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _StockService_Watchlists_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WatchlistsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StockServiceServer).Watchlists(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StockService_Watchlists_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StockServiceServer).Watchlists(ctx, req.(*WatchlistsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StockService_CreateWatchlist_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateWatchlistReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StockServiceServer).CreateWatchlist(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StockService_CreateWatchlist_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StockServiceServer).CreateWatchlist(ctx, req.(*CreateWatchlistReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StockService_DelWatchlist_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DelWatchlistReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StockServiceServer).DelWatchlist(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StockService_DelWatchlist_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StockServiceServer).DelWatchlist(ctx, req.(*DelWatchlistReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StockService_AddToWatchlist_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddToWatchlistReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StockServiceServer).AddToWatchlist(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StockService_AddToWatchlist_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StockServiceServer).AddToWatchlist(ctx, req.(*AddToWatchlistReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StockService_DelFromWatchlist_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DelFromWatchReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StockServiceServer).DelFromWatchlist(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StockService_DelFromWatchlist_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StockServiceServer).DelFromWatchlist(ctx, req.(*DelFromWatchReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StockService_MoveFromWatchlist_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MoveFromWatchlistReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StockServiceServer).MoveFromWatchlist(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StockService_MoveFromWatchlist_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StockServiceServer).MoveFromWatchlist(ctx, req.(*MoveFromWatchlistReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StockService_SortFromWatchlist_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SortFromWatchlistReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StockServiceServer).SortFromWatchlist(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StockService_SortFromWatchlist_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StockServiceServer).SortFromWatchlist(ctx, req.(*SortFromWatchlistReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StockService_Realtime_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RealtimeReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StockServiceServer).Realtime(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StockService_Realtime_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StockServiceServer).Realtime(ctx, req.(*RealtimeReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // StockService_ServiceDesc is the grpc.ServiceDesc for StockService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -143,6 +423,38 @@ var StockService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Indicators",
 			Handler:    _StockService_Indicators_Handler,
+		},
+		{
+			MethodName: "Watchlists",
+			Handler:    _StockService_Watchlists_Handler,
+		},
+		{
+			MethodName: "CreateWatchlist",
+			Handler:    _StockService_CreateWatchlist_Handler,
+		},
+		{
+			MethodName: "DelWatchlist",
+			Handler:    _StockService_DelWatchlist_Handler,
+		},
+		{
+			MethodName: "AddToWatchlist",
+			Handler:    _StockService_AddToWatchlist_Handler,
+		},
+		{
+			MethodName: "DelFromWatchlist",
+			Handler:    _StockService_DelFromWatchlist_Handler,
+		},
+		{
+			MethodName: "MoveFromWatchlist",
+			Handler:    _StockService_MoveFromWatchlist_Handler,
+		},
+		{
+			MethodName: "SortFromWatchlist",
+			Handler:    _StockService_SortFromWatchlist_Handler,
+		},
+		{
+			MethodName: "Realtime",
+			Handler:    _StockService_Realtime_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
