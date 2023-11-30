@@ -124,7 +124,7 @@ message StockData {
     int64 transactions  = 5; // 交易量
     double open  = 6; // 开盘价
 	int64 timestamp = 7; // 时间戳
-	double volume = 8; // 成交额
+	int64 volume = 8; // 成交额
     double vwap = 9; // 。VWAP 是一种衡量某个证券在一定时间段内的平均价格的方法，这个价格是根据成交量加权计算的
 	bool otc  = 10; // 场外交易
 }
@@ -271,7 +271,7 @@ message StockRealTime {
     int64 transactions  = 5; // 交易量
     double open  = 6; // 开盘价
 	int64 timestamp = 7; // 时间戳
-	double volume = 8; // 成交额
+	int64 volume = 8; // 成交额
     double vwap = 9; // 。VWAP 是一种衡量某个证券在一定时间段内的平均价格的方法，这个价格是根据成交量加权计算的
 	bool otc  = 10; // 场外交易
     double pre_close  = 11; // 前一个收盘价
@@ -279,7 +279,7 @@ message StockRealTime {
     double pre_low  = 13; // 前一个最低价
     double pre_open  = 15; // 前一个开盘价
     double pre_timestamp  = 16; // 前一个时间戳
-    double pre_volume  = 17; // 前一个成交额
+    int64 pre_volume  = 17; // 前一个成交额
     double pre_vwap  = 18; // 前一个VWAP
     double change = 19; // 改变
     double change_ratio =20; // 比例
