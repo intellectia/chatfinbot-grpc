@@ -201,7 +201,7 @@ message CreateWatchlistRsp {
 }
 
 message DelWatchlistReq {
-    int64 pid = 1; // id
+    int64 id = 1; // id
 }
 
 message DelWatchlistRsp {
