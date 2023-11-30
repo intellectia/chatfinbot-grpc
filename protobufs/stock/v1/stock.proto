@@ -254,7 +254,7 @@ message SortFromWatchlistRsp {
 }
 
 message RealtimeReq {
-    repeated string codes = 1;
+    string codes = 1; // 公司代码。逗号分隔
 }
 
 message RealtimeRsp {
