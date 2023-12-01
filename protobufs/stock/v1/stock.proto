@@ -190,6 +190,7 @@ message StockWatchlists {
     string symbol = 3; // 代码
     double sort = 4;   // 排序
     int64 create_time =5; // 创建时间
+    int64 pid = 6; // 分类id
 }
 
 message CreateWatchlistReq {
@@ -199,7 +200,7 @@ message CreateWatchlistReq {
 message CreateWatchlistRsp {
     int32 ret = 1; // 错误码
     string msg = 2; // msg
-    int64 pid = 3; // 返回id
+    int64 id = 3; // 返回id
 }
 
 message DelWatchlistReq {
