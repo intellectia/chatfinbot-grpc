@@ -316,7 +316,7 @@ message GetEventTimelineRsp {
 
 message EventTimeline {
     int64 timestamp = 1; // 时间戳
-    int32 count = 2; // 
+    int64 count = 2; // 
 }
 
 message GetEventListReq {
