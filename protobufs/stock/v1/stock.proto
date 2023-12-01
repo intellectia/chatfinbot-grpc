@@ -245,7 +245,7 @@ message MoveFromWatchlistRsp {
 
 message SortFromWatchlistReq {
     int64 pid = 1; // id
-    int64 target_code = 2; // 目标code
+    string target_code = 2; // 目标code
     string code = 3; // code
 }
 
