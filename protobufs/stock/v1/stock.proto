@@ -82,6 +82,20 @@ service StockService {
 		};
     };
 
+    // 股票事件
+    rpc GetEventTimeline(GetEventTimelineReq) returns (GetEventTimelineRsp) {
+        option (google.api.http) = {
+			get: "/v1/stock/event/timeline",
+		};
+    };
+
+    // 股票事件
+    rpc GetEventList(GetEventListReq) returns (GetEventListRsp) {
+        option (google.api.http) = {
+			get: "/v1/stock/event/list",
+		};
+    };
+
 }
 
 
@@ -284,4 +298,40 @@ message StockRealTime {
     double pre_vwap  = 18; // 前一个VWAP
     double change = 19; // 改变
     double change_ratio =20; // 比例
+}
+
+message GetEventTimelineReq {
+    string code = 1; // 股票代码
+    int32 multiplier = 2; // 时间跨度
+    TimespanOpt timespan = 3; // 时间的单位
+    int64 timestamp = 4; // 时间戳，不传则截止到当前为止，传就截止到传的时间为止
+    int32 count = 5; // 数量，最大传5000，建议传800
+}
+
+message GetEventTimelineRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    repeated EventTimeline list = 3; // 列表数据
+}
+
+message EventTimeline {
+    int64 timestamp = 1; // 时间戳
+    int32 count = 2; // 
+}
+
+message GetEventListReq {
+    string code = 1; // 股票代码
+    int64 timestamp = 2; // 时间戳
+}
+
+message GetEventListRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    repeated EventList list = 3; // 列表数据
+}
+
+message EventList {
+    string title = 1; // 标题
+    int64 timestamp = 2; // 时间戳
+    string category = 3; // 分类
 }

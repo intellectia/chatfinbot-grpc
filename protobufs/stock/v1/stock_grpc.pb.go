@@ -29,6 +29,8 @@ const (
 	StockService_MoveFromWatchlist_FullMethodName = "/chatfinbot.stock.v1.StockService/MoveFromWatchlist"
 	StockService_SortFromWatchlist_FullMethodName = "/chatfinbot.stock.v1.StockService/SortFromWatchlist"
 	StockService_Realtime_FullMethodName          = "/chatfinbot.stock.v1.StockService/Realtime"
+	StockService_GetEventTimeline_FullMethodName  = "/chatfinbot.stock.v1.StockService/GetEventTimeline"
+	StockService_GetEventList_FullMethodName      = "/chatfinbot.stock.v1.StockService/GetEventList"
 )
 
 // StockServiceClient is the client API for StockService service.
@@ -55,6 +57,10 @@ type StockServiceClient interface {
 	SortFromWatchlist(ctx context.Context, in *SortFromWatchlistReq, opts ...grpc.CallOption) (*SortFromWatchlistRsp, error)
 	// 实时数据
 	Realtime(ctx context.Context, in *RealtimeReq, opts ...grpc.CallOption) (*RealtimeRsp, error)
+	// 股票事件
+	GetEventTimeline(ctx context.Context, in *GetEventTimelineReq, opts ...grpc.CallOption) (*GetEventTimelineRsp, error)
+	// 股票事件
+	GetEventList(ctx context.Context, in *GetEventListReq, opts ...grpc.CallOption) (*GetEventListRsp, error)
 }
 
 type stockServiceClient struct {
@@ -155,6 +161,24 @@ func (c *stockServiceClient) Realtime(ctx context.Context, in *RealtimeReq, opts
 	return out, nil
 }
 
+func (c *stockServiceClient) GetEventTimeline(ctx context.Context, in *GetEventTimelineReq, opts ...grpc.CallOption) (*GetEventTimelineRsp, error) {
+	out := new(GetEventTimelineRsp)
+	err := c.cc.Invoke(ctx, StockService_GetEventTimeline_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *stockServiceClient) GetEventList(ctx context.Context, in *GetEventListReq, opts ...grpc.CallOption) (*GetEventListRsp, error) {
+	out := new(GetEventListRsp)
+	err := c.cc.Invoke(ctx, StockService_GetEventList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // StockServiceServer is the server API for StockService service.
 // All implementations must embed UnimplementedStockServiceServer
 // for forward compatibility
@@ -179,6 +203,10 @@ type StockServiceServer interface {
 	SortFromWatchlist(context.Context, *SortFromWatchlistReq) (*SortFromWatchlistRsp, error)
 	// 实时数据
 	Realtime(context.Context, *RealtimeReq) (*RealtimeRsp, error)
+	// 股票事件
+	GetEventTimeline(context.Context, *GetEventTimelineReq) (*GetEventTimelineRsp, error)
+	// 股票事件
+	GetEventList(context.Context, *GetEventListReq) (*GetEventListRsp, error)
 	mustEmbedUnimplementedStockServiceServer()
 }
 
@@ -215,6 +243,12 @@ func (UnimplementedStockServiceServer) SortFromWatchlist(context.Context, *SortF
 }
 func (UnimplementedStockServiceServer) Realtime(context.Context, *RealtimeReq) (*RealtimeRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Realtime not implemented")
+}
+func (UnimplementedStockServiceServer) GetEventTimeline(context.Context, *GetEventTimelineReq) (*GetEventTimelineRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetEventTimeline not implemented")
+}
+func (UnimplementedStockServiceServer) GetEventList(context.Context, *GetEventListReq) (*GetEventListRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetEventList not implemented")
 }
 func (UnimplementedStockServiceServer) mustEmbedUnimplementedStockServiceServer() {}
 
@@ -409,6 +443,42 @@ func _StockService_Realtime_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _StockService_GetEventTimeline_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetEventTimelineReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StockServiceServer).GetEventTimeline(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StockService_GetEventTimeline_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StockServiceServer).GetEventTimeline(ctx, req.(*GetEventTimelineReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _StockService_GetEventList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetEventListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StockServiceServer).GetEventList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: StockService_GetEventList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StockServiceServer).GetEventList(ctx, req.(*GetEventListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // StockService_ServiceDesc is the grpc.ServiceDesc for StockService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -455,6 +525,14 @@ var StockService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Realtime",
 			Handler:    _StockService_Realtime_Handler,
+		},
+		{
+			MethodName: "GetEventTimeline",
+			Handler:    _StockService_GetEventTimeline_Handler,
+		},
+		{
+			MethodName: "GetEventList",
+			Handler:    _StockService_GetEventList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
