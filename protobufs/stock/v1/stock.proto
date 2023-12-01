@@ -279,7 +279,7 @@ message StockRealTime {
     double pre_high  = 12; // 前一个最高价
     double pre_low  = 13; // 前一个最低价
     double pre_open  = 15; // 前一个开盘价
-    double pre_timestamp  = 16; // 前一个时间戳
+    int64 pre_timestamp  = 16; // 前一个时间戳
     double pre_volume  = 17; // 前一个成交额
     double pre_vwap  = 18; // 前一个VWAP
     double change = 19; // 改变

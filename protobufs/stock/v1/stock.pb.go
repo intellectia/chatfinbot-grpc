@@ -1794,24 +1794,24 @@ type StockRealTime struct {
 	unknownFields protoimpl.UnknownFields
 
 	Code         string  `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
-	Close        float64 `protobuf:"fixed64,2,opt,name=close,proto3" json:"close,omitempty"`                                    // 收盘价
-	High         float64 `protobuf:"fixed64,3,opt,name=high,proto3" json:"high,omitempty"`                                      // 最高价
-	Low          float64 `protobuf:"fixed64,4,opt,name=low,proto3" json:"low,omitempty"`                                        // 最低价
-	Transactions int64   `protobuf:"varint,5,opt,name=transactions,proto3" json:"transactions,omitempty"`                       // 交易量
-	Open         float64 `protobuf:"fixed64,6,opt,name=open,proto3" json:"open,omitempty"`                                      // 开盘价
-	Timestamp    int64   `protobuf:"varint,7,opt,name=timestamp,proto3" json:"timestamp,omitempty"`                             // 时间戳
-	Volume       float64 `protobuf:"fixed64,8,opt,name=volume,proto3" json:"volume,omitempty"`                                  // 成交额
-	Vwap         float64 `protobuf:"fixed64,9,opt,name=vwap,proto3" json:"vwap,omitempty"`                                      // 。VWAP 是一种衡量某个证券在一定时间段内的平均价格的方法，这个价格是根据成交量加权计算的
-	Otc          bool    `protobuf:"varint,10,opt,name=otc,proto3" json:"otc,omitempty"`                                        // 场外交易
-	PreClose     float64 `protobuf:"fixed64,11,opt,name=pre_close,json=preClose,proto3" json:"pre_close,omitempty"`             // 前一个收盘价
-	PreHigh      float64 `protobuf:"fixed64,12,opt,name=pre_high,json=preHigh,proto3" json:"pre_high,omitempty"`                // 前一个最高价
-	PreLow       float64 `protobuf:"fixed64,13,opt,name=pre_low,json=preLow,proto3" json:"pre_low,omitempty"`                   // 前一个最低价
-	PreOpen      float64 `protobuf:"fixed64,15,opt,name=pre_open,json=preOpen,proto3" json:"pre_open,omitempty"`                // 前一个开盘价
-	PreTimestamp float64 `protobuf:"fixed64,16,opt,name=pre_timestamp,json=preTimestamp,proto3" json:"pre_timestamp,omitempty"` // 前一个时间戳
-	PreVolume    float64 `protobuf:"fixed64,17,opt,name=pre_volume,json=preVolume,proto3" json:"pre_volume,omitempty"`          // 前一个成交额
-	PreVwap      float64 `protobuf:"fixed64,18,opt,name=pre_vwap,json=preVwap,proto3" json:"pre_vwap,omitempty"`                // 前一个VWAP
-	Change       float64 `protobuf:"fixed64,19,opt,name=change,proto3" json:"change,omitempty"`                                 // 改变
-	ChangeRatio  float64 `protobuf:"fixed64,20,opt,name=change_ratio,json=changeRatio,proto3" json:"change_ratio,omitempty"`    // 比例
+	Close        float64 `protobuf:"fixed64,2,opt,name=close,proto3" json:"close,omitempty"`                                   // 收盘价
+	High         float64 `protobuf:"fixed64,3,opt,name=high,proto3" json:"high,omitempty"`                                     // 最高价
+	Low          float64 `protobuf:"fixed64,4,opt,name=low,proto3" json:"low,omitempty"`                                       // 最低价
+	Transactions int64   `protobuf:"varint,5,opt,name=transactions,proto3" json:"transactions,omitempty"`                      // 交易量
+	Open         float64 `protobuf:"fixed64,6,opt,name=open,proto3" json:"open,omitempty"`                                     // 开盘价
+	Timestamp    int64   `protobuf:"varint,7,opt,name=timestamp,proto3" json:"timestamp,omitempty"`                            // 时间戳
+	Volume       float64 `protobuf:"fixed64,8,opt,name=volume,proto3" json:"volume,omitempty"`                                 // 成交额
+	Vwap         float64 `protobuf:"fixed64,9,opt,name=vwap,proto3" json:"vwap,omitempty"`                                     // 。VWAP 是一种衡量某个证券在一定时间段内的平均价格的方法，这个价格是根据成交量加权计算的
+	Otc          bool    `protobuf:"varint,10,opt,name=otc,proto3" json:"otc,omitempty"`                                       // 场外交易
+	PreClose     float64 `protobuf:"fixed64,11,opt,name=pre_close,json=preClose,proto3" json:"pre_close,omitempty"`            // 前一个收盘价
+	PreHigh      float64 `protobuf:"fixed64,12,opt,name=pre_high,json=preHigh,proto3" json:"pre_high,omitempty"`               // 前一个最高价
+	PreLow       float64 `protobuf:"fixed64,13,opt,name=pre_low,json=preLow,proto3" json:"pre_low,omitempty"`                  // 前一个最低价
+	PreOpen      float64 `protobuf:"fixed64,15,opt,name=pre_open,json=preOpen,proto3" json:"pre_open,omitempty"`               // 前一个开盘价
+	PreTimestamp int64   `protobuf:"varint,16,opt,name=pre_timestamp,json=preTimestamp,proto3" json:"pre_timestamp,omitempty"` // 前一个时间戳
+	PreVolume    float64 `protobuf:"fixed64,17,opt,name=pre_volume,json=preVolume,proto3" json:"pre_volume,omitempty"`         // 前一个成交额
+	PreVwap      float64 `protobuf:"fixed64,18,opt,name=pre_vwap,json=preVwap,proto3" json:"pre_vwap,omitempty"`               // 前一个VWAP
+	Change       float64 `protobuf:"fixed64,19,opt,name=change,proto3" json:"change,omitempty"`                                // 改变
+	ChangeRatio  float64 `protobuf:"fixed64,20,opt,name=change_ratio,json=changeRatio,proto3" json:"change_ratio,omitempty"`   // 比例
 }
 
 func (x *StockRealTime) Reset() {
@@ -1944,7 +1944,7 @@ func (x *StockRealTime) GetPreOpen() float64 {
 	return 0
 }
 
-func (x *StockRealTime) GetPreTimestamp() float64 {
+func (x *StockRealTime) GetPreTimestamp() int64 {
 	if x != nil {
 		return x.PreTimestamp
 	}
@@ -2169,7 +2169,7 @@ var file_stock_proto_rawDesc = []byte{
 	0x12, 0x19, 0x0a, 0x08, 0x70, 0x72, 0x65, 0x5f, 0x6f, 0x70, 0x65, 0x6e, 0x18, 0x0f, 0x20, 0x01,
 	0x28, 0x01, 0x52, 0x07, 0x70, 0x72, 0x65, 0x4f, 0x70, 0x65, 0x6e, 0x12, 0x23, 0x0a, 0x0d, 0x70,
 	0x72, 0x65, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x10, 0x20, 0x01,
-	0x28, 0x01, 0x52, 0x0c, 0x70, 0x72, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70,
+	0x28, 0x03, 0x52, 0x0c, 0x70, 0x72, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70,
 	0x12, 0x1d, 0x0a, 0x0a, 0x70, 0x72, 0x65, 0x5f, 0x76, 0x6f, 0x6c, 0x75, 0x6d, 0x65, 0x18, 0x11,
 	0x20, 0x01, 0x28, 0x01, 0x52, 0x09, 0x70, 0x72, 0x65, 0x56, 0x6f, 0x6c, 0x75, 0x6d, 0x65, 0x12,
 	0x19, 0x0a, 0x08, 0x70, 0x72, 0x65, 0x5f, 0x76, 0x77, 0x61, 0x70, 0x18, 0x12, 0x20, 0x01, 0x28,
