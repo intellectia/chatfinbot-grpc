@@ -11,14 +11,14 @@ service NewsService {
     // Get a list of news articles
     rpc GetNewsList(GetNewsListReq) returns (GetNewsListRsp) {
         option (google.api.http) = {
-            get: "/gateway/v1/news/list"
+            get: "/v1/news/list"
         };
     };
 
     // Get detailed information about a specific news article
     rpc GetNewsInfo(GetNewsInfoReq) returns (GetNewsInfoRsp) {
         option (google.api.http) = {
-            get: "/gateway/v1/news/info"
+            get: "/v1/news/info"
         };
     };
 }
