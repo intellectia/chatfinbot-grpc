@@ -25,10 +25,11 @@ service NewsService {
 
 // Request message for GetNewsList
 message GetNewsListReq {
-    string firstCategory = 1; // Primary news category
-    string secondCategory = 2; // Secondary news category (optional)
+    string first_category = 1; // Primary news category
+    string second_category = 2; // Secondary news category (optional)
     int32 page = 3;            // Pagination: page number
-    int32 pageSize = 4;        // Pagination: number of items per page
+    int32 page_size = 4;        // Pagination: number of items per page
+    string company_code = 5;        // Company Code (optional)
 }
 
 // Response message for GetNewsList
@@ -40,18 +41,26 @@ message GetNewsListRsp {
 
 // News article information
 message NewsArticle {
-    string id = 1;             // Unique identifier for the news article
+    string doc_id = 1;             // Unique identifier for the news article
     string title = 2;          // Title of the article
     string summary = 3;        // Summary of the article
     string url = 4;            // URL to the full article
-    string publishedDate = 5;  // Publication date
-    // Additional fields like author, images, etc.
-    // ...
+    string published_date = 5;  // Publication date
+    string author_info = 6;    // Author information
+    string company_info = 7;   // Company 
+    string file_type = 8;      // File type
+    string category_info = 9;  // Category information
+    string images = 10;        // Images
+    string keywords = 11;      // Keywords
+    string region = 12;        // Region
+    string full_text = 13;     // Full text
+    string videos = 14;        // Videos
+    string audios = 15;         // audios
 }
 
 // Request message for GetNewsInfo
 message GetNewsInfoReq {
-    string id = 1; // Unique identifier for the news article
+    string doc_id = 1; // Unique identifier for the news article
 }
 
 // Response message for GetNewsInfo
