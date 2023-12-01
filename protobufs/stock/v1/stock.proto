@@ -331,7 +331,9 @@ message GetEventListRsp {
 }
 
 message EventList {
-    string title = 1; // 标题
-    int64 timestamp = 2; // 时间戳
-    string category = 3; // 分类
+    string doc_id = 1; // doc id
+    string title = 2; // 标题
+    int64 timestamp = 3; // 时间戳
+    string category = 4; // 分类
+    string region = 5; // 的确
 }
