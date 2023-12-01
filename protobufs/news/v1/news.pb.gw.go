@@ -117,7 +117,7 @@ func RegisterNewsServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.news.v1.NewsService/GetNewsList", runtime.WithHTTPPathPattern("/gateway/v1/news/list"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.news.v1.NewsService/GetNewsList", runtime.WithHTTPPathPattern("/v1/news/list"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -142,7 +142,7 @@ func RegisterNewsServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.news.v1.NewsService/GetNewsInfo", runtime.WithHTTPPathPattern("/gateway/v1/news/info"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.news.v1.NewsService/GetNewsInfo", runtime.WithHTTPPathPattern("/v1/news/info"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -206,7 +206,7 @@ func RegisterNewsServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.news.v1.NewsService/GetNewsList", runtime.WithHTTPPathPattern("/gateway/v1/news/list"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.news.v1.NewsService/GetNewsList", runtime.WithHTTPPathPattern("/v1/news/list"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -228,7 +228,7 @@ func RegisterNewsServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.news.v1.NewsService/GetNewsInfo", runtime.WithHTTPPathPattern("/gateway/v1/news/info"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.news.v1.NewsService/GetNewsInfo", runtime.WithHTTPPathPattern("/v1/news/info"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -248,9 +248,9 @@ func RegisterNewsServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 }
 
 var (
-	pattern_NewsService_GetNewsList_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"gateway", "v1", "news", "list"}, ""))
+	pattern_NewsService_GetNewsList_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "news", "list"}, ""))
 
-	pattern_NewsService_GetNewsInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"gateway", "v1", "news", "info"}, ""))
+	pattern_NewsService_GetNewsInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "news", "info"}, ""))
 )
 
 var (
