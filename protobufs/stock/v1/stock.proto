@@ -261,6 +261,7 @@ message SortFromWatchlistReq {
     int64 pid = 1; // id
     string target_code = 2; // 目标code
     string code = 3; // code
+    int32 type = 4; // 类型  0=排在前面 1=排在后面
 }
 
 message SortFromWatchlistRsp {
