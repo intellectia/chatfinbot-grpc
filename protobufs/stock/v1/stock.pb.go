@@ -2620,6 +2620,209 @@ func (x *MarketData) GetOtc() bool {
 	return false
 }
 
+type StockHistoryReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *StockHistoryReq) Reset() {
+	*x = StockHistoryReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_stock_proto_msgTypes[34]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StockHistoryReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StockHistoryReq) ProtoMessage() {}
+
+func (x *StockHistoryReq) ProtoReflect() protoreflect.Message {
+	mi := &file_stock_proto_msgTypes[34]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StockHistoryReq.ProtoReflect.Descriptor instead.
+func (*StockHistoryReq) Descriptor() ([]byte, []int) {
+	return file_stock_proto_rawDescGZIP(), []int{34}
+}
+
+type StockHistoryRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Ret  int32              `protobuf:"varint,1,opt,name=ret,proto3" json:"ret,omitempty"` // 错误码
+	Msg  string             `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`  // msg
+	List []*StockWatchlists `protobuf:"bytes,3,rep,name=list,proto3" json:"list,omitempty"`
+}
+
+func (x *StockHistoryRsp) Reset() {
+	*x = StockHistoryRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_stock_proto_msgTypes[35]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StockHistoryRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StockHistoryRsp) ProtoMessage() {}
+
+func (x *StockHistoryRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_stock_proto_msgTypes[35]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StockHistoryRsp.ProtoReflect.Descriptor instead.
+func (*StockHistoryRsp) Descriptor() ([]byte, []int) {
+	return file_stock_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *StockHistoryRsp) GetRet() int32 {
+	if x != nil {
+		return x.Ret
+	}
+	return 0
+}
+
+func (x *StockHistoryRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
+func (x *StockHistoryRsp) GetList() []*StockWatchlists {
+	if x != nil {
+		return x.List
+	}
+	return nil
+}
+
+type StockAccessReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Code string `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"` // 股票代码
+}
+
+func (x *StockAccessReq) Reset() {
+	*x = StockAccessReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_stock_proto_msgTypes[36]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StockAccessReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StockAccessReq) ProtoMessage() {}
+
+func (x *StockAccessReq) ProtoReflect() protoreflect.Message {
+	mi := &file_stock_proto_msgTypes[36]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StockAccessReq.ProtoReflect.Descriptor instead.
+func (*StockAccessReq) Descriptor() ([]byte, []int) {
+	return file_stock_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *StockAccessReq) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+type StockAccessRsp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Ret int32  `protobuf:"varint,1,opt,name=ret,proto3" json:"ret,omitempty"` // 错误码
+	Msg string `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`  // msg
+}
+
+func (x *StockAccessRsp) Reset() {
+	*x = StockAccessRsp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_stock_proto_msgTypes[37]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StockAccessRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StockAccessRsp) ProtoMessage() {}
+
+func (x *StockAccessRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_stock_proto_msgTypes[37]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StockAccessRsp.ProtoReflect.Descriptor instead.
+func (*StockAccessRsp) Descriptor() ([]byte, []int) {
+	return file_stock_proto_rawDescGZIP(), []int{37}
+}
+
+func (x *StockAccessRsp) GetRet() int32 {
+	if x != nil {
+		return x.Ret
+	}
+	return 0
+}
+
+func (x *StockAccessRsp) GetMsg() string {
+	if x != nil {
+		return x.Msg
+	}
+	return ""
+}
+
 var File_stock_proto protoreflect.FileDescriptor
 
 var file_stock_proto_rawDesc = []byte{
@@ -2910,7 +3113,21 @@ var file_stock_proto_rawDesc = []byte{
 	0x64, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x18, 0x0e, 0x20, 0x01, 0x28,
 	0x03, 0x52, 0x0c, 0x65, 0x6e, 0x64, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12,
 	0x10, 0x0a, 0x03, 0x6f, 0x74, 0x63, 0x18, 0x0f, 0x20, 0x01, 0x28, 0x08, 0x52, 0x03, 0x6f, 0x74,
-	0x63, 0x2a, 0xd4, 0x01, 0x0a, 0x0b, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x6e, 0x4f, 0x70,
+	0x63, 0x22, 0x11, 0x0a, 0x0f, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x48, 0x69, 0x73, 0x74, 0x6f, 0x72,
+	0x79, 0x52, 0x65, 0x71, 0x22, 0x6f, 0x0a, 0x0f, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x48, 0x69, 0x73,
+	0x74, 0x6f, 0x72, 0x79, 0x52, 0x73, 0x70, 0x12, 0x10, 0x0a, 0x03, 0x72, 0x65, 0x74, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x03, 0x72, 0x65, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73, 0x67, 0x12, 0x38, 0x0a, 0x04, 0x6c,
+	0x69, 0x73, 0x74, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x24, 0x2e, 0x63, 0x68, 0x61, 0x74,
+	0x66, 0x69, 0x6e, 0x62, 0x6f, 0x74, 0x2e, 0x73, 0x74, 0x6f, 0x63, 0x6b, 0x2e, 0x76, 0x31, 0x2e,
+	0x53, 0x74, 0x6f, 0x63, 0x6b, 0x57, 0x61, 0x74, 0x63, 0x68, 0x6c, 0x69, 0x73, 0x74, 0x73, 0x52,
+	0x04, 0x6c, 0x69, 0x73, 0x74, 0x22, 0x24, 0x0a, 0x0e, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x41, 0x63,
+	0x63, 0x65, 0x73, 0x73, 0x52, 0x65, 0x71, 0x12, 0x12, 0x0a, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x63, 0x6f, 0x64, 0x65, 0x22, 0x34, 0x0a, 0x0e, 0x53,
+	0x74, 0x6f, 0x63, 0x6b, 0x41, 0x63, 0x63, 0x65, 0x73, 0x73, 0x52, 0x73, 0x70, 0x12, 0x10, 0x0a,
+	0x03, 0x72, 0x65, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x03, 0x72, 0x65, 0x74, 0x12,
+	0x10, 0x0a, 0x03, 0x6d, 0x73, 0x67, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6d, 0x73,
+	0x67, 0x2a, 0xd4, 0x01, 0x0a, 0x0b, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x6e, 0x4f, 0x70,
 	0x74, 0x12, 0x16, 0x0a, 0x12, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x70, 0x61, 0x6e, 0x4f, 0x70, 0x74,
 	0x55, 0x6e, 0x6b, 0x6e, 0x6f, 0x77, 0x6e, 0x10, 0x00, 0x12, 0x15, 0x0a, 0x11, 0x54, 0x69, 0x6d,
 	0x65, 0x73, 0x70, 0x61, 0x6e, 0x4f, 0x70, 0x74, 0x53, 0x65, 0x63, 0x6f, 0x6e, 0x64, 0x10, 0x01,
@@ -2931,7 +3148,7 @@ var file_stock_proto_rawDesc = []byte{
 	0x64, 0x69, 0x63, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x4f, 0x70, 0x74, 0x45, 0x4d, 0x41, 0x10, 0x02,
 	0x12, 0x15, 0x0a, 0x11, 0x49, 0x6e, 0x64, 0x69, 0x63, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x4f, 0x70,
 	0x74, 0x4d, 0x41, 0x43, 0x44, 0x10, 0x03, 0x12, 0x14, 0x0a, 0x10, 0x49, 0x6e, 0x64, 0x69, 0x63,
-	0x61, 0x74, 0x6f, 0x72, 0x73, 0x4f, 0x70, 0x74, 0x52, 0x53, 0x49, 0x10, 0x04, 0x32, 0xa8, 0x0c,
+	0x61, 0x74, 0x6f, 0x72, 0x73, 0x4f, 0x70, 0x74, 0x52, 0x53, 0x49, 0x10, 0x04, 0x32, 0x95, 0x0e,
 	0x0a, 0x0c, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x5e,
 	0x0a, 0x05, 0x51, 0x75, 0x65, 0x72, 0x79, 0x12, 0x1d, 0x2e, 0x63, 0x68, 0x61, 0x74, 0x66, 0x69,
 	0x6e, 0x62, 0x6f, 0x74, 0x2e, 0x73, 0x74, 0x6f, 0x63, 0x6b, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75,
@@ -3030,8 +3247,23 @@ var file_stock_proto_rawDesc = []byte{
 	0x74, 0x2e, 0x73, 0x74, 0x6f, 0x63, 0x6b, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x45, 0x76,
 	0x65, 0x6e, 0x74, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x73, 0x70, 0x22, 0x1c, 0x82, 0xd3, 0xe4, 0x93,
 	0x02, 0x16, 0x12, 0x14, 0x2f, 0x76, 0x31, 0x2f, 0x73, 0x74, 0x6f, 0x63, 0x6b, 0x2f, 0x65, 0x76,
-	0x65, 0x6e, 0x74, 0x2f, 0x6c, 0x69, 0x73, 0x74, 0x42, 0x0b, 0x5a, 0x09, 0x2e, 0x3b, 0x73, 0x74,
-	0x6f, 0x63, 0x6b, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x6e, 0x74, 0x2f, 0x6c, 0x69, 0x73, 0x74, 0x12, 0x75, 0x0a, 0x0c, 0x53, 0x74, 0x6f, 0x63,
+	0x6b, 0x48, 0x69, 0x73, 0x74, 0x6f, 0x72, 0x79, 0x12, 0x24, 0x2e, 0x63, 0x68, 0x61, 0x74, 0x66,
+	0x69, 0x6e, 0x62, 0x6f, 0x74, 0x2e, 0x73, 0x74, 0x6f, 0x63, 0x6b, 0x2e, 0x76, 0x31, 0x2e, 0x53,
+	0x74, 0x6f, 0x63, 0x6b, 0x48, 0x69, 0x73, 0x74, 0x6f, 0x72, 0x79, 0x52, 0x65, 0x71, 0x1a, 0x24,
+	0x2e, 0x63, 0x68, 0x61, 0x74, 0x66, 0x69, 0x6e, 0x62, 0x6f, 0x74, 0x2e, 0x73, 0x74, 0x6f, 0x63,
+	0x6b, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x48, 0x69, 0x73, 0x74, 0x6f, 0x72,
+	0x79, 0x52, 0x73, 0x70, 0x22, 0x19, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x13, 0x12, 0x11, 0x2f, 0x76,
+	0x31, 0x2f, 0x73, 0x74, 0x6f, 0x63, 0x6b, 0x2f, 0x68, 0x69, 0x73, 0x74, 0x6f, 0x72, 0x79, 0x12,
+	0x74, 0x0a, 0x0b, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x41, 0x63, 0x63, 0x65, 0x73, 0x73, 0x12, 0x23,
+	0x2e, 0x63, 0x68, 0x61, 0x74, 0x66, 0x69, 0x6e, 0x62, 0x6f, 0x74, 0x2e, 0x73, 0x74, 0x6f, 0x63,
+	0x6b, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x41, 0x63, 0x63, 0x65, 0x73, 0x73,
+	0x52, 0x65, 0x71, 0x1a, 0x23, 0x2e, 0x63, 0x68, 0x61, 0x74, 0x66, 0x69, 0x6e, 0x62, 0x6f, 0x74,
+	0x2e, 0x73, 0x74, 0x6f, 0x63, 0x6b, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x6f, 0x63, 0x6b, 0x41,
+	0x63, 0x63, 0x65, 0x73, 0x73, 0x52, 0x73, 0x70, 0x22, 0x1b, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x15,
+	0x3a, 0x01, 0x2a, 0x22, 0x10, 0x2f, 0x76, 0x31, 0x2f, 0x73, 0x74, 0x6f, 0x63, 0x6b, 0x2f, 0x61,
+	0x63, 0x63, 0x65, 0x73, 0x73, 0x42, 0x0b, 0x5a, 0x09, 0x2e, 0x3b, 0x73, 0x74, 0x6f, 0x63, 0x6b,
+	0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -3047,7 +3279,7 @@ func file_stock_proto_rawDescGZIP() []byte {
 }
 
 var file_stock_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_stock_proto_msgTypes = make([]protoimpl.MessageInfo, 34)
+var file_stock_proto_msgTypes = make([]protoimpl.MessageInfo, 38)
 var file_stock_proto_goTypes = []interface{}{
 	(TimespanOpt)(0),             // 0: chatfinbot.stock.v1.TimespanOpt
 	(IndicatorsOpt)(0),           // 1: chatfinbot.stock.v1.IndicatorsOpt
@@ -3085,6 +3317,10 @@ var file_stock_proto_goTypes = []interface{}{
 	(*GetEventListRsp)(nil),      // 33: chatfinbot.stock.v1.GetEventListRsp
 	(*EventList)(nil),            // 34: chatfinbot.stock.v1.EventList
 	(*MarketData)(nil),           // 35: chatfinbot.stock.v1.MarketData
+	(*StockHistoryReq)(nil),      // 36: chatfinbot.stock.v1.StockHistoryReq
+	(*StockHistoryRsp)(nil),      // 37: chatfinbot.stock.v1.StockHistoryRsp
+	(*StockAccessReq)(nil),       // 38: chatfinbot.stock.v1.StockAccessReq
+	(*StockAccessRsp)(nil),       // 39: chatfinbot.stock.v1.StockAccessRsp
 }
 var file_stock_proto_depIdxs = []int32{
 	0,  // 0: chatfinbot.stock.v1.QueryReq.timespan:type_name -> chatfinbot.stock.v1.TimespanOpt
@@ -3100,35 +3336,40 @@ var file_stock_proto_depIdxs = []int32{
 	0,  // 10: chatfinbot.stock.v1.GetEventTimelineReq.timespan:type_name -> chatfinbot.stock.v1.TimespanOpt
 	31, // 11: chatfinbot.stock.v1.GetEventTimelineRsp.list:type_name -> chatfinbot.stock.v1.EventTimeline
 	34, // 12: chatfinbot.stock.v1.GetEventListRsp.list:type_name -> chatfinbot.stock.v1.EventList
-	2,  // 13: chatfinbot.stock.v1.StockService.Query:input_type -> chatfinbot.stock.v1.QueryReq
-	6,  // 14: chatfinbot.stock.v1.StockService.Indicators:input_type -> chatfinbot.stock.v1.IndicatorsReq
-	10, // 15: chatfinbot.stock.v1.StockService.Watchlists:input_type -> chatfinbot.stock.v1.WatchlistsReq
-	14, // 16: chatfinbot.stock.v1.StockService.CreateWatchlist:input_type -> chatfinbot.stock.v1.CreateWatchlistReq
-	16, // 17: chatfinbot.stock.v1.StockService.DelWatchlist:input_type -> chatfinbot.stock.v1.DelWatchlistReq
-	18, // 18: chatfinbot.stock.v1.StockService.AddToWatchlist:input_type -> chatfinbot.stock.v1.AddToWatchlistReq
-	20, // 19: chatfinbot.stock.v1.StockService.DelFromWatchlist:input_type -> chatfinbot.stock.v1.DelFromWatchlistReq
-	22, // 20: chatfinbot.stock.v1.StockService.MoveFromWatchlist:input_type -> chatfinbot.stock.v1.MoveFromWatchlistReq
-	24, // 21: chatfinbot.stock.v1.StockService.SortFromWatchlist:input_type -> chatfinbot.stock.v1.SortFromWatchlistReq
-	26, // 22: chatfinbot.stock.v1.StockService.Realtime:input_type -> chatfinbot.stock.v1.RealtimeReq
-	29, // 23: chatfinbot.stock.v1.StockService.GetEventTimeline:input_type -> chatfinbot.stock.v1.GetEventTimelineReq
-	32, // 24: chatfinbot.stock.v1.StockService.GetEventList:input_type -> chatfinbot.stock.v1.GetEventListReq
-	3,  // 25: chatfinbot.stock.v1.StockService.Query:output_type -> chatfinbot.stock.v1.QueryRsp
-	7,  // 26: chatfinbot.stock.v1.StockService.Indicators:output_type -> chatfinbot.stock.v1.IndicatorsRsp
-	11, // 27: chatfinbot.stock.v1.StockService.Watchlists:output_type -> chatfinbot.stock.v1.WatchlistsRsp
-	15, // 28: chatfinbot.stock.v1.StockService.CreateWatchlist:output_type -> chatfinbot.stock.v1.CreateWatchlistRsp
-	17, // 29: chatfinbot.stock.v1.StockService.DelWatchlist:output_type -> chatfinbot.stock.v1.DelWatchlistRsp
-	19, // 30: chatfinbot.stock.v1.StockService.AddToWatchlist:output_type -> chatfinbot.stock.v1.AddToWatchlistRsp
-	21, // 31: chatfinbot.stock.v1.StockService.DelFromWatchlist:output_type -> chatfinbot.stock.v1.DelFromWatchlistRsp
-	23, // 32: chatfinbot.stock.v1.StockService.MoveFromWatchlist:output_type -> chatfinbot.stock.v1.MoveFromWatchlistRsp
-	25, // 33: chatfinbot.stock.v1.StockService.SortFromWatchlist:output_type -> chatfinbot.stock.v1.SortFromWatchlistRsp
-	27, // 34: chatfinbot.stock.v1.StockService.Realtime:output_type -> chatfinbot.stock.v1.RealtimeRsp
-	30, // 35: chatfinbot.stock.v1.StockService.GetEventTimeline:output_type -> chatfinbot.stock.v1.GetEventTimelineRsp
-	33, // 36: chatfinbot.stock.v1.StockService.GetEventList:output_type -> chatfinbot.stock.v1.GetEventListRsp
-	25, // [25:37] is the sub-list for method output_type
-	13, // [13:25] is the sub-list for method input_type
-	13, // [13:13] is the sub-list for extension type_name
-	13, // [13:13] is the sub-list for extension extendee
-	0,  // [0:13] is the sub-list for field type_name
+	13, // 13: chatfinbot.stock.v1.StockHistoryRsp.list:type_name -> chatfinbot.stock.v1.StockWatchlists
+	2,  // 14: chatfinbot.stock.v1.StockService.Query:input_type -> chatfinbot.stock.v1.QueryReq
+	6,  // 15: chatfinbot.stock.v1.StockService.Indicators:input_type -> chatfinbot.stock.v1.IndicatorsReq
+	10, // 16: chatfinbot.stock.v1.StockService.Watchlists:input_type -> chatfinbot.stock.v1.WatchlistsReq
+	14, // 17: chatfinbot.stock.v1.StockService.CreateWatchlist:input_type -> chatfinbot.stock.v1.CreateWatchlistReq
+	16, // 18: chatfinbot.stock.v1.StockService.DelWatchlist:input_type -> chatfinbot.stock.v1.DelWatchlistReq
+	18, // 19: chatfinbot.stock.v1.StockService.AddToWatchlist:input_type -> chatfinbot.stock.v1.AddToWatchlistReq
+	20, // 20: chatfinbot.stock.v1.StockService.DelFromWatchlist:input_type -> chatfinbot.stock.v1.DelFromWatchlistReq
+	22, // 21: chatfinbot.stock.v1.StockService.MoveFromWatchlist:input_type -> chatfinbot.stock.v1.MoveFromWatchlistReq
+	24, // 22: chatfinbot.stock.v1.StockService.SortFromWatchlist:input_type -> chatfinbot.stock.v1.SortFromWatchlistReq
+	26, // 23: chatfinbot.stock.v1.StockService.Realtime:input_type -> chatfinbot.stock.v1.RealtimeReq
+	29, // 24: chatfinbot.stock.v1.StockService.GetEventTimeline:input_type -> chatfinbot.stock.v1.GetEventTimelineReq
+	32, // 25: chatfinbot.stock.v1.StockService.GetEventList:input_type -> chatfinbot.stock.v1.GetEventListReq
+	36, // 26: chatfinbot.stock.v1.StockService.StockHistory:input_type -> chatfinbot.stock.v1.StockHistoryReq
+	38, // 27: chatfinbot.stock.v1.StockService.StockAccess:input_type -> chatfinbot.stock.v1.StockAccessReq
+	3,  // 28: chatfinbot.stock.v1.StockService.Query:output_type -> chatfinbot.stock.v1.QueryRsp
+	7,  // 29: chatfinbot.stock.v1.StockService.Indicators:output_type -> chatfinbot.stock.v1.IndicatorsRsp
+	11, // 30: chatfinbot.stock.v1.StockService.Watchlists:output_type -> chatfinbot.stock.v1.WatchlistsRsp
+	15, // 31: chatfinbot.stock.v1.StockService.CreateWatchlist:output_type -> chatfinbot.stock.v1.CreateWatchlistRsp
+	17, // 32: chatfinbot.stock.v1.StockService.DelWatchlist:output_type -> chatfinbot.stock.v1.DelWatchlistRsp
+	19, // 33: chatfinbot.stock.v1.StockService.AddToWatchlist:output_type -> chatfinbot.stock.v1.AddToWatchlistRsp
+	21, // 34: chatfinbot.stock.v1.StockService.DelFromWatchlist:output_type -> chatfinbot.stock.v1.DelFromWatchlistRsp
+	23, // 35: chatfinbot.stock.v1.StockService.MoveFromWatchlist:output_type -> chatfinbot.stock.v1.MoveFromWatchlistRsp
+	25, // 36: chatfinbot.stock.v1.StockService.SortFromWatchlist:output_type -> chatfinbot.stock.v1.SortFromWatchlistRsp
+	27, // 37: chatfinbot.stock.v1.StockService.Realtime:output_type -> chatfinbot.stock.v1.RealtimeRsp
+	30, // 38: chatfinbot.stock.v1.StockService.GetEventTimeline:output_type -> chatfinbot.stock.v1.GetEventTimelineRsp
+	33, // 39: chatfinbot.stock.v1.StockService.GetEventList:output_type -> chatfinbot.stock.v1.GetEventListRsp
+	37, // 40: chatfinbot.stock.v1.StockService.StockHistory:output_type -> chatfinbot.stock.v1.StockHistoryRsp
+	39, // 41: chatfinbot.stock.v1.StockService.StockAccess:output_type -> chatfinbot.stock.v1.StockAccessRsp
+	28, // [28:42] is the sub-list for method output_type
+	14, // [14:28] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_stock_proto_init() }
@@ -3545,6 +3786,54 @@ func file_stock_proto_init() {
 				return nil
 			}
 		}
+		file_stock_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StockHistoryReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_stock_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StockHistoryRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_stock_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StockAccessReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_stock_proto_msgTypes[37].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StockAccessRsp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -3552,7 +3841,7 @@ func file_stock_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_stock_proto_rawDesc,
 			NumEnums:      2,
-			NumMessages:   34,
+			NumMessages:   38,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

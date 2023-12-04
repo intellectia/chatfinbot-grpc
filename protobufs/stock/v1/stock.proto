@@ -96,6 +96,24 @@ service StockService {
 		};
     };
 
+    // 股票历史
+    rpc StockHistory(StockHistoryReq) returns (StockHistoryRsp) {
+        option (google.api.http) = {
+			get: "/v1/stock/history",
+		};
+    };
+
+    // 股票历史
+    rpc StockAccess(StockAccessReq) returns (StockAccessRsp) {
+        option (google.api.http) = {
+			post: "/v1/stock/access",
+            body: "*",
+		};
+    };
+
+
+    
+
 }
 
 
@@ -365,4 +383,23 @@ message MarketData {
     int64 start_timestamp = 13; // The timestamp of the starting tick for this aggregate window in Unix Milliseconds.
     int64 end_timestamp = 14; // The timestamp of the ending tick for this aggregate window in Unix Milliseconds.
     bool otc = 15; // Whether or not this aggregate is for an OTC ticker. This field will be left off if false.
+}
+
+message StockHistoryReq {
+
+}
+
+message StockHistoryRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
+    repeated StockWatchlists list = 3; 
+}
+
+message StockAccessReq {
+    string code = 1; // 股票代码
+}
+
+message StockAccessRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // msg
 }
