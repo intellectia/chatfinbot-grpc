@@ -361,7 +361,7 @@ message MarketData {
     double high = 9; // The highest tick price for this aggregate window.
     double low = 10; // The lowest tick price for this aggregate window.
     double aggregate_vwap = 11; // Today's volume weighted average price.
-    int64 average_size = 12; // The average trade size for this aggregate window.
+    double average_size = 12; // The average trade size for this aggregate window.
     int64 start_timestamp = 13; // The timestamp of the starting tick for this aggregate window in Unix Milliseconds.
     int64 end_timestamp = 14; // The timestamp of the ending tick for this aggregate window in Unix Milliseconds.
     bool otc = 15; // Whether or not this aggregate is for an OTC ticker. This field will be left off if false.

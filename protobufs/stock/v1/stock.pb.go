@@ -2477,7 +2477,7 @@ type MarketData struct {
 	High              float64 `protobuf:"fixed64,9,opt,name=high,proto3" json:"high,omitempty"`                                                      // The highest tick price for this aggregate window.
 	Low               float64 `protobuf:"fixed64,10,opt,name=low,proto3" json:"low,omitempty"`                                                       // The lowest tick price for this aggregate window.
 	AggregateVwap     float64 `protobuf:"fixed64,11,opt,name=aggregate_vwap,json=aggregateVwap,proto3" json:"aggregate_vwap,omitempty"`              // Today's volume weighted average price.
-	AverageSize       int64   `protobuf:"varint,12,opt,name=average_size,json=averageSize,proto3" json:"average_size,omitempty"`                     // The average trade size for this aggregate window.
+	AverageSize       float64 `protobuf:"fixed64,12,opt,name=average_size,json=averageSize,proto3" json:"average_size,omitempty"`                    // The average trade size for this aggregate window.
 	StartTimestamp    int64   `protobuf:"varint,13,opt,name=start_timestamp,json=startTimestamp,proto3" json:"start_timestamp,omitempty"`            // The timestamp of the starting tick for this aggregate window in Unix Milliseconds.
 	EndTimestamp      int64   `protobuf:"varint,14,opt,name=end_timestamp,json=endTimestamp,proto3" json:"end_timestamp,omitempty"`                  // The timestamp of the ending tick for this aggregate window in Unix Milliseconds.
 	Otc               bool    `protobuf:"varint,15,opt,name=otc,proto3" json:"otc,omitempty"`                                                        // Whether or not this aggregate is for an OTC ticker. This field will be left off if false.
@@ -2592,7 +2592,7 @@ func (x *MarketData) GetAggregateVwap() float64 {
 	return 0
 }
 
-func (x *MarketData) GetAverageSize() int64 {
+func (x *MarketData) GetAverageSize() float64 {
 	if x != nil {
 		return x.AverageSize
 	}
@@ -2903,7 +2903,7 @@ var file_stock_proto_rawDesc = []byte{
 	0x67, 0x61, 0x74, 0x65, 0x5f, 0x76, 0x77, 0x61, 0x70, 0x18, 0x0b, 0x20, 0x01, 0x28, 0x01, 0x52,
 	0x0d, 0x61, 0x67, 0x67, 0x72, 0x65, 0x67, 0x61, 0x74, 0x65, 0x56, 0x77, 0x61, 0x70, 0x12, 0x21,
 	0x0a, 0x0c, 0x61, 0x76, 0x65, 0x72, 0x61, 0x67, 0x65, 0x5f, 0x73, 0x69, 0x7a, 0x65, 0x18, 0x0c,
-	0x20, 0x01, 0x28, 0x03, 0x52, 0x0b, 0x61, 0x76, 0x65, 0x72, 0x61, 0x67, 0x65, 0x53, 0x69, 0x7a,
+	0x20, 0x01, 0x28, 0x01, 0x52, 0x0b, 0x61, 0x76, 0x65, 0x72, 0x61, 0x67, 0x65, 0x53, 0x69, 0x7a,
 	0x65, 0x12, 0x27, 0x0a, 0x0f, 0x73, 0x74, 0x61, 0x72, 0x74, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x73,
 	0x74, 0x61, 0x6d, 0x70, 0x18, 0x0d, 0x20, 0x01, 0x28, 0x03, 0x52, 0x0e, 0x73, 0x74, 0x61, 0x72,
 	0x74, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x12, 0x23, 0x0a, 0x0d, 0x65, 0x6e,
