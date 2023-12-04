@@ -349,20 +349,20 @@ message EventList {
     string region = 5; // 的确
 }
 
-message MarketAggregates {
-    string event_type = 1; // 时间类型
+message MarketData {
+    string event_type = 1; // 事件类型
     string symbol = 2; // symbol
     double volume = 3; // The tick volume.
-    double av = 4; // Today's accumulated volume.
-    double op = 5; // Today's official opening price.
-    double vw = 6; // The tick's volume weighted average price.
+    double accumulated_volume = 4; // Today's accumulated volume.
+    double official_open_price = 5; // Today's official opening price.
+    double vwap = 6; // The tick's volume weighted average price.
     double open = 7; // The opening tick price for this aggregate window.
     double close = 8; // The closing tick price for this aggregate window.
     double high = 9; // The highest tick price for this aggregate window.
     double low = 10; // The lowest tick price for this aggregate window.
-    double a = 11; // Today's volume weighted average price.
-    int64 z = 12; // The average trade size for this aggregate window.
-    int64 stime = 13; // The timestamp of the starting tick for this aggregate window in Unix Milliseconds.
-    int64 etime = 14; // The timestamp of the ending tick for this aggregate window in Unix Milliseconds.
+    double aggregate_vwap = 11; // Today's volume weighted average price.
+    int64 average_size = 12; // The average trade size for this aggregate window.
+    int64 start_timestamp = 13; // The timestamp of the starting tick for this aggregate window in Unix Milliseconds.
+    int64 end_timestamp = 14; // The timestamp of the ending tick for this aggregate window in Unix Milliseconds.
     bool otc = 15; // Whether or not this aggregate is for an OTC ticker. This field will be left off if false.
 }
