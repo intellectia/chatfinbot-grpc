@@ -39,23 +39,89 @@ message GetNewsListRsp {
     repeated NewsArticle articles = 3; // List of news articles
 }
 
-// News article information
+message TitleEntry {
+    string text = 1;
+    string lang = 2;
+}
+
+message SummaryEntry {
+    int32 negative = 1;
+    string summary_id = 2;
+    string text = 3;
+    int32 positive = 4;
+    string lang = 5;
+}
+
+// Define the nested structures first
+message Author {
+    string author_id = 1;
+    string author_name = 2;
+}
+
+message Category {
+    string primary_category = 1;
+    string secondary_category = 2;
+    string tertiary_category = 3;
+}
+
+message CompanyInfo {
+    string company_code = 1;
+    string company_name_en = 2;
+    string company_name_zh = 3;
+}
+
+message Image {
+    string img_context = 1;
+    string img_desc = 2;
+    string img_id = 3;
+    string img_path = 4;
+    string img_url = 5;
+}
+
+message Video {
+    string video_desc_en = 1;
+    string video_desc_zh = 2;
+    string video_details = 3;
+    string video_id = 4;
+    string video_subtitles = 5;
+    string video_url = 6;
+}
+
+message Audio {
+    string audio_desc = 1;
+    string audio_id = 2;
+    string audio_path = 3;
+    string audio_url = 4;
+}
+
+message TextEntry {
+    string lang = 1;
+    string text = 2;
+}
+
+message Keywords {
+    string primary_keywords = 1;
+    string secondary_keywords = 2;
+}
+
+// Now, update the NewsArticle message
 message NewsArticle {
-    string doc_id = 1;             // Unique identifier for the news article
-    string title = 2;          // Title of the article
-    string summary = 3;        // Summary of the article
-    string url = 4;            // URL to the full article
-    string published_date = 5;  // Publication date
-    string author_info = 6;    // Author information
-    string company_info = 7;   // Company 
-    string file_type = 8;      // File type
-    string category_info = 9;  // Category information
-    string images = 10;        // Images
-    string keywords = 11;      // Keywords
-    string region = 12;        // Region
-    string full_text = 13;     // Full text
-    string videos = 14;        // Videos
-    string audios = 15;         // audios
+    string doc_id = 1;                 
+    repeated TextEntry title = 2;       
+    repeated SummaryEntry summary = 3;  
+    string url = 4;                    
+    string published_date = 5;         
+    repeated Author author_info = 6;   
+    repeated CompanyInfo company_info = 7; 
+    string file_type = 8;             
+    Category category_info = 9; 
+    Image images = 10;       
+    Keywords keywords = 11;            
+    string region = 12;               
+    repeated TextEntry full_text = 13; 
+    Video videos = 14;       
+    Audio audios = 15;        
+    // Add other fields as required
 }
 
 // Request message for GetNewsInfo
