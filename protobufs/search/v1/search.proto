@@ -607,7 +607,7 @@ message GetRecQaRsp {
 
 message RecQa {
     string question_id = 1; //
-    RecQuestion question = 2 ;
+    repeated RecQuestion question = 2 ;
     repeated RecAnswer answer = 3; 
     RecCategory category = 4;
 }
