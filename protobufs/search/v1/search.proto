@@ -86,6 +86,13 @@ service SearchService {
 			get: "/v1/search/stock"
 		};
     }
+
+    // 获得推荐问题和答案
+    rpc GetRecQa(GetRecQaReq) returns (GetRecQaRsp){
+        option (google.api.http) = {
+			get: "/v1/search/rec-qa"
+		};
+    }
 }
 
 message GetCompanyInfoReq {
@@ -585,4 +592,41 @@ message StockInfoCharts {
     string name = 1;   // name
     string x = 2; // x
     double y = 3;  // y
+}
+
+message GetRecQaReq {
+    string code = 1; // 代码
+    string lang = 2; // 语言
+}
+
+message GetRecQaRsp {
+    int32 ret = 1; // 错误码
+    string msg = 2; // 消息
+    repeated RecQa list = 3;
+}
+
+message RecQa {
+    string question_id = 1; //
+    RecQuestion question = 2 ;
+    repeated RecAnswer answer = 3; 
+    RecCategory category = 4;
+}
+
+message RecQuestion {
+    string text = 1; 
+    string lang = 2;
+}
+
+message RecAnswer {
+    string text = 1; 
+    string lang = 2;
+    int64 positive = 3;
+    int64 negative = 4;
+    string answer_id = 5;
+}
+
+message RecCategory {
+    string primary_category = 1;
+    string secondary_category = 2;
+    string tertiary_category = 3;
 }
