@@ -123,12 +123,12 @@ message NewsArticle {
     repeated CompanyInfo company_info = 7; 
     string file_type = 8;             
     Category category_info = 9; 
-    Image images = 10;       
+    repeated Image images = 10;       
     Keywords keywords = 11;            
     string region = 12;               
     repeated TextEntry full_text = 13; 
     repeated Video videos = 14;       
-    Audio audios = 15;        
+    repeated Audio audios = 15;        
     // Add other fields as required
 }
 
