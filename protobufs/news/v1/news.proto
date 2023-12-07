@@ -84,6 +84,7 @@ message Video {
     string video_details = 3;
     string video_url = 4;
     repeated SubtitleEntry video_subtitles = 5;
+    string cover_image_url = 6;
 }
 
 message SubtitleEntry {
@@ -126,7 +127,7 @@ message NewsArticle {
     Keywords keywords = 11;            
     string region = 12;               
     repeated TextEntry full_text = 13; 
-    Video videos = 14;       
+    repeated Video videos = 14;       
     Audio audios = 15;        
     // Add other fields as required
 }
