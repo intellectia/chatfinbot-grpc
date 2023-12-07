@@ -79,13 +79,20 @@ message Image {
 }
 
 message Video {
-    string video_desc_en = 1;
-    string video_desc_zh = 2;
+    string video_id = 1;
+    repeated TextEntry video_descriptions = 2;
     string video_details = 3;
-    string video_id = 4;
-    string video_subtitles = 5;
-    string video_url = 6;
+    string video_url = 4;
+    repeated SubtitleEntry video_subtitles = 5;
 }
+
+message SubtitleEntry {
+    int32 start = 1;
+    int32 end = 2;
+    string text = 3;
+    string lang = 4; // Optional, if you want to support multiple languages for subtitles
+}
+
 
 message Audio {
     string audio_desc = 1;
