@@ -128,7 +128,9 @@ message NewsArticle {
     string region = 12;               
     repeated TextEntry full_text = 13; 
     repeated Video videos = 14;       
-    repeated Audio audios = 15;        
+    repeated Audio audios = 15;
+    string pdf_file_path = 16;
+    string txt_file_path = 17;        
     // Add other fields as required
 }
 
