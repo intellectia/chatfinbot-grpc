@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package chatfinbot.dashboard.v1;
+
+option go_package = ".;dashboardpb";
+
+import "google/api/annotations.proto";
+
+// The custom activity service definition.
+service CustomActivityService {
+  rpc CreateCustomActivity (CreateCustomActivityRequest) returns (CustomActivityResponse) {
+    option (google.api.http) = {
+      post: "/v1/activity"
+      body: "*"
+    };
+  }
+
+  rpc GetAllCustomActivities (GetAllCustomActivitiesRequest) returns (CustomActivitiesResponse) {
+    option (google.api.http) = {
+      get: "/v1/activities"
+    };
+  }
+
+  // Additional service methods can be defined here...
+}
+
+// Request message for CreateCustomActivity.
+message CreateCustomActivityRequest {
+  string user_id = 1;
+  string aegis_id = 2;
+  string type = 3;
+  bytes extra = 4; // Assuming json.RawMessage can be represented as bytes.
+}
+
+// Response message for CustomActivity.
+message CustomActivityResponse {
+  uint32 id = 1;
+  string user_id = 2;
+  string aegis_id = 3;
+  string type = 4;
+  bytes extra = 5;
+  int64 created_at = 6; // Using int64 for Unix timestamp in milliseconds
+}
+
+// Request message for GetAllCustomActivities.
+message GetAllCustomActivitiesRequest {
+  int64 start_time = 1; // Using int64 for Unix timestamp in milliseconds
+  int64 end_time = 2;   // Using int64 for Unix timestamp in milliseconds
+  string user_type = 3;
+}
+
+// Response message for multiple CustomActivities.
+message CustomActivitiesResponse {
+  repeated CustomActivityResponse activities = 1;
+}
