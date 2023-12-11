@@ -7,15 +7,15 @@ option go_package = ".;dashboardpb";
 import "google/api/annotations.proto";
 
 // The custom activity service definition.
-service CustomActivityService {
-  rpc CreateCustomActivity (CreateCustomActivityRequest) returns (CustomActivityResponse) {
+service DashboardService {
+  rpc CreateCustomActivity (CreateCustomActivityRequest) returns (CreateCustomActivityResponse) {
     option (google.api.http) = {
-      post: "/v1/activity"
+      post: "/v1/activity2"
       body: "*"
     };
   }
 
-  rpc GetAllCustomActivities (GetAllCustomActivitiesRequest) returns (CustomActivitiesResponse) {
+  rpc GetAllCustomActivities (GetAllCustomActivitiesRequest) returns (GetAllCustomActivitiesResponse) {
     option (google.api.http) = {
       get: "/v1/activities"
     };
@@ -27,13 +27,13 @@ service CustomActivityService {
 // Request message for CreateCustomActivity.
 message CreateCustomActivityRequest {
   string user_id = 1;
-  string aegis_id = 2;
+  string aegis_id2 = 2;
   string type = 3;
   bytes extra = 4; // Assuming json.RawMessage can be represented as bytes.
 }
 
 // Response message for CustomActivity.
-message CustomActivityResponse {
+message CustomActivity {
   uint32 id = 1;
   string user_id = 2;
   string aegis_id = 3;
@@ -50,6 +50,14 @@ message GetAllCustomActivitiesRequest {
 }
 
 // Response message for multiple CustomActivities.
-message CustomActivitiesResponse {
-  repeated CustomActivityResponse activities = 1;
+message GetAllCustomActivitiesResponse {
+  int32 ret = 1; // 错误码
+  string msg = 2; // msg
+  repeated CustomActivity list = 3;
+}
+
+message CreateCustomActivityResponse {
+  int32 ret = 1; // Error code
+  string msg = 2; // Message
+  CustomActivity data = 3;
 }

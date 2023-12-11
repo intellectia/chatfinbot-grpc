@@ -31,7 +31,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_CustomActivityService_CreateCustomActivity_0(ctx context.Context, marshaler runtime.Marshaler, client CustomActivityServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_DashboardService_CreateCustomActivity_0(ctx context.Context, marshaler runtime.Marshaler, client DashboardServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateCustomActivityRequest
 	var metadata runtime.ServerMetadata
 
@@ -48,7 +48,7 @@ func request_CustomActivityService_CreateCustomActivity_0(ctx context.Context, m
 
 }
 
-func local_request_CustomActivityService_CreateCustomActivity_0(ctx context.Context, marshaler runtime.Marshaler, server CustomActivityServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_DashboardService_CreateCustomActivity_0(ctx context.Context, marshaler runtime.Marshaler, server DashboardServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreateCustomActivityRequest
 	var metadata runtime.ServerMetadata
 
@@ -66,17 +66,17 @@ func local_request_CustomActivityService_CreateCustomActivity_0(ctx context.Cont
 }
 
 var (
-	filter_CustomActivityService_GetAllCustomActivities_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_DashboardService_GetAllCustomActivities_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
-func request_CustomActivityService_GetAllCustomActivities_0(ctx context.Context, marshaler runtime.Marshaler, client CustomActivityServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_DashboardService_GetAllCustomActivities_0(ctx context.Context, marshaler runtime.Marshaler, client DashboardServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq GetAllCustomActivitiesRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CustomActivityService_GetAllCustomActivities_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_DashboardService_GetAllCustomActivities_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -85,14 +85,14 @@ func request_CustomActivityService_GetAllCustomActivities_0(ctx context.Context,
 
 }
 
-func local_request_CustomActivityService_GetAllCustomActivities_0(ctx context.Context, marshaler runtime.Marshaler, server CustomActivityServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_DashboardService_GetAllCustomActivities_0(ctx context.Context, marshaler runtime.Marshaler, server DashboardServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq GetAllCustomActivitiesRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CustomActivityService_GetAllCustomActivities_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_DashboardService_GetAllCustomActivities_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -101,13 +101,13 @@ func local_request_CustomActivityService_GetAllCustomActivities_0(ctx context.Co
 
 }
 
-// RegisterCustomActivityServiceHandlerServer registers the http handlers for service CustomActivityService to "mux".
-// UnaryRPC     :call CustomActivityServiceServer directly.
+// RegisterDashboardServiceHandlerServer registers the http handlers for service DashboardService to "mux".
+// UnaryRPC     :call DashboardServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterCustomActivityServiceHandlerFromEndpoint instead.
-func RegisterCustomActivityServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server CustomActivityServiceServer) error {
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterDashboardServiceHandlerFromEndpoint instead.
+func RegisterDashboardServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server DashboardServiceServer) error {
 
-	mux.Handle("POST", pattern_CustomActivityService_CreateCustomActivity_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_DashboardService_CreateCustomActivity_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -115,12 +115,12 @@ func RegisterCustomActivityServiceHandlerServer(ctx context.Context, mux *runtim
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.dashboard.v1.CustomActivityService/CreateCustomActivity", runtime.WithHTTPPathPattern("/v1/activity"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.dashboard.v1.DashboardService/CreateCustomActivity", runtime.WithHTTPPathPattern("/v1/activity2"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CustomActivityService_CreateCustomActivity_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_DashboardService_CreateCustomActivity_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -128,11 +128,11 @@ func RegisterCustomActivityServiceHandlerServer(ctx context.Context, mux *runtim
 			return
 		}
 
-		forward_CustomActivityService_CreateCustomActivity_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_DashboardService_CreateCustomActivity_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_CustomActivityService_GetAllCustomActivities_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_DashboardService_GetAllCustomActivities_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -140,12 +140,12 @@ func RegisterCustomActivityServiceHandlerServer(ctx context.Context, mux *runtim
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.dashboard.v1.CustomActivityService/GetAllCustomActivities", runtime.WithHTTPPathPattern("/v1/activities"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.dashboard.v1.DashboardService/GetAllCustomActivities", runtime.WithHTTPPathPattern("/v1/activities"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CustomActivityService_GetAllCustomActivities_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_DashboardService_GetAllCustomActivities_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -153,16 +153,16 @@ func RegisterCustomActivityServiceHandlerServer(ctx context.Context, mux *runtim
 			return
 		}
 
-		forward_CustomActivityService_GetAllCustomActivities_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_DashboardService_GetAllCustomActivities_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterCustomActivityServiceHandlerFromEndpoint is same as RegisterCustomActivityServiceHandler but
+// RegisterDashboardServiceHandlerFromEndpoint is same as RegisterDashboardServiceHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterCustomActivityServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterDashboardServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.DialContext(ctx, endpoint, opts...)
 	if err != nil {
 		return err
@@ -182,63 +182,63 @@ func RegisterCustomActivityServiceHandlerFromEndpoint(ctx context.Context, mux *
 		}()
 	}()
 
-	return RegisterCustomActivityServiceHandler(ctx, mux, conn)
+	return RegisterDashboardServiceHandler(ctx, mux, conn)
 }
 
-// RegisterCustomActivityServiceHandler registers the http handlers for service CustomActivityService to "mux".
+// RegisterDashboardServiceHandler registers the http handlers for service DashboardService to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterCustomActivityServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterCustomActivityServiceHandlerClient(ctx, mux, NewCustomActivityServiceClient(conn))
+func RegisterDashboardServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterDashboardServiceHandlerClient(ctx, mux, NewDashboardServiceClient(conn))
 }
 
-// RegisterCustomActivityServiceHandlerClient registers the http handlers for service CustomActivityService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "CustomActivityServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "CustomActivityServiceClient"
+// RegisterDashboardServiceHandlerClient registers the http handlers for service DashboardService
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "DashboardServiceClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "DashboardServiceClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "CustomActivityServiceClient" to call the correct interceptors.
-func RegisterCustomActivityServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client CustomActivityServiceClient) error {
+// "DashboardServiceClient" to call the correct interceptors.
+func RegisterDashboardServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client DashboardServiceClient) error {
 
-	mux.Handle("POST", pattern_CustomActivityService_CreateCustomActivity_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_DashboardService_CreateCustomActivity_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.dashboard.v1.CustomActivityService/CreateCustomActivity", runtime.WithHTTPPathPattern("/v1/activity"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.dashboard.v1.DashboardService/CreateCustomActivity", runtime.WithHTTPPathPattern("/v1/activity2"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CustomActivityService_CreateCustomActivity_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_DashboardService_CreateCustomActivity_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_CustomActivityService_CreateCustomActivity_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_DashboardService_CreateCustomActivity_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_CustomActivityService_GetAllCustomActivities_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_DashboardService_GetAllCustomActivities_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.dashboard.v1.CustomActivityService/GetAllCustomActivities", runtime.WithHTTPPathPattern("/v1/activities"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.dashboard.v1.DashboardService/GetAllCustomActivities", runtime.WithHTTPPathPattern("/v1/activities"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CustomActivityService_GetAllCustomActivities_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_DashboardService_GetAllCustomActivities_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_CustomActivityService_GetAllCustomActivities_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_DashboardService_GetAllCustomActivities_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -246,13 +246,13 @@ func RegisterCustomActivityServiceHandlerClient(ctx context.Context, mux *runtim
 }
 
 var (
-	pattern_CustomActivityService_CreateCustomActivity_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "activity"}, ""))
+	pattern_DashboardService_CreateCustomActivity_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "activity2"}, ""))
 
-	pattern_CustomActivityService_GetAllCustomActivities_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "activities"}, ""))
+	pattern_DashboardService_GetAllCustomActivities_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "activities"}, ""))
 )
 
 var (
-	forward_CustomActivityService_CreateCustomActivity_0 = runtime.ForwardResponseMessage
+	forward_DashboardService_CreateCustomActivity_0 = runtime.ForwardResponseMessage
 
-	forward_CustomActivityService_GetAllCustomActivities_0 = runtime.ForwardResponseMessage
+	forward_DashboardService_GetAllCustomActivities_0 = runtime.ForwardResponseMessage
 )

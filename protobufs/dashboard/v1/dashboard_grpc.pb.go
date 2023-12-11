@@ -19,126 +19,126 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	CustomActivityService_CreateCustomActivity_FullMethodName   = "/chatfinbot.dashboard.v1.CustomActivityService/CreateCustomActivity"
-	CustomActivityService_GetAllCustomActivities_FullMethodName = "/chatfinbot.dashboard.v1.CustomActivityService/GetAllCustomActivities"
+	DashboardService_CreateCustomActivity_FullMethodName   = "/chatfinbot.dashboard.v1.DashboardService/CreateCustomActivity"
+	DashboardService_GetAllCustomActivities_FullMethodName = "/chatfinbot.dashboard.v1.DashboardService/GetAllCustomActivities"
 )
 
-// CustomActivityServiceClient is the client API for CustomActivityService service.
+// DashboardServiceClient is the client API for DashboardService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type CustomActivityServiceClient interface {
-	CreateCustomActivity(ctx context.Context, in *CreateCustomActivityRequest, opts ...grpc.CallOption) (*CustomActivityResponse, error)
-	GetAllCustomActivities(ctx context.Context, in *GetAllCustomActivitiesRequest, opts ...grpc.CallOption) (*CustomActivitiesResponse, error)
+type DashboardServiceClient interface {
+	CreateCustomActivity(ctx context.Context, in *CreateCustomActivityRequest, opts ...grpc.CallOption) (*CreateCustomActivityResponse, error)
+	GetAllCustomActivities(ctx context.Context, in *GetAllCustomActivitiesRequest, opts ...grpc.CallOption) (*GetAllCustomActivitiesResponse, error)
 }
 
-type customActivityServiceClient struct {
+type dashboardServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewCustomActivityServiceClient(cc grpc.ClientConnInterface) CustomActivityServiceClient {
-	return &customActivityServiceClient{cc}
+func NewDashboardServiceClient(cc grpc.ClientConnInterface) DashboardServiceClient {
+	return &dashboardServiceClient{cc}
 }
 
-func (c *customActivityServiceClient) CreateCustomActivity(ctx context.Context, in *CreateCustomActivityRequest, opts ...grpc.CallOption) (*CustomActivityResponse, error) {
-	out := new(CustomActivityResponse)
-	err := c.cc.Invoke(ctx, CustomActivityService_CreateCustomActivity_FullMethodName, in, out, opts...)
+func (c *dashboardServiceClient) CreateCustomActivity(ctx context.Context, in *CreateCustomActivityRequest, opts ...grpc.CallOption) (*CreateCustomActivityResponse, error) {
+	out := new(CreateCustomActivityResponse)
+	err := c.cc.Invoke(ctx, DashboardService_CreateCustomActivity_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *customActivityServiceClient) GetAllCustomActivities(ctx context.Context, in *GetAllCustomActivitiesRequest, opts ...grpc.CallOption) (*CustomActivitiesResponse, error) {
-	out := new(CustomActivitiesResponse)
-	err := c.cc.Invoke(ctx, CustomActivityService_GetAllCustomActivities_FullMethodName, in, out, opts...)
+func (c *dashboardServiceClient) GetAllCustomActivities(ctx context.Context, in *GetAllCustomActivitiesRequest, opts ...grpc.CallOption) (*GetAllCustomActivitiesResponse, error) {
+	out := new(GetAllCustomActivitiesResponse)
+	err := c.cc.Invoke(ctx, DashboardService_GetAllCustomActivities_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// CustomActivityServiceServer is the server API for CustomActivityService service.
-// All implementations must embed UnimplementedCustomActivityServiceServer
+// DashboardServiceServer is the server API for DashboardService service.
+// All implementations must embed UnimplementedDashboardServiceServer
 // for forward compatibility
-type CustomActivityServiceServer interface {
-	CreateCustomActivity(context.Context, *CreateCustomActivityRequest) (*CustomActivityResponse, error)
-	GetAllCustomActivities(context.Context, *GetAllCustomActivitiesRequest) (*CustomActivitiesResponse, error)
-	mustEmbedUnimplementedCustomActivityServiceServer()
+type DashboardServiceServer interface {
+	CreateCustomActivity(context.Context, *CreateCustomActivityRequest) (*CreateCustomActivityResponse, error)
+	GetAllCustomActivities(context.Context, *GetAllCustomActivitiesRequest) (*GetAllCustomActivitiesResponse, error)
+	mustEmbedUnimplementedDashboardServiceServer()
 }
 
-// UnimplementedCustomActivityServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedCustomActivityServiceServer struct {
+// UnimplementedDashboardServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedDashboardServiceServer struct {
 }
 
-func (UnimplementedCustomActivityServiceServer) CreateCustomActivity(context.Context, *CreateCustomActivityRequest) (*CustomActivityResponse, error) {
+func (UnimplementedDashboardServiceServer) CreateCustomActivity(context.Context, *CreateCustomActivityRequest) (*CreateCustomActivityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateCustomActivity not implemented")
 }
-func (UnimplementedCustomActivityServiceServer) GetAllCustomActivities(context.Context, *GetAllCustomActivitiesRequest) (*CustomActivitiesResponse, error) {
+func (UnimplementedDashboardServiceServer) GetAllCustomActivities(context.Context, *GetAllCustomActivitiesRequest) (*GetAllCustomActivitiesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllCustomActivities not implemented")
 }
-func (UnimplementedCustomActivityServiceServer) mustEmbedUnimplementedCustomActivityServiceServer() {}
+func (UnimplementedDashboardServiceServer) mustEmbedUnimplementedDashboardServiceServer() {}
 
-// UnsafeCustomActivityServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to CustomActivityServiceServer will
+// UnsafeDashboardServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to DashboardServiceServer will
 // result in compilation errors.
-type UnsafeCustomActivityServiceServer interface {
-	mustEmbedUnimplementedCustomActivityServiceServer()
+type UnsafeDashboardServiceServer interface {
+	mustEmbedUnimplementedDashboardServiceServer()
 }
 
-func RegisterCustomActivityServiceServer(s grpc.ServiceRegistrar, srv CustomActivityServiceServer) {
-	s.RegisterService(&CustomActivityService_ServiceDesc, srv)
+func RegisterDashboardServiceServer(s grpc.ServiceRegistrar, srv DashboardServiceServer) {
+	s.RegisterService(&DashboardService_ServiceDesc, srv)
 }
 
-func _CustomActivityService_CreateCustomActivity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _DashboardService_CreateCustomActivity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateCustomActivityRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CustomActivityServiceServer).CreateCustomActivity(ctx, in)
+		return srv.(DashboardServiceServer).CreateCustomActivity(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CustomActivityService_CreateCustomActivity_FullMethodName,
+		FullMethod: DashboardService_CreateCustomActivity_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomActivityServiceServer).CreateCustomActivity(ctx, req.(*CreateCustomActivityRequest))
+		return srv.(DashboardServiceServer).CreateCustomActivity(ctx, req.(*CreateCustomActivityRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CustomActivityService_GetAllCustomActivities_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _DashboardService_GetAllCustomActivities_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetAllCustomActivitiesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CustomActivityServiceServer).GetAllCustomActivities(ctx, in)
+		return srv.(DashboardServiceServer).GetAllCustomActivities(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CustomActivityService_GetAllCustomActivities_FullMethodName,
+		FullMethod: DashboardService_GetAllCustomActivities_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomActivityServiceServer).GetAllCustomActivities(ctx, req.(*GetAllCustomActivitiesRequest))
+		return srv.(DashboardServiceServer).GetAllCustomActivities(ctx, req.(*GetAllCustomActivitiesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// CustomActivityService_ServiceDesc is the grpc.ServiceDesc for CustomActivityService service.
+// DashboardService_ServiceDesc is the grpc.ServiceDesc for DashboardService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var CustomActivityService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "chatfinbot.dashboard.v1.CustomActivityService",
-	HandlerType: (*CustomActivityServiceServer)(nil),
+var DashboardService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "chatfinbot.dashboard.v1.DashboardService",
+	HandlerType: (*DashboardServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "CreateCustomActivity",
-			Handler:    _CustomActivityService_CreateCustomActivity_Handler,
+			Handler:    _DashboardService_CreateCustomActivity_Handler,
 		},
 		{
 			MethodName: "GetAllCustomActivities",
-			Handler:    _CustomActivityService_GetAllCustomActivities_Handler,
+			Handler:    _DashboardService_GetAllCustomActivities_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
