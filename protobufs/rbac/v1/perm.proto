@@ -79,8 +79,8 @@ enum ChatOpt {
     ChatOptUnknown = 0; // 未知（不要使用）
     ChatOptAnswerNum = 1; // 聊天问答数量
     ChatOptOCR = 3; // ocr
-    ChatOptFileNum = 4; // 文件数量
-    ChatOptPageSize = 5; // 文件页数
+    ChatOptDocNum = 4; // 文档数
+    ChatOptPageSize = 5; // 页数
 }
 
 enum MediaOpt {
