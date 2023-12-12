@@ -96,6 +96,12 @@ enum PermConfigMode {
     PermConfigModeUnlimited = 3; // 无限模式计费
 }
 
+enum PlanType {
+    PlanTypeFree = 0;  // 免费
+    PlanTypePro = 1; // vip
+    PlanTypeMax = 2; // svip
+}
+
 message PermConfig {
     ChatPermConfig chat_config = 1;
     // WritingPermConfig writing_config = 2;
@@ -201,6 +207,7 @@ message GetUserUsageResponse {
     string msg = 2;
     UserBasicUsage basic_info = 3;
     repeated UserPackageUsage package_list = 4;
+    PlanType user_type = 5;
 }
 
 message UserBasicUsage {
