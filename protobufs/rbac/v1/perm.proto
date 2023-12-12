@@ -80,7 +80,7 @@ enum ChatOpt {
     ChatOptAnswerNum = 1; // 聊天问答数量
     ChatOptOCR = 3; // ocr
     ChatOptDocNum = 4; // 文档数
-    ChatOptPageSize = 5; // 页数
+    ChatOptDocPages = 5; // 页数
 }
 
 enum MediaOpt {
@@ -189,7 +189,7 @@ message BasicQuota {
     uint32 chat_usage_num = 3; // 使用 聊天数量
     uint32 doc_num = 4; // 文档数
     uint32 doc_usage_num = 5; // 使用文档数量
-    uint32 doc_pagesize = 6; // 文档页数
+    uint32 doc_pages = 6; // 文档页数
     uint32 ocr_num = 7; // ocr数量
     uint32 ocr_usage_num = 8; // 使用ocr数量
     uint32 audio_duration = 9; // 音频时长
