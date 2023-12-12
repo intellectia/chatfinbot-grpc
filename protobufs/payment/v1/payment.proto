@@ -207,7 +207,13 @@ message GetUserUsageResponse {
     string msg = 2;
     UserBasicUsage basic_info = 3;
     repeated UserPackageUsage package_list = 4;
-    PlanType user_type = 5;
+    UserPlan user_plan = 5;
+}
+
+message UserPlan {
+    PlanType user_type = 1;
+    int64 start_time = 2;
+    int64 end_time = 3;
 }
 
 message UserBasicUsage {
