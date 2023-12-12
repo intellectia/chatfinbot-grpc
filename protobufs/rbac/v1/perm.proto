@@ -12,66 +12,49 @@ service RbacService {
 			body: "*"
 		};
     };
-    rpc CheckWritingPerm(CheckWritingPermReq) returns (CheckWritingPermRsp) {
-        option (google.api.http) = {
-			post: "/v1/rbac/checkwritingperm",
-			body: "*"
-		};
-    };
+    
     rpc CheckMediaPerm(CheckMediaPermReq) returns (CheckMediaPermRsp) {
         option (google.api.http) = {
 			post: "/v1/rbac/checkmediaperm",
 			body: "*"
 		};
     };
+
     rpc CheckChatPermInner(CheckChatPermReq) returns (CheckChatPermRsp) {
         option (google.api.http) = {
 			post: "/v1/rbac/checkchatperm-inner",
 			body: "*"
 		};
     };
-    rpc CheckWritingPermInner(CheckWritingPermReq) returns (CheckWritingPermRsp) {
-        option (google.api.http) = {
-			post: "/v1/rbac/checkwritingperm-inner",
-			body: "*"
-		};
-    };
+   
     rpc CheckMediaPermInner(CheckMediaPermReq) returns (CheckMediaPermRsp) {
         option (google.api.http) = {
 			post: "/v1/rbac/checkmediaperm-inner",
 			body: "*"
 		};
     };
+
     rpc SetChatPerm(SetChatPermReq) returns (SetChatPermRsp) {
         option (google.api.http) = {
 			post: "/v1/rbac/setchatperm",
 			body: "*"
 		};
     };
-    rpc SetWritingPerm(SetWritingPermReq) returns (SetWritingPermRsp)  {
-        option (google.api.http) = {
-			post: "/v1/rbac/setwritingperm",
-			body: "*"
-		};
-    };
+
     rpc SetMediaPerm(SetMediaPermReq) returns (SetMediaPermRsp)  {
         option (google.api.http) = {
 			post: "/v1/rbac/setmediaperm",
 			body: "*"
 		};
     };
+
     rpc SetChatPermInner(SetChatPermReq) returns (SetChatPermRsp)  {
         option (google.api.http) = {
 			post: "/v1/rbac/setchatperm-inner",
 			body: "*"
 		};
     };
-    rpc SetWritingPermInner(SetWritingPermReq) returns (SetWritingPermRsp) {
-        option (google.api.http) = {
-			post: "/v1/rbac/setwritingperm-inner",
-			body: "*"
-		};
-    };
+   
     rpc SetMediaPermInner(SetMediaPermReq) returns (SetMediaPermRsp)  {
         option (google.api.http) = {
 			post: "/v1/rbac/setmediaperm-inner",
@@ -89,41 +72,21 @@ service RbacService {
 enum ChatType {
     ChatTypeUnknown = 0; // 未知（不要使用）
     ChatTypeChat = 1; // 问答
-    ChatTypeWriting = 2; // 写作
-    ChatTypeMedia = 3; // 音视频
+    ChatTypeMedia = 3; // 媒体
 }
 
 enum ChatOpt {
     ChatOptUnknown = 0; // 未知（不要使用）
     ChatOptAnswerNum = 1; // 聊天问答数量
-    ChatOptUploadFormat = 2; // 上传文件格式
     ChatOptOCR = 3; // ocr
     ChatOptFileNum = 4; // 文件数量
     ChatOptPageSize = 5; // 文件页数
-    ChatOptFileSize = 6; // 文件大小
-    ChatOptGraph = 7; // 图表生成
-    ChatOptMultiDoc = 8;  //多文档分析
-}
-
-enum WritingOpt {
-    WritingOptUnknown = 0; // 未知（不要使用）
-    WritingOptOutputToken = 1; // 输出文字数量
-    WritingOptInputFileNum = 2; // 输入文件数量及页数
-    WritingOptInputPageSize = 3; // 输入文件数量及页数
-    WritingOptEdit = 4; // 写作编辑
-    WritingOptGraph = 5; // 图表生成
-    WritingOptExport = 6; // 导出格式
-    WritingOptGraphNum = 7; // 图表数量
-    WritingOptCustomColor = 8; // 自定义配色方案
-    WritingOptOCR = 9; // ocr
 }
 
 enum MediaOpt {
     MediaOptUnknown = 0; // 未知（不要使用）
-    MediaOptAudioFile = 1; // 音频文件
+    MediaOptAudio = 1; // 音频文件
     MediaOptVideo = 2; // 视频
-    MediaOptAudioLive = 3; // 录音
-    MediaOptDeepSummary = 4; // 深度总结次数
 }
 
 message CheckChatPermReq {
@@ -133,11 +96,9 @@ message CheckChatPermReq {
 
 message ChatPermItem {
     ChatOpt opt = 1; // 选项
-    string upload_format = 2; // 上传文件格式 只有在opt=ChatOptUploadFormat生效
-    uint32 ocr_num = 3; // OCR数量     只有在opt=ChatOptOCR生效
-    uint32 file_num = 4; // 文件数量    只有在opt=ChatOptFileNum  生效
-    uint32 page_size = 5; // 文件页数   只有在opt=ChatOptPageSize  生效
-    uint32 file_size = 6; // 文件大小 有在opt=ChatOptFileSize  生效
+    uint32 ocr_num = 2; // OCR数量     只有在opt=ChatOptOCR生效
+    uint32 file_num = 3; // 文件数量    只有在opt=ChatOptFileNum  生效
+    uint32 page_size = 4; // 文件页数   只有在opt=ChatOptPageSize  生效
 }
 
 message PermData {
@@ -152,20 +113,6 @@ message CheckChatPermRsp {
     int32 ret = 1; // 错误码
     string msg = 2; // msg
     repeated PermData list = 3; // 数据
-}
-
-message CheckWritingPermReq {
-    string user_id = 1; // 用户id
-    repeated WritingPermItem list = 2;
-}
-
-message WritingPermItem {
-    WritingOpt opt = 1; // 选项
-    int32 intput_file_num = 2; // 输入文件数量
-    int32 intput_page_size = 3; // 输入文件页数
-    string export_format = 4; // 导出格式
-    int32 graph_num = 5; // 图表数量
-    uint32 ocr_num = 6; // OCR数量     只有在opt=WritingOptOCR生效
 }
 
 message CheckWritingPermRsp {
@@ -208,23 +155,6 @@ message SetChatPermRsp {
     string msg = 2; // msg
 }
 
-message SetWritingPermReq {
-    string user_id = 1; // 用户id
-    repeated SetWritingPermItem list = 2;
-}
-
-message SetWritingPermItem {
-    WritingOpt opt = 1; // 选项
-    int32 intput_file_num = 2; // 输入文件数量
-    int32 graph_num = 3; // 图表数量
-    uint32 intput_page_size = 4; // 页数数量    只有在opt=WritingOptInputPageSize   生效
-    string remark = 5; // 备注
-}
-
-message SetWritingPermRsp {
-    int32 ret = 1; // 错误码
-    string msg = 2; // msg
-}
 
 message SetMediaPermReq {
     string user_id = 1; // 用户id
@@ -242,60 +172,34 @@ message SetMediaPermRsp {
 }
 
 message UserQuotaUsage {
-    uint32 answer_num = 1; // 回答次数
-    uint32 ocr_num = 2; // ocr次数
-    uint32 chat_file_num = 3; // 聊天使用文件数量
-    uint32 writing_file_num = 4; // 写作输入文件数量
-    uint32 writing_graph_num = 5; // 写作生成图表数量
-}
-
-message UserPackageUsage {
-    int64 video_time = 1; // 花费视频时间
-    int64 audio_file_time = 2; // 花费音频文件时间
-    int64 audio_live_time =3 ; // 花费录音时间
-    int64 deep_summary = 4; // 深度总结次数
-    int64 ocr = 5; // ocr次数
+    uint32 chat_num = 1; // 聊天数量
+    uint32 doc_num = 2; // 聊天使用文件数量
+    uint32 ocr_num = 3; // ocr次数
+    uint32 audio_duration = 4; // 音频时长
+    uint32 video_duration= 5; // 视频时长
 }
 
 message GetUserQuotaReq {
 
 }
 
-
-message BasicInfoQuota {
-    int32 mode = 1; // 模式  1=天 2=月
-    int32 chat_num = 2; // 聊天数量
-    int32 doc_num = 3; // 文档数
-    int32 doc_page_size = 4; // 文档页数
-    int32 writing_file_num = 5; // 写作文件数
-    int32 writing_file_page_size = 6; // 写作文件页数
-    int32 chat_usage_num = 7; //使用问答数量 
-    int32 doc_usage_num = 8; //使用文档数量
-    int32 writing_file_usage_num = 9; //  使用写作的文件数量
-}
-
-message PackageInfoQuota {
-    int32 doc_num = 1; // 文档数量 
-    int32 doc_usage_num = 2; //使用文档数量
-    int32 chat_num = 3; // 问答数量 
-    int32 chat_usage_num = 4; //使用问答数量 
-    int32 audio_file_duration = 5; // 音频数量 
-    int32 audio_usage_file_duration = 6; //使用音频数量
-    int32 record_audio_duration= 7; // 转录时长
-    int32 record_audio_usage_duration = 8; //使用转录时长
-    int32 video_duration= 9; // 视频时长
-    int32 video_usage_duration = 10; //使用视频时长
-    int32 ocr_num = 11; // ocr数量
-    int32 ocr_usage_num = 12; // 使用ocr数量
-    int32 depth_summary_num = 13; // 深度总结数量
-    int32 depth_summary_usage_num = 14; // 使用深度总结数量
-    int32 writing_file_num = 15; // 写作的文件数量
-    int32 writing_file_usage_num = 16; //  使用写作的文件数量
+message BasicQuota {
+    uint32 mode = 1; // 模式  1=天 2=月
+    uint32 chat_num = 2; // 聊天数量
+    uint32 chat_usage_num = 3; // 使用 聊天数量
+    uint32 doc_num = 4; // 文档数
+    uint32 doc_usage_num = 5; // 使用文档数量
+    uint32 doc_pagesize = 6; // 文档页数
+    uint32 ocr_num = 7; // ocr数量
+    uint32 ocr_usage_num = 8; // 使用ocr数量
+    uint32 audio_duration = 9; // 音频时长
+    uint32 audio_usage_duration = 10; //使用音频数量
+    uint32 video_duration= 11; // 视频时长
+    uint32 video_usage_duration = 12; //使用视频时长
 }
 
 message GetUserQuotaRsp {
     int32 ret = 1; // 错误码
     string msg = 2; // msg
-    BasicInfoQuota basic_info = 3;
-    PackageInfoQuota package_info = 4;
+    BasicQuota basic_info = 3;
 }
