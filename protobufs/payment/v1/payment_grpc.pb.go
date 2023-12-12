@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PaymentsServiceClient interface {
-	CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*OrderResponse, error)
+	CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error)
 	ListOrders(ctx context.Context, in *ListOrdersRequest, opts ...grpc.CallOption) (*ListOrdersResponse, error)
 	GetOrderStatus(ctx context.Context, in *GetOrderStatusRequest, opts ...grpc.CallOption) (*GetOrderStatusResponse, error)
 	GetPlanDetail(ctx context.Context, in *GetPlanDetailRequest, opts ...grpc.CallOption) (*GetPlanDetailResponse, error)
@@ -40,8 +40,8 @@ func NewPaymentsServiceClient(cc grpc.ClientConnInterface) PaymentsServiceClient
 	return &paymentsServiceClient{cc}
 }
 
-func (c *paymentsServiceClient) CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*OrderResponse, error) {
-	out := new(OrderResponse)
+func (c *paymentsServiceClient) CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error) {
+	out := new(CreateOrderResponse)
 	err := c.cc.Invoke(ctx, "/chatfinbot.payment.v1.PaymentsService/CreateOrder", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -116,7 +116,7 @@ func (c *paymentsServiceClient) CreateUsages(ctx context.Context, in *CreateUsag
 // All implementations must embed UnimplementedPaymentsServiceServer
 // for forward compatibility
 type PaymentsServiceServer interface {
-	CreateOrder(context.Context, *CreateOrderRequest) (*OrderResponse, error)
+	CreateOrder(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error)
 	ListOrders(context.Context, *ListOrdersRequest) (*ListOrdersResponse, error)
 	GetOrderStatus(context.Context, *GetOrderStatusRequest) (*GetOrderStatusResponse, error)
 	GetPlanDetail(context.Context, *GetPlanDetailRequest) (*GetPlanDetailResponse, error)
@@ -131,7 +131,7 @@ type PaymentsServiceServer interface {
 type UnimplementedPaymentsServiceServer struct {
 }
 
-func (UnimplementedPaymentsServiceServer) CreateOrder(context.Context, *CreateOrderRequest) (*OrderResponse, error) {
+func (UnimplementedPaymentsServiceServer) CreateOrder(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOrder not implemented")
 }
 func (UnimplementedPaymentsServiceServer) ListOrders(context.Context, *ListOrdersRequest) (*ListOrdersResponse, error) {

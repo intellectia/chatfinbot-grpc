@@ -19,16 +19,16 @@ message Order {
 }
 
 service PaymentsService {
-    rpc CreateOrder(CreateOrderRequest) returns (OrderResponse) {
+    rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse) {
         option (google.api.http) = {
-            post: "/orders"
-            body: "order_data"
+            post: "/v1/order"
+            body: "*"
         };
     };
     
     rpc ListOrders(ListOrdersRequest) returns (ListOrdersResponse) {
         option (google.api.http) = {
-            get: "/orders"
+            get: "/v1/orders"
         };
     };
     
@@ -159,10 +159,10 @@ message CreateOrderRequest {
     Order order_data = 1;
 }
 
-message OrderResponse {
+message CreateOrderResponse {
     Order order_data = 1;
-    string status = 2;
-    string message = 3;
+    int32 ret = 2;
+    string msg = 3;
 }
 
 // Messages for ListOrders
@@ -176,8 +176,8 @@ message ListOrdersRequest {
 message ListOrdersResponse {
     repeated Order orders = 1;
     int32 total_records = 2;
-    string status = 3;
-    string message = 4;
+    int32 ret = 3;
+    string msg = 4;
 }
 
 // Messages for GetOrderStatus
