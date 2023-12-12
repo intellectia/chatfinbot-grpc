@@ -77,7 +77,7 @@ enum ChatType {
 
 enum ChatOpt {
     ChatOptUnknown = 0; // 未知（不要使用）
-    ChatOptAnswerNum = 1; // 聊天问答数量
+    ChatOptChatNum = 1; // 聊天问答数量
     ChatOptOCR = 3; // ocr
     ChatOptDocNum = 4; // 文档数
     ChatOptDocPages = 5; // 页数
