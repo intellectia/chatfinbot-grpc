@@ -225,7 +225,7 @@ message UserBasicUsage {
 
 enum PackageType {
     PackageTypeUnknown = 0; // 未知（不要使用）
-    PackageTypeUploadAudio = 4; //  上传音频文件
+    PackageTypeAudio = 4; //  音频
     PackageTypeVideo = 5; //  视频
     // PackageTypeRecordAudio = 6; //  录音
     // PackageTypeDepthSummary = 7; // 深度总结
