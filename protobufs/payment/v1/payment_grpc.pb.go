@@ -24,12 +24,15 @@ const _ = grpc.SupportPackageIsVersion7
 type PaymentsServiceClient interface {
 	CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error)
 	ListOrders(ctx context.Context, in *ListOrdersRequest, opts ...grpc.CallOption) (*ListOrdersResponse, error)
-	GetOrderStatus(ctx context.Context, in *GetOrderStatusRequest, opts ...grpc.CallOption) (*GetOrderStatusResponse, error)
+	GetOrderInfo(ctx context.Context, in *GetOrderInfoRequest, opts ...grpc.CallOption) (*GetOrderInfoResponse, error)
+	// deprecated
 	GetPlanDetail(ctx context.Context, in *GetPlanDetailRequest, opts ...grpc.CallOption) (*GetPlanDetailResponse, error)
+	// deprecated
 	GetUserUsagePermissions(ctx context.Context, in *GetUserUsagePermissionsRequest, opts ...grpc.CallOption) (*GetUserUsagePermissionsResponse, error)
 	GetUserUsage(ctx context.Context, in *GetUserUsageRequest, opts ...grpc.CallOption) (*GetUserUsageResponse, error)
 	ConsumeUserPackageUsage(ctx context.Context, in *ConsumeUserPackageUsageRequest, opts ...grpc.CallOption) (*ConsumeUserPackageUsageResponse, error)
-	CreateUsages(ctx context.Context, in *CreateUsagesRequest, opts ...grpc.CallOption) (*Empty, error)
+	CreateUsages(ctx context.Context, in *CreateUsagesRequest, opts ...grpc.CallOption) (*CreateUsagesResponse, error)
+	GetPlans(ctx context.Context, in *GetPlansRequest, opts ...grpc.CallOption) (*GetPlansResponse, error)
 }
 
 type paymentsServiceClient struct {
@@ -58,9 +61,9 @@ func (c *paymentsServiceClient) ListOrders(ctx context.Context, in *ListOrdersRe
 	return out, nil
 }
 
-func (c *paymentsServiceClient) GetOrderStatus(ctx context.Context, in *GetOrderStatusRequest, opts ...grpc.CallOption) (*GetOrderStatusResponse, error) {
-	out := new(GetOrderStatusResponse)
-	err := c.cc.Invoke(ctx, "/chatfinbot.payment.v1.PaymentsService/GetOrderStatus", in, out, opts...)
+func (c *paymentsServiceClient) GetOrderInfo(ctx context.Context, in *GetOrderInfoRequest, opts ...grpc.CallOption) (*GetOrderInfoResponse, error) {
+	out := new(GetOrderInfoResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.payment.v1.PaymentsService/GetOrderInfo", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,9 +106,18 @@ func (c *paymentsServiceClient) ConsumeUserPackageUsage(ctx context.Context, in 
 	return out, nil
 }
 
-func (c *paymentsServiceClient) CreateUsages(ctx context.Context, in *CreateUsagesRequest, opts ...grpc.CallOption) (*Empty, error) {
-	out := new(Empty)
+func (c *paymentsServiceClient) CreateUsages(ctx context.Context, in *CreateUsagesRequest, opts ...grpc.CallOption) (*CreateUsagesResponse, error) {
+	out := new(CreateUsagesResponse)
 	err := c.cc.Invoke(ctx, "/chatfinbot.payment.v1.PaymentsService/CreateUsages", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *paymentsServiceClient) GetPlans(ctx context.Context, in *GetPlansRequest, opts ...grpc.CallOption) (*GetPlansResponse, error) {
+	out := new(GetPlansResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.payment.v1.PaymentsService/GetPlans", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -118,12 +130,15 @@ func (c *paymentsServiceClient) CreateUsages(ctx context.Context, in *CreateUsag
 type PaymentsServiceServer interface {
 	CreateOrder(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error)
 	ListOrders(context.Context, *ListOrdersRequest) (*ListOrdersResponse, error)
-	GetOrderStatus(context.Context, *GetOrderStatusRequest) (*GetOrderStatusResponse, error)
+	GetOrderInfo(context.Context, *GetOrderInfoRequest) (*GetOrderInfoResponse, error)
+	// deprecated
 	GetPlanDetail(context.Context, *GetPlanDetailRequest) (*GetPlanDetailResponse, error)
+	// deprecated
 	GetUserUsagePermissions(context.Context, *GetUserUsagePermissionsRequest) (*GetUserUsagePermissionsResponse, error)
 	GetUserUsage(context.Context, *GetUserUsageRequest) (*GetUserUsageResponse, error)
 	ConsumeUserPackageUsage(context.Context, *ConsumeUserPackageUsageRequest) (*ConsumeUserPackageUsageResponse, error)
-	CreateUsages(context.Context, *CreateUsagesRequest) (*Empty, error)
+	CreateUsages(context.Context, *CreateUsagesRequest) (*CreateUsagesResponse, error)
+	GetPlans(context.Context, *GetPlansRequest) (*GetPlansResponse, error)
 	mustEmbedUnimplementedPaymentsServiceServer()
 }
 
@@ -137,8 +152,8 @@ func (UnimplementedPaymentsServiceServer) CreateOrder(context.Context, *CreateOr
 func (UnimplementedPaymentsServiceServer) ListOrders(context.Context, *ListOrdersRequest) (*ListOrdersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListOrders not implemented")
 }
-func (UnimplementedPaymentsServiceServer) GetOrderStatus(context.Context, *GetOrderStatusRequest) (*GetOrderStatusResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetOrderStatus not implemented")
+func (UnimplementedPaymentsServiceServer) GetOrderInfo(context.Context, *GetOrderInfoRequest) (*GetOrderInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOrderInfo not implemented")
 }
 func (UnimplementedPaymentsServiceServer) GetPlanDetail(context.Context, *GetPlanDetailRequest) (*GetPlanDetailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPlanDetail not implemented")
@@ -152,8 +167,11 @@ func (UnimplementedPaymentsServiceServer) GetUserUsage(context.Context, *GetUser
 func (UnimplementedPaymentsServiceServer) ConsumeUserPackageUsage(context.Context, *ConsumeUserPackageUsageRequest) (*ConsumeUserPackageUsageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ConsumeUserPackageUsage not implemented")
 }
-func (UnimplementedPaymentsServiceServer) CreateUsages(context.Context, *CreateUsagesRequest) (*Empty, error) {
+func (UnimplementedPaymentsServiceServer) CreateUsages(context.Context, *CreateUsagesRequest) (*CreateUsagesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUsages not implemented")
+}
+func (UnimplementedPaymentsServiceServer) GetPlans(context.Context, *GetPlansRequest) (*GetPlansResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPlans not implemented")
 }
 func (UnimplementedPaymentsServiceServer) mustEmbedUnimplementedPaymentsServiceServer() {}
 
@@ -204,20 +222,20 @@ func _PaymentsService_ListOrders_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PaymentsService_GetOrderStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetOrderStatusRequest)
+func _PaymentsService_GetOrderInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOrderInfoRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PaymentsServiceServer).GetOrderStatus(ctx, in)
+		return srv.(PaymentsServiceServer).GetOrderInfo(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/chatfinbot.payment.v1.PaymentsService/GetOrderStatus",
+		FullMethod: "/chatfinbot.payment.v1.PaymentsService/GetOrderInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentsServiceServer).GetOrderStatus(ctx, req.(*GetOrderStatusRequest))
+		return srv.(PaymentsServiceServer).GetOrderInfo(ctx, req.(*GetOrderInfoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -312,6 +330,24 @@ func _PaymentsService_CreateUsages_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PaymentsService_GetPlans_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPlansRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentsServiceServer).GetPlans(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.payment.v1.PaymentsService/GetPlans",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentsServiceServer).GetPlans(ctx, req.(*GetPlansRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PaymentsService_ServiceDesc is the grpc.ServiceDesc for PaymentsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -328,8 +364,8 @@ var PaymentsService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _PaymentsService_ListOrders_Handler,
 		},
 		{
-			MethodName: "GetOrderStatus",
-			Handler:    _PaymentsService_GetOrderStatus_Handler,
+			MethodName: "GetOrderInfo",
+			Handler:    _PaymentsService_GetOrderInfo_Handler,
 		},
 		{
 			MethodName: "GetPlanDetail",
@@ -350,6 +386,10 @@ var PaymentsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateUsages",
 			Handler:    _PaymentsService_CreateUsages_Handler,
+		},
+		{
+			MethodName: "GetPlans",
+			Handler:    _PaymentsService_GetPlans_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
