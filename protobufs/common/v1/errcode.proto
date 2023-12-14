@@ -96,5 +96,9 @@ enum RetCode {
     ERR_STOCK_CALL_POLYGON_API_FAILED = 18001; // call polygon API failed
 
     ERR_PLAN_EXPIRE = 19001; // plan expire
+
+
+    // chatfinbot
+    ERR_CHATFINBOT_FAILED = 20000; // chatfinbot failed
 }
 
