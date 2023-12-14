@@ -85,7 +85,9 @@ service AudioService {
 message CreateRecordReq {
     string session_id = 1; // session id
     string doc_id = 2; // 文件id
-    string lang = 3; // 传语言
+    int64 mtid = 3; // 重要领域
+    string keyword = 4; // 关键词
+    string lang = 5; // 语言
 }
 
 message CreateRecordRsp {
