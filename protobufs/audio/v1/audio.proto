@@ -85,6 +85,7 @@ service AudioService {
 message CreateRecordReq {
     string session_id = 1; // session id
     string doc_id = 2; // 文件id
+    string lang = 3; // 传语言
 }
 
 message CreateRecordRsp {
@@ -387,7 +388,7 @@ message GetRecordRsp {
 }
 
 message GetMeetingTypeReq {
-
+    string lang = 1;  // 语言
 }
 
 message GetMeetingTypeRsp {
