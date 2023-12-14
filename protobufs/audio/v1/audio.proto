@@ -74,6 +74,12 @@ service AudioService {
 		};
     };
     rpc GetRecord(GetRecordReq) returns (GetRecordRsp);
+
+    rpc GetMeetingType(GetMeetingTypeReq) returns (GetMeetingTypeRsp) {
+        option (google.api.http) = {
+			get: "/v1/audio/meeting-type"
+		};
+    };
 }
 
 message CreateRecordReq {
@@ -143,6 +149,9 @@ message TranscriptionReq {
     string session_id = 2; // session id
     repeated MediaContent content = 3; // 追加内容
     uint32 stype = 4; // 状态 1=追加 2=覆盖 3=结束录制   2=后面会去掉
+    int64 mtid = 5; // 重要领域
+    string keyword = 6; // 关键词
+    string lang = 7; // 语言
 }
 
 message MediaContent {
@@ -375,4 +384,20 @@ message GetRecordRsp {
     int32 ret = 1; 
     string msg = 2;
     MediaRecord data = 3;
+}
+
+message GetMeetingTypeReq {
+
+}
+
+message GetMeetingTypeRsp {
+    int32 ret = 1; 
+    string msg = 2;
+    repeated MeetingTypeData list = 3;
+}
+
+message MeetingTypeData {
+    int64 id = 1; // id 
+    string name = 2; // 名称
+    int64 sort = 3; // 排序
 }
