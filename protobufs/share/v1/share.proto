@@ -4,7 +4,6 @@ package chatfinbot.share.v1;
 
 option go_package = "github.com/intellectia/chatfinbot-grpc/protobufs/share/v1;sharepb";
 import "google/api/annotations.proto";
-import "search/v1/search.proto";
 
 service ShareService {
     rpc ShareChat(ShareChatReq) returns (ShareChatRsp) {
@@ -98,69 +97,6 @@ service ShareService {
 		};
     }
 
-    // 获取公司数据 
-    rpc GetCompanyInfo(GetCompanyInfoReq) returns (chatfinbot.search.v1.GetCompanyInfoRsp) {
-        option (google.api.http) = {
-			get: "/v1/share/company-info"
-		};
-    }
-    // 获取公司行情指标
-    rpc GetIndicators(GetIndicatorsReq) returns (chatfinbot.search.v1.GetIndicatorsRsp) {
-        option (google.api.http) = {
-			get: "/v1/share/indicators"
-		};
-    }
-    // 获取公司股权结构
-    rpc GetShareholders(GetShareholdersReq) returns (chatfinbot.search.v1.GetShareholdersRsp){ 
-        option (google.api.http) = {
-			get: "/v1/share/shareholders"
-		};
-    }
-    // 获取公司管理层信息
-    rpc GetExecutives(GetExecutivesReq) returns (chatfinbot.search.v1.GetExecutivesRsp) {
-        option (google.api.http) = {
-			get: "/v1/share/executives"
-		};
-    }
-    // 获取员工构成
-    rpc GetStaffInfo(GetStaffInfoReq) returns (chatfinbot.search.v1.GetStaffInfoRsp) {
-        option (google.api.http) = {
-			get: "/v1/share/staff-info"
-		};
-    }
-    // 获取主营营收
-    rpc GetMBRevenue(GetMBRevenueReq) returns (chatfinbot.search.v1.GetMBRevenueRsp) {
-        option (google.api.http) = {
-			get: "/v1/share/mbrevenue"
-		};
-    }
-    // 获取财务概况
-    rpc GetFinancial(GetFinancialReq) returns (chatfinbot.search.v1.GetFinancialRsp) {
-        option (google.api.http) = {
-			get: "/v1/share/financial"
-		};
-    }
-    
-    // 获取应收款
-    rpc GetAccountsReceivable(GetAccountsReceivableReq) returns (chatfinbot.search.v1.GetAccountsReceivableRsp) {
-        option (google.api.http) = {
-			get: "/v1/share/ar"
-		};
-    }
-    // 获取研发支出
-    rpc GetRdExpenditure(GetRdExpenditureReq) returns (chatfinbot.search.v1.GetRdExpenditureRsp) {
-        option (google.api.http) = {
-			get: "/v1/share/rd-expenditure"
-		};
-    }
-
-    // 获取港美股信息
-    rpc GetStock(GetStockReq) returns (chatfinbot.search.v1.GetStockRsp) {
-        option (google.api.http) = {
-			get: "/v1/share/stock"
-		};
-    }
-
     rpc ShareVideo(ShareVideoReq) returns (ShareVideoRsp) {
         option (google.api.http) = {
             post: "/v1/share/share-video",
@@ -181,6 +117,11 @@ service ShareService {
 		};
     };
 
+}
+
+enum ShareType {
+    ShareTypeAll = 0;
+    ShareTypePartial = 1;
 }
 
 message GetChatInfoReq {
@@ -345,7 +286,9 @@ message UnshareVideoRsp {
 
 
 message ShareChatReq {
-    string sid = 1;
+    ShareType type = 1;
+    int64 sid = 2;
+    string content = 3;
 }
 
 message ShareChatRsp {
@@ -354,7 +297,7 @@ message ShareChatRsp {
 }
 
 message UnshareChatReq {
-    string sid = 1;
+    int64 sid = 1;
 }
 
 message UnshareChatRsp {
@@ -363,7 +306,9 @@ message UnshareChatRsp {
 }
 
 message ShareDocReq {
-    string sid = 1;
+    ShareType type = 1;
+    int64 sid = 2;
+    string content = 3;
 }
 
 message ShareDocRsp {
@@ -372,7 +317,7 @@ message ShareDocRsp {
 }
 
 message UnshareDocReq {
-    string sid = 1;
+    int64 sid = 1;
 }
 
 message UnshareDocRsp {
@@ -402,7 +347,9 @@ message CheckShareDocRsp {
 }
 
 message ShareAudioReq {
-    string sid = 1;
+    ShareType type = 1;
+    int64 sid = 2;
+    string content = 3;
 }
 
 message ShareAudioRsp {
@@ -411,7 +358,7 @@ message ShareAudioRsp {
 }
 
 message UnshareAudioReq {
-    string sid = 1;
+    int64 sid = 1;
 }
 
 message UnshareAudioRsp {
@@ -431,85 +378,11 @@ message CheckAudioRsp {
 }
 
 
-message GetCompanyInfoReq {
-    string sid = 1;
-    int32 mid = 2; 
-    string code = 3; // 公司code 例如00030.SZ
-}
-
-message GetIndicatorsReq {
-    string sid = 1;
-    int32 mid = 2; 
-    string code = 3; // 公司code 例如00030.SZ
-}
-
-message GetShareholdersReq {
-    string sid = 1;
-    int32 mid = 2; 
-    string code = 3; // 公司code 例如00030.SZ
-}
 
 
-message GetExecutivesReq {
-    string sid = 1;
-    int32 mid = 2; 
-    string code = 3; // 公司code 例如00030.SZ
-}
 
 
-message GetStaffInfoReq {
-    string sid = 1;
-    int32 mid = 2; 
-    uint32 stype  =3; // 3=近三年 5=近五年 10=近十年  999=上市以来 
-    string code = 4; // 公司code 例如00030.SZ
-}
 
-
-message GetMBRevenueReq {
-    string sid = 1;
-    int32 mid = 2; 
-    uint32 stype  = 3; // 3=近三年 5=近五年 10=近十年  999=上市以来 
-    uint32 mbtype = 4; // 类型 1=行业 2=产品 3=地区
-    string code = 5; // 公司code 例如00030.SZ
-    uint32 unit = 6; // 单位 0=元 1=千元 2=万元 3=百万元 4=亿元 5=十亿元
-}
-
-
-message GetFinancialReq {
-    string sid = 1;
-    int32 mid = 2; 
-    uint32 stype  = 3; // 3=近三年 5=近五年 10=近十年  999=上市以来 
-    string code = 4; // 公司code 例如00030.SZ
-    uint32 unit = 5; // 单位 0=元 1=千元 2=万元 3=百万元 4=亿元 5=十亿元
-}
-
-
-message GetAccountsReceivableReq {
-    string sid = 1;
-    int32 mid = 2; 
-    string code = 3; // 公司code 例如00030.SZ
-    uint32 stype  = 4; // 3=近三年 5=近五年 10=近十年  999=上市以来 
-    uint32 unit = 5; // 单位 0=元 1=千元 2=万元 3=百万元 4=亿元 5=十亿元
-}
-
-
-message  GetRdExpenditureReq {
-    string sid = 1;
-    int32 mid = 2; 
-    uint32 stype  = 3; // 3=近三年 5=近五年 10=近十年  999=上市以来 
-    string code = 4; // 公司code 例如00030.SZ
-    uint32 unit = 5; // 单位 0=元 1=千元 2=万元 3=百万元 4=亿元 5=十亿元
-}
-
-message GetStockReq {
-    string sid = 1;
-    int32 mid = 2; 
-    chatfinbot.search.v1.StockType stock_type = 3; //类型
-    string lang = 4; // 语言
-    uint32 stype  = 5; // 3=近三年 5=近五年 10=近十年  999=上市以来 
-    string code = 6; // 公司code 例如00030.SZ
-    uint32 unit = 7; // 单位 0=元 1=千元 2=万元 3=百万元 4=亿元 5=十亿元
-}
 
 
 
