@@ -43,12 +43,6 @@ service PaymentsService {
             get: "/plan-details"
         };
     };
-    
-    rpc GetUserUsagePermissions(GetUserUsagePermissionsRequest) returns (GetUserUsagePermissionsResponse) {
-        option (google.api.http) = {
-            get: "/usage-details"
-        };
-    };
 
     rpc GetUserUsage(GetUserUsageRequest) returns (GetUserUsageResponse) {
         option (google.api.http) = {
@@ -78,14 +72,6 @@ message GetPlanDetailRequest {
 }
 
 message GetPlanDetailResponse {
-    PermConfig perm_config = 1;
-}
-
-message GetUserUsagePermissionsRequest {
-    string user_id = 1;
-}
-
-message GetUserUsagePermissionsResponse {
     PermConfig perm_config = 1;
 }
 

@@ -26,7 +26,6 @@ type PaymentsServiceClient interface {
 	ListOrders(ctx context.Context, in *ListOrdersRequest, opts ...grpc.CallOption) (*ListOrdersResponse, error)
 	GetOrderStatus(ctx context.Context, in *GetOrderStatusRequest, opts ...grpc.CallOption) (*GetOrderStatusResponse, error)
 	GetPlanDetail(ctx context.Context, in *GetPlanDetailRequest, opts ...grpc.CallOption) (*GetPlanDetailResponse, error)
-	GetUserUsagePermissions(ctx context.Context, in *GetUserUsagePermissionsRequest, opts ...grpc.CallOption) (*GetUserUsagePermissionsResponse, error)
 	GetUserUsage(ctx context.Context, in *GetUserUsageRequest, opts ...grpc.CallOption) (*GetUserUsageResponse, error)
 	ConsumeUserPackageUsage(ctx context.Context, in *ConsumeUserPackageUsageRequest, opts ...grpc.CallOption) (*ConsumeUserPackageUsageResponse, error)
 	CreateUsages(ctx context.Context, in *CreateUsagesRequest, opts ...grpc.CallOption) (*Empty, error)
@@ -76,15 +75,6 @@ func (c *paymentsServiceClient) GetPlanDetail(ctx context.Context, in *GetPlanDe
 	return out, nil
 }
 
-func (c *paymentsServiceClient) GetUserUsagePermissions(ctx context.Context, in *GetUserUsagePermissionsRequest, opts ...grpc.CallOption) (*GetUserUsagePermissionsResponse, error) {
-	out := new(GetUserUsagePermissionsResponse)
-	err := c.cc.Invoke(ctx, "/chatfinbot.payment.v1.PaymentsService/GetUserUsagePermissions", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *paymentsServiceClient) GetUserUsage(ctx context.Context, in *GetUserUsageRequest, opts ...grpc.CallOption) (*GetUserUsageResponse, error) {
 	out := new(GetUserUsageResponse)
 	err := c.cc.Invoke(ctx, "/chatfinbot.payment.v1.PaymentsService/GetUserUsage", in, out, opts...)
@@ -120,7 +110,6 @@ type PaymentsServiceServer interface {
 	ListOrders(context.Context, *ListOrdersRequest) (*ListOrdersResponse, error)
 	GetOrderStatus(context.Context, *GetOrderStatusRequest) (*GetOrderStatusResponse, error)
 	GetPlanDetail(context.Context, *GetPlanDetailRequest) (*GetPlanDetailResponse, error)
-	GetUserUsagePermissions(context.Context, *GetUserUsagePermissionsRequest) (*GetUserUsagePermissionsResponse, error)
 	GetUserUsage(context.Context, *GetUserUsageRequest) (*GetUserUsageResponse, error)
 	ConsumeUserPackageUsage(context.Context, *ConsumeUserPackageUsageRequest) (*ConsumeUserPackageUsageResponse, error)
 	CreateUsages(context.Context, *CreateUsagesRequest) (*Empty, error)
@@ -142,9 +131,6 @@ func (UnimplementedPaymentsServiceServer) GetOrderStatus(context.Context, *GetOr
 }
 func (UnimplementedPaymentsServiceServer) GetPlanDetail(context.Context, *GetPlanDetailRequest) (*GetPlanDetailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPlanDetail not implemented")
-}
-func (UnimplementedPaymentsServiceServer) GetUserUsagePermissions(context.Context, *GetUserUsagePermissionsRequest) (*GetUserUsagePermissionsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUserUsagePermissions not implemented")
 }
 func (UnimplementedPaymentsServiceServer) GetUserUsage(context.Context, *GetUserUsageRequest) (*GetUserUsageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserUsage not implemented")
@@ -240,24 +226,6 @@ func _PaymentsService_GetPlanDetail_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PaymentsService_GetUserUsagePermissions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUserUsagePermissionsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PaymentsServiceServer).GetUserUsagePermissions(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/chatfinbot.payment.v1.PaymentsService/GetUserUsagePermissions",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PaymentsServiceServer).GetUserUsagePermissions(ctx, req.(*GetUserUsagePermissionsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _PaymentsService_GetUserUsage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetUserUsageRequest)
 	if err := dec(in); err != nil {
@@ -334,10 +302,6 @@ var PaymentsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPlanDetail",
 			Handler:    _PaymentsService_GetPlanDetail_Handler,
-		},
-		{
-			MethodName: "GetUserUsagePermissions",
-			Handler:    _PaymentsService_GetUserUsagePermissions_Handler,
 		},
 		{
 			MethodName: "GetUserUsage",
