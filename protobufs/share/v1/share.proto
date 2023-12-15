@@ -121,7 +121,7 @@ message GetChatInfoRsp {
 message GetChatInfoData {
     ShareType type = 1;
     repeated ChatHistory list = 2;
-    string content = 3;
+    string detail = 3;
 }
 
 message ChatHistory {
@@ -172,7 +172,7 @@ message GetDocInfoRsp {
 message GetDocInfoData {
     ShareType type = 1;
     repeated ChatHistory list = 2;
-    string content = 3;
+    string detail = 3;
 }
 
 message AudioInfo {
@@ -180,15 +180,13 @@ message AudioInfo {
     string doc_id = 2; // 文件id
     repeated MediaContent content = 3; // 内容
     string summary = 4; // 总结
-    repeated MediaSummary partial_summary = 5; // 部分内容
-    repeated string todo = 6; // 待办事项
-    bool is_depth_summary = 7; // 是否有深度总结
-    string depth_summary = 8; // 深度总结
-    string url = 9; // 链接地址 
-    uint32 media_type = 10; // 媒体类型 
-    string notes = 11; // 笔记 
-    bool is_public = 12; // 是否公开
-    string notes_title = 13; // 笔记标题
+    repeated string todo = 5; // 待办事项
+    string url = 6; // 链接地址 
+    uint32 media_type = 7; // 媒体类型 
+    string notes = 8; // 笔记 
+    string notes_title = 9; // 笔记标题
+    ShareType type = 10;
+    string detail = 11;
 }
 
 message MediaContent {
@@ -283,7 +281,7 @@ message UnshareVideoRsp {
 message ShareChatReq {
     ShareType type = 1;
     string session_id = 2;
-    string content = 3;
+    string detail = 3;
 }
 
 message ShareChatRsp {
@@ -304,7 +302,7 @@ message UnshareChatRsp {
 message ShareDocReq {
     ShareType type = 1;
     string session_id = 2;
-    string content = 3;
+    string detail = 3;
 }
 
 message ShareDocRsp {
@@ -325,7 +323,7 @@ message UnshareDocRsp {
 message ShareAudioReq {
     ShareType type = 1;
     string session_id = 2;
-    string content = 3;
+    string detail = 3;
 }
 
 message ShareAudioRsp {
