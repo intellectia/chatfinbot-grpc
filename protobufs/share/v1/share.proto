@@ -270,13 +270,14 @@ message UnshareVideoRsp {
 
 message ShareChatReq {
     ShareType type = 1;
-    int64 sid = 2;
+    string session_id = 2;
     string content = 3;
 }
 
 message ShareChatRsp {
     int32 ret = 1; // 错误码
     string msg = 2; // msg
+    int64 sid = 3; 
 }
 
 message UnshareChatReq {
@@ -290,13 +291,14 @@ message UnshareChatRsp {
 
 message ShareDocReq {
     ShareType type = 1;
-    int64 sid = 2;
+    string session_id = 2;
     string content = 3;
 }
 
 message ShareDocRsp {
     int32 ret = 1; // 错误码
     string msg = 2; // msg
+    int64 sid = 3; 
 }
 
 message UnshareDocReq {
@@ -310,13 +312,14 @@ message UnshareDocRsp {
 
 message ShareAudioReq {
     ShareType type = 1;
-    int64 sid = 2;
+    string session_id = 2;
     string content = 3;
 }
 
 message ShareAudioRsp {
     int32 ret = 1; // 错误码
     string msg = 2; // msg
+    int64 sid = 3; 
 }
 
 message UnshareAudioReq {
@@ -328,16 +331,6 @@ message UnshareAudioRsp {
     string msg = 2; // msg
 }
 
-
-message CheckAudioReq {
-    string sid = 1;
-}
-
-message CheckAudioRsp {
-    int32 ret = 1; // 错误码
-    string msg = 2; // msg
-    bool is_share = 3; // 
-}
 
 
 
