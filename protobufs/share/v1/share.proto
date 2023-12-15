@@ -115,9 +115,13 @@ message GetChatInfoReq {
 message GetChatInfoRsp {
     int32 ret = 1; // 错误码
     string msg = 2; // msg
-    ShareType type = 3;
-    repeated ChatHistory list = 4;
-    string content = 5;
+    GetChatInfoData data = 3;
+}
+
+message GetChatInfoData {
+    ShareType type = 1;
+    repeated ChatHistory list = 2;
+    string content = 3;
 }
 
 message ChatHistory {
