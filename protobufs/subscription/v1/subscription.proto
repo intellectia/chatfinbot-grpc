@@ -1,0 +1,220 @@
+syntax = "proto3";
+
+package chatfinbot.subscription.v1;
+
+option go_package = ".;subscriptionpb";
+
+import "google/api/annotations.proto";
+
+message Order {
+    string order_id = 1;
+    string user_id = 2;
+    string item_id = 3;
+    float total_amount = 4;  // Remember to handle decimals in a suitable manner for protobuf.
+    string currency = 5;
+    string order_status = 6; // Pending, Completed, Failed, Refunded, etc.
+    int64 created_at = 7;
+    int64 updated_at = 8;
+    string payment_method = 9; // Wechat, Alipay, Paypal.
+}
+
+service SubscriptionService {
+    rpc CreateOrder(CreateOrderRequest) returns (OrderResponse) {
+        option (google.api.http) = {
+            post: "/orders"
+            body: "order_data"
+        };
+    };
+    
+    rpc ListOrders(ListOrdersRequest) returns (ListOrdersResponse) {
+        option (google.api.http) = {
+            get: "/orders"
+        };
+    };
+    
+    rpc GetOrderStatus(GetOrderStatusRequest) returns (GetOrderStatusResponse) {
+        option (google.api.http) = {
+            get: "/orders/{order_id}/status"
+        };
+    };
+
+    rpc GetPlanDetail(GetPlanDetailRequest) returns (GetPlanDetailResponse) {
+        option (google.api.http) = {
+            get: "/plan-details"
+        };
+    };
+
+    rpc GetUserUsage(GetUserUsageRequest) returns (GetUserUsageResponse) {
+        option (google.api.http) = {
+            get: "/usage"
+        };
+    };
+
+    rpc ConsumeUserPackageUsage(ConsumeUserPackageUsageRequest) returns (ConsumeUserPackageUsageResponse) {
+        option (google.api.http) = {
+            post: "/consume-package-usage"
+            body: "*"
+        };
+    };
+
+    rpc CreateUsages(CreateUsagesRequest) returns (Empty);
+
+}
+
+enum PlanId {
+    Free = 0;  // default value, 免费版
+    Premium = 1; // 个人付费版
+    Enterprise = 2; // 企业付费版
+}
+
+message GetPlanDetailRequest {
+    PlanId plan_id = 1;
+}
+
+message GetPlanDetailResponse {
+    PermConfig perm_config = 1;
+}
+
+enum PermConfigMode {
+    PermConfigModeUnknown = 0; // 未知（不要使用）
+    PermConfigModeDay = 1; // 按天计费
+    PermConfigModeMonth = 2; // 按月计费
+    PermConfigModeUnlimited = 3; // 无限模式计费
+}
+
+enum PlanType {
+    PlanTypeFree = 0;  // 免费
+    PlanTypePro = 1; // vip
+    PlanTypeMax = 2; // svip
+}
+
+message PermConfig {
+    ChatPermConfig chat_config = 1;
+    MediaPermConfig media_config = 2;
+    PackageConfig package_config = 3;
+}
+
+message ChatPermConfig {
+    PermConfigMode mode = 1; // 模式
+    uint32 answer_num = 2; // 回答数量
+    string upload_format = 3; // 上传文件格式 多个英语逗号分隔 doc,pdf,docx,md,txt
+    uint32 ocr_num = 4; // ocr次数， 0=未限制
+    uint32 file_num = 5; // 文件数量
+    uint32 page_size = 6; // 每个文件限制页数 
+}
+
+message MediaPermConfig {
+    uint32 audio_time = 1; // 音频时长
+    uint32 video_time = 2; // 视频时长
+    PermConfigMode mode = 3; // 模式
+}
+
+message PackageConfig {
+    uint32 ocr_num = 1; // ocr 次数
+    uint32 file_num = 2; // file num 次数
+    uint32 writing_num = 4; // writing num 次数 
+    uint32 writing_file_num = 5; // writing file num 次数
+    uint32 deep_summary_num = 6; // 深度总结次数
+}
+
+// Messages for CreateOrder
+message CreateOrderRequest {
+    Order order_data = 1;
+}
+
+message OrderResponse {
+    Order order_data = 1;
+    string status = 2;
+    string message = 3;
+}
+
+// Messages for ListOrders
+message ListOrdersRequest {
+    int32 page = 1;
+    int32 limit = 2;
+    string sort_by = 3;
+    bool descending = 4;
+}
+
+message ListOrdersResponse {
+    repeated Order orders = 1;
+    int32 total_records = 2;
+    string status = 3;
+    string message = 4;
+}
+
+// Messages for GetOrderStatus
+message GetOrderStatusRequest {
+    string order_id = 1;
+}
+
+message GetOrderStatusResponse {
+    string order_status = 1;
+    string status = 2;  // General status for the response (e.g., success, failure).
+    string message = 3;  // Optional message providing more details.
+}
+
+message GetUserUsageRequest {
+    string user_id = 1;
+}
+
+
+message GetUserUsageResponse {
+    int32 ret = 1;
+    string msg = 2;
+    UserBasicUsage basic_info = 3;
+    repeated UserPackageUsage package_list = 4;
+    UserPlan user_plan = 5;
+}
+
+message UserPlan {
+    PlanType user_type = 1;
+    int64 start_time = 2;
+    int64 end_time = 3;
+}
+
+message UserBasicUsage {
+    ChatPermConfig chat_config = 1; // 聊天
+    MediaPermConfig media_config = 2;  // 媒体
+}
+
+enum PackageType {
+    PackageTypeUnknown = 0; // 未知（不要使用）
+    PackageTypeAudio = 4; //  音频
+    PackageTypeVideo = 5; //  视频
+    PackageTypeOCR = 8;   // ocr包
+}
+
+message UserPackageUsage {
+    string id = 1;
+    PackageType package_type = 2; // 包类型
+    string title = 3; // 标题
+    int64 start_time = 4; // 开始时间
+    int64 end_time = 5; // 结束时间
+    int64 quota = 6; // 用量
+    int64 usage = 7; // 使用量
+}
+
+message ConsumeUserPackageUsageRequest {
+    string user_id = 1;
+    repeated ConsumePackageData list = 2;
+}
+
+message ConsumePackageData {
+    string id = 1;  // id
+    int64 usage = 2; // 使用量
+}
+
+message ConsumeUserPackageUsageResponse {
+    int32 ret = 1;
+    string msg = 2;
+}
+
+// Request message for CreateFreeUsages RPC
+message CreateUsagesRequest {
+  repeated int32 plan_ids = 1;
+  string user_id = 2;
+}
+
+message Empty {}
+
