@@ -212,7 +212,7 @@ message ConsumeUserPackageUsageResponse {
 
 // Request message for CreateFreeUsages RPC
 message CreateUsagesRequest {
-  repeated string plan_ids = 1;
+  repeated int32 plan_ids = 1;
   string user_id = 2;
 }
 
