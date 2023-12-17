@@ -31,6 +31,7 @@ type SubscriptionServiceClient interface {
 	CreateUsages(ctx context.Context, in *CreateUsagesRequest, opts ...grpc.CallOption) (*CreateUsagesResponse, error)
 	GetPlans(ctx context.Context, in *GetPlansRequest, opts ...grpc.CallOption) (*GetPlansResponse, error)
 	CancelSubscription(ctx context.Context, in *CancelSubscriptionRequest, opts ...grpc.CallOption) (*CancelSubscriptionResponse, error)
+	TriggerPaypalSubscription(ctx context.Context, in *TriggerPaypalSubscriptionRequest, opts ...grpc.CallOption) (*TriggerPaypalSubscriptionResponse, error)
 }
 
 type subscriptionServiceClient struct {
@@ -122,6 +123,15 @@ func (c *subscriptionServiceClient) CancelSubscription(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *subscriptionServiceClient) TriggerPaypalSubscription(ctx context.Context, in *TriggerPaypalSubscriptionRequest, opts ...grpc.CallOption) (*TriggerPaypalSubscriptionResponse, error) {
+	out := new(TriggerPaypalSubscriptionResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.subscription.v1.SubscriptionService/TriggerPaypalSubscription", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SubscriptionServiceServer is the server API for SubscriptionService service.
 // All implementations must embed UnimplementedSubscriptionServiceServer
 // for forward compatibility
@@ -135,6 +145,7 @@ type SubscriptionServiceServer interface {
 	CreateUsages(context.Context, *CreateUsagesRequest) (*CreateUsagesResponse, error)
 	GetPlans(context.Context, *GetPlansRequest) (*GetPlansResponse, error)
 	CancelSubscription(context.Context, *CancelSubscriptionRequest) (*CancelSubscriptionResponse, error)
+	TriggerPaypalSubscription(context.Context, *TriggerPaypalSubscriptionRequest) (*TriggerPaypalSubscriptionResponse, error)
 	mustEmbedUnimplementedSubscriptionServiceServer()
 }
 
@@ -168,6 +179,9 @@ func (UnimplementedSubscriptionServiceServer) GetPlans(context.Context, *GetPlan
 }
 func (UnimplementedSubscriptionServiceServer) CancelSubscription(context.Context, *CancelSubscriptionRequest) (*CancelSubscriptionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CancelSubscription not implemented")
+}
+func (UnimplementedSubscriptionServiceServer) TriggerPaypalSubscription(context.Context, *TriggerPaypalSubscriptionRequest) (*TriggerPaypalSubscriptionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TriggerPaypalSubscription not implemented")
 }
 func (UnimplementedSubscriptionServiceServer) mustEmbedUnimplementedSubscriptionServiceServer() {}
 
@@ -344,6 +358,24 @@ func _SubscriptionService_CancelSubscription_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SubscriptionService_TriggerPaypalSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TriggerPaypalSubscriptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionServiceServer).TriggerPaypalSubscription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.subscription.v1.SubscriptionService/TriggerPaypalSubscription",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionServiceServer).TriggerPaypalSubscription(ctx, req.(*TriggerPaypalSubscriptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SubscriptionService_ServiceDesc is the grpc.ServiceDesc for SubscriptionService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -386,6 +418,10 @@ var SubscriptionService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CancelSubscription",
 			Handler:    _SubscriptionService_CancelSubscription_Handler,
+		},
+		{
+			MethodName: "TriggerPaypalSubscription",
+			Handler:    _SubscriptionService_TriggerPaypalSubscription_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
