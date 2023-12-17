@@ -22,13 +22,15 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SubscriptionServiceClient interface {
-	CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*OrderResponse, error)
+	CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error)
 	ListOrders(ctx context.Context, in *ListOrdersRequest, opts ...grpc.CallOption) (*ListOrdersResponse, error)
-	GetOrderStatus(ctx context.Context, in *GetOrderStatusRequest, opts ...grpc.CallOption) (*GetOrderStatusResponse, error)
+	GetOrderInfo(ctx context.Context, in *GetOrderInfoRequest, opts ...grpc.CallOption) (*GetOrderInfoResponse, error)
 	GetPlanDetail(ctx context.Context, in *GetPlanDetailRequest, opts ...grpc.CallOption) (*GetPlanDetailResponse, error)
 	GetUserUsage(ctx context.Context, in *GetUserUsageRequest, opts ...grpc.CallOption) (*GetUserUsageResponse, error)
 	ConsumeUserPackageUsage(ctx context.Context, in *ConsumeUserPackageUsageRequest, opts ...grpc.CallOption) (*ConsumeUserPackageUsageResponse, error)
-	CreateUsages(ctx context.Context, in *CreateUsagesRequest, opts ...grpc.CallOption) (*Empty, error)
+	CreateUsages(ctx context.Context, in *CreateUsagesRequest, opts ...grpc.CallOption) (*CreateUsagesResponse, error)
+	GetPlans(ctx context.Context, in *GetPlansRequest, opts ...grpc.CallOption) (*GetPlansResponse, error)
+	CancelSubscription(ctx context.Context, in *CancelSubscriptionRequest, opts ...grpc.CallOption) (*CancelSubscriptionResponse, error)
 }
 
 type subscriptionServiceClient struct {
@@ -39,8 +41,8 @@ func NewSubscriptionServiceClient(cc grpc.ClientConnInterface) SubscriptionServi
 	return &subscriptionServiceClient{cc}
 }
 
-func (c *subscriptionServiceClient) CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*OrderResponse, error) {
-	out := new(OrderResponse)
+func (c *subscriptionServiceClient) CreateOrder(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderResponse, error) {
+	out := new(CreateOrderResponse)
 	err := c.cc.Invoke(ctx, "/chatfinbot.subscription.v1.SubscriptionService/CreateOrder", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -57,9 +59,9 @@ func (c *subscriptionServiceClient) ListOrders(ctx context.Context, in *ListOrde
 	return out, nil
 }
 
-func (c *subscriptionServiceClient) GetOrderStatus(ctx context.Context, in *GetOrderStatusRequest, opts ...grpc.CallOption) (*GetOrderStatusResponse, error) {
-	out := new(GetOrderStatusResponse)
-	err := c.cc.Invoke(ctx, "/chatfinbot.subscription.v1.SubscriptionService/GetOrderStatus", in, out, opts...)
+func (c *subscriptionServiceClient) GetOrderInfo(ctx context.Context, in *GetOrderInfoRequest, opts ...grpc.CallOption) (*GetOrderInfoResponse, error) {
+	out := new(GetOrderInfoResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.subscription.v1.SubscriptionService/GetOrderInfo", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -93,9 +95,27 @@ func (c *subscriptionServiceClient) ConsumeUserPackageUsage(ctx context.Context,
 	return out, nil
 }
 
-func (c *subscriptionServiceClient) CreateUsages(ctx context.Context, in *CreateUsagesRequest, opts ...grpc.CallOption) (*Empty, error) {
-	out := new(Empty)
+func (c *subscriptionServiceClient) CreateUsages(ctx context.Context, in *CreateUsagesRequest, opts ...grpc.CallOption) (*CreateUsagesResponse, error) {
+	out := new(CreateUsagesResponse)
 	err := c.cc.Invoke(ctx, "/chatfinbot.subscription.v1.SubscriptionService/CreateUsages", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *subscriptionServiceClient) GetPlans(ctx context.Context, in *GetPlansRequest, opts ...grpc.CallOption) (*GetPlansResponse, error) {
+	out := new(GetPlansResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.subscription.v1.SubscriptionService/GetPlans", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *subscriptionServiceClient) CancelSubscription(ctx context.Context, in *CancelSubscriptionRequest, opts ...grpc.CallOption) (*CancelSubscriptionResponse, error) {
+	out := new(CancelSubscriptionResponse)
+	err := c.cc.Invoke(ctx, "/chatfinbot.subscription.v1.SubscriptionService/CancelSubscription", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -106,13 +126,15 @@ func (c *subscriptionServiceClient) CreateUsages(ctx context.Context, in *Create
 // All implementations must embed UnimplementedSubscriptionServiceServer
 // for forward compatibility
 type SubscriptionServiceServer interface {
-	CreateOrder(context.Context, *CreateOrderRequest) (*OrderResponse, error)
+	CreateOrder(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error)
 	ListOrders(context.Context, *ListOrdersRequest) (*ListOrdersResponse, error)
-	GetOrderStatus(context.Context, *GetOrderStatusRequest) (*GetOrderStatusResponse, error)
+	GetOrderInfo(context.Context, *GetOrderInfoRequest) (*GetOrderInfoResponse, error)
 	GetPlanDetail(context.Context, *GetPlanDetailRequest) (*GetPlanDetailResponse, error)
 	GetUserUsage(context.Context, *GetUserUsageRequest) (*GetUserUsageResponse, error)
 	ConsumeUserPackageUsage(context.Context, *ConsumeUserPackageUsageRequest) (*ConsumeUserPackageUsageResponse, error)
-	CreateUsages(context.Context, *CreateUsagesRequest) (*Empty, error)
+	CreateUsages(context.Context, *CreateUsagesRequest) (*CreateUsagesResponse, error)
+	GetPlans(context.Context, *GetPlansRequest) (*GetPlansResponse, error)
+	CancelSubscription(context.Context, *CancelSubscriptionRequest) (*CancelSubscriptionResponse, error)
 	mustEmbedUnimplementedSubscriptionServiceServer()
 }
 
@@ -120,14 +142,14 @@ type SubscriptionServiceServer interface {
 type UnimplementedSubscriptionServiceServer struct {
 }
 
-func (UnimplementedSubscriptionServiceServer) CreateOrder(context.Context, *CreateOrderRequest) (*OrderResponse, error) {
+func (UnimplementedSubscriptionServiceServer) CreateOrder(context.Context, *CreateOrderRequest) (*CreateOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOrder not implemented")
 }
 func (UnimplementedSubscriptionServiceServer) ListOrders(context.Context, *ListOrdersRequest) (*ListOrdersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListOrders not implemented")
 }
-func (UnimplementedSubscriptionServiceServer) GetOrderStatus(context.Context, *GetOrderStatusRequest) (*GetOrderStatusResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetOrderStatus not implemented")
+func (UnimplementedSubscriptionServiceServer) GetOrderInfo(context.Context, *GetOrderInfoRequest) (*GetOrderInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOrderInfo not implemented")
 }
 func (UnimplementedSubscriptionServiceServer) GetPlanDetail(context.Context, *GetPlanDetailRequest) (*GetPlanDetailResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPlanDetail not implemented")
@@ -138,8 +160,14 @@ func (UnimplementedSubscriptionServiceServer) GetUserUsage(context.Context, *Get
 func (UnimplementedSubscriptionServiceServer) ConsumeUserPackageUsage(context.Context, *ConsumeUserPackageUsageRequest) (*ConsumeUserPackageUsageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ConsumeUserPackageUsage not implemented")
 }
-func (UnimplementedSubscriptionServiceServer) CreateUsages(context.Context, *CreateUsagesRequest) (*Empty, error) {
+func (UnimplementedSubscriptionServiceServer) CreateUsages(context.Context, *CreateUsagesRequest) (*CreateUsagesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUsages not implemented")
+}
+func (UnimplementedSubscriptionServiceServer) GetPlans(context.Context, *GetPlansRequest) (*GetPlansResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPlans not implemented")
+}
+func (UnimplementedSubscriptionServiceServer) CancelSubscription(context.Context, *CancelSubscriptionRequest) (*CancelSubscriptionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CancelSubscription not implemented")
 }
 func (UnimplementedSubscriptionServiceServer) mustEmbedUnimplementedSubscriptionServiceServer() {}
 
@@ -190,20 +218,20 @@ func _SubscriptionService_ListOrders_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SubscriptionService_GetOrderStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetOrderStatusRequest)
+func _SubscriptionService_GetOrderInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOrderInfoRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SubscriptionServiceServer).GetOrderStatus(ctx, in)
+		return srv.(SubscriptionServiceServer).GetOrderInfo(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/chatfinbot.subscription.v1.SubscriptionService/GetOrderStatus",
+		FullMethod: "/chatfinbot.subscription.v1.SubscriptionService/GetOrderInfo",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).GetOrderStatus(ctx, req.(*GetOrderStatusRequest))
+		return srv.(SubscriptionServiceServer).GetOrderInfo(ctx, req.(*GetOrderInfoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -280,6 +308,42 @@ func _SubscriptionService_CreateUsages_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SubscriptionService_GetPlans_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPlansRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionServiceServer).GetPlans(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.subscription.v1.SubscriptionService/GetPlans",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionServiceServer).GetPlans(ctx, req.(*GetPlansRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SubscriptionService_CancelSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CancelSubscriptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionServiceServer).CancelSubscription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.subscription.v1.SubscriptionService/CancelSubscription",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionServiceServer).CancelSubscription(ctx, req.(*CancelSubscriptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SubscriptionService_ServiceDesc is the grpc.ServiceDesc for SubscriptionService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -296,8 +360,8 @@ var SubscriptionService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _SubscriptionService_ListOrders_Handler,
 		},
 		{
-			MethodName: "GetOrderStatus",
-			Handler:    _SubscriptionService_GetOrderStatus_Handler,
+			MethodName: "GetOrderInfo",
+			Handler:    _SubscriptionService_GetOrderInfo_Handler,
 		},
 		{
 			MethodName: "GetPlanDetail",
@@ -314,6 +378,14 @@ var SubscriptionService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateUsages",
 			Handler:    _SubscriptionService_CreateUsages_Handler,
+		},
+		{
+			MethodName: "GetPlans",
+			Handler:    _SubscriptionService_GetPlans_Handler,
+		},
+		{
+			MethodName: "CancelSubscription",
+			Handler:    _SubscriptionService_CancelSubscription_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -19,22 +19,22 @@ message Order {
 }
 
 service SubscriptionService {
-    rpc CreateOrder(CreateOrderRequest) returns (OrderResponse) {
+    rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse) {
         option (google.api.http) = {
-            post: "/orders"
-            body: "order_data"
+            post: "/v1/order"
+            body: "*"
         };
     };
     
     rpc ListOrders(ListOrdersRequest) returns (ListOrdersResponse) {
         option (google.api.http) = {
-            get: "/orders"
+            get: "/v1/orders"
         };
     };
     
-    rpc GetOrderStatus(GetOrderStatusRequest) returns (GetOrderStatusResponse) {
+    rpc GetOrderInfo(GetOrderInfoRequest) returns (GetOrderInfoResponse) {
         option (google.api.http) = {
-            get: "/orders/{order_id}/status"
+            get: "/v1/order"
         };
     };
 
@@ -57,7 +57,25 @@ service SubscriptionService {
         };
     };
 
-    rpc CreateUsages(CreateUsagesRequest) returns (Empty);
+    rpc CreateUsages(CreateUsagesRequest) returns (CreateUsagesResponse) {
+        option (google.api.http) = {
+            post: "/v1/usages/create"
+            body: "*"
+        };
+    };
+
+    rpc GetPlans(GetPlansRequest) returns (GetPlansResponse) {
+        option (google.api.http) = {
+            delete: "/v1/plans"
+        };
+    };
+
+
+    rpc CancelSubscription(CancelSubscriptionRequest) returns (CancelSubscriptionResponse) {
+        option (google.api.http) = {
+            delete: "/v1/subscription"
+        };
+    };
 
 }
 
@@ -119,13 +137,14 @@ message PackageConfig {
 
 // Messages for CreateOrder
 message CreateOrderRequest {
-    Order order_data = 1;
+    repeated string order_items = 1;
 }
 
-message OrderResponse {
+
+message CreateOrderResponse {
     Order order_data = 1;
-    string status = 2;
-    string message = 3;
+    int32 ret = 2;
+    string msg = 3;
 }
 
 // Messages for ListOrders
@@ -139,19 +158,19 @@ message ListOrdersRequest {
 message ListOrdersResponse {
     repeated Order orders = 1;
     int32 total_records = 2;
-    string status = 3;
-    string message = 4;
+    int32 ret = 3;
+    string msg = 4;
 }
 
 // Messages for GetOrderStatus
-message GetOrderStatusRequest {
+message GetOrderInfoRequest {
     string order_id = 1;
 }
 
-message GetOrderStatusResponse {
-    string order_status = 1;
-    string status = 2;  // General status for the response (e.g., success, failure).
-    string message = 3;  // Optional message providing more details.
+message GetOrderInfoResponse {
+    Order data = 1;
+    int32 ret = 2;  // General status for the response (e.g., success, failure).
+    string msg = 3;  // Optional message providing more details.
 }
 
 message GetUserUsageRequest {
@@ -218,3 +237,43 @@ message CreateUsagesRequest {
 
 message Empty {}
 
+
+message GetPlansRequest {
+    // Define any request parameters here, if needed
+}
+
+message GetPlansResponse {
+    int32 ret = 1;
+    string msg = 2;
+    repeated Plan plans = 3;
+}
+
+message Plan {
+    string plan_id = 1;
+    string name = 2;
+    string name_cn = 3;
+    string description = 4;
+    string description_cn = 5;
+    double price = 6;
+    string currency = 7;
+    uint32 duration_days = 8;
+    bytes plan_details = 9; // json.RawMessage can be represented as bytes in protobuf
+    int32 plan_type = 10;
+    int64 created_at = 11;
+    int64 updated_at = 12;
+    bool is_package = 13;
+}
+
+message CreateUsagesResponse {
+    int32 ret = 1;
+    string msg = 2;
+}
+
+message CancelSubscriptionRequest {
+    string subscription_id = 1;
+}
+
+message CancelSubscriptionResponse {
+    int32 ret = 1;
+    string msg = 2;
+}
