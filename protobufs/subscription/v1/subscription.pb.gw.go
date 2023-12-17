@@ -379,7 +379,7 @@ func RegisterSubscriptionServiceHandlerServer(ctx context.Context, mux *runtime.
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.subscription.v1.SubscriptionService/CreateOrder", runtime.WithHTTPPathPattern("/v1/order"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.subscription.v1.SubscriptionService/CreateOrder", runtime.WithHTTPPathPattern("/v1/subscription/order"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -604,7 +604,7 @@ func RegisterSubscriptionServiceHandlerServer(ctx context.Context, mux *runtime.
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.subscription.v1.SubscriptionService/TriggerPaypalSubscription", runtime.WithHTTPPathPattern("/v1/paypal-subscription"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.subscription.v1.SubscriptionService/TriggerPaypalSubscription", runtime.WithHTTPPathPattern("/v1/subscription/paypal"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -668,7 +668,7 @@ func RegisterSubscriptionServiceHandlerClient(ctx context.Context, mux *runtime.
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.subscription.v1.SubscriptionService/CreateOrder", runtime.WithHTTPPathPattern("/v1/order"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.subscription.v1.SubscriptionService/CreateOrder", runtime.WithHTTPPathPattern("/v1/subscription/order"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -866,7 +866,7 @@ func RegisterSubscriptionServiceHandlerClient(ctx context.Context, mux *runtime.
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.subscription.v1.SubscriptionService/TriggerPaypalSubscription", runtime.WithHTTPPathPattern("/v1/paypal-subscription"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.subscription.v1.SubscriptionService/TriggerPaypalSubscription", runtime.WithHTTPPathPattern("/v1/subscription/paypal"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -886,7 +886,7 @@ func RegisterSubscriptionServiceHandlerClient(ctx context.Context, mux *runtime.
 }
 
 var (
-	pattern_SubscriptionService_CreateOrder_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "order"}, ""))
+	pattern_SubscriptionService_CreateOrder_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "subscription", "order"}, ""))
 
 	pattern_SubscriptionService_ListOrders_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "orders"}, ""))
 
@@ -904,7 +904,7 @@ var (
 
 	pattern_SubscriptionService_CancelSubscription_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "subscription"}, ""))
 
-	pattern_SubscriptionService_TriggerPaypalSubscription_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "paypal-subscription"}, ""))
+	pattern_SubscriptionService_TriggerPaypalSubscription_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "subscription", "paypal"}, ""))
 )
 
 var (

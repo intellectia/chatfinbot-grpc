@@ -21,7 +21,7 @@ message Order {
 service SubscriptionService {
     rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse) {
         option (google.api.http) = {
-            post: "/v1/order"
+            post: "/v1/subscription/order"
             body: "*"
         };
     };
@@ -79,7 +79,7 @@ service SubscriptionService {
 
     rpc TriggerPaypalSubscription(TriggerPaypalSubscriptionRequest) returns (TriggerPaypalSubscriptionResponse) {
         option (google.api.http) = {
-            post: "/v1/paypal-subscription"
+            post: "/v1/subscription/paypal"
             body: "*"
         };
     };
