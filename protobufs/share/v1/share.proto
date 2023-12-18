@@ -122,6 +122,7 @@ message GetChatInfoData {
     ShareType type = 1;
     repeated ChatHistory list = 2;
     string detail = 3;
+    string uid = 4;
 }
 
 message ChatHistory {
@@ -167,6 +168,7 @@ message GetDocInfoRsp {
     int32 ret = 1; // 错误码
     string msg = 2; // msg
     GetDocInfoData data = 3;
+    string uid = 4;
 }
 
 message GetDocInfoData {
@@ -209,6 +211,7 @@ message GetAudioInfoRsp {
     int32 ret = 1; // 错误码
     string msg = 2; // msg
     AudioInfo data = 3;  // 数据
+    string uid = 4;
 }
 
 message GetAudioChatInfoReq {
@@ -220,6 +223,7 @@ message GetAudioChatInfoRsp {
     int32 ret = 1; // 错误码
     string msg = 2; // msg
     repeated ChatHistory list = 3;
+    string uid = 4;
 }
 
 message GetVideoChatInfoReq {
