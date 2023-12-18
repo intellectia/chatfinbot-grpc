@@ -62,6 +62,8 @@ message Category {
     string primary_category = 1;
     string secondary_category = 2;
     string tertiary_category = 3;
+    string quaternary_category = 4;
+    string quinary_category = 5;
 }
 
 message CompanyInfo {
@@ -71,20 +73,24 @@ message CompanyInfo {
 }
 
 message Image {
-    string img_context = 1;
-    string img_desc = 2;
-    string img_id = 3;
-    string img_path = 4;
-    string img_url = 5;
+    string cover_image_url = 1;   // URL of the cover image
+    string desc = 2;              // Description of the image
+    string id = 3;                // Unique identifier for the image
+    string local_path = 4;        // Local path of the image file
+    repeated Subtitle subtitles = 5; // Nested subtitles field (if applicable)
+    string type = 6;              // Type of the image
+    string url = 7;               // URL of the image
 }
 
+
 message Video {
-    string video_id = 1;
-    repeated TextEntry video_descriptions = 2;
-    string video_details = 3;
-    string video_url = 4;
-    repeated SubtitleEntry video_subtitles = 5;
-    string cover_image_url = 6;
+    string cover_image_url = 1;   // URL of the cover image
+    string desc = 2;              // Description of the video
+    string id = 3;                // Unique identifier for the video
+    string local_path = 4;        // Local path of the video file
+    repeated Subtitle subtitles = 5; // Nested subtitles field
+    string type = 6;              // Type of the video
+    string url = 7;               // URL of the video
 }
 
 message SubtitleEntry {
@@ -94,12 +100,21 @@ message SubtitleEntry {
     string lang = 4; // Optional, if you want to support multiple languages for subtitles
 }
 
-
 message Audio {
-    string audio_desc = 1;
-    string audio_id = 2;
-    string audio_path = 3;
-    string audio_url = 4;
+    string cover_image_url = 1;   
+    string desc = 2;             
+    string id = 3;                
+    string local_path = 4;        
+    repeated Subtitle subtitles = 5; 
+    string type = 6;              
+    string url = 7;              
+}
+
+message Subtitle {
+    int32 end = 1;             // End time of the subtitle
+    string speaker = 2;        // Speaker's name or identifier
+    int32 start = 3;           // Start time of the subtitle
+    string text = 4;           // Subtitle text
 }
 
 message TextEntry {
@@ -107,16 +122,35 @@ message TextEntry {
     string text = 2;
 }
 
-message Keywords {
-    string primary_keywords = 1;
-    string secondary_keywords = 2;
+message FullText {
+    string id = 1;       
+    string lang = 2;     
+    string tag = 3;      
+    string text = 4;     
+}
+
+message Rating {
+    int32 comments = 1;    // Number of comments
+    int32 likes = 2;       // Number of likes
+    float score = 3;       // Score rating
+    int32 shares = 4;      // Number of shares
+    int32 views = 5;       // Number of views
+}
+
+// Define the Summary message
+message Summary {
+    string id = 1;         // Unique identifier for the summary
+    string lang = 2;       // Language of the summary
+    int32 negative = 3;    // Negative sentiment score
+    int32 positive = 4;    // Positive sentiment score
+    string tag = 5;        // Tag or label associated with the summary
+    string text = 6;       // The actual summary text
 }
 
 // Now, update the NewsArticle message
 message NewsArticle {
     string doc_id = 1;                 
     repeated TextEntry title = 2;       
-    repeated SummaryEntry summary = 3;  
     string url = 4;                    
     string published_date = 5;         
     repeated Author author_info = 6;   
@@ -124,14 +158,14 @@ message NewsArticle {
     string file_type = 8;             
     Category category_info = 9; 
     repeated Image images = 10;       
-    Keywords keywords = 11;            
-    string region = 12;               
-    repeated TextEntry full_text = 13; 
-    repeated Video videos = 14;       
-    repeated Audio audios = 15;
-    string pdf_file_path = 16;
-    string txt_file_path = 17;        
-    // Add other fields as required
+    string region = 11;               
+    repeated FullText full_text = 12; 
+    repeated Video videos = 13;       
+    repeated Audio audios = 14;
+    string pdf_file_path = 15;
+    string txt_file_path = 16; 
+    repeated Rating ratings = 17;       
+    repeated Summary summaries = 18;        
 }
 
 // Request message for GetNewsInfo
