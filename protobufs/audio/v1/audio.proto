@@ -94,8 +94,6 @@ message CreateRecordRsp {
     int32 ret = 1; 
     string msg = 2;
     string job_id = 3; // 获取任务id
-
-
 }
 
 message GetRecordListReq {
@@ -121,20 +119,14 @@ message MediaRecord {
     string schedule = 8; // 进度 
     string url = 9; // 视频链接地址 
     uint32 media_type = 10; // 媒体类型 
-    repeated MediaSummary partial_summary = 11; // 部分内容
-    repeated string todo = 12; // 待办事项
-    bool is_depth_summary = 13; // 是否有深度总结
-    string depth_summary = 14; // 深度总结
-    ScheduleStatus depth_summary_status = 15; // 深度总结状态
-    string depth_summary_schedule = 16; // 深度总结进度
-    ScheduleStatus summary_status = 17; // 概要总结状态
-    string summary_schedule = 18; // 概要总结进度
-    ScheduleStatus todo_status = 19; // 待办事项状态
-    string todo_schedule = 20; // 待办事项进度
-    ScheduleStatus partial_summary_status = 21; // 分段总结状态
-    string partial_summary_schedule = 22; // 分段总结进度
-    ScheduleStatus content_status = 23; // 字幕状态
-    string content_schedule = 24; // 字幕进度
+    repeated string todo = 11; // 待办事项
+    ScheduleStatus summary_status = 12; // 概要总结状态
+    string summary_schedule = 13; // 概要总结进度
+    ScheduleStatus todo_status = 14; // 待办事项状态
+    string todo_schedule = 15; // 待办事项进度
+    ScheduleStatus content_status = 16; // 字幕状态
+    string content_schedule = 17; // 字幕进度
+    repeated SectionSummary structured_summary = 18;  // 结构化总结
 }
 
 message GetRecordStatusReq {
@@ -403,4 +395,10 @@ message MeetingTypeData {
     int64 id = 1; // id 
     string name = 2; // 名称
     int64 sort = 3; // 排序
+}
+
+message SectionSummary {
+    int32 i = 1;
+    string section = 2;
+    string content = 3;
 }
