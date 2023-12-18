@@ -52,12 +52,6 @@ message SummaryEntry {
     string lang = 5;
 }
 
-// Define the nested structures first
-message Author {
-    string author_id = 1;
-    string author_name = 2;
-}
-
 message Category {
     string primary_category = 1;
     string secondary_category = 2;
@@ -129,13 +123,6 @@ message FullText {
     string text = 4;     
 }
 
-message Rating {
-    int32 comments = 1;    // Number of comments
-    int32 likes = 2;       // Number of likes
-    float score = 3;       // Score rating
-    int32 shares = 4;      // Number of shares
-    int32 views = 5;       // Number of views
-}
 
 // Define the Summary message
 message Summary {
@@ -153,7 +140,6 @@ message NewsArticle {
     repeated TextEntry title = 2;       
     string url = 4;                    
     string published_date = 5;         
-    repeated Author author_info = 6;   
     repeated CompanyInfo company_info = 7; 
     string file_type = 8;             
     Category category_info = 9; 
@@ -164,7 +150,6 @@ message NewsArticle {
     repeated Audio audios = 14;
     string pdf_file_path = 15;
     string txt_file_path = 16; 
-    repeated Rating ratings = 17;       
     repeated Summary summaries = 18;        
 }
 
