@@ -230,6 +230,7 @@ message AudioSummaryStatus {
 message RegenSummaryReq {
     string session_id = 1;
     string doc_id = 2;
+    string lang = 3; // 语言
 }
 
 message RegenSummaryRsp {
