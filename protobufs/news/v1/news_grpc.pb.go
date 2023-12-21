@@ -26,6 +26,8 @@ type NewsServiceClient interface {
 	GetNewsList(ctx context.Context, in *GetNewsListReq, opts ...grpc.CallOption) (*GetNewsListRsp, error)
 	// Get detailed information about a specific news article
 	GetNewsInfo(ctx context.Context, in *GetNewsInfoReq, opts ...grpc.CallOption) (*GetNewsInfoRsp, error)
+	// Get detailed information about a specific news article
+	GetCacheInfo(ctx context.Context, in *GetCacheInfoReq, opts ...grpc.CallOption) (*GetCacheInfoRsp, error)
 }
 
 type newsServiceClient struct {
@@ -54,6 +56,15 @@ func (c *newsServiceClient) GetNewsInfo(ctx context.Context, in *GetNewsInfoReq,
 	return out, nil
 }
 
+func (c *newsServiceClient) GetCacheInfo(ctx context.Context, in *GetCacheInfoReq, opts ...grpc.CallOption) (*GetCacheInfoRsp, error) {
+	out := new(GetCacheInfoRsp)
+	err := c.cc.Invoke(ctx, "/chatfinbot.news.v1.NewsService/GetCacheInfo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NewsServiceServer is the server API for NewsService service.
 // All implementations must embed UnimplementedNewsServiceServer
 // for forward compatibility
@@ -62,6 +73,8 @@ type NewsServiceServer interface {
 	GetNewsList(context.Context, *GetNewsListReq) (*GetNewsListRsp, error)
 	// Get detailed information about a specific news article
 	GetNewsInfo(context.Context, *GetNewsInfoReq) (*GetNewsInfoRsp, error)
+	// Get detailed information about a specific news article
+	GetCacheInfo(context.Context, *GetCacheInfoReq) (*GetCacheInfoRsp, error)
 	mustEmbedUnimplementedNewsServiceServer()
 }
 
@@ -74,6 +87,9 @@ func (UnimplementedNewsServiceServer) GetNewsList(context.Context, *GetNewsListR
 }
 func (UnimplementedNewsServiceServer) GetNewsInfo(context.Context, *GetNewsInfoReq) (*GetNewsInfoRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNewsInfo not implemented")
+}
+func (UnimplementedNewsServiceServer) GetCacheInfo(context.Context, *GetCacheInfoReq) (*GetCacheInfoRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCacheInfo not implemented")
 }
 func (UnimplementedNewsServiceServer) mustEmbedUnimplementedNewsServiceServer() {}
 
@@ -124,6 +140,24 @@ func _NewsService_GetNewsInfo_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _NewsService_GetCacheInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCacheInfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsServiceServer).GetCacheInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.news.v1.NewsService/GetCacheInfo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsServiceServer).GetCacheInfo(ctx, req.(*GetCacheInfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // NewsService_ServiceDesc is the grpc.ServiceDesc for NewsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -138,6 +172,10 @@ var NewsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetNewsInfo",
 			Handler:    _NewsService_GetNewsInfo_Handler,
+		},
+		{
+			MethodName: "GetCacheInfo",
+			Handler:    _NewsService_GetCacheInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
