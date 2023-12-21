@@ -34,18 +34,13 @@ service AudioService {
 		};
     };
 
-    rpc SummaryDepth(SummaryDepthReq) returns (SummaryDepthRsp) {
+    rpc RegenSummary(RegenSummaryReq) returns (RegenSummaryRsp) {
         option (google.api.http) = {
-			post: "/v1/audio/summary-depth",
+			post: "/v1/audio/regen-summary",
             body: "*"
 		};
     };
 
-    rpc GetSummaryDepth(GetSummaryDepthReq) returns (GetSummaryDepthRsp) {
-        option (google.api.http) = {
-			get: "/v1/audio/summary-depth"
-		};
-    };
 
     rpc UpdateSummary(UpdateSummaryReq) returns (UpdateSummaryRsp) {
         option (google.api.http) = {
@@ -232,12 +227,12 @@ message AudioSummaryStatus {
     int64 submit_time = 3;
 }
 
-message SummaryDepthReq {
+message RegenSummaryReq {
     string session_id = 1;
     string doc_id = 2;
 }
 
-message SummaryDepthRsp {
+message RegenSummaryRsp {
     int32 ret = 1; 
     string msg = 2;
 }
@@ -313,10 +308,8 @@ message GetScheduleReq {
     string session_id = 1;   // session的id
     string doc_id = 2;      // 文档id
     bool show_content = 3; // 是否返回字幕
-    bool show_partial_summary = 4; // 是否返回章节信息
-    bool show_summary = 5; // 是否返回概要总结
-    bool show_depth_summary = 6; // 是否返回深度总结
-    bool show_todo = 7; // 是否返回todo
+    bool show_summary = 4; // 是否返回概要总结
+    bool show_todo = 5; // 是否返回todo
 }
 
 message GetScheduleRsp {
@@ -335,10 +328,8 @@ enum ScheduleStatus {
 
 message ScheduleInfo { 
     ScheduleInfoSubtitles content_info = 1;  // 字幕数据
-    ScheduleInfoChapter  partial_summary_info = 2;     // 章节总结
-    ScheduleInfoSummary summary_info = 3; // 概要总结信息
-    ScheduleInfoDepthSummary  depth_summary_info = 4; // 深度总结信息
-    ScheduleInfoTodo  todo_info = 5; // todo
+    ScheduleInfoSummary summary_info = 2; // 概要总结信息
+    ScheduleInfoTodo  todo_info = 3; // todo
 }
 
 message ScheduleInfoSubtitles {
@@ -347,23 +338,13 @@ message ScheduleInfoSubtitles {
     string schedule = 3; 
 }
 
-message ScheduleInfoChapter {
-    ScheduleStatus status = 1;
-    repeated MediaSummary partial_summary = 2;
-    string schedule = 3; 
-}
-
 message ScheduleInfoSummary {
     ScheduleStatus status = 1;
     string summary = 2;
-    string schedule = 3; 
+    repeated SectionSummary structured_summary = 3;  // 结构化总结
+    string schedule = 4; 
 }
 
-message ScheduleInfoDepthSummary {
-    ScheduleStatus status = 1;
-    string summary_depth = 2;
-    string schedule = 3; 
-}
 
 message ScheduleInfoTodo {
     ScheduleStatus status = 1;
