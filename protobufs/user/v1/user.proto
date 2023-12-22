@@ -200,6 +200,7 @@ message UserInfo {
   UserType user_type = 8;
   string head_url = 9;
   string tutorial = 10; // 新手教程信息
+  string email = 11;
 }
 
 message GetInfoResponse {
