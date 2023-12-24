@@ -6,7 +6,7 @@ option go_package = ".;filepb";
 
 service FileService {
   rpc UploadFile(UploadRequest) returns (UploadResponse);
-  rpc UploadPublicFile(UploadRequest) returns (UploadResponse);
+  rpc UploadOpenFile(UploadOpenFileRequest) returns (UploadResponse);
   rpc DeleteFile(DeleteFileRequest) returns (Empty);
   rpc UpdateFile(UpdateFileRequest) returns (Empty);
   rpc UploadTinyAudioFile(UploadTinyAudioFileRequest) returns (UploadTinyAudioFileResponse);
@@ -33,6 +33,11 @@ message UploadRequest {
   string file_name = 2;
   string bucket_name = 3;
   string doc_id = 4;
+}
+
+message UploadOpenFileRequest {
+    bytes file_content = 1;
+    string file_name = 2;
 }
 
 message GetFileListRequest {}

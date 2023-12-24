@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.20.3
-// source: file.proto
+// source: file/v1/file.proto
 
 package filepb
 
@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type FileServiceClient interface {
 	UploadFile(ctx context.Context, in *UploadRequest, opts ...grpc.CallOption) (*UploadResponse, error)
-	UploadPublicFile(ctx context.Context, in *UploadRequest, opts ...grpc.CallOption) (*UploadResponse, error)
+	UploadOpenFile(ctx context.Context, in *UploadOpenFileRequest, opts ...grpc.CallOption) (*UploadResponse, error)
 	DeleteFile(ctx context.Context, in *DeleteFileRequest, opts ...grpc.CallOption) (*Empty, error)
 	UpdateFile(ctx context.Context, in *UpdateFileRequest, opts ...grpc.CallOption) (*Empty, error)
 	UploadTinyAudioFile(ctx context.Context, in *UploadTinyAudioFileRequest, opts ...grpc.CallOption) (*UploadTinyAudioFileResponse, error)
@@ -53,9 +53,9 @@ func (c *fileServiceClient) UploadFile(ctx context.Context, in *UploadRequest, o
 	return out, nil
 }
 
-func (c *fileServiceClient) UploadPublicFile(ctx context.Context, in *UploadRequest, opts ...grpc.CallOption) (*UploadResponse, error) {
+func (c *fileServiceClient) UploadOpenFile(ctx context.Context, in *UploadOpenFileRequest, opts ...grpc.CallOption) (*UploadResponse, error) {
 	out := new(UploadResponse)
-	err := c.cc.Invoke(ctx, "/chatfinbot.file.v1.FileService/UploadPublicFile", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/chatfinbot.file.v1.FileService/UploadOpenFile", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -157,7 +157,7 @@ func (c *fileServiceClient) GetFileDownloadURL(ctx context.Context, in *GetFileD
 // for forward compatibility
 type FileServiceServer interface {
 	UploadFile(context.Context, *UploadRequest) (*UploadResponse, error)
-	UploadPublicFile(context.Context, *UploadRequest) (*UploadResponse, error)
+	UploadOpenFile(context.Context, *UploadOpenFileRequest) (*UploadResponse, error)
 	DeleteFile(context.Context, *DeleteFileRequest) (*Empty, error)
 	UpdateFile(context.Context, *UpdateFileRequest) (*Empty, error)
 	UploadTinyAudioFile(context.Context, *UploadTinyAudioFileRequest) (*UploadTinyAudioFileResponse, error)
@@ -178,8 +178,8 @@ type UnimplementedFileServiceServer struct {
 func (UnimplementedFileServiceServer) UploadFile(context.Context, *UploadRequest) (*UploadResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UploadFile not implemented")
 }
-func (UnimplementedFileServiceServer) UploadPublicFile(context.Context, *UploadRequest) (*UploadResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UploadPublicFile not implemented")
+func (UnimplementedFileServiceServer) UploadOpenFile(context.Context, *UploadOpenFileRequest) (*UploadResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadOpenFile not implemented")
 }
 func (UnimplementedFileServiceServer) DeleteFile(context.Context, *DeleteFileRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteFile not implemented")
@@ -242,20 +242,20 @@ func _FileService_UploadFile_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _FileService_UploadPublicFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UploadRequest)
+func _FileService_UploadOpenFile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadOpenFileRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FileServiceServer).UploadPublicFile(ctx, in)
+		return srv.(FileServiceServer).UploadOpenFile(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/chatfinbot.file.v1.FileService/UploadPublicFile",
+		FullMethod: "/chatfinbot.file.v1.FileService/UploadOpenFile",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FileServiceServer).UploadPublicFile(ctx, req.(*UploadRequest))
+		return srv.(FileServiceServer).UploadOpenFile(ctx, req.(*UploadOpenFileRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -452,8 +452,8 @@ var FileService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _FileService_UploadFile_Handler,
 		},
 		{
-			MethodName: "UploadPublicFile",
-			Handler:    _FileService_UploadPublicFile_Handler,
+			MethodName: "UploadOpenFile",
+			Handler:    _FileService_UploadOpenFile_Handler,
 		},
 		{
 			MethodName: "DeleteFile",
@@ -497,5 +497,5 @@ var FileService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "file.proto",
+	Metadata: "file/v1/file.proto",
 }
