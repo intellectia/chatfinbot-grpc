@@ -24,8 +24,7 @@ const (
 	AudioService_GetRecordStatus_FullMethodName = "/chatfinbot.audio.v1.AudioService/GetRecordStatus"
 	AudioService_Transcription_FullMethodName   = "/chatfinbot.audio.v1.AudioService/Transcription"
 	AudioService_GetTransData_FullMethodName    = "/chatfinbot.audio.v1.AudioService/GetTransData"
-	AudioService_SummaryDepth_FullMethodName    = "/chatfinbot.audio.v1.AudioService/SummaryDepth"
-	AudioService_GetSummaryDepth_FullMethodName = "/chatfinbot.audio.v1.AudioService/GetSummaryDepth"
+	AudioService_RegenSummary_FullMethodName    = "/chatfinbot.audio.v1.AudioService/RegenSummary"
 	AudioService_UpdateSummary_FullMethodName   = "/chatfinbot.audio.v1.AudioService/UpdateSummary"
 	AudioService_CheckTrans_FullMethodName      = "/chatfinbot.audio.v1.AudioService/CheckTrans"
 	AudioService_UpdateRecord_FullMethodName    = "/chatfinbot.audio.v1.AudioService/UpdateRecord"
@@ -43,8 +42,7 @@ type AudioServiceClient interface {
 	GetRecordStatus(ctx context.Context, in *GetRecordStatusReq, opts ...grpc.CallOption) (*GetRecordStatusRsp, error)
 	Transcription(ctx context.Context, in *TranscriptionReq, opts ...grpc.CallOption) (*TranscriptionRsp, error)
 	GetTransData(ctx context.Context, in *GetTransDataReq, opts ...grpc.CallOption) (*GetTransDataRsp, error)
-	SummaryDepth(ctx context.Context, in *SummaryDepthReq, opts ...grpc.CallOption) (*SummaryDepthRsp, error)
-	GetSummaryDepth(ctx context.Context, in *GetSummaryDepthReq, opts ...grpc.CallOption) (*GetSummaryDepthRsp, error)
+	RegenSummary(ctx context.Context, in *RegenSummaryReq, opts ...grpc.CallOption) (*RegenSummaryRsp, error)
 	UpdateSummary(ctx context.Context, in *UpdateSummaryReq, opts ...grpc.CallOption) (*UpdateSummaryRsp, error)
 	CheckTrans(ctx context.Context, in *CheckTransReq, opts ...grpc.CallOption) (*CheckTransRsp, error)
 	UpdateRecord(ctx context.Context, in *UpdateRecordReq, opts ...grpc.CallOption) (*UpdateRecordRsp, error)
@@ -106,18 +104,9 @@ func (c *audioServiceClient) GetTransData(ctx context.Context, in *GetTransDataR
 	return out, nil
 }
 
-func (c *audioServiceClient) SummaryDepth(ctx context.Context, in *SummaryDepthReq, opts ...grpc.CallOption) (*SummaryDepthRsp, error) {
-	out := new(SummaryDepthRsp)
-	err := c.cc.Invoke(ctx, AudioService_SummaryDepth_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *audioServiceClient) GetSummaryDepth(ctx context.Context, in *GetSummaryDepthReq, opts ...grpc.CallOption) (*GetSummaryDepthRsp, error) {
-	out := new(GetSummaryDepthRsp)
-	err := c.cc.Invoke(ctx, AudioService_GetSummaryDepth_FullMethodName, in, out, opts...)
+func (c *audioServiceClient) RegenSummary(ctx context.Context, in *RegenSummaryReq, opts ...grpc.CallOption) (*RegenSummaryRsp, error) {
+	out := new(RegenSummaryRsp)
+	err := c.cc.Invoke(ctx, AudioService_RegenSummary_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -187,8 +176,7 @@ type AudioServiceServer interface {
 	GetRecordStatus(context.Context, *GetRecordStatusReq) (*GetRecordStatusRsp, error)
 	Transcription(context.Context, *TranscriptionReq) (*TranscriptionRsp, error)
 	GetTransData(context.Context, *GetTransDataReq) (*GetTransDataRsp, error)
-	SummaryDepth(context.Context, *SummaryDepthReq) (*SummaryDepthRsp, error)
-	GetSummaryDepth(context.Context, *GetSummaryDepthReq) (*GetSummaryDepthRsp, error)
+	RegenSummary(context.Context, *RegenSummaryReq) (*RegenSummaryRsp, error)
 	UpdateSummary(context.Context, *UpdateSummaryReq) (*UpdateSummaryRsp, error)
 	CheckTrans(context.Context, *CheckTransReq) (*CheckTransRsp, error)
 	UpdateRecord(context.Context, *UpdateRecordReq) (*UpdateRecordRsp, error)
@@ -217,11 +205,8 @@ func (UnimplementedAudioServiceServer) Transcription(context.Context, *Transcrip
 func (UnimplementedAudioServiceServer) GetTransData(context.Context, *GetTransDataReq) (*GetTransDataRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTransData not implemented")
 }
-func (UnimplementedAudioServiceServer) SummaryDepth(context.Context, *SummaryDepthReq) (*SummaryDepthRsp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SummaryDepth not implemented")
-}
-func (UnimplementedAudioServiceServer) GetSummaryDepth(context.Context, *GetSummaryDepthReq) (*GetSummaryDepthRsp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetSummaryDepth not implemented")
+func (UnimplementedAudioServiceServer) RegenSummary(context.Context, *RegenSummaryReq) (*RegenSummaryRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegenSummary not implemented")
 }
 func (UnimplementedAudioServiceServer) UpdateSummary(context.Context, *UpdateSummaryReq) (*UpdateSummaryRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateSummary not implemented")
@@ -344,38 +329,20 @@ func _AudioService_GetTransData_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AudioService_SummaryDepth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SummaryDepthReq)
+func _AudioService_RegenSummary_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegenSummaryReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AudioServiceServer).SummaryDepth(ctx, in)
+		return srv.(AudioServiceServer).RegenSummary(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AudioService_SummaryDepth_FullMethodName,
+		FullMethod: AudioService_RegenSummary_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AudioServiceServer).SummaryDepth(ctx, req.(*SummaryDepthReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _AudioService_GetSummaryDepth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetSummaryDepthReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AudioServiceServer).GetSummaryDepth(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AudioService_GetSummaryDepth_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AudioServiceServer).GetSummaryDepth(ctx, req.(*GetSummaryDepthReq))
+		return srv.(AudioServiceServer).RegenSummary(ctx, req.(*RegenSummaryReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -516,12 +483,8 @@ var AudioService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AudioService_GetTransData_Handler,
 		},
 		{
-			MethodName: "SummaryDepth",
-			Handler:    _AudioService_SummaryDepth_Handler,
-		},
-		{
-			MethodName: "GetSummaryDepth",
-			Handler:    _AudioService_GetSummaryDepth_Handler,
+			MethodName: "RegenSummary",
+			Handler:    _AudioService_RegenSummary_Handler,
 		},
 		{
 			MethodName: "UpdateSummary",

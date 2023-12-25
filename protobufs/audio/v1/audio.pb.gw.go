@@ -207,8 +207,8 @@ func local_request_AudioService_GetTransData_0(ctx context.Context, marshaler ru
 
 }
 
-func request_AudioService_SummaryDepth_0(ctx context.Context, marshaler runtime.Marshaler, client AudioServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq SummaryDepthReq
+func request_AudioService_RegenSummary_0(ctx context.Context, marshaler runtime.Marshaler, client AudioServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq RegenSummaryReq
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -219,13 +219,13 @@ func request_AudioService_SummaryDepth_0(ctx context.Context, marshaler runtime.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.SummaryDepth(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.RegenSummary(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_AudioService_SummaryDepth_0(ctx context.Context, marshaler runtime.Marshaler, server AudioServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq SummaryDepthReq
+func local_request_AudioService_RegenSummary_0(ctx context.Context, marshaler runtime.Marshaler, server AudioServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq RegenSummaryReq
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -236,43 +236,7 @@ func local_request_AudioService_SummaryDepth_0(ctx context.Context, marshaler ru
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.SummaryDepth(ctx, &protoReq)
-	return msg, metadata, err
-
-}
-
-var (
-	filter_AudioService_GetSummaryDepth_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
-)
-
-func request_AudioService_GetSummaryDepth_0(ctx context.Context, marshaler runtime.Marshaler, client AudioServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetSummaryDepthReq
-	var metadata runtime.ServerMetadata
-
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_AudioService_GetSummaryDepth_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	msg, err := client.GetSummaryDepth(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-
-}
-
-func local_request_AudioService_GetSummaryDepth_0(ctx context.Context, marshaler runtime.Marshaler, server AudioServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetSummaryDepthReq
-	var metadata runtime.ServerMetadata
-
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_AudioService_GetSummaryDepth_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	msg, err := server.GetSummaryDepth(ctx, &protoReq)
+	msg, err := server.RegenSummary(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -582,7 +546,7 @@ func RegisterAudioServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 
 	})
 
-	mux.Handle("POST", pattern_AudioService_SummaryDepth_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_AudioService_RegenSummary_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -590,12 +554,12 @@ func RegisterAudioServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.audio.v1.AudioService/SummaryDepth", runtime.WithHTTPPathPattern("/v1/audio/summary-depth"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.audio.v1.AudioService/RegenSummary", runtime.WithHTTPPathPattern("/v1/audio/regen-summary"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_AudioService_SummaryDepth_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_AudioService_RegenSummary_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -603,32 +567,7 @@ func RegisterAudioServiceHandlerServer(ctx context.Context, mux *runtime.ServeMu
 			return
 		}
 
-		forward_AudioService_SummaryDepth_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("GET", pattern_AudioService_GetSummaryDepth_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		var stream runtime.ServerTransportStream
-		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		var err error
-		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.audio.v1.AudioService/GetSummaryDepth", runtime.WithHTTPPathPattern("/v1/audio/summary-depth"))
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_AudioService_GetSummaryDepth_0(annotatedContext, inboundMarshaler, server, req, pathParams)
-		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
-		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
-		if err != nil {
-			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_AudioService_GetSummaryDepth_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_AudioService_RegenSummary_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -908,47 +847,25 @@ func RegisterAudioServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 
 	})
 
-	mux.Handle("POST", pattern_AudioService_SummaryDepth_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_AudioService_RegenSummary_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.audio.v1.AudioService/SummaryDepth", runtime.WithHTTPPathPattern("/v1/audio/summary-depth"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.audio.v1.AudioService/RegenSummary", runtime.WithHTTPPathPattern("/v1/audio/regen-summary"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_AudioService_SummaryDepth_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_AudioService_RegenSummary_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_AudioService_SummaryDepth_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("GET", pattern_AudioService_GetSummaryDepth_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		var err error
-		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.audio.v1.AudioService/GetSummaryDepth", runtime.WithHTTPPathPattern("/v1/audio/summary-depth"))
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_AudioService_GetSummaryDepth_0(annotatedContext, inboundMarshaler, client, req, pathParams)
-		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
-		if err != nil {
-			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_AudioService_GetSummaryDepth_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_AudioService_RegenSummary_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -1076,9 +993,7 @@ var (
 
 	pattern_AudioService_GetTransData_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "audio", "trans-data"}, ""))
 
-	pattern_AudioService_SummaryDepth_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "audio", "summary-depth"}, ""))
-
-	pattern_AudioService_GetSummaryDepth_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "audio", "summary-depth"}, ""))
+	pattern_AudioService_RegenSummary_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "audio", "regen-summary"}, ""))
 
 	pattern_AudioService_UpdateSummary_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "audio", "update-summary"}, ""))
 
@@ -1102,9 +1017,7 @@ var (
 
 	forward_AudioService_GetTransData_0 = runtime.ForwardResponseMessage
 
-	forward_AudioService_SummaryDepth_0 = runtime.ForwardResponseMessage
-
-	forward_AudioService_GetSummaryDepth_0 = runtime.ForwardResponseMessage
+	forward_AudioService_RegenSummary_0 = runtime.ForwardResponseMessage
 
 	forward_AudioService_UpdateSummary_0 = runtime.ForwardResponseMessage
 

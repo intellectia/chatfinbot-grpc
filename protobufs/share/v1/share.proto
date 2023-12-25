@@ -190,6 +190,7 @@ message AudioInfo {
     ShareType type = 10;
     string detail = 11;
     string uid = 12;
+    repeated SectionSummary structured_summary = 13;  // 结构化总结
 }
 
 message MediaContent {
@@ -271,6 +272,7 @@ message ShareVideoReq {
 message ShareVideoRsp {
     int32 ret = 1; // Error code
     string msg = 2; // Message
+    int64 sid = 3;
 }
 
 message UnshareVideoReq {
@@ -348,6 +350,11 @@ message UnshareAudioRsp {
     string msg = 2; // msg
 }
 
+message SectionSummary {
+    int32 i = 1;
+    string section = 2;
+    string content = 3;
+}
 
 
 
