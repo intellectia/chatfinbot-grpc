@@ -230,6 +230,7 @@ message GetAudioChatInfoRsp {
 message GetVideoChatInfoReq {
     string sid = 1;
     int32 mid= 2;
+    string detail = 3;
 }
 
 message GetVideoChatInfoRsp {
@@ -245,13 +246,11 @@ message VideoInfo {
     string doc_id = 4; // Corresponds to doc_id in the table
     string subtitles = 5; // Subtitles (JSON string)
     string summary = 6; // Corresponds to summary in the table
-    string deep_summary = 7; // Corresponds to deep_summary in the table
-    string thumbnail = 8; // Corresponds to thumbnail in the table
-    string created_at = 9; // Timestamp as string, corresponds to created_at
-    string updated_at = 10; // Timestamp as string, corresponds to updated_at
-    string deleted_at = 11; // Timestamp as string, corresponds to deleted_at
-    string title = 12; 
-    // ... other fields as needed
+    string thumbnail = 7; // Corresponds to thumbnail in the table
+    int64 created_at = 8; // Timestamp as string, corresponds to created_at
+    int64 updated_at = 9; // Timestamp as string, corresponds to updated_at
+    int64 deleted_at = 10; // Timestamp as string, corresponds to deleted_at
+    string title = 11; 
 }
 
 message GetVideoInfoReq {
@@ -266,15 +265,20 @@ message GetVideoInfoRsp {
 
 message ShareVideoReq {
     string sid = 1; // session id or other relevant fields
+    ShareType type = 2;
+    string detail = 3;
 }
 
 message ShareVideoRsp {
     int32 ret = 1; // Error code
     string msg = 2; // Message
+    int64 sid = 3;
 }
 
 message UnshareVideoReq {
     string sid = 1; // session id or other relevant fields
+    ShareType type = 2;
+
 }
 
 message UnshareVideoRsp {
