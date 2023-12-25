@@ -251,6 +251,8 @@ message VideoInfo {
     int64 updated_at = 9; // Timestamp as string, corresponds to updated_at
     int64 deleted_at = 10; // Timestamp as string, corresponds to deleted_at
     string title = 11; 
+    string content = 12;
+    int64  sid = 13;
 }
 
 message GetVideoInfoReq {
