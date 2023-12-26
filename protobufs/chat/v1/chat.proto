@@ -10,10 +10,15 @@ message Message {
   string content = 3;
 }
 
-message Feedback {
-  int64 message_id = 1;
+message RateMessageReq {
+  int32 message_id = 1;
+  string session_id = 2;
   int32 rate_score = 3;
-  bool is_rated = 4;
+}
+
+message RateMessageRsp {
+  int32 ret = 1;
+  string msg = 2;
 }
 
 message Attachment {
@@ -42,14 +47,6 @@ message Session {
 
 
 message Empty {}
-
-message FeedbackResponse {
-  Feedback feedback = 1;
-}
-
-message GetFeedbackListResponse {
-  repeated Feedback feedbacks = 1;
-}
 
 message SessionResponse {
   Session session = 1;
@@ -158,9 +155,7 @@ message CheckHistoryBySessionAndMIDRsp {
 
 
 service ChatService {
-  rpc GiveFeedback(Feedback) returns (Empty);
-  rpc GetFeedbackList(Empty) returns (GetFeedbackListResponse);
-
+  rpc RateMessage(RateMessageReq) returns (RateMessageRsp);
 
   // New RPC methods for managing sessions
   rpc CreateSession(Session) returns (SessionResponse);

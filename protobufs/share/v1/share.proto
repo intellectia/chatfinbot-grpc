@@ -266,7 +266,7 @@ message GetVideoInfoRsp {
 }
 
 message ShareVideoReq {
-    string sid = 1; // session id or other relevant fields
+    string session_id = 1; // session id or other relevant fields
     ShareType type = 2;
     string detail = 3;
 }
