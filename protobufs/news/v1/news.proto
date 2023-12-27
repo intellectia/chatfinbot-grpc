@@ -28,6 +28,13 @@ service NewsService {
             get: "/v1/news/cache-info"
         };
     };
+
+    // Get a list of sentiment
+    rpc GetSentimentList(GetSentimentListReq) returns (GetSentimentListRsp) {
+        option (google.api.http) = {
+            get: "/v1/news/sentiment"
+        };
+    };
 }
 
 // Request message for GetNewsList
@@ -185,3 +192,82 @@ message GetCacheInfoRsp {
     string cache_info = 3;  // Detailed information about the cache info
 }
 
+message GetSentimentListReq {
+    uint32 type = 1;  // 类型 1=大v 2=选股
+    string code = 2;  // type=2时生效，公司代码
+    string last_id = 3;  // 下一页把这个id传上来
+    uint32 size = 4; // 分页数，最大50
+}
+
+message GetSentimentListRsp {
+    int32 ret = 1;            // Return code (0 for success, non-zero for errors)
+    string msg = 2;           // Response message or error description
+    repeated SentimentData list = 3; // list about the sentiment
+}
+
+message SentimentData {
+    string id = 1;
+    SentimentContent content = 2;
+    SentimentAuthor author = 3;
+    SentimentVideo video = 4;
+    SentimentAnimated animated = 5;
+    SentimentImage image = 6;
+    SentimentFeedback feedback = 7;
+    SentimentTags tags = 8;
+    string source = 9;
+}
+
+message SentimentContent {
+    string content_id = 1;
+    string content_url = 2;
+    string content_date = 3;
+    string raw_content = 4;
+}
+
+message SentimentAuthor {
+    bool is_kol = 1;
+    string author_created = 2;
+    string author_description = 3;
+    string author_displayname = 4;
+    int32 author_favourites_count = 5;
+    int32 author_followers_count = 6;
+    int32 author_friends_count = 7;
+    string author_id = 8;
+    int32 author_listed_count = 9;
+    string author_location = 10;
+    int32 author_media_count = 11;
+    string author_name = 12;
+    string author_profile_banner_url = 13;
+    string author_profile_image_url = 14;
+    int32 author_statuses_count = 15;
+    string author_url = 16;
+}
+
+message SentimentVideo {
+    repeated string videos_pic = 1;
+    repeated string videos_vid = 2;
+}
+
+message SentimentAnimated {
+    repeated string animated_pic = 1;
+    repeated string animated_vid = 2;
+}
+
+message SentimentImage {
+    repeated string image_url = 1;
+    repeated string image_id = 2;
+}
+
+message SentimentFeedback {
+    int32 like_count = 1;
+    int32 quote_count = 2;
+    int32 reply_count = 3;
+    int32 retweet_count = 4;
+    int32 view_count = 5;
+}
+
+message SentimentTags {
+    string ticker = 1;
+    repeated string cashtags = 2;
+    repeated string hashtags = 3;
+}
