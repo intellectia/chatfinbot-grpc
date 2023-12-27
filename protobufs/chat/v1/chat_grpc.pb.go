@@ -27,7 +27,7 @@ type ChatServiceClient interface {
 	CreateSession(ctx context.Context, in *Session, opts ...grpc.CallOption) (*SessionResponse, error)
 	UpdateSession(ctx context.Context, in *Session, opts ...grpc.CallOption) (*SessionResponse, error)
 	DeleteSession(ctx context.Context, in *Session, opts ...grpc.CallOption) (*Empty, error)
-	GetSessionByID(ctx context.Context, in *Session, opts ...grpc.CallOption) (*SessionResponse, error)
+	GetSessionBySessionID(ctx context.Context, in *GetSessionBySessionIDReq, opts ...grpc.CallOption) (*GetSessionBySessionIDRsp, error)
 	GetSessionList(ctx context.Context, in *GetSessionListReq, opts ...grpc.CallOption) (*GetSessionListResponse, error)
 	// New RPC methods for managing chat
 	GetChatHistory(ctx context.Context, in *GetChatHistoryReq, opts ...grpc.CallOption) (*GetChatHistoryRsp, error)
@@ -80,9 +80,9 @@ func (c *chatServiceClient) DeleteSession(ctx context.Context, in *Session, opts
 	return out, nil
 }
 
-func (c *chatServiceClient) GetSessionByID(ctx context.Context, in *Session, opts ...grpc.CallOption) (*SessionResponse, error) {
-	out := new(SessionResponse)
-	err := c.cc.Invoke(ctx, "/chatfinbot.chat.v1.ChatService/GetSessionByID", in, out, opts...)
+func (c *chatServiceClient) GetSessionBySessionID(ctx context.Context, in *GetSessionBySessionIDReq, opts ...grpc.CallOption) (*GetSessionBySessionIDRsp, error) {
+	out := new(GetSessionBySessionIDRsp)
+	err := c.cc.Invoke(ctx, "/chatfinbot.chat.v1.ChatService/GetSessionBySessionID", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -143,7 +143,7 @@ type ChatServiceServer interface {
 	CreateSession(context.Context, *Session) (*SessionResponse, error)
 	UpdateSession(context.Context, *Session) (*SessionResponse, error)
 	DeleteSession(context.Context, *Session) (*Empty, error)
-	GetSessionByID(context.Context, *Session) (*SessionResponse, error)
+	GetSessionBySessionID(context.Context, *GetSessionBySessionIDReq) (*GetSessionBySessionIDRsp, error)
 	GetSessionList(context.Context, *GetSessionListReq) (*GetSessionListResponse, error)
 	// New RPC methods for managing chat
 	GetChatHistory(context.Context, *GetChatHistoryReq) (*GetChatHistoryRsp, error)
@@ -169,8 +169,8 @@ func (UnimplementedChatServiceServer) UpdateSession(context.Context, *Session) (
 func (UnimplementedChatServiceServer) DeleteSession(context.Context, *Session) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteSession not implemented")
 }
-func (UnimplementedChatServiceServer) GetSessionByID(context.Context, *Session) (*SessionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetSessionByID not implemented")
+func (UnimplementedChatServiceServer) GetSessionBySessionID(context.Context, *GetSessionBySessionIDReq) (*GetSessionBySessionIDRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSessionBySessionID not implemented")
 }
 func (UnimplementedChatServiceServer) GetSessionList(context.Context, *GetSessionListReq) (*GetSessionListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSessionList not implemented")
@@ -272,20 +272,20 @@ func _ChatService_DeleteSession_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ChatService_GetSessionByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Session)
+func _ChatService_GetSessionBySessionID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSessionBySessionIDReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ChatServiceServer).GetSessionByID(ctx, in)
+		return srv.(ChatServiceServer).GetSessionBySessionID(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/chatfinbot.chat.v1.ChatService/GetSessionByID",
+		FullMethod: "/chatfinbot.chat.v1.ChatService/GetSessionBySessionID",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ChatServiceServer).GetSessionByID(ctx, req.(*Session))
+		return srv.(ChatServiceServer).GetSessionBySessionID(ctx, req.(*GetSessionBySessionIDReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -404,8 +404,8 @@ var ChatService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ChatService_DeleteSession_Handler,
 		},
 		{
-			MethodName: "GetSessionByID",
-			Handler:    _ChatService_GetSessionByID_Handler,
+			MethodName: "GetSessionBySessionID",
+			Handler:    _ChatService_GetSessionBySessionID_Handler,
 		},
 		{
 			MethodName: "GetSessionList",

@@ -4,6 +4,27 @@ package chatfinbot.chat.v1;
 
 option go_package = ".;chatpb";
 
+service ChatService {
+  rpc RateMessage(RateMessageReq) returns (RateMessageRsp);
+
+  // New RPC methods for managing sessions
+  rpc CreateSession(Session) returns (SessionResponse);
+  rpc UpdateSession(Session) returns (SessionResponse);
+  rpc DeleteSession(Session) returns (Empty);
+  rpc GetSessionBySessionID(GetSessionBySessionIDReq) returns (GetSessionBySessionIDRsp);
+  rpc GetSessionList(GetSessionListReq) returns (GetSessionListResponse);
+  
+  // New RPC methods for managing chat
+  rpc GetChatHistory (GetChatHistoryReq) returns (GetChatHistoryRsp);
+  rpc IntelChat(IntelChatReq) returns (IntelChatRsp);
+
+  rpc CheckUserSessionInner(CheckUserSessionReq) returns (CheckUserSessionRsp);
+
+  rpc GetAudioWsURL(GetAudioWsURLReq) returns (GetAudioWsURLRsp);
+
+}
+
+
 message Message {
   // int64 id = 1;
   string sender_id = 2;
@@ -52,9 +73,20 @@ message SessionResponse {
   Session session = 1;
 }
 
+message GetSessionListReq {
+  repeated string session_types = 1;
+  int32 page = 2;           // Specify the page number in the paginated list
+  int32 page_size = 3;      // Specify the number of items per page
+}
+
 message GetSessionListResponse {
   repeated Session sessions = 1;
+  int32 ret = 2;
+  string msg = 3;
+  int32 page = 4;           // Added to return the current page number
+  int32 page_size = 5;      // Added to return the current page size
 }
+
 
 message GetChatHistoryReq {
   string session_id = 1;
@@ -114,10 +146,6 @@ message IntelChatReq {
     string chat_id = 5;
 }
 
-message GetSessionListReq {
-    string session_type = 1;
-}
-
 message IntelChatRsp {
     
 }
@@ -153,24 +181,12 @@ message CheckHistoryBySessionAndMIDRsp {
   string url = 3; 
 }
 
-
-service ChatService {
-  rpc RateMessage(RateMessageReq) returns (RateMessageRsp);
-
-  // New RPC methods for managing sessions
-  rpc CreateSession(Session) returns (SessionResponse);
-  rpc UpdateSession(Session) returns (SessionResponse);
-  rpc DeleteSession(Session) returns (Empty);
-  rpc GetSessionByID(Session) returns (SessionResponse);
-  rpc GetSessionList(GetSessionListReq) returns (GetSessionListResponse);
-  
-  // New RPC methods for managing chat
-  rpc GetChatHistory (GetChatHistoryReq) returns (GetChatHistoryRsp);
-  rpc IntelChat(IntelChatReq) returns (IntelChatRsp);
-
-  rpc CheckUserSessionInner(CheckUserSessionReq) returns (CheckUserSessionRsp);
-
-  rpc GetAudioWsURL(GetAudioWsURLReq) returns (GetAudioWsURLRsp);
-
+message GetSessionBySessionIDReq {
+  string session_id = 1;
 }
 
+message GetSessionBySessionIDRsp {
+  int32 ret = 1; // 错误码
+  string msg = 2; // msg
+  Session session = 3;
+}
