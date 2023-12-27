@@ -201,9 +201,8 @@ enum SentimentType {
 message GetSentimentListReq {
     SentimentType type = 1;  // 类型 1=大v 2=选股
     string code = 2;  // type=2时生效，公司代码
-    string last_date = 3;  // 下一页把这个最后的date传上来
-    string last_id = 4;  // 下一页把这个最后的id传上来
-    uint32 size = 5; // 分页数，最大50
+    double last_id = 3;  // 下一页把这个最后的id传上来
+    uint32 size = 4; // 分页数，最大50
 }
 
 message GetSentimentListRsp {
