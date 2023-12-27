@@ -210,7 +210,9 @@ message GetSentimentListRsp {
     int32 ret = 1;            // Return code (0 for success, non-zero for errors)
     string msg = 2;           // Response message or error description
     repeated SentimentData list = 3; // list about the sentiment
+    string last_sort = 4;
 }
+
 
 message SentimentData {
     string id = 1;
