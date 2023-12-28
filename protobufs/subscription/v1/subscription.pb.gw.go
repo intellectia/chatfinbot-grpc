@@ -529,7 +529,7 @@ func RegisterSubscriptionServiceHandlerServer(ctx context.Context, mux *runtime.
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.subscription.v1.SubscriptionService/CreateUsages", runtime.WithHTTPPathPattern("/v1/usages/create"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.subscription.v1.SubscriptionService/CreateUsages", runtime.WithHTTPPathPattern("/v1/subscription/usages/create"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -800,7 +800,7 @@ func RegisterSubscriptionServiceHandlerClient(ctx context.Context, mux *runtime.
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.subscription.v1.SubscriptionService/CreateUsages", runtime.WithHTTPPathPattern("/v1/usages/create"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.subscription.v1.SubscriptionService/CreateUsages", runtime.WithHTTPPathPattern("/v1/subscription/usages/create"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -898,7 +898,7 @@ var (
 
 	pattern_SubscriptionService_ConsumeUserPackageUsage_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"consume-package-usage"}, ""))
 
-	pattern_SubscriptionService_CreateUsages_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "usages", "create"}, ""))
+	pattern_SubscriptionService_CreateUsages_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"v1", "subscription", "usages", "create"}, ""))
 
 	pattern_SubscriptionService_GetPlans_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "plans"}, ""))
 
