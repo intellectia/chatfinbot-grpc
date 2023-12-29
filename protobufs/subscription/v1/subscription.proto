@@ -59,7 +59,7 @@ service SubscriptionService {
 
     rpc CreateUsages(CreateUsagesRequest) returns (CreateUsagesResponse) {
         option (google.api.http) = {
-            post: "/v1/usages/create"
+            post: "/v1/subscription/usages/create"
             body: "*"
         };
     };
