@@ -1,0 +1,164 @@
+syntax = "proto3";
+
+package chatfinbot.community.v1;
+
+option go_package = ".;communitypb";
+import "google/api/annotations.proto";
+
+service CommunityService {
+    rpc CreatePost(CreatePostReq) returns (CreatePostRsp) {
+        option (google.api.http) = {
+			post: "/v1/community/create-post",
+			body: "*"
+		};
+    };
+
+    rpc DeletePost(DeletePostReq) returns (DeletePostRsp) {
+        option (google.api.http) = {
+			post: "/v1/community/delete-post",
+			body: "*"
+		};
+    };
+
+    rpc GetStockPosts(GetStockPostsReq) returns (GetStockPostsRsp) {
+        option (google.api.http) = {
+			get: "/v1/community/posts"
+		};
+    };
+
+    rpc GetMyPosts(GetMyPostsReq) returns (GetMyPostsRsp) {
+        option (google.api.http) = {
+			get: "/v1/community/my-posts"
+		};
+    };
+
+    rpc AddComment(AddCommentReq) returns (AddCommentRsp) {
+        option (google.api.http) = {
+			post: "/v1/community/add-comment",
+			body: "*"
+		};
+    };
+
+    rpc DeleteComment(DeleteCommentReq) returns (DeleteCommentRsp) {
+        option (google.api.http) = {
+			post: "/v1/community/delete-comment",
+			body: "*"
+		};
+    };
+
+    rpc GetMyComment(GetMyCommentsReq) returns (GetMyCommentsRsp) {
+        option (google.api.http) = {
+			post: "/v1/community/my-comments",
+			body: "*"
+		};
+    };
+}
+
+enum MarketSentiment {
+    MarketSentimentUnknown = 0;
+    MarketSentimentBullish = 1; // 看涨
+    MarketSentimentBearish = 2; // 看跌
+    MarketSentimentNeutral = 3; // 中立
+}
+
+message CreatePostReq {
+    string content = 1;
+    repeated string codes = 2;
+    repeated string pic_list = 3; // 图片列表
+    MarketSentiment sentiment = 4; // 市场情绪
+}
+
+message CreatePostRsp {
+    int32 ret = 1; 
+    string msg = 2;
+    uint64 post_id = 3; // 帖子id
+}
+
+
+message DeletePostReq {
+    uint64 post_id = 1; // 帖子id
+}
+
+message DeletePostRsp {
+    int32 ret = 1; 
+    string msg = 2;
+}
+
+message GetStockPostsReq {
+    string code = 1; // 股票
+    int64 last_post_id =2 ; // 上一个帖子 
+    int32 size = 3; // 
+}
+
+message PostData {
+    int64 post_id = 1; // 
+    string content = 2;
+    repeated string codes = 3;
+    repeated string pic_list = 4; // 图片列表
+    MarketSentiment sentiment = 5; // 市场情绪
+    int64 create_time = 6; // 创建时间
+    UserInfo user_info = 7; //
+    repeated CommentData comment_list = 8;
+    int32 like_num = 9; // 点赞数
+}
+
+message CommentData {
+    UserInfo user_info = 1; //
+    string message = 2;
+    int64 create_time = 3; // 创建时间
+}
+
+message UserInfo {
+    string user_id = 1;
+    string nickname = 2; 
+    string head_url = 3;
+}
+
+message GetStockPostsRsp {
+    int32 ret = 1; 
+    string msg = 2;
+    repeated PostData list = 3;
+}
+
+message GetMyPostsReq {
+    int64 from = 1 ; // 上一个帖子 
+    int32 size = 2; // 
+}
+
+message GetMyPostsRsp {
+    int32 ret = 1; 
+    string msg = 2;
+    repeated PostData list = 3;
+}
+
+message AddCommentReq {
+    int64 post_id = 1; // 帖子id
+    string content = 2; // 内容 
+}
+
+message AddCommentRsp {
+    int32 ret = 1; 
+    string msg = 2;
+    int64 comment_id = 3; // 评论id
+}
+
+message DeleteCommentReq {
+    int64 post_id = 1; // 帖子id
+    int64 comment_id = 2; // 评论id
+}
+
+message DeleteCommentRsp {
+    int32 ret = 1; 
+    string msg = 2;
+}
+
+message GetMyCommentsReq {
+    int64 from = 1;
+    int32 size = 2; // 
+}
+
+message GetMyCommentsRsp {
+    int32 ret = 1; 
+    string msg = 2;
+    repeated CommentData list = 3;
+}
