@@ -71,12 +71,12 @@ message CreatePostReq {
 message CreatePostRsp {
     int32 ret = 1; 
     string msg = 2;
-    uint64 post_id = 3; // 帖子id
+    int64 post_id = 3; // 帖子id
 }
 
 
 message DeletePostReq {
-    uint64 post_id = 1; // 帖子id
+    int64 post_id = 1; // 帖子id
 }
 
 message DeletePostRsp {
