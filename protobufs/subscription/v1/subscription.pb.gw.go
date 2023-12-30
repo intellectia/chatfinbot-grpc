@@ -479,7 +479,7 @@ func RegisterSubscriptionServiceHandlerServer(ctx context.Context, mux *runtime.
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.subscription.v1.SubscriptionService/GetUserUsage", runtime.WithHTTPPathPattern("/usage"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.subscription.v1.SubscriptionService/GetUserUsage", runtime.WithHTTPPathPattern("/v1/subscription/usages"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -504,7 +504,7 @@ func RegisterSubscriptionServiceHandlerServer(ctx context.Context, mux *runtime.
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.subscription.v1.SubscriptionService/ConsumeUserPackageUsage", runtime.WithHTTPPathPattern("/consume-package-usage"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/chatfinbot.subscription.v1.SubscriptionService/ConsumeUserPackageUsage", runtime.WithHTTPPathPattern("/v1/subscription/usages/consume"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -756,7 +756,7 @@ func RegisterSubscriptionServiceHandlerClient(ctx context.Context, mux *runtime.
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.subscription.v1.SubscriptionService/GetUserUsage", runtime.WithHTTPPathPattern("/usage"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.subscription.v1.SubscriptionService/GetUserUsage", runtime.WithHTTPPathPattern("/v1/subscription/usages"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -778,7 +778,7 @@ func RegisterSubscriptionServiceHandlerClient(ctx context.Context, mux *runtime.
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.subscription.v1.SubscriptionService/ConsumeUserPackageUsage", runtime.WithHTTPPathPattern("/consume-package-usage"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/chatfinbot.subscription.v1.SubscriptionService/ConsumeUserPackageUsage", runtime.WithHTTPPathPattern("/v1/subscription/usages/consume"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -894,9 +894,9 @@ var (
 
 	pattern_SubscriptionService_GetPlanDetail_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"plan-details"}, ""))
 
-	pattern_SubscriptionService_GetUserUsage_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"usage"}, ""))
+	pattern_SubscriptionService_GetUserUsage_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "subscription", "usages"}, ""))
 
-	pattern_SubscriptionService_ConsumeUserPackageUsage_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"consume-package-usage"}, ""))
+	pattern_SubscriptionService_ConsumeUserPackageUsage_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"v1", "subscription", "usages", "consume"}, ""))
 
 	pattern_SubscriptionService_CreateUsages_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"v1", "subscription", "usages", "create"}, ""))
 
