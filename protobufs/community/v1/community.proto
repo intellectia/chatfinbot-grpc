@@ -100,6 +100,7 @@ message PostData {
     UserInfo user_info = 7; //
     repeated CommentData comment_list = 8;
     int32 like_num = 9; // 点赞数
+    int32 comment_num = 10; // 评论数
 }
 
 message CommentData {
