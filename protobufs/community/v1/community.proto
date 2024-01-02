@@ -121,7 +121,7 @@ message GetStockPostsRsp {
 }
 
 message GetMyPostsReq {
-    int64 post_id = 1 ; // 上一个帖子 
+    int64 last_post_id = 1 ; // 上一个帖子 
     int32 size = 2; // 
 }
 
