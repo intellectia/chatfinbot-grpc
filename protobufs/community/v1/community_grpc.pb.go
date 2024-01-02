@@ -26,6 +26,7 @@ const (
 	CommunityService_AddComment_FullMethodName    = "/chatfinbot.community.v1.CommunityService/AddComment"
 	CommunityService_DeleteComment_FullMethodName = "/chatfinbot.community.v1.CommunityService/DeleteComment"
 	CommunityService_GetMyComment_FullMethodName  = "/chatfinbot.community.v1.CommunityService/GetMyComment"
+	CommunityService_PostFeedback_FullMethodName  = "/chatfinbot.community.v1.CommunityService/PostFeedback"
 )
 
 // CommunityServiceClient is the client API for CommunityService service.
@@ -39,6 +40,7 @@ type CommunityServiceClient interface {
 	AddComment(ctx context.Context, in *AddCommentReq, opts ...grpc.CallOption) (*AddCommentRsp, error)
 	DeleteComment(ctx context.Context, in *DeleteCommentReq, opts ...grpc.CallOption) (*DeleteCommentRsp, error)
 	GetMyComment(ctx context.Context, in *GetMyCommentsReq, opts ...grpc.CallOption) (*GetMyCommentsRsp, error)
+	PostFeedback(ctx context.Context, in *PostFeedbackReq, opts ...grpc.CallOption) (*PostFeedbackRsp, error)
 }
 
 type communityServiceClient struct {
@@ -112,6 +114,15 @@ func (c *communityServiceClient) GetMyComment(ctx context.Context, in *GetMyComm
 	return out, nil
 }
 
+func (c *communityServiceClient) PostFeedback(ctx context.Context, in *PostFeedbackReq, opts ...grpc.CallOption) (*PostFeedbackRsp, error) {
+	out := new(PostFeedbackRsp)
+	err := c.cc.Invoke(ctx, CommunityService_PostFeedback_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CommunityServiceServer is the server API for CommunityService service.
 // All implementations must embed UnimplementedCommunityServiceServer
 // for forward compatibility
@@ -123,6 +134,7 @@ type CommunityServiceServer interface {
 	AddComment(context.Context, *AddCommentReq) (*AddCommentRsp, error)
 	DeleteComment(context.Context, *DeleteCommentReq) (*DeleteCommentRsp, error)
 	GetMyComment(context.Context, *GetMyCommentsReq) (*GetMyCommentsRsp, error)
+	PostFeedback(context.Context, *PostFeedbackReq) (*PostFeedbackRsp, error)
 	mustEmbedUnimplementedCommunityServiceServer()
 }
 
@@ -150,6 +162,9 @@ func (UnimplementedCommunityServiceServer) DeleteComment(context.Context, *Delet
 }
 func (UnimplementedCommunityServiceServer) GetMyComment(context.Context, *GetMyCommentsReq) (*GetMyCommentsRsp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMyComment not implemented")
+}
+func (UnimplementedCommunityServiceServer) PostFeedback(context.Context, *PostFeedbackReq) (*PostFeedbackRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PostFeedback not implemented")
 }
 func (UnimplementedCommunityServiceServer) mustEmbedUnimplementedCommunityServiceServer() {}
 
@@ -290,6 +305,24 @@ func _CommunityService_GetMyComment_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CommunityService_PostFeedback_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PostFeedbackReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CommunityServiceServer).PostFeedback(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CommunityService_PostFeedback_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CommunityServiceServer).PostFeedback(ctx, req.(*PostFeedbackReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CommunityService_ServiceDesc is the grpc.ServiceDesc for CommunityService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -324,6 +357,10 @@ var CommunityService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetMyComment",
 			Handler:    _CommunityService_GetMyComment_Handler,
+		},
+		{
+			MethodName: "PostFeedback",
+			Handler:    _CommunityService_PostFeedback_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

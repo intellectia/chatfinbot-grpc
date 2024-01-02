@@ -52,6 +52,13 @@ service CommunityService {
 			body: "*"
 		};
     };
+
+    rpc PostFeedback(PostFeedbackReq) returns (PostFeedbackRsp) {
+        option (google.api.http) = {
+			post: "/v1/community/post-feedback",
+			body: "*"
+		};
+    };
 }
 
 enum MarketSentiment {
@@ -173,4 +180,20 @@ enum PostQueueType {
 message PostQueue {
     PostQueueType type = 1;
     PostData post_data = 2;
+}
+
+enum PostFeedbackType {
+    PostFeedbackTypeUnknown = 0;
+    PostFeedbackTypeLike = 1;
+    PostFeedbackTypeCancelLike = 2;
+}
+
+message PostFeedbackReq {
+    PostFeedbackType type = 1;
+    int64 post_id = 2;
+}
+
+message PostFeedbackRsp {
+    int32 ret = 1; 
+    string msg = 2;
 }
