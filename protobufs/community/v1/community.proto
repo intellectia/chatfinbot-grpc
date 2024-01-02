@@ -162,3 +162,14 @@ message GetMyCommentsRsp {
     string msg = 2;
     repeated CommentData list = 3;
 }
+
+enum PostQueueType {
+    PostQueueTypeUnknown = 0;
+    PostQueueTypeAdd = 1;
+    PostQueueTypeDel = 2;
+}
+
+message PostQueue {
+    PostQueueType type = 1;
+    PostData post_data = 2;
+}
