@@ -68,6 +68,7 @@ enum RetCode {
     ERR_PAYPAL_ORDER_NOT_EXIST = 14008; // PAYPAL 订单不存在
     ERR_USER_NOT_HAVE_THE_ORDER = 14009; // 用户没有该订单
     ERR_PAYPAL_API_ERR = 14010; // PAYPAL 接口错误
+    ERR_STRIPE_API_ERR = 14011; // STRIPE 接口错误
 
     // User 相关错误码
     ERR_USER_APPLICATION_FAILED = 15000; // 用户申请失败
