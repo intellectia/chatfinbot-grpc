@@ -194,8 +194,9 @@ message GetCacheInfoRsp {
 
 enum SentimentType {
     SentimentTypeUnknown = 0; 
-    SentimentTypeKOL = 1;
-    SentimentTypeTicker = 2;
+    SentimentTypeInfluencer = 1;
+    SentimentTypeStock = 2;
+    SentimentTypeMarket = 3;
 }
 
 message GetSentimentListReq {
