@@ -233,7 +233,7 @@ message SentimentContent {
 }
 
 message SentimentAuthor {
-    string type = 1;
+    string tag = 1;
     string author_created = 2;
     string author_description = 3;
     string author_displayname = 4;
