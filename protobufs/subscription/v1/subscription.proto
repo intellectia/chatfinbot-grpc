@@ -64,6 +64,13 @@ service SubscriptionService {
         };
     };
 
+    rpc CreateSubscription(CreateSubscriptionRequest) returns (CreateSubscriptionRsp) {
+        option (google.api.http) = {
+            post: "/v1/subscription/create"
+            body: "*"
+        };
+    };
+
     rpc GetPlans(GetPlansRequest) returns (GetPlansResponse) {
         option (google.api.http) = {
             delete: "/v1/plans"
@@ -144,7 +151,7 @@ message PackageConfig {
 
 // Messages for CreateOrder
 message CreateOrderRequest {
-    repeated int32 item_ids = 1;
+    int32 item_id = 1;
 }
 
 
@@ -197,6 +204,7 @@ message UserPlan {
     PlanType user_type = 1;
     int64 start_time = 2;
     int64 end_time = 3;
+    string subscription_id = 4;
 }
 
 message UserBasicUsage {
@@ -241,6 +249,19 @@ message CreateUsagesRequest {
   repeated int32 plan_ids = 1;
   string user_id = 2;
 }
+
+message CreateSubscriptionRequest {
+  int32 plan_id = 1;
+  string user_id = 2;
+  string subscription_id = 3;
+}
+
+message CreateSubscriptionRsp {
+    int32 ret = 1;
+    string msg = 2;
+}
+  
+
 
 message Empty {}
 

@@ -29,6 +29,7 @@ type SubscriptionServiceClient interface {
 	GetUserUsage(ctx context.Context, in *GetUserUsageRequest, opts ...grpc.CallOption) (*GetUserUsageResponse, error)
 	ConsumeUserPackageUsage(ctx context.Context, in *ConsumeUserPackageUsageRequest, opts ...grpc.CallOption) (*ConsumeUserPackageUsageResponse, error)
 	CreateUsages(ctx context.Context, in *CreateUsagesRequest, opts ...grpc.CallOption) (*CreateUsagesResponse, error)
+	CreateSubscription(ctx context.Context, in *CreateSubscriptionRequest, opts ...grpc.CallOption) (*CreateSubscriptionRsp, error)
 	GetPlans(ctx context.Context, in *GetPlansRequest, opts ...grpc.CallOption) (*GetPlansResponse, error)
 	CancelSubscription(ctx context.Context, in *CancelSubscriptionRequest, opts ...grpc.CallOption) (*CancelSubscriptionResponse, error)
 	TriggerPaypalSubscription(ctx context.Context, in *TriggerPaypalSubscriptionRequest, opts ...grpc.CallOption) (*TriggerPaypalSubscriptionResponse, error)
@@ -105,6 +106,15 @@ func (c *subscriptionServiceClient) CreateUsages(ctx context.Context, in *Create
 	return out, nil
 }
 
+func (c *subscriptionServiceClient) CreateSubscription(ctx context.Context, in *CreateSubscriptionRequest, opts ...grpc.CallOption) (*CreateSubscriptionRsp, error) {
+	out := new(CreateSubscriptionRsp)
+	err := c.cc.Invoke(ctx, "/chatfinbot.subscription.v1.SubscriptionService/CreateSubscription", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *subscriptionServiceClient) GetPlans(ctx context.Context, in *GetPlansRequest, opts ...grpc.CallOption) (*GetPlansResponse, error) {
 	out := new(GetPlansResponse)
 	err := c.cc.Invoke(ctx, "/chatfinbot.subscription.v1.SubscriptionService/GetPlans", in, out, opts...)
@@ -143,6 +153,7 @@ type SubscriptionServiceServer interface {
 	GetUserUsage(context.Context, *GetUserUsageRequest) (*GetUserUsageResponse, error)
 	ConsumeUserPackageUsage(context.Context, *ConsumeUserPackageUsageRequest) (*ConsumeUserPackageUsageResponse, error)
 	CreateUsages(context.Context, *CreateUsagesRequest) (*CreateUsagesResponse, error)
+	CreateSubscription(context.Context, *CreateSubscriptionRequest) (*CreateSubscriptionRsp, error)
 	GetPlans(context.Context, *GetPlansRequest) (*GetPlansResponse, error)
 	CancelSubscription(context.Context, *CancelSubscriptionRequest) (*CancelSubscriptionResponse, error)
 	TriggerPaypalSubscription(context.Context, *TriggerPaypalSubscriptionRequest) (*TriggerPaypalSubscriptionResponse, error)
@@ -173,6 +184,9 @@ func (UnimplementedSubscriptionServiceServer) ConsumeUserPackageUsage(context.Co
 }
 func (UnimplementedSubscriptionServiceServer) CreateUsages(context.Context, *CreateUsagesRequest) (*CreateUsagesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateUsages not implemented")
+}
+func (UnimplementedSubscriptionServiceServer) CreateSubscription(context.Context, *CreateSubscriptionRequest) (*CreateSubscriptionRsp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateSubscription not implemented")
 }
 func (UnimplementedSubscriptionServiceServer) GetPlans(context.Context, *GetPlansRequest) (*GetPlansResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPlans not implemented")
@@ -322,6 +336,24 @@ func _SubscriptionService_CreateUsages_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SubscriptionService_CreateSubscription_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateSubscriptionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SubscriptionServiceServer).CreateSubscription(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/chatfinbot.subscription.v1.SubscriptionService/CreateSubscription",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SubscriptionServiceServer).CreateSubscription(ctx, req.(*CreateSubscriptionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _SubscriptionService_GetPlans_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetPlansRequest)
 	if err := dec(in); err != nil {
@@ -410,6 +442,10 @@ var SubscriptionService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateUsages",
 			Handler:    _SubscriptionService_CreateUsages_Handler,
+		},
+		{
+			MethodName: "CreateSubscription",
+			Handler:    _SubscriptionService_CreateSubscription_Handler,
 		},
 		{
 			MethodName: "GetPlans",
