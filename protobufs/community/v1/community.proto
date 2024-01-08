@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package chatfinbot.community.v1;
 
-option go_package = ".;communitypb";
+option go_package = "github.com/intellectia/chatfinbot-grpc/protobufs/community/v1;communitypb";
 import "google/api/annotations.proto";
 
 service CommunityService {
@@ -176,11 +176,24 @@ enum PostQueueType {
     PostQueueTypeUnknown = 0;
     PostQueueTypeAdd = 1;
     PostQueueTypeDel = 2;
+    PostQueueTypeAddComment = 3;
+    PostQueueTypeDelComment = 4;
+    PostQueueTypeAddLike = 5;
+    PostQueueTypeAddCancelLike = 6;
 }
 
 message PostQueue {
     PostQueueType type = 1;
     PostData post_data = 2;
+    PostExtra extra_data = 3;
+}
+
+message PostExtra {
+    int64 post_id = 1;
+    int64 comment_id = 2;
+    string content = 3;
+    string user_id = 4;
+    int64 create_time = 5;
 }
 
 enum PostFeedbackType {
