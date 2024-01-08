@@ -204,6 +204,7 @@ message UserPlan {
     PlanType user_type = 1;
     int64 start_time = 2;
     int64 end_time = 3;
+    string subscription_id = 4;
 }
 
 message UserBasicUsage {
