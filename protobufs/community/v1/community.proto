@@ -112,9 +112,10 @@ message PostData {
 }
 
 message CommentData {
-    UserInfo user_info = 1; //
-    string message = 2;
-    int64 create_time = 3; // 创建时间
+    int64 comment_id = 1;
+    UserInfo user_info = 2; //
+    string message = 3;
+    int64 create_time = 4; // 创建时间
 }
 
 message UserInfo {
